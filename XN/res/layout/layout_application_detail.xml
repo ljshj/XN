@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_page_bg"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/application_detail_rl_title"
+        style="@style/common_top_title_style" >
+
+        <Button
+            android:id="@+id/application_detail_btn_back"
+            style="@style/common_btn_back_style" />
+
+        <TextView
+            android:id="@+id/application_detail_tv_title"
+            style="@style/common_tv_title_style"
+            android:text="应用详情" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent" >
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="60dp" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+                
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="150.0dip"
+                    android:layout_gravity="center"
+                    android:background="#ff707175"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <Gallery
+                        android:id="@+id/application_detail_gallery_imgaes"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:fadingEdge="none"
+                        android:fadingEdgeLength="0.0dip"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:gravity="center"
+                        android:spacing="6.0dip"
+                        android:unselectedAlpha="1.5" />
+                </LinearLayout>
+                
+                <LinearLayout 
+                    android:layout_width="fill_parent"
+                    android:layout_height="100dp"
+                    android:orientation="horizontal">
+                    
+                    <ImageView 
+                        android:id="@+id/application_detail_imgv_logo"
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_launcher"/>
+                    
+                    <LinearLayout 
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="vertical">
+                        
+                        <LinearLayout 
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="2"
+                            android:orientation="horizontal">
+                            
+                            <TextView 
+                                android:id="@+id/application_detail_tv_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="fill_parent"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_vertical"
+                                android:textSize="18dp"
+                                android:text="UC浏览器"/>
+                            
+                            <ImageView 
+                                android:id="@+id/application_detail_imgv_version"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:src="@drawable/ic_launcher"/>
+                            
+                        </LinearLayout>
+                        
+                        <LinearLayout 
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+                            
+                            <TextView 
+                                android:layout_width="wrap_content"
+                                android:layout_height="fill_parent"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_vertical"
+                                android:textSize="16dp"
+                                android:text="软件大小："/>
+                            
+                            <TextView 
+                                android:id="@+id/application_detail_tv_size"
+                                android:layout_width="wrap_content"
+                                android:layout_height="fill_parent"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_vertical"
+                                android:textSize="16dp"
+                                android:text="6M"/>
+                            
+                        </LinearLayout>
+                        
+                    </LinearLayout>
+                    
+                </LinearLayout>
+                
+                <View 
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/img_search_x_line"/>
+                
+                <TextView 
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="应用介绍"
+                    android:gravity="center_vertical"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"/>
+                
+                <TextView 
+                    android:id="@+id/application_detail_tv_info"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="25dp"
+                    android:text="应用介绍"
+                    android:gravity="center_vertical"
+                    android:textSize="16dp"
+                    android:textColor="#626262"/>
+                
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/application_detail_ll_download"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="立即下载"
+                android:textColor="#343434"
+                android:textSize="16dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+android:background="@drawable/item_press_grey_selector"
+    android:orientation="horizontal" >
+
+    <ImageView
+        android:id="@+id/communication_hall_item_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/ic_launcher" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/communication_hall_item_icon" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="3dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/communication_hall_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="深圳交流群"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/communication_hall_item_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="固定群" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/communication_hall_item_summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="请自觉遵守群规"
+            android:textSize="15dp" />
+    </RelativeLayout>
+
+</RelativeLayout>

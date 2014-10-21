@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_page_bg"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/imiss_rl_title"
+        style="@style/common_top_title_style" >
+
+        <Button
+            android:id="@+id/imiss_btn_back"
+            style="@style/common_btn_back_style" />
+
+        <TextView
+            style="@style/common_tv_title_style"
+            android:text="我想" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="180dp"
+        android:layout_margin="10.0dp"
+        android:background="@drawable/img_user_center_bg" >
+
+        <EditText
+            android:id="@+id/imiss_edit_content"
+            android:layout_width="fill_parent"
+            android:layout_height="170dp"
+            android:layout_alignParentTop="true"
+            android:layout_margin="5dp"
+            android:background="@null"
+            android:gravity="top"
+            android:hint="请输入您的想法;例如:去旅游"
+            android:lines="4"
+            android:maxLength="35"
+            android:text=""
+            android:textSize="16dp" >
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
+            android:id="@+id/imiss_tv_wordcount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="5.0dip"
+            android:layout_marginRight="5.0dip"
+            android:text="0/30" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/imiss_btn_done"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/login_btn_selector"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+</LinearLayout>

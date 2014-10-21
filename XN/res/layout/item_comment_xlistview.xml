@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhuozhong.view.xlistview.XListView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/common_xlv"
+    style="@style/common_listview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_page_bg"
+    android:divider="@android:color/transparent"
+    android:visibility="gone"
+    android:dividerHeight="10dp" >
+</com.zhuozhong.view.xlistview.XListView>

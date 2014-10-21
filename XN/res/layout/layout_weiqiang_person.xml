@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout style="@style/common_top_title_style" >
+
+        <Button
+            android:id="@+id/return_btn"
+            style="@style/common_btn_back_style" />
+
+        <TextView
+            android:id="@+id/weiqiang_person_title"
+            style="@style/common_tv_title_style"
+            android:text="微墙" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent" >
+
+        <ProgressBar
+            android:id="@+id/weiqiang_person_progress"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true" />
+
+        <com.zhuozhong.view.xlistview.XListView
+            android:id="@+id/weiqiang_person_listview"
+            style="@style/common_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/common_page_bg"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="10dp"
+            android:visibility="gone" >
+        </com.zhuozhong.view.xlistview.XListView>
+    </RelativeLayout>
+
+</LinearLayout>

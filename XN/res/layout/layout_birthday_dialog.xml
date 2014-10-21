@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/translucent" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@color/birthday_dialog_bg" >
+
+            <TextView
+                android:id="@+id/birthday_dialog_tv_cancel"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="#226ff9"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/birthday_dialog_tv_confirm"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="#226ff9"
+                android:textSize="20dp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/timePicker1"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:layout_gravity="center" >
+
+            <com.zhuozhong.widget.wheelview.WheelView
+                android:id="@+id/birthday_dialog_wv_year"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:layout_weight="2" />
+
+            <com.zhuozhong.widget.wheelview.WheelView
+                android:id="@+id/birthday_dialog_wv_month"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1" />
+
+            <com.zhuozhong.widget.wheelview.WheelView
+                android:id="@+id/birthday_dialog_wv_day"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

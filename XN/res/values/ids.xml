@@ -1,0 +1,8 @@
+<resources>
+
+    <item name="tag_first" type="id"></item>
+    <item name="tag_second" type="id"></item>
+    
+    <item name="selected_view" type="id"/>
+
+</resources>

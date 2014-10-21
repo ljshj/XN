@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_page_bg"
+    android:orientation="vertical" >
+    <RelativeLayout
+        android:id="@+id/vermicelli_rl_title"
+        style="@style/common_top_title_style" >
+
+        <Button
+            android:id="@+id/vermicelli_btn_back"
+            style="@style/common_btn_back_style" />
+
+        <TextView
+            style="@style/common_tv_title_style"
+            android:text="我的粉丝" />
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent" >
+
+        <ProgressBar
+            android:id="@+id/vermicelli_progress"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true" />
+
+        <com.zhuozhong.view.xlistview.XListView
+            android:id="@+id/vermicelli_xlv_list"
+            style="@style/common_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/common_page_bg"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="1dp"
+            android:visibility="gone" >
+        </com.zhuozhong.view.xlistview.XListView>
+    </RelativeLayout>
+
+</LinearLayout>

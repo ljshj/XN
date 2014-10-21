@@ -1,0 +1,15 @@
+<resources>
+
+    <dimen name="home_drawabletop">16dp</dimen>
+    <dimen name="message_friend_list_margin_left_right">20dp</dimen>
+    <dimen name="pull_refresh_listview_text_size">12sp</dimen>
+    <dimen name="indicator_right_padding">10dp</dimen>
+    <dimen name="indicator_corner_radius">12dp</dimen>
+    <dimen name="indicator_internal_padding">4dp</dimen>
+    <dimen name="head_icon">60dp</dimen>
+    <dimen name="chat_keybord_button_indicator">30dp</dimen>
+    <dimen name="weiqiang_comment">17dp</dimen>
+    <dimen name="right_menu_width">200dp</dimen>
+    <dimen name="home_ithink">12dp</dimen>
+
+</resources>

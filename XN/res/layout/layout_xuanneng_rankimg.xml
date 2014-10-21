@@ -1,0 +1,74 @@
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/tabhost"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/common_page_bg" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            style="@style/common_top_title_style"
+            android:layout_height="45dp"
+            android:gravity="center_vertical" >
+
+            <RadioGroup
+                android:id="@+id/xuanneng_ranking_rg_tab"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_centerInParent="true"
+                android:background="@drawable/img_message_main_select_bg"
+                android:divider="@drawable/img_common_ll_divider"
+                android:gravity="bottom"
+                android:orientation="horizontal"
+                android:showDividers="middle" >
+
+                <RadioButton
+                    android:id="@+id/xuanneng_ranking_tab_day"
+                    style="@style/message_main_tab_button"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="日排行"
+                    android:textColor="@color/color_home_radiobutton_text" />
+
+                <RadioButton
+                    android:id="@+id/xuanneng_ranking_tab_week"
+                    style="@style/message_main_tab_button"
+                    android:gravity="center"
+                    android:text="周排行"
+                    android:textColor="@color/color_home_radiobutton_text" />
+
+                <RadioButton
+                    android:id="@+id/xuanneng_ranking_tab_month"
+                    style="@style/message_main_tab_button"
+                    android:gravity="center"
+                    android:text="月排行"
+                    android:textColor="@color/color_home_radiobutton_text" />
+                <RadioButton
+                    android:id="@+id/xuanneng_ranking_tab_year"
+                    style="@style/message_main_tab_button"
+                    android:gravity="center"
+                    android:text="年排行"
+                    android:textColor="@color/color_home_radiobutton_text" />
+            </RadioGroup>
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@android:id/tabcontent"
+            android:layout_width="fill_parent"
+            android:layout_height="0.0dip"
+            android:layout_weight="1.0" />
+
+        <TabWidget
+            android:id="@android:id/tabs"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.0"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</TabHost>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout style="@style/common_top_title_style" >
+
+        <TextView
+            style="@style/common_tv_title_style"
+            android:text="tianjia" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/img_common_search_bg" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/ll_add_friend_or_group_search"
+            android:gravity="center_vertical" >
+
+            <EditText
+                android:id="@+id/et_add_friend_or_group_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/b_add_friend_or_group_clear_text"
+                android:background="@android:color/transparent" />
+
+            <Button
+                android:id="@+id/b_add_friend_or_group_clear_text"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/img_common_clear_text" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_add_friend_or_group_search"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:background="@drawable/img_common_ll_divider" />
+
+            <Button
+                android:id="@+id/search_friend_b_search"
+                android:layout_width="30dp"
+                android:layout_height="31dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/img_common_search_button" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ProgressBar
+            android:id="@+id/search_friend_pb_searching"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+        <com.zhuozhong.view.xlistview.XListView
+            android:id="@+id/lv_add_friend_or_group"
+            style="@style/common_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        </com.zhuozhong.view.xlistview.XListView>
+    </RelativeLayout>
+
+</LinearLayout>

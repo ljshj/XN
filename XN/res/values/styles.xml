@@ -1,0 +1,171 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+<style name="APPTheme" parent="android:Theme.Light">
+		<item name="android:windowNoTitle">true</item>
+		<item name="android:windowBackground">@color/white</item>
+		<item name="android:windowSoftInputMode">stateAlwaysHidden</item>
+		<item name="android:windowAnimationStyle">@style/activityAnimation</item>
+		<item name="android:orientation">vertical</item>
+	</style>
+	
+<style name="activityAnimation" parent="@android:style/Animation">
+		<item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
+		<item name="android:activityOpenExitAnimation">@anim/slide_left_out</item>
+		<item name="android:activityCloseEnterAnimation">@anim/slide_left_in</item>
+		<item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>
+	</style>
+    
+    <style name="home_tab_button">
+        <item name="android:textSize">15.0dp</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:background">@drawable/bg_home_radiobutton_bg</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:button">@null</item>
+        <item name="android:layout_weight">1.0</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="common_top_title_style">
+        <item name="android:textAppearance">@android:style/TextAppearance.DialogWindowTitle</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">51dp</item>
+        <item name="android:background">@drawable/img_common_top_title_bg</item>
+    </style>
+
+    <style name="common_btn_back_style">
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:marqueeRepeatLimit">marquee_forever</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:background">@drawable/common_back_btn</item>
+    </style>
+
+    <style name="common_tv_title_style">
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:marqueeRepeatLimit">marquee_forever</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/common_title</item>
+        <item name="android:textSize">20dp</item>
+    </style>
+
+    <style name="common_btn_title_right_style">
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:layout_width">70dp</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:marqueeRepeatLimit">marquee_forever</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:background">@null</item>
+        <item name="android:textColor">@color/common_title</item>
+        <item name="android:textSize">16dp</item>
+    </style>
+
+    <style name="message_main_tab_button">
+        <item name="android:textSize">14.0dp</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:background">@drawable/bg_home_radiobutton_bg</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:button">@null</item>
+        <item name="android:layout_weight">1.0</item>
+    </style>
+
+    <style name="common_listview">
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:listSelector">@android:color/transparent</item>
+        <item name="android:overScrollMode">never</item>
+        <item name="android:scrollbars">@null</item>
+    </style>
+
+    <style name="tv_singline_ellipsize_end" parent="android:Widget.TextView">
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="dialog_no_thing" parent="@android:Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="anim_flick_bottom">
+        <item name="android:windowEnterAnimation">@anim/flick_bottom_enter</item>
+        <item name="android:windowExitAnimation">@anim/flick_bottom_exit</item>
+    </style>
+
+    <style name="roomRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:maxHeight">18.0dip</item>
+        <item name="android:progressDrawable">@drawable/room_rating_bar</item>
+        <item name="android:minHeight">18.0dip</item>
+    </style>
+
+    <style name="tabView_no_underline" parent="@android:style/Widget.Holo.Light.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_holo_bandgood</item>
+    </style>
+
+    <style name="Theme.Holo.Light.NoActionBar.Tab" parent="@android:style/Theme.Holo.Light.NoActionBar">
+        <item name="android:actionBarTabStyle">@style/tabView_no_underline</item>
+    </style>
+    
+    <style name="gridview_item_tv_style">
+        <item name="android:textSize">13dp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name = "birthday_time_dialog_animation" parent="android:Animation">
+        <item name="@android:windowEnterAnimation">@anim/dialog_anim_enter</item>
+        <item name="@android:windowExitAnimation">@anim/dialog_anim_exit</item>
+    </style>
+    
+    <style name="birthday_time_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:colorBackgroundCacheHint">@android:color/transparent</item>
+        <item name="android:windowFrame">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@null</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+    
+    <style name="logOffDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:colorBackgroundCacheHint">@android:color/transparent</item>
+        <item name="android:windowFrame">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@null</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+    
+    <!-- 搜索结果页面进度条动画 -->
+    <style name = "DialogAnimation" parent="android:Animation">
+        <item name="@android:windowEnterAnimation">@anim/dialog_anim_enter</item>
+        <item name="@android:windowExitAnimation">@anim/dialog_anim_exit</item>
+    </style>
+    
+</resources>

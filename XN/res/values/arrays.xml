@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string-array name="smiley_array">
+        <item>[face01]</item>
+        <item>[face02]</item>
+        <item>[face03]</item>
+        <item>[face04]</item>
+        <item>[face05]</item>
+        <item>[face06]</item>
+        <item>[face07]</item>
+        <item>[face08]</item>
+        <item>[face09]</item>
+        <item>[face10]</item>
+        <item>[face11]</item>
+        <item>[face12]</item>
+        <item>[face13]</item>
+        <item>[face14]</item>
+        <item>[face15]</item>
+        <item>[face16]</item>
+        <item>[face17]</item>
+        <item>[face18]</item>
+        <item>[face19]</item>
+        <item>[face20]</item>
+    </string-array>
+
+</resources>

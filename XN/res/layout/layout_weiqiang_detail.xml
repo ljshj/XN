@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <RelativeLayout style="@style/common_top_title_style" >
+
+            <Button
+                android:id="@+id/return_btn"
+                style="@style/common_btn_back_style" />
+
+            <TextView
+                style="@style/common_tv_title_style"
+                android:text="详情" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent" >
+
+            <ProgressBar
+                android:id="@+id/common_progress"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true" />
+
+            <LinearLayout
+                android:id="@+id/weiqiang_detail_ll_reply"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/img_comment_bottom_bg"
+                android:orientation="horizontal"
+                android:visibility="visible" >
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent" >
+
+                    <EditText
+                        android:id="@+id/weiqiang_detail_et_reply_content"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="55dp"
+                        android:singleLine="true"
+                        android:background="@drawable/img_comment_content" />
+
+                    <Button
+                        android:id="@+id/weiqiang_detail_btn_reply_send"
+                        android:layout_width="45dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/img_chat_send" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <com.zhuozhong.view.xlistview.XListView
+                android:id="@+id/weiqiang_detail_xlv"
+                style="@style/common_listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/weiqiang_detail_ll_reply"
+                android:background="@color/common_page_bg"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="10dp"
+                android:visibility="gone" >
+            </com.zhuozhong.view.xlistview.XListView>
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

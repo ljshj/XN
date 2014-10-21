@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_page_bg"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/showcase_rl_title"
+        style="@style/common_top_title_style" >
+
+        <Button
+            android:id="@+id/showcase_btn_back"
+            style="@style/common_btn_back_style" />
+
+        <TextView
+            style="@style/common_tv_title_style"
+            android:text="我的橱窗" />
+
+        <Button
+            android:id="@+id/showcase_btn_more"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/more_btn_selector" />
+    </RelativeLayout>
+
+    <!--
+         <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >    -->
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent" >
+
+        <ProgressBar
+            android:id="@+id/showcase_progress"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true" />
+
+        <LinearLayout
+            android:id="@+id/showcase_ll_show"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <FrameLayout
+                android:id="@+id/showcase_fl_background"
+                android:layout_width="fill_parent"
+                android:layout_height="200dp"
+                android:background="@color/individuation_blue1" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/img_showcase_search_bg"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:orientation="horizontal" >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/img_common_search_bg"
+                            android:layout_toLeftOf="@+id/showcase_btn_search"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal" >
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="5dp"
+                                android:background="@drawable/img_common_search_hint" />
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/img_message_main_search_divider" />
+
+                            <EditText
+                                android:id="@+id/showcase_et_search"
+                                android:layout_width="match_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_marginLeft="5dp"
+                                android:background="@null"
+                                android:hint="请输入您要搜索的产品"
+                                android:singleLine="true"
+                                android:textSize="20dp" >
+
+                                <requestFocus />
+                            </EditText>
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/showcase_btn_search"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="5dp"
+                            android:background="@null"
+                            android:text="搜索"
+                            android:textColor="#000000"
+                            android:textSize="18dp" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/white"
+                    android:gravity="bottom"
+                    android:orientation="horizontal" >
+
+                    <LinearLayout
+                        android:id="@+id/user_center_ll_follow"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center|bottom"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dp"
+                            android:gravity="center"
+                            android:text="信用值："
+                            android:textColor="#000000"
+                            android:textSize="12dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal" >
+
+                            <ImageView
+                                android:id="@+id/showcase_imgv_one"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:src="@drawable/img_showcase_bathecomfort" />
+
+                            <ImageView
+                                android:id="@+id/showcase_imgv_two"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:src="@drawable/img_showcase_bathecomfort" />
+
+                            <ImageView
+                                android:id="@+id/showcase_imgv_three"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:src="@drawable/img_showcase_bathecomfort" />
+
+                            <ImageView
+                                android:id="@+id/showcase_imgv_four"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:src="@drawable/img_showcase_bathecomfort" />
+
+                            <ImageView
+                                android:id="@+id/showcase_imgv_five"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:src="@drawable/img_showcase_bathecomfort" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/img_user_center_y_line" />
+
+                    <LinearLayout
+                        android:id="@+id/showcase_ll_recommend"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/showcase_tv_recommend_hint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="产品推荐："
+                            android:textColor="@color/red"
+                            android:textSize="12dp" />
+
+                        <TextView
+                            android:id="@+id/showcase_tv_recommend"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="(0)"
+                            android:textColor="@color/red"
+                            android:textSize="12dp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/img_user_center_y_line" />
+
+                    <LinearLayout
+                        android:id="@+id/showcase_ll_all_product"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/showcase_tv_all_product_hint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="所有产品："
+                            android:textColor="#000000"
+                            android:textSize="12dp" />
+
+                        <TextView
+                            android:id="@+id/showcase_tv_all_product"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="(0)"
+                            android:textColor="@color/black"
+                            android:textSize="12dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/showcase_imgv_showcase_icon"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="25dp"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/ic_launcher" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="60dp"
+                    android:layout_marginLeft="90dp"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/showcase_tv_shop_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="私享黑莓上海分店"
+                        android:textColor="#000000"
+                        android:textSize="16dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="3dp"
+                        android:background="@color/white"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="好评："
+                            android:textColor="#000000"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:id="@+id/showcase_tv_comments"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="97%"
+                            android:textColor="#000000"
+                            android:textSize="14dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical" >
+
+                <com.zhuozhong.view.xlistview.XListView
+                    android:id="@+id/showcase_xlv_recommend"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@null" >
+                </com.zhuozhong.view.xlistview.XListView>
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent" >
+
+                    <ProgressBar
+                        android:id="@+id/showcase_all_product_progress"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_centerInParent="true" />
+
+                    <com.zhuozhong.view.xlistview.XListView
+                        android:id="@+id/showcase_xlv_all_product"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:divider="@null"
+                        android:visibility="gone" >
+                    </com.zhuozhong.view.xlistview.XListView>
+                </RelativeLayout>
+
+                <!--
+                <include layout="@layout/layout_showcase_recommend" />
+
+                <include layout="@layout/layout_showcase_all_product" />                -->
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

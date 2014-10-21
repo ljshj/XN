@@ -1,0 +1,91 @@
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/tabhost"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/common_page_bg" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            style="@style/common_top_title_style"
+            android:gravity="center_vertical" >
+
+            <Button
+                android:id="@+id/return_btn"
+                style="@style/common_btn_back_style" />
+
+            <Button
+                android:id="@+id/xuanneng_b_response"
+                style="@style/common_btn_title_right_style"
+                android:text="有奖投稿"
+                android:textSize="14dp" />
+
+            <RadioGroup
+                android:id="@+id/xuanneng_humor_rg_tab"
+                android:layout_width="150dp"
+                android:layout_height="35dp"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/img_message_main_select_bg"
+                android:divider="@drawable/img_common_ll_divider"
+                android:gravity="bottom"
+                android:orientation="horizontal"
+                android:showDividers="middle" >
+
+                <RadioButton
+                    android:id="@+id/xuanneng_humor_tab_ranking"
+                    style="@style/message_main_tab_button"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="排行榜"
+                    android:textColor="@color/color_home_radiobutton_text" />
+
+                <RadioButton
+                    android:id="@+id/xuanneng_humor_tab_order"
+                    style="@style/message_main_tab_button"
+                    android:gravity="center"
+                    android:text="顺序"
+                    android:textColor="@color/color_home_radiobutton_text" />
+
+                <RadioButton
+                    android:id="@+id/xuanneng_humor_tab_random"
+                    style="@style/message_main_tab_button"
+                    android:gravity="center"
+                    android:text="随机"
+                    android:textColor="@color/color_home_radiobutton_text" />
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/xuanneng_humor_b_add"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/img_message_add"
+                android:visibility="invisible" />
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@android:id/tabcontent"
+            android:layout_width="fill_parent"
+            android:layout_height="0.0dip"
+            android:layout_weight="1.0" />
+
+        <TabWidget
+            android:id="@android:id/tabs"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.0"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</TabHost>

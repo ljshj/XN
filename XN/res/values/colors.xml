@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="red">#FF0000</color>
+    <color name="grey">#c8c8c8</color>
+    <color name="gray">#808080</color>
+    <color name="text_color_normal">#c8c8c8</color>
+    <color name="color_home_tab_text_selected">#25a3d7</color>
+    <color name="color_home_tab_text_normal">#6d6d6d</color>
+    <color name="item_press_grey">#d0e6ff</color>
+    <color name="green">#00FF00</color>
+
+    <!-- 公共颜色值 -->
+    <color name="common_page_bg">#f0f0f0</color>
+    <color name="common_title">#626262</color>
+    <color name="listitem_transparent">#00000000</color>
+    <color name="pic_bg">#33838B8B</color>
+    <color name="home_type_text_select">#2e92ff</color>
+    <color name="grey1">#888888</color>
+    <color name="grey2">#909090</color>
+    <color name="translucent">#E0000000</color>
+
+    <!-- 搜索结果 -->
+    <color name="search_result_yellow">#ffebcb</color>
+    <color name="search_result_select_bule">#4ba2df</color>
+    <color name="search_result_unselect_black">#000000</color>
+
+    <!-- 消息 -->
+    <color name="common_title_indicator_grey">#e4e4e4</color>
+
+    <!-- 性别 -->
+    <color name="sex_text_selected">#0F96F5</color>
+    <color name="sex_text_normal">#000000</color>
+    
+    <!-- 生日 -->
+    <color name="birthday_dialog_bg">#D7D7D7</color>
+    <color name="home_check_search_normal">#494949</color>
+    <color name="home_check_search_checked">#ff5c30</color>
+    
+    <!-- 个性化模块 -->
+    <color name="individuation_blue1">#5cb9e0</color>
+    <color name="individuation_white2">#ffffff</color>
+    <color name="individuation_purple3">#ab6afb</color>
+    <color name="individuation_green4">#48ce48</color>
+    <color name="individuation_lightblue5">#48c3ce</color>
+    <color name="individuation_yellow6">#e7e55c</color>
+
+</resources>

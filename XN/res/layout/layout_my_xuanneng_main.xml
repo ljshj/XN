@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_page_bg"
+    android:orientation="vertical" >
+
+    <RelativeLayout style="@style/common_top_title_style" >
+
+        <TextView
+            style="@style/common_tv_title_style"
+            android:text="微墙" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        android:divider="@drawable/img_common_ll_divider"
+        android:orientation="horizontal"
+        android:showDividers="middle" >
+
+        <RelativeLayout
+            android:id="@+id/layout_weiqiang_type_left_select"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/tv_weiqiang_type_left_select"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="我的投稿"
+                android:textSize="18dp" />
+
+            <View
+                android:id="@+id/v_weiqiang_type_select_left_underline"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/img_home_type_select" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_weiqiang_type_right_select"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/tv_weiqiang_type_right_select"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="审核中"
+                android:textSize="18dp" />
+
+            <View
+                android:id="@+id/v_weiqiang_type_select_right_underline"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/img_home_type_select"
+                android:visibility="invisible" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/img_common_h_divider" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_weiqiang_type_select"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:background="@color/white" />
+
+</LinearLayout>

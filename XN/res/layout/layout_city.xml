@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white" >
+
+    <RelativeLayout
+        android:id="@+id/privince_rl_title"
+        style="@style/common_top_title_style" >
+
+        <Button
+            android:id="@+id/city_btn_back"
+            style="@style/common_btn_back_style" />
+
+        <TextView
+            android:id="@+id/city_tv_title"
+            style="@style/common_tv_title_style"
+            android:text="家乡" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/privince_rl_title" >
+
+        <ProgressBar
+            android:id="@+id/city_progress"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true" />
+
+        <ListView
+            android:id="@+id/city_lv_privince"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:divider="@drawable/img_search_x_line"
+            android:scrollbars="none"
+            android:scrollingCache="false"
+            android:visibility="gone" >
+        </ListView>
+
+        <com.zhuozhong.widget.ZZCityQuickAlphabeticBar
+            android:id="@+id/city_qab_fast_scroller"
+            android:layout_width="22dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="top|right|center"
+            android:layout_marginTop="0dp"
+            android:background="@null"
+            android:scaleType="centerInside"
+            android:src="@drawable/dic_background"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/city_tv_fast_position"
+            android:layout_width="70dip"
+            android:layout_height="70dip"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_margin="34dip"
+            android:background="@drawable/bg_dic_alpha_text"
+            android:gravity="center"
+            android:padding="2dip"
+            android:textColor="#404040"
+            android:textSize="48dp"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+</RelativeLayout>
