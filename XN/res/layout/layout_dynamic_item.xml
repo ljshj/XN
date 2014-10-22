@@ -71,11 +71,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <com.zhuozhong.widget.CMyGridView
+            <com.com.bgood.xn.widget.CMyGridView
                 android:id="@+id/dynamic_item_gv_list"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" >
-            </com.zhuozhong.widget.CMyGridView>
+            </com.com.bgood.xn.widget.CMyGridView>
         </LinearLayout>
 
         <View

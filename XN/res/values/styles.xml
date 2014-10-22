@@ -5,6 +5,7 @@
 		<item name="android:windowSoftInputMode">stateAlwaysHidden</item>
 		<item name="android:windowAnimationStyle">@style/activityAnimation</item>
 		<item name="android:orientation">vertical</item>
+		
 	</style>
 	
 <style name="activityAnimation" parent="@android:style/Animation">

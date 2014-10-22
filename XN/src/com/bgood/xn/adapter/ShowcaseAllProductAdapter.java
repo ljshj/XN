@@ -2,6 +2,7 @@ package com.bgood.xn.adapter;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -13,41 +14,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
+import com.bgood.xn.bean.ProductBean;
 import com.squareup.picasso.Picasso;
 
 /**
  * 橱窗中产品所有页面的适配器
  */
-public class ShowcaseAllProductAdapter extends BaseAdapter
+public class ShowcaseAllProductAdapter extends KBaseAdapter
 {
-	private Context m_context;
-    private LayoutInflater m_inflater;
-    private List<ProductDTO> m_list;
-    
-    public ShowcaseAllProductAdapter(Context context, List<ProductDTO> list)
-    {
-        super();
-        this.m_context = context;
-        this.m_inflater = LayoutInflater.from(m_context);
-        this.m_list = list;
-    }
-    
-	@Override
-	public int getCount()
-	{
-		return m_list.size();
-	}
-
-	@Override
-	public ProductDTO getItem(int position)
-	{
-		return m_list.get(position);
-	}
-
-	@Override
-	public long getItemId(int position)
-	{
-		return position;
+	
+	public ShowcaseAllProductAdapter(List<?> mList, Activity mActivity) {
+		super(mList, mActivity);
 	}
 
 	@Override
@@ -58,7 +35,7 @@ public class ShowcaseAllProductAdapter extends BaseAdapter
 		if (convertView == null)
 		{
 			holder = new ViewHolder();
-			convertView = m_inflater.inflate(R.layout.layout_showcase_all_product_item, null);
+			convertView = mInflater.inflate(R.layout.layout_showcase_all_product_item, null);
 			holder.iconImgV = (ImageView) convertView.findViewById(R.id.showcase_all_product_item_imgv_icon);
 			holder.nameTv = (TextView) convertView.findViewById(R.id.showcase_all_product_item_tv_name);
 			holder.priceTv = (TextView) convertView.findViewById(R.id.showcase_all_product_item_tv_price);
@@ -69,23 +46,23 @@ public class ShowcaseAllProductAdapter extends BaseAdapter
             holder = (ViewHolder)convertView.getTag();
         }
 		
-		final ProductDTO productDTO = m_list.get(position);
-		Picasso.with(m_context).load(productDTO.productSmallIcon).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
+		final ProductBean productDTO = (ProductBean) mList.get(position);
+		Picasso.with(mActivity).load(productDTO.productSmallIcon).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
 		holder.nameTv.setText(productDTO.productName);
 		holder.priceTv.setText(productDTO.productPrice);
 		
-		convertView.setOnClickListener(new OnClickListener()
-        {
-            
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(m_context, ProductDetailActivity.class);
-                intent.putExtra("productId", productDTO.productId);
-                m_context.startActivity(intent);
-            }
-        });
-		
+//		convertView.setOnClickListener(new OnClickListener()
+//        {
+//            
+//            @Override
+//            public void onClick(View v)
+//            {
+//                Intent intent = new Intent(mActivity, ProductDetailActivity.class);
+//                intent.putExtra("productId", productDTO.productId);
+//                mActivity.startActivity(intent);
+//            }
+//        });
+//		
 		return convertView;
 	}
 

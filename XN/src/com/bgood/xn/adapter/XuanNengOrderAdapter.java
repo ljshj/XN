@@ -2,70 +2,30 @@ package com.bgood.xn.adapter;
 
 import java.util.List;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.app.Activity;
+import android.text.TextUtils;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bgood.xn.R;
-import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.bean.CommentBean;
 import com.squareup.picasso.Picasso;
 
 /**
- * @author ChenGuoqing 2014-7-9上午11:27:04
+ * 
+ * @todo:炫能排行榜
+ * @date:2014-10-22 上午9:48:02
+ * @author:hg_liuzl@163.com
  */
-public class XuanNengOrderAdapter extends BaseAdapter implements XuannengMessageManagerInterface
+
+public class XuanNengOrderAdapter extends KBaseAdapter 
 {
-
-	protected Context m_context;
-	protected LayoutInflater m_inflater;
-	protected List<CommentsDTO> m_list;
-	private int m_delPosition;
-	
-	ShareManager   m_shareManager;
-	
-	XuannengMessageManager messageManager = XuannengMessageManager.getInstance();
-	
-
-	/**
-	 * @param context
-	 * @param list
-	 */
-	public XuanNengOrderAdapter(Context context, List<CommentsDTO> list)
-	{
-		this.m_context = context;
-		this.m_list = list;
-		this.m_inflater = LayoutInflater.from(m_context);
-		
+	public XuanNengOrderAdapter(List<?> mList, Activity mActivity) {
+		super(mList, mActivity);
 	}
-
-	@Override
-	public int getCount()
-	{
-		return m_list.size();
-	}
-
-	@Override
-	public Object getItem(int position)
-	{
-		return m_list.get(position);
-	}
-
-	@Override
-	public long getItemId(int position)
-	{
-		return position;
-	}
-	
-	
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
@@ -74,7 +34,7 @@ public class XuanNengOrderAdapter extends BaseAdapter implements XuannengMessage
 		if (convertView == null)
 		{
 			holder = new Holder();
-			convertView = m_inflater.inflate(R.layout.item_weiqiang_comment, parent, false);
+			convertView = mInflater.inflate(R.layout.item_weiqiang_comment, parent, false);
 			holder.iconImgV = (ImageView) convertView.findViewById(R.id.weiqiang_detail_item_imgv_icon);
 			holder.nameTv = (TextView) convertView.findViewById(R.id.weiqiang_detail_item_tv_name);
 			holder.distanceTv = (TextView) convertView.findViewById(R.id.weiqiang_detail_item_tv_distance);
@@ -96,12 +56,13 @@ public class XuanNengOrderAdapter extends BaseAdapter implements XuannengMessage
 		{
 			holder = (Holder) convertView.getTag();
 		}
-		
-		final CommentsDTO commentsDTO = m_list.get(position);
-		if (commentsDTO.senderIcon != null && !commentsDTO.senderIcon.equals(""))
+
+		final CommentBean commentsDTO = (CommentBean) mList.get(position);
+		if (!TextUtils.isEmpty(commentsDTO.senderIcon))
 		{
-			Picasso.with(m_context).load(commentsDTO.senderIcon).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
+			Picasso.with(mActivity).load(commentsDTO.senderIcon).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
 		}
+		
 		holder.nameTv.setText(commentsDTO.senderName);
 		holder.distanceTv.setText(commentsDTO.distance);
 		holder.timeTv.setText(commentsDTO.sendTime);
@@ -121,68 +82,12 @@ public class XuanNengOrderAdapter extends BaseAdapter implements XuannengMessage
 		holder.reply_countTv.setText(commentsDTO.revertCount + "");
 		holder.transform_send_countTv.setText(commentsDTO.forward_count + "");
 		holder.share_countTv.setText(commentsDTO.share_count + "");
-		
-		m_delPosition = position;
-		
-		convertView.setOnClickListener(new OnClickListener()
-        {
-            
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(m_context, XuanNengDetailActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("comment", commentsDTO);
-                intent.putExtras(bundle);
-                m_context.startActivity(intent);
-            }
-        });
-		
-		holder.deleteImgV.setOnClickListener(new OnClickListener()
-        {
-            
-            @Override
-            public void onClick(View v)
-            {
-                WindowUtil.getInstance().progressDialogShow(m_context, "删除中...");
-                messageManager.registerObserver(XuanNengOrderAdapter.this);
-//                messageManager.deleteWeiqiang(commentsDTO.commentId);
-            }
-        });
-		
-		/*// 分享
-		holder.layout_share_count.setOnClickListener(new OnClickListener()
-        {
-            
-            @Override
-            public void onClick(View v)
-            {
-                m_shareManager = new ShareManager((XuannengHumorOrderActivity)m_context);
-
-                m_shareManager.shareContentInit("adg", "掌上有礼", "", "", "1", "d");
-                m_shareManager.openShare();
-            }
-        });
-		
-		
-		
-		//点赞
-		holder.layout_zan_count.setOnClickListener(new OnClickListener()
-        {
-            
-            @Override
-            public void onClick(View v)
-            {
-                WindowUtil.getInstance().progressDialogShow(m_context, "赞中...");
-                messageManager.registerObserver(XuanNengOrderAdapter.this);
-                messageManager.zanXuanneng(commentsDTO.commentId);
-            }
-        });*/
+	
 		
 		return convertView;
 	}
 
-	class Holder
+	final class Holder
 	{
 		public ImageView iconImgV;
 		public TextView nameTv;
@@ -202,82 +107,4 @@ public class XuanNengOrderAdapter extends BaseAdapter implements XuannengMessage
 		public LinearLayout layout_share_count;
 		public TextView share_countTv;
 	}
-
-	/*@Override
-    public void deleteWeiqiangCB(Reulst result_state)
-    {
-        WindowUtil.getInstance().DismissAllDialog();
-        messageManager.unregisterObserver(XuanNengRandomAdapter.this);
-        if (result_state.resultCode == ReturnCode.RETURNCODE_OK)
-        {
-            Toast.makeText(m_context, "删除成功", Toast.LENGTH_SHORT).show();
-            m_list.remove(m_delPosition);
-            notifyDataSetChanged();
-        } else
-        {
-            Toast.makeText(m_context, "删除失败", Toast.LENGTH_SHORT).show();
-        }
-    }*/
-
-
-    @Override
-    public void getXuannengJokeListCB(Reulst result_state, List<CommentsDTO> list)
-    {
-    }
-
-    @Override
-    public void getXuannengRankingCB(Reulst result_state, List<CommentsDTO> list)
-    {
-    }
-
-    @Override
-    public void publishXuannengCB(Reulst result_state)
-    {
-    }
-
-    @Override
-    public void relayXuannengCB(Reulst result_state)
-    {
-    }
-
-    @Override
-    public void shareXuannengCB(Reulst result_state)
-    {
-    }
-
-    @Override
-    public void commentaryXuannengCB(Reulst result_state)
-    {
-    }
-
-    @Override
-    public void zanXuannengCB(Reulst result_state)
-    {
-        WindowUtil.getInstance().DismissAllDialog();
-        messageManager.unregisterObserver(XuanNengOrderAdapter.this);
-        if (result_state.resultCode == ReturnCode.RETURNCODE_OK)
-        {
-            m_list.get(m_delPosition).like_count += 1;
-            notifyDataSetChanged();
-        } else
-        {
-            Toast.makeText(m_context, "删除失败", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void getXuannengPulishListCB(Reulst result_state, List<CommentsDTO> list)
-    {
-    }
-    
-    @Override
-    public void getJokeCB(Reulst result_state, CommentsDTO commentsDTO)
-    {
-    }
-
-    @Override
-    public void deleteXuannengCB(Reulst result_state)
-    {
-        
-    }
 }

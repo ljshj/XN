@@ -26,7 +26,7 @@
             android:layout_height="30dp"
             android:layout_centerInParent="true" />
 
-        <com.zhuozhong.view.xlistview.XListView
+        <com.bgood.xn.view.xlistview.XListView
             android:id="@+id/weiqiang_person_listview"
             style="@style/common_listview"
             android:layout_width="match_parent"
@@ -35,7 +35,7 @@
             android:divider="@android:color/transparent"
             android:dividerHeight="10dp"
             android:visibility="gone" >
-        </com.zhuozhong.view.xlistview.XListView>
+        </com.bgood.xn.view.xlistview.XListView>
     </RelativeLayout>
 
 </LinearLayout>

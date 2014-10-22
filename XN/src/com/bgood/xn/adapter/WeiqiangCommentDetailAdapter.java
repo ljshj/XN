@@ -2,56 +2,28 @@ package com.bgood.xn.adapter;
 
 import java.util.List;
 
-import android.content.Context;
-import android.view.LayoutInflater;
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
+import com.bgood.xn.bean.ReplyCommentBean;
 import com.squareup.picasso.Picasso;
 
 /**
- * @author ChenGuoqing 2014-7-9下午4:12:46
+ * @todo:微墙评论
+ * @date:2014-10-22 上午9:43:36
+ * @author:hg_liuzl@163.com
  */
-public class WeiqiangCommentDetailAdapter extends BaseAdapter
+
+public class WeiqiangCommentDetailAdapter extends KBaseAdapter
 {
-    
-    protected Context m_context;
-    protected LayoutInflater m_inflater;
-    protected List<ReplyCommentDTO> m_list;
-
-	/**
-	 * @param context
-	 * @param list
-	 */
-	public WeiqiangCommentDetailAdapter(Context context, List<ReplyCommentDTO> list)
-	{
-	    this.m_context = context;
-        this.m_list = list;
-        this.m_inflater = LayoutInflater.from(m_context);
+	public WeiqiangCommentDetailAdapter(List<?> mList, Activity mActivity) {
+		super(mList, mActivity);
 	}
-	
-	@Override
-    public int getCount()
-    {
-        return m_list.size();
-    }
-
-    @Override
-    public Object getItem(int position)
-    {
-        return m_list.get(position);
-    }
-
-    @Override
-    public long getItemId(int position)
-    {
-        return position;
-    }
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
@@ -60,7 +32,7 @@ public class WeiqiangCommentDetailAdapter extends BaseAdapter
         if (convertView == null)
         {
             holder = new Holder();
-            convertView = m_inflater.inflate(R.layout.item_weiqiang_detail, parent, false);
+            convertView = mInflater.inflate(R.layout.item_weiqiang_detail, parent, false);
             holder.iconImgV = (ImageView) convertView.findViewById(R.id.icon);
             holder.nameTv = (TextView) convertView.findViewById(R.id.name);
             holder.contentTv = (TextView) convertView.findViewById(R.id.content);
@@ -70,10 +42,10 @@ public class WeiqiangCommentDetailAdapter extends BaseAdapter
             holder = (Holder) convertView.getTag();
         }
         
-        ReplyCommentDTO replyCommentDTO = m_list.get(position);
+       final ReplyCommentBean replyCommentDTO = (ReplyCommentBean) mList.get(position);
         if (replyCommentDTO.senderIcon != null && !replyCommentDTO.senderIcon.equals(""))
         {
-            Picasso.with(m_context).load(replyCommentDTO.senderIcon).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
+            Picasso.with(mActivity).load(replyCommentDTO.senderIcon).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
         }
         holder.nameTv.setText(replyCommentDTO.senderName);
         holder.contentTv.setText(replyCommentDTO.content);

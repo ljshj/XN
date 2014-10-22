@@ -63,7 +63,7 @@
                 </RelativeLayout>
             </LinearLayout>
 
-            <com.zhuozhong.view.xlistview.XListView
+            <com.bgood.xn.view.xlistview.XListView
                 android:id="@+id/weiqiang_detail_xlv"
                 style="@style/common_listview"
                 android:layout_width="match_parent"
@@ -73,7 +73,7 @@
                 android:divider="@android:color/transparent"
                 android:dividerHeight="10dp"
                 android:visibility="gone" >
-            </com.zhuozhong.view.xlistview.XListView>
+            </com.bgood.xn.view.xlistview.XListView>
         </RelativeLayout>
     </LinearLayout>
 

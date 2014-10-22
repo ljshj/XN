@@ -317,12 +317,12 @@
                 android:layout_height="fill_parent"
                 android:orientation="vertical" >
 
-                <com.zhuozhong.view.xlistview.XListView
+                <com.bgood.xn.view.xlistview.XListView
                     android:id="@+id/showcase_xlv_recommend"
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
                     android:divider="@null" >
-                </com.zhuozhong.view.xlistview.XListView>
+                </com.bgood.xn.view.xlistview.XListView>
 
                 <RelativeLayout
                     android:layout_width="fill_parent"
@@ -334,13 +334,13 @@
                         android:layout_height="30dp"
                         android:layout_centerInParent="true" />
 
-                    <com.zhuozhong.view.xlistview.XListView
+                    <com.bgood.xn.view.xlistview.XListView
                         android:id="@+id/showcase_xlv_all_product"
                         android:layout_width="fill_parent"
                         android:layout_height="match_parent"
                         android:divider="@null"
                         android:visibility="gone" >
-                    </com.zhuozhong.view.xlistview.XListView>
+                    </com.bgood.xn.view.xlistview.XListView>
                 </RelativeLayout>
 
                 <!--

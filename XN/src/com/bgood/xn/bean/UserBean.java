@@ -1,12 +1,14 @@
 package com.bgood.xn.bean;
 
+import java.io.Serializable;
+
 
 /**
  * @todo:TODO
  * @date:2014-10-20 下午4:06:36
  * @author:hg_liuzl@163.com
  */
-public class UserBean {
+public class UserBean implements Serializable {
 	public String roleID; // 用户权限ID
 	/* fds搬运 */
 	public String m_job;

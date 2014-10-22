@@ -2,6 +2,7 @@ package com.bgood.xn.adapter;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -13,41 +14,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
+import com.bgood.xn.bean.ProductBean;
 import com.squareup.picasso.Picasso;
 
 /**
- * 橱窗中产品推荐页面的适配器
+ * 
+ * @todo: 橱窗中产品推荐页面的适配器
+ * @date:2014-10-22 上午9:37:14
+ * @author:hg_liuzl@163.com
  */
-public class ShowcaseRecommendAdapter extends BaseAdapter
+public class ShowcaseRecommendAdapter extends KBaseAdapter
 {
-	private Context m_context;
-    private LayoutInflater m_inflater;
-    private List<ProductDTO> m_list;
-    
-    public ShowcaseRecommendAdapter(Context context, List<ProductDTO> list)
-    {
-        super();
-        this.m_context = context;
-        this.m_inflater = LayoutInflater.from(m_context);
-        this.m_list = list;
-    }
-    
-	@Override
-	public int getCount()
-	{
-		return m_list.size();
-	}
+	
 
-	@Override
-	public ProductDTO getItem(int position)
-	{
-		return m_list.get(position);
-	}
-
-	@Override
-	public long getItemId(int position)
-	{
-		return position;
+	public ShowcaseRecommendAdapter(List<?> mList, Activity mActivity) {
+		super(mList, mActivity);
 	}
 
 	@Override
@@ -58,7 +39,7 @@ public class ShowcaseRecommendAdapter extends BaseAdapter
 		if (convertView == null)
 		{
 			holder = new ViewHolder();
-			convertView = m_inflater.inflate(R.layout.layout_showcase_recommend_item, null);
+			convertView = mInflater.inflate(R.layout.layout_showcase_recommend_item, null);
 			holder.timeTv = (TextView) convertView.findViewById(R.id.showcase_recommend_item_tv_time);
 			holder.iconImgV = (ImageView) convertView.findViewById(R.id.showcase_recommend_item_imgv_icon);
 			holder.nameTv = (TextView) convertView.findViewById(R.id.showcase_recommend_item_tv_name);
@@ -70,24 +51,24 @@ public class ShowcaseRecommendAdapter extends BaseAdapter
             holder = (ViewHolder)convertView.getTag();
         }
 		
-		final ProductDTO productDTO = m_list.get(position);
+		final ProductBean productDTO = (ProductBean) mList.get(position);
 		holder.timeTv.setText(productDTO.productAddTime);
-		Picasso.with(m_context).load(productDTO.productBigIcon).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
+		Picasso.with(mActivity).load(productDTO.productBigIcon).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
 		holder.nameTv.setText(productDTO.productName);
 		holder.priceTv.setText(productDTO.productPrice);
 		
-		convertView.setOnClickListener(new OnClickListener()
-        {
-            
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(m_context, ProductDetailActivity.class);
-                intent.putExtra("productId", productDTO.productId);
-                m_context.startActivity(intent);
-            }
-        });
-		
+//		convertView.setOnClickListener(new OnClickListener()
+//        {
+//            
+//            @Override
+//            public void onClick(View v)
+//            {
+//                Intent intent = new Intent(mActivity, ProductDetailActivity.class);
+//                intent.putExtra("productId", productDTO.productId);
+//                mActivity.startActivity(intent);
+//            }
+//        });
+//		
 		return convertView;
 	}
 

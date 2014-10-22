@@ -1,1 +1,1 @@
-package com.bgood.xn.ui.message;import android.support.v4.app.FragmentActivity;/** * @todo:TODO * @author:hg_liuzl@163.com */public class MessageFragment extends FragmentActivity {	/**	 * @todo:TODO	 * @author:hg_liuzl@163.com	 */}
+package com.bgood.xn.ui.message;import android.support.v4.app.Fragment;/** * @todo:TODO * @author:hg_liuzl@163.com */public class MessageFragment extends Fragment {	/**	 * @todo:TODO	 * @author:hg_liuzl@163.com	 */}

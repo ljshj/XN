@@ -2,6 +2,7 @@ package com.bgood.xn.adapter;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,56 +15,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bgood.xn.R;
+import com.bgood.xn.bean.CommentBean;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.squareup.picasso.Picasso;
-
 /**
- * @author ChenGuoqing 2014-7-9上午11:27:04
+ * 
+ * @todo:微墙适配器
+ * @date:2014-10-22 上午9:41:14
+ * @author:hg_liuzl@163.com
  */
-public class WeiqiangAdapter extends BaseAdapter implements WeiqiangMessageManagerInterface
+public class WeiqiangAdapter extends KBaseAdapter 
 {
-
-	protected Context m_context;
-	protected LayoutInflater m_inflater;
-	protected List<CommentsDTO> m_list;
-	private int m_delPosition;
-	
-	ShareManager   m_shareManager;
-	
-	WeiqiangMessageManager messageManager = WeiqiangMessageManager.getInstance();
-	
-
-	/**
-	 * @param context
-	 * @param list
-	 */
-	public WeiqiangAdapter(Context context, List<CommentsDTO> list)
-	{
-		this.m_context = context;
-		this.m_list = list;
-		this.m_inflater = LayoutInflater.from(m_context);
-		
+	public WeiqiangAdapter(List<?> mList, Activity mActivity) {
+		super(mList, mActivity);
 	}
-
-	@Override
-	public int getCount()
-	{
-		return m_list.size();
-	}
-
-	@Override
-	public Object getItem(int position)
-	{
-		return m_list.get(position);
-	}
-
-	@Override
-	public long getItemId(int position)
-	{
-		return position;
-	}
-	
-	
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
@@ -72,7 +37,7 @@ public class WeiqiangAdapter extends BaseAdapter implements WeiqiangMessageManag
 		if (convertView == null)
 		{
 			holder = new Holder();
-			convertView = m_inflater.inflate(R.layout.item_weiqiang_comment, parent, false);
+			convertView = mInflater.inflate(R.layout.item_weiqiang_comment, parent, false);
 			holder.iconImgV = (ImageView) convertView.findViewById(R.id.weiqiang_detail_item_imgv_icon);
 			holder.nameTv = (TextView) convertView.findViewById(R.id.weiqiang_detail_item_tv_name);
 			holder.distanceTv = (TextView) convertView.findViewById(R.id.weiqiang_detail_item_tv_distance);
@@ -99,10 +64,10 @@ public class WeiqiangAdapter extends BaseAdapter implements WeiqiangMessageManag
 			holder = (Holder) convertView.getTag();
 		}
 		
-		final CommentsDTO commentsDTO = m_list.get(position);
+		final CommentBean commentsDTO = (CommentBean) mList.get(position);
 		if (commentsDTO.senderIcon != null && !commentsDTO.senderIcon.equals(""))
 		{
-			Picasso.with(m_context).load(commentsDTO.senderIcon).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
+			Picasso.with(mActivity).load(commentsDTO.senderIcon).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
 		}
 		holder.nameTv.setText(commentsDTO.senderName);
 		holder.distanceTv.setText(commentsDTO.distance);
@@ -124,19 +89,7 @@ public class WeiqiangAdapter extends BaseAdapter implements WeiqiangMessageManag
 		holder.transform_send_countTv.setText(commentsDTO.forward_count + "");
 		holder.share_countTv.setText(commentsDTO.share_count + "");
 		
-		m_delPosition = position;
-		
-		holder.deleteImgV.setOnClickListener(new OnClickListener()
-        {
-            
-            @Override
-            public void onClick(View v)
-            {
-                WindowUtil.getInstance().progressDialogShow(m_context, "删除中...");
-                messageManager.registerObserver(WeiqiangAdapter.this);
-                messageManager.deleteWeiqiang(commentsDTO.commentId);
-            }
-        });
+	
 		
 		if (commentsDTO.imageList != null && commentsDTO.imageList.size() > 0)
 		{
@@ -144,15 +97,15 @@ public class WeiqiangAdapter extends BaseAdapter implements WeiqiangMessageManag
 		    {
 		        holder.layout_images.setVisibility(View.VISIBLE);
 		        holder.oneImgV.setVisibility(View.VISIBLE);
-		        Picasso.with(m_context).load(commentsDTO.imageList.get(0).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.oneImgV);
+		        Picasso.with(mActivity).load(commentsDTO.imageList.get(0).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.oneImgV);
 		    }
 		    else if (commentsDTO.imageList.size() == 2)
 		    {
 		        holder.layout_images.setVisibility(View.VISIBLE);
                 holder.oneImgV.setVisibility(View.VISIBLE);
                 holder.twoImgV.setVisibility(View.VISIBLE);
-                Picasso.with(m_context).load(commentsDTO.imageList.get(0).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.oneImgV);
-                Picasso.with(m_context).load(commentsDTO.imageList.get(1).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.twoImgV);
+                Picasso.with(mActivity).load(commentsDTO.imageList.get(0).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.oneImgV);
+                Picasso.with(mActivity).load(commentsDTO.imageList.get(1).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.twoImgV);
 		    }
 		    else if (commentsDTO.imageList.size() > 2)
             {
@@ -160,9 +113,9 @@ public class WeiqiangAdapter extends BaseAdapter implements WeiqiangMessageManag
                 holder.oneImgV.setVisibility(View.VISIBLE);
                 holder.twoImgV.setVisibility(View.VISIBLE);
                 holder.threeImgV.setVisibility(View.VISIBLE);
-                Picasso.with(m_context).load(commentsDTO.imageList.get(0).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.oneImgV);
-                Picasso.with(m_context).load(commentsDTO.imageList.get(1).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.twoImgV);
-                Picasso.with(m_context).load(commentsDTO.imageList.get(2).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.threeImgV);
+                Picasso.with(mActivity).load(commentsDTO.imageList.get(0).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.oneImgV);
+                Picasso.with(mActivity).load(commentsDTO.imageList.get(1).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.twoImgV);
+                Picasso.with(mActivity).load(commentsDTO.imageList.get(2).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.threeImgV);
             }
 		}
 		
@@ -208,7 +161,6 @@ public class WeiqiangAdapter extends BaseAdapter implements WeiqiangMessageManag
 		public LinearLayout layout_transform_send_name;
 		public TextView transform_send_nameTv;
 		public TextView contentTv;
-		
 		public LinearLayout layout_zan_count;
 		public TextView zan_countTv;
 		public LinearLayout layout_reply_count;
@@ -222,71 +174,4 @@ public class WeiqiangAdapter extends BaseAdapter implements WeiqiangMessageManag
 		public ImageView twoImgV;
 		public ImageView threeImgV;
 	}
-
-    @Override
-    public void getWeiqiangListCB(List<CommentsDTO> list, Reulst result_state , int type)
-    {
-        
-    }
-
-    @Override
-    public void getWeiqiangContentCB(CommentsDTO commentsDTO, Reulst result_state)
-    {
-        
-    }
-
-    @Override
-    public void publishWeiqiangCB(Reulst result_state)
-    {
-        
-    }
-
-    @Override
-    public void deleteWeiqiangCB(Reulst result_state)
-    {
-        WindowUtil.getInstance().DismissAllDialog();
-        messageManager.unregisterObserver(WeiqiangAdapter.this);
-        if (result_state.resultCode == ReturnCode.RETURNCODE_OK)
-        {
-            Toast.makeText(m_context, "删除成功", Toast.LENGTH_SHORT).show();
-            m_list.remove(m_delPosition);
-            notifyDataSetChanged();
-        } else
-        {
-            Toast.makeText(m_context, "删除失败", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void transformWeiqiangCB(Reulst result_state)
-    {
-        
-    }
-
-    @Override
-    public void shareWeiqiangCB(Reulst result_state)
-    {
-        
-    }
-
-    @Override
-    public void commentaryWeiqiangCB(Reulst result_state)
-    {
-        
-    }
-
-    @Override
-    public void zanWeiqiangCB(Reulst result_state)
-    {
-        WindowUtil.getInstance().DismissAllDialog();
-        messageManager.unregisterObserver(WeiqiangAdapter.this);
-        if (result_state.resultCode == ReturnCode.RETURNCODE_OK)
-        {
-            m_list.get(m_delPosition).like_count += 1;
-            notifyDataSetChanged();
-        } else
-        {
-            Toast.makeText(m_context, "删除失败", Toast.LENGTH_SHORT).show();
-        }
-    }
 }

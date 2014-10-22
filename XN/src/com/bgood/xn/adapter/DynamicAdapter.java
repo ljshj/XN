@@ -2,6 +2,7 @@ package com.bgood.xn.adapter;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,50 +13,27 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
+import com.bgood.xn.widget.CMyGridView;
 
 /**
  * 我的动态适配器
  */
-public class DynamicAdapter extends BaseAdapter
+public class DynamicAdapter extends KBaseAdapter
 {
-    private LayoutInflater m_inflater;
-    private Context m_context;
-    private List<String> m_list;
-    
-    public DynamicAdapter(Context context, List<String> list)
-    {
-        super();
-        this.m_context = context;
-        this.m_list = list;
-        this.m_inflater = LayoutInflater.from(m_context);
-    }
 
-    @Override
-    public int getCount()
-    {
-        return m_list.size();
-    }
 
-    @Override
-    public Object getItem(int position)
-    {
-        return m_list.get(position);
-    }
+    public DynamicAdapter(List<?> mList, Activity mActivity) {
+		super(mList, mActivity);
+	}
 
-    @Override
-    public long getItemId(int position)
-    {
-        return position;
-    }
-
-    @Override
+	@Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
         ViewHolder holder;
         if (convertView == null)
         {
             holder = new ViewHolder();
-            convertView = m_inflater.inflate(R.layout.layout_dynamic_item, null);
+            convertView = mInflater.inflate(R.layout.layout_dynamic_item, null);
             holder.iconImgV = (ImageView) convertView.findViewById(R.id.dynamic_item_imgv_icon);
             holder.nameTv = (TextView) convertView.findViewById(R.id.dynamic_item_tv_name);
             holder.timeTv = (TextView) convertView.findViewById(R.id.dynamic_item_tv_time);

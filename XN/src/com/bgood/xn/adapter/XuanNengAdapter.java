@@ -2,7 +2,9 @@ package com.bgood.xn.adapter;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,56 +16,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bgood.xn.R;
+import com.bgood.xn.bean.CommentBean;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.squareup.picasso.Picasso;
 
 /**
- * @author ChenGuoqing 2014-7-9上午11:27:04
+ * 
+ * @todo:炫能适配器
+ * @date:2014-10-22 上午9:44:44
+ * @author:hg_liuzl@163.com
  */
-public class XuanNengAdapter extends BaseAdapter implements XuannengMessageManagerInterface
+public class XuanNengAdapter extends KBaseAdapter 
 {
-
-	protected Context m_context;
-	protected LayoutInflater m_inflater;
-	protected List<CommentsDTO> m_list;
-	private int m_delPosition;
-	
-	ShareManager   m_shareManager;
-	
-	XuannengMessageManager messageManager = XuannengMessageManager.getInstance();
-	
-
-	/**
-	 * @param context
-	 * @param list
-	 */
-	public XuanNengAdapter(Context context, List<CommentsDTO> list)
-	{
-		this.m_context = context;
-		this.m_list = list;
-		this.m_inflater = LayoutInflater.from(m_context);
-		
+	public XuanNengAdapter(List<?> mList, Activity mActivity) {
+		super(mList, mActivity);
 	}
-
-	@Override
-	public int getCount()
-	{
-		return m_list.size();
-	}
-
-	@Override
-	public Object getItem(int position)
-	{
-		return m_list.get(position);
-	}
-
-	@Override
-	public long getItemId(int position)
-	{
-		return position;
-	}
-	
-	
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
@@ -72,7 +39,7 @@ public class XuanNengAdapter extends BaseAdapter implements XuannengMessageManag
 		if (convertView == null)
 		{
 			holder = new Holder();
-			convertView = m_inflater.inflate(R.layout.item_weiqiang_comment, parent, false);
+			convertView = mInflater.inflate(R.layout.item_weiqiang_comment, parent, false);
 			holder.iconImgV = (ImageView) convertView.findViewById(R.id.weiqiang_detail_item_imgv_icon);
 			holder.nameTv = (TextView) convertView.findViewById(R.id.weiqiang_detail_item_tv_name);
 			holder.distanceTv = (TextView) convertView.findViewById(R.id.weiqiang_detail_item_tv_distance);
@@ -99,10 +66,10 @@ public class XuanNengAdapter extends BaseAdapter implements XuannengMessageManag
 			holder = (Holder) convertView.getTag();
 		}
 		
-		final CommentsDTO commentsDTO = m_list.get(position);
-		if (commentsDTO.senderIcon != null && !commentsDTO.senderIcon.equals(""))
+		final CommentBean commentsDTO = (CommentBean) mList.get(position);
+		if (!TextUtils.isEmpty(commentsDTO.senderIcon))
 		{
-			Picasso.with(m_context).load(commentsDTO.senderIcon).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
+			Picasso.with(mActivity).load(commentsDTO.senderIcon).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
 		}
 		holder.nameTv.setText(commentsDTO.senderName);
 		holder.distanceTv.setText(commentsDTO.distance);
@@ -124,19 +91,7 @@ public class XuanNengAdapter extends BaseAdapter implements XuannengMessageManag
 		holder.transform_send_countTv.setText(commentsDTO.forward_count + "");
 		holder.share_countTv.setText(commentsDTO.share_count + "");
 		
-		m_delPosition = position;
 		
-		holder.deleteImgV.setOnClickListener(new OnClickListener()
-        {
-            
-            @Override
-            public void onClick(View v)
-            {
-                WindowUtil.getInstance().progressDialogShow(m_context, "删除中...");
-                messageManager.registerObserver(XuanNengAdapter.this);
-                messageManager.deleteXuanneng(commentsDTO.commentId);
-            }
-        });
 		
 		if (commentsDTO.imageList != null && commentsDTO.imageList.size() > 0)
 		{
@@ -144,15 +99,15 @@ public class XuanNengAdapter extends BaseAdapter implements XuannengMessageManag
 		    {
 		        holder.layout_images.setVisibility(View.VISIBLE);
 		        holder.oneImgV.setVisibility(View.VISIBLE);
-		        Picasso.with(m_context).load(commentsDTO.imageList.get(0).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.oneImgV);
+		        Picasso.with(mActivity).load(commentsDTO.imageList.get(0).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.oneImgV);
 		    }
 		    else if (commentsDTO.imageList.size() == 2)
 		    {
 		        holder.layout_images.setVisibility(View.VISIBLE);
                 holder.oneImgV.setVisibility(View.VISIBLE);
                 holder.twoImgV.setVisibility(View.VISIBLE);
-                Picasso.with(m_context).load(commentsDTO.imageList.get(0).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.oneImgV);
-                Picasso.with(m_context).load(commentsDTO.imageList.get(1).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.twoImgV);
+                Picasso.with(mActivity).load(commentsDTO.imageList.get(0).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.oneImgV);
+                Picasso.with(mActivity).load(commentsDTO.imageList.get(1).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.twoImgV);
 		    }
 		    else if (commentsDTO.imageList.size() > 2)
             {
@@ -160,45 +115,45 @@ public class XuanNengAdapter extends BaseAdapter implements XuannengMessageManag
                 holder.oneImgV.setVisibility(View.VISIBLE);
                 holder.twoImgV.setVisibility(View.VISIBLE);
                 holder.threeImgV.setVisibility(View.VISIBLE);
-                Picasso.with(m_context).load(commentsDTO.imageList.get(0).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.oneImgV);
-                Picasso.with(m_context).load(commentsDTO.imageList.get(1).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.twoImgV);
-                Picasso.with(m_context).load(commentsDTO.imageList.get(2).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.threeImgV);
+                Picasso.with(mActivity).load(commentsDTO.imageList.get(0).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.oneImgV);
+                Picasso.with(mActivity).load(commentsDTO.imageList.get(1).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.twoImgV);
+                Picasso.with(mActivity).load(commentsDTO.imageList.get(2).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.threeImgV);
             }
 		}
 		
-		// 分享
-		holder.layout_share_count.setOnClickListener(new OnClickListener()
-        {
-            
-            @Override
-            public void onClick(View v)
-            {
-                m_shareManager = new ShareManager((WeiqiangPersonActivity)m_context);
-
-                m_shareManager.shareContentInit("adg", "掌上有礼", "", "", "1", "d");
-                m_shareManager.openShare();
-            }
-        });
+//		// 分享
+//		holder.layout_share_count.setOnClickListener(new OnClickListener()
+//        {
+//            
+//            @Override
+//            public void onClick(View v)
+//            {
+//                m_shareManager = new ShareManager((WeiqiangPersonActivity)m_context);
+//
+//                m_shareManager.shareContentInit("adg", "掌上有礼", "", "", "1", "d");
+//                m_shareManager.openShare();
+//            }
+//        });
 		
 		
-		
-		//点赞
-		holder.layout_zan_count.setOnClickListener(new OnClickListener()
-        {
-            
-            @Override
-            public void onClick(View v)
-            {
-                WindowUtil.getInstance().progressDialogShow(m_context, "赞中...");
-                messageManager.registerObserver(XuanNengAdapter.this);
-                messageManager.zanXuanneng(commentsDTO.commentId);
-            }
-        });
+//		
+//		//点赞
+//		holder.layout_zan_count.setOnClickListener(new OnClickListener()
+//        {
+//            
+//            @Override
+//            public void onClick(View v)
+//            {
+//                WindowUtil.getInstance().progressDialogShow(m_context, "赞中...");
+//                messageManager.registerObserver(XuanNengAdapter.this);
+//                messageManager.zanXuanneng(commentsDTO.commentId);
+//            }
+//        });
 		
 		return convertView;
 	}
 
-	class Holder
+	final class Holder
 	{
 		public ImageView iconImgV;
 		public TextView nameTv;
@@ -208,7 +163,6 @@ public class XuanNengAdapter extends BaseAdapter implements XuannengMessageManag
 		public LinearLayout layout_transform_send_name;
 		public TextView transform_send_nameTv;
 		public TextView contentTv;
-		
 		public LinearLayout layout_zan_count;
 		public TextView zan_countTv;
 		public LinearLayout layout_reply_count;
@@ -222,93 +176,4 @@ public class XuanNengAdapter extends BaseAdapter implements XuannengMessageManag
 		public ImageView twoImgV;
 		public ImageView threeImgV;
 	}
-
-
-    @Override
-    public void getXuannengJokeListCB(Reulst result_state, List<CommentsDTO> list)
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void getXuannengRankingCB(Reulst result_state, List<CommentsDTO> list)
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void publishXuannengCB(Reulst result_state)
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void relayXuannengCB(Reulst result_state)
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void shareXuannengCB(Reulst result_state)
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void commentaryXuannengCB(Reulst result_state)
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void zanXuannengCB(Reulst result_state)
-    {
-        WindowUtil.getInstance().DismissAllDialog();
-        messageManager.unregisterObserver(XuanNengAdapter.this);
-        if (result_state.resultCode == ReturnCode.RETURNCODE_OK)
-        {
-            m_list.get(m_delPosition).like_count += 1;
-            notifyDataSetChanged();
-        } else
-        {
-            Toast.makeText(m_context, "删除失败", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void getXuannengPulishListCB(Reulst result_state, List<CommentsDTO> list)
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void getJokeCB(Reulst result_state, CommentsDTO commentsDTO)
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void deleteXuannengCB(Reulst result_state)
-    {
-        WindowUtil.getInstance().DismissAllDialog();
-        messageManager.unregisterObserver(XuanNengAdapter.this);
-        if (result_state.resultCode == ReturnCode.RETURNCODE_OK)
-        {
-            Toast.makeText(m_context, "删除成功", Toast.LENGTH_SHORT).show();
-            m_list.remove(m_delPosition);
-            notifyDataSetChanged();
-        } else
-        {
-            Toast.makeText(m_context, "删除失败", Toast.LENGTH_SHORT).show();
-        }
-        
-    }
 }

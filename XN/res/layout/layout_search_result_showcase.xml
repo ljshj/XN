@@ -4,13 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-        <com.zhuozhong.view.xlistview.XListView
+        <com.bgood.xn.view.xlistview.XListView
             android:id="@+id/search_result_showcase_xlv_list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:divider="@android:color/transparent"
             android:dividerHeight="3dp"
             android:visibility="gone" >
-        </com.zhuozhong.view.xlistview.XListView>
+        </com.bgood.xn.view.xlistview.XListView>
     
 </LinearLayout>

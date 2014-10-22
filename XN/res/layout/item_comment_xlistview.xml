@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhuozhong.view.xlistview.XListView
+<com.bgood.xn.view.xlistview.XListView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/common_xlv"
     style="@style/common_listview"
@@ -9,4 +9,4 @@
     android:divider="@android:color/transparent"
     android:visibility="gone"
     android:dividerHeight="10dp" >
-</com.zhuozhong.view.xlistview.XListView>
+</com.bgood.xn.view.xlistview.XListView>
