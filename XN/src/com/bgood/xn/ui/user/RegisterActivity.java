@@ -1,0 +1,1 @@
+package com.bgood.xn.ui.user;import com.bgood.xn.ui.BaseActivity;/** * @todo:TODO * @author:hg_liuzl@163.com */public class RegisterActivity extends BaseActivity {	/**	 * @todo:TODO	 * @author:hg_liuzl@163.com	 */}

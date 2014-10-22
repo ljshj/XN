@@ -1,17 +1,22 @@
 package com.bgood.xn.utils;
 
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * @author ChenGuoqing 2014-7-4下午5:17:57
+ * MD5进行加密
  */
 public class MD5
 {
-	public static String getMD5(String val) throws NoSuchAlgorithmException, UnsupportedEncodingException
+	public static String getMD5(String val) 
 	{
-		MessageDigest md5 = MessageDigest.getInstance("MD5");
+		MessageDigest md5 = null;
+		try {
+			md5 = MessageDigest.getInstance("MD5");
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		md5.update(val.getBytes());
 		byte[] m = md5.digest();// 加密
 		return getString(m);
