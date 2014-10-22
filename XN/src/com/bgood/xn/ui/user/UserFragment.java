@@ -1,0 +1,1 @@
+package com.bgood.xn.ui.user;import android.support.v4.app.FragmentActivity;/** * @todo:TODO * @author:hg_liuzl@163.com */public class UserFragment extends FragmentActivity {	/**	 * @todo:TODO	 * @author:hg_liuzl@163.com	 */}
