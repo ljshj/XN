@@ -9,6 +9,8 @@ import java.io.Serializable;
  * @author:hg_liuzl@163.com
  */
 public class UserBean implements Serializable {
+	/**用户间传bean的key*/
+	public static final String KEY_USER_BEAN = "user_bean";
 	public String roleID; // 用户权限ID
 	/* fds搬运 */
 	public String m_job;

@@ -3,34 +3,27 @@ package com.bgood.xn.ui.home;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +33,6 @@ import com.bgood.xn.adapter.ResultMemberAdapter;
 import com.bgood.xn.adapter.ResultShowcaseAdapter;
 import com.bgood.xn.adapter.ResultWeiQiangAdapter;
 import com.bgood.xn.bean.CabinetBean;
-import com.bgood.xn.bean.CommentBean;
 import com.bgood.xn.bean.MemberLoginBean;
 import com.bgood.xn.bean.UserBean;
 import com.bgood.xn.bean.WeiQiangBean;
@@ -82,7 +74,6 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 	private RadioButton radio_01,radio_02,radio_03;
 	
 	private ImageView img_01,img_02,img_03,no_data_img;
-	
 	
 	private ResultMemberAdapter m_memberAdapter = null;
 	private ResultWeiQiangAdapter m_weiqiangAdapter = null;
