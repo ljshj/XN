@@ -61,10 +61,13 @@ import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 public class SearchResultActivity extends BaseActivity implements OnClickListener, OnItemClickListener,TaskListenerWithState,IXListViewListener
 {
 	
-// ViewPager是google SDk中自带的一个附加包的一个类，可以用来实现屏幕间的切换。
-	// android-support-v4.jar
 	private ViewPager mTabPager;//页卡内容
-
+	
+	public static final int CHOOSE_MEMBER = 1;	//会员类型
+	public static final int CHOOSE_WEI_QIANG = CHOOSE_MEMBER + 1;  //微墙类型
+	public static final int CHOOSE_CHU_CHUANG = CHOOSE_WEI_QIANG + 1; //橱窗类型
+	private int REQUEST_FLAG = CHOOSE_MEMBER;
+	
 	private Button m_backBtn = null; // 返回按钮
 	private EditText m_contentEt = null; // 输入内容
 
@@ -78,7 +81,8 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
     private RadioGroup radio_group;
 	private RadioButton radio_01,radio_02,radio_03;
 	
-	private ImageView img_01,img_02,img_03;
+	private ImageView img_01,img_02,img_03,no_data_img;
+	
 	
 	private ResultMemberAdapter m_memberAdapter = null;
 	private ResultWeiQiangAdapter m_weiqiangAdapter = null;
@@ -98,13 +102,6 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 	private int m_memberStart = 0;
 	private int m_weiqiangStart = 0;
 	private int m_cabinetStart = 0;
-	private int m_appStart = 0;
-	
-	
-	private int m_memberLoad = 0;
-    private int m_weiqiangLoad = 0;
-    private int m_cabinetLoad = 0;
-    private int m_appLoad = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -114,7 +111,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		m_msg = getIntent().getStringExtra("msg");
 		findView();
 		setListeners();
-		loadData();
+		HomeRequest.getInstance().requestSearch(this, this, search_type, m_msg, 114.1917953491211f, 22.636533737182617f, m_start, m_start + PAGE_SIZE_ADD);
 	}
 
 	/**
@@ -123,10 +120,10 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 	@SuppressLint("InflateParams")
 	private void findView()
 	{
-		m_backBtn = (Button) findViewById(R.id.search_result_btn_back);
-		m_contentEt = (EditText) findViewById(R.id.search_result_et_content);
-		
-		m_serachBtn = (Button) findViewById(R.id.search_result_btn_search);
+//		m_backBtn = (Button) findViewById(R.id.search_result_btn_back);
+//		m_contentEt = (EditText) findViewById(R.id.search_result_et_content);
+//		
+//		m_serachBtn = (Button) findViewById(R.id.search_result_btn_search);
 		
 		home_tv_check_search_indecator = (TextView) findViewById(R.id.home_tv_check_search_indecator);
         ll_home_search_check_type = (ViewGroup) findViewById(R.id.ll_home_search_check_type);
@@ -155,22 +152,22 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		
 		//加载布局
 		LayoutInflater inflater = LayoutInflater.from(this);
-		View view1 = inflater.inflate(R.layout.result_listView, null);
+		View view1 = inflater.inflate(R.layout.result_listview, null);
 		m_memberXLv = (XListView) view1.findViewById(R.id.xListView);
-		View view2 = inflater.inflate(R.layout.result_listView, null);
+		View view2 = inflater.inflate(R.layout.result_listview, null);
 		m_weiQiangXLv = (XListView) view2.findViewById(R.id.xListView);
-		View view3 = inflater.inflate(R.layout.result_listView, null);
+		View view3 = inflater.inflate(R.layout.result_listview, null);
 		m_showcaseXLv = (XListView) view3.findViewById(R.id.xListView);
 		
 		
-		m_memberXLv.setPullLoadEnable(false);
-		m_memberXLv.setPullRefreshEnable(true);
+		m_memberXLv.setPullLoadEnable(true);
+		m_memberXLv.setPullRefreshEnable(false);
 		m_memberXLv.setXListViewListener(this);
-		m_weiQiangXLv.setPullLoadEnable(false);
-		m_weiQiangXLv.setPullRefreshEnable(true);
+		m_weiQiangXLv.setPullLoadEnable(true);
+		m_weiQiangXLv.setPullRefreshEnable(false);
 		m_weiQiangXLv.setXListViewListener(this);
-		m_showcaseXLv.setPullLoadEnable(false);
-		m_showcaseXLv.setPullRefreshEnable(true);
+		m_showcaseXLv.setPullLoadEnable(true);
+		m_showcaseXLv.setPullRefreshEnable(false);
 		m_showcaseXLv.setXListViewListener(this);
 		
 		//将布局放入集合
@@ -206,6 +203,78 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		mTabPager.setAdapter(adapter);
 	}
 
+	OnClickListener radio_click = new OnClickListener() {
+
+		@Override
+		public void onClick(View view) {
+			// TODO Auto-generated method stub
+				switch (view.getId()) {
+				case R.id.radio_01:
+					setChooseView(CHOOSE_MEMBER);
+					break;
+				case R.id.radio_02:
+					setChooseView(CHOOSE_WEI_QIANG);
+					break;
+				case R.id.radio_03:
+					setChooseView(CHOOSE_CHU_CHUANG);
+					break;
+
+				default:
+					break;
+				
+			}
+		}
+		
+	};
+	
+	
+	/**
+	 * 设置选中
+	 * @param flag
+	 */
+	private void setChooseView(int flag){
+		mTabPager.setVisibility(View.VISIBLE);
+		switch (flag) {
+		case CHOOSE_MEMBER:
+			img_01.setVisibility(View.VISIBLE);
+			img_02.setVisibility(View.INVISIBLE);
+			img_03.setVisibility(View.INVISIBLE);
+			break;
+		case CHOOSE_WEI_QIANG:
+			img_02.setVisibility(View.VISIBLE);
+			img_01.setVisibility(View.INVISIBLE);
+			img_03.setVisibility(View.INVISIBLE);
+			break;
+		case CHOOSE_CHU_CHUANG:
+			img_03.setVisibility(View.VISIBLE);
+			img_01.setVisibility(View.INVISIBLE);
+			img_02.setVisibility(View.INVISIBLE);
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/**
+	 * 设置选中
+	 * @param flag
+	 */
+	private void getData(int flag){
+		switch (flag) {
+		case CHOOSE_MEMBER:
+			HomeRequest.getInstance().reqeuestMemberList(this, this, search_type, m_msg, m_start, m_start + PAGE_SIZE_ADD);
+			break;
+		case CHOOSE_WEI_QIANG:
+			HomeRequest.getInstance().requestWeiqianList(this, this, search_type, m_msg, m_start, m_start + PAGE_SIZE_ADD);
+			break;
+		case CHOOSE_CHU_CHUANG:
+			HomeRequest.getInstance().requestProductList(this, this, search_type, m_msg, m_start, m_start + PAGE_SIZE_ADD);
+			break;
+		default:
+			break;
+		}
+	}
+	
 	/**
 	 * 控件事件监听方法
 	 */
@@ -256,13 +325,13 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 			int radioButtonId = group.getCheckedRadioButtonId();
 			switch (radioButtonId) {
 			case R.id.radio_01:
-				request_flag = one_month_flag;
+				REQUEST_FLAG = CHOOSE_MEMBER;
 				mTabPager.setCurrentItem(0);
-				if(mYKListAdapter_01 == null){
+				if(m_memberAdapter == null){
 					no_data_img.setVisibility(View.VISIBLE);
-					getData(request_flag);
+					getData(REQUEST_FLAG);
 				}else{
-					if(mYKListAdapter_01.getCount() == 0){
+					if(m_memberAdapter.getCount() == 0){
 						no_data_img.setVisibility(View.VISIBLE);
 					}else{
 						no_data_img.setVisibility(View.GONE);
@@ -270,13 +339,13 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 				}
 				break;
 			case R.id.radio_02:
-				request_flag = three_month_flag;
+				REQUEST_FLAG = CHOOSE_WEI_QIANG;
 				mTabPager.setCurrentItem(1);
-				if(mYKListAdapter_02 == null){
+				if(m_weiqiangAdapter == null){
 					no_data_img.setVisibility(View.VISIBLE);
-					getData(request_flag);
+					getData(REQUEST_FLAG);
 				}else{
-					if(mYKListAdapter_02.getCount() == 0){
+					if(m_weiqiangAdapter.getCount() == 0){
 						no_data_img.setVisibility(View.VISIBLE);
 					}else{
 						no_data_img.setVisibility(View.GONE);
@@ -284,38 +353,24 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 				}
 				break;
 			case R.id.radio_03:
-				request_flag = one_year_flag;
+				REQUEST_FLAG = CHOOSE_CHU_CHUANG;
 				mTabPager.setCurrentItem(2);
-				if(mYKListAdapter_03 == null){
+				if(m_showcaseAdapter == null){
 					no_data_img.setVisibility(View.VISIBLE);
-					getData(request_flag);
+					getData(REQUEST_FLAG);
 				}else{
-					if(mYKListAdapter_03.getCount() == 0){
+					if(m_showcaseAdapter.getCount() == 0){
 						no_data_img.setVisibility(View.VISIBLE);
 					}else{
 						no_data_img.setVisibility(View.GONE);
 					}
 				}
 				break;
-			case R.id.radio_04:
-				request_flag = from_now_year_flag;
-				mTabPager.setCurrentItem(3);
-				if(mYKListAdapter_04 == null){
-					no_data_img.setVisibility(View.VISIBLE);
-					getData(request_flag);
-				}else{
-					if(mYKListAdapter_04.getCount() == 0){
-						no_data_img.setVisibility(View.VISIBLE);
-					}else{
-						no_data_img.setVisibility(View.GONE);
-					}
-				}
-				break;
-
+		
 			default:
 				break;
 			}
-			setChooseView(request_flag);
+			setChooseView(REQUEST_FLAG);
 		}
 	};
 	
@@ -340,48 +395,6 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 			child.setChecked(true);
 		}
 	}
-	
-
-	/**
-	 * 加载搜索结果数据
-	 */
-	private void loadData()
-	{
-		HomeRequest.getInstance().requestSearch(this, this, search_type, m_msg, 114.1917953491211f, 22.636533737182617f, m_start, m_start + PAGE_SIZE_ADD);
-	}
-	
-	/**
-	 * 获取会员接口数据
-	 */
-	private void loadMemberList()
-	{
-		HomeRequest.getInstance().reqeuestMemberList(this, this, search_type, m_msg, m_start, m_start + PAGE_SIZE_ADD);
-	}
-	
-	/**
-	 * 获取微墙接口数据
-	 */
-	private void loadWeiQiangList()
-	{
-		HomeRequest.getInstance().requestWeiqianList(this, this, search_type, m_msg, m_start, m_start + PAGE_SIZE_ADD);
-	}
-	
-	/**
-	 * 获取橱窗接口数据
-	 */
-	private void loadCabinetList()
-	{
-		HomeRequest.getInstance().requestProductList(this, this, search_type, m_msg, m_start, m_start + PAGE_SIZE_ADD);
-	}
-	
-	/**
-	 * 获取应用接口数据
-	 */
-	private void loadAppList()
-	{
-		HomeRequest.getInstance().requestAppList(this, this, search_type, m_msg, m_start, m_start + PAGE_SIZE_ADD);
-	}
-
 
     /**
      * 设置会员数据
@@ -537,7 +550,6 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 				break;
 			case 840002:	//会员分页请求
 				ArrayList<UserBean> list = (ArrayList<UserBean>) JSON.parseArray(strJson, UserBean.class);
-					m_memberLoad = 1;
 		            if (list != null)
 		            {
 		                setMemberAdapter(list);
@@ -556,7 +568,6 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 				break;
 			case 840003:	//微墙请求
 				ArrayList<WeiQiangBean> listWeiqiang = (ArrayList<WeiQiangBean>) JSON.parseArray(strJson, WeiQiangBean.class);
-					m_weiqiangLoad = 1;
 		            if (listWeiqiang != null)
 		            {
 		                setWeiQiangAdapter(listWeiqiang);
@@ -576,7 +587,6 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 			case 840004:	//橱窗请求
 				ArrayList<CabinetBean> listCabinet = (ArrayList<CabinetBean>) JSON.parseArray(strJson, CabinetBean.class);
 
-					m_cabinetLoad = 1;
 		            if (listCabinet != null)
 		            {
 		                setShowcaseAdapter(listCabinet);
@@ -620,23 +630,11 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 
 	@Override
 	public void onRefresh() {
-		// TODO Auto-generated method stub
-		/**
-		 * @todo:TODO
-		 * @date:2014-10-22 下午6:44:03
-		 * @author:hg_liuzl@163.com
-		 */
 		
 	}
 
 	@Override
 	public void onLoadMore() {
-		// TODO Auto-generated method stub
-		/**
-		 * @todo:TODO
-		 * @date:2014-10-22 下午6:44:03
-		 * @author:hg_liuzl@163.com
-		 */
-		
+		getData(REQUEST_FLAG);
 	}
 }
