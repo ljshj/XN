@@ -37,7 +37,7 @@
             android:layout_height="fill_parent"
             android:layout_above="@+id/layout_keyboard" >
 
-            <com.zhuozhong.view.pulltorefresh.PullToRefreshListView
+            <com.bgood.xn.view.pulltorefresh.PullToRefreshListView
                 android:id="@+id/chatMessagesList"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"

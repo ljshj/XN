@@ -39,13 +39,13 @@
                     android:text="群人数: 180人" />
             </RelativeLayout>
 
-            <com.zhuozhong.view.ExpandGridView
+            <com.bgood.xn.view.ExpandGridView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:numColumns="6"
                 android:stretchMode="columnWidth" >
-            </com.zhuozhong.view.ExpandGridView>
+            </com.bgood.xn.view.ExpandGridView>
 
             <View
                 android:layout_width="match_parent"

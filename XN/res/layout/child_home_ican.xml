@@ -11,28 +11,24 @@
         android:id="@+id/home_ican_tv_one"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:text="gagrea"/>
+        android:textSize="18dp"/>
     
     <TextView 
         android:id="@+id/home_ican_tv_two"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:text="gagrea"/>
+        android:textSize="18dp"/>
     
     <TextView 
         android:id="@+id/home_ican_tv_three"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:text="gagrea"/>
+        android:textSize="18dp"/>
     
     <TextView 
         android:id="@+id/home_ican_tv_four"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:text="gagrea"/>
+        android:textSize="18dp"/>
 
 </LinearLayout>

@@ -3,6 +3,7 @@ package com.bgood.xn.ui.home;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.json.JSONObject;
 
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,7 +35,10 @@ import com.bgood.xn.adapter.ResultMemberAdapter;
 import com.bgood.xn.adapter.ResultShowcaseAdapter;
 import com.bgood.xn.adapter.ResultWeiQiangAdapter;
 import com.bgood.xn.bean.CabinetBean;
+import com.bgood.xn.bean.HallBean;
+import com.bgood.xn.bean.MemberBean;
 import com.bgood.xn.bean.MemberLoginBean;
+import com.bgood.xn.bean.SearchResultBean;
 import com.bgood.xn.bean.UserBean;
 import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.network.BaseNetWork;
@@ -46,6 +51,7 @@ import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
+import com.bgood.xn.widget.TitleBar;
 
 /**
  * 搜索结果页面
@@ -60,15 +66,15 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 	public static final int CHOOSE_CHU_CHUANG = CHOOSE_WEI_QIANG + 1; //橱窗类型
 	private int REQUEST_FLAG = CHOOSE_MEMBER;
 	
-	private Button m_backBtn = null; // 返回按钮
 	private EditText m_contentEt = null; // 输入内容
 
 	private Button m_serachBtn = null;  // 搜索按钮
+	private TextView home_tv_check_search_indecator;
 	
 	private PopupWindow popupWindowCheckSearchType;
     private ViewGroup ll_home_search_check_type;
+    
     private int search_type = 0;
-    private TextView home_tv_check_search_indecator;
 
     private RadioGroup radio_group;
 	private RadioButton radio_01,radio_02,radio_03;
@@ -83,7 +89,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 	private XListView m_weiQiangXLv = null;    // 微墙
 	private XListView m_showcaseXLv = null;    // 橱窗
 	
-	ArrayList<UserBean> m_memberList = new ArrayList<UserBean>();
+	ArrayList<MemberBean> m_memberList = new ArrayList<MemberBean>();
 	ArrayList<WeiQiangBean> m_weiQiangList = new ArrayList<WeiQiangBean>();
 	ArrayList<CabinetBean> m_showcaseList = new ArrayList<CabinetBean>();
 
@@ -94,15 +100,21 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 	private int m_weiqiangStart = 0;
 	private int m_cabinetStart = 0;
 	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_search_result);
+		initTitle();
 		m_msg = getIntent().getStringExtra("msg");
 		findView();
 		setListeners();
 		HomeRequest.getInstance().requestSearch(this, this, search_type, m_msg, 114.1917953491211f, 22.636533737182617f, m_start, m_start + PAGE_SIZE_ADD);
+	}
+	
+	private void initTitle() {
+		new TitleBar(mContext).initTitleBar("搜索结果");
 	}
 
 	/**
@@ -111,15 +123,15 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 	@SuppressLint("InflateParams")
 	private void findView()
 	{
-//		m_backBtn = (Button) findViewById(R.id.search_result_btn_back);
-//		m_contentEt = (EditText) findViewById(R.id.search_result_et_content);
-//		
-//		m_serachBtn = (Button) findViewById(R.id.search_result_btn_search);
+		m_contentEt = (EditText) findViewById(R.id.search_result_et_content);
 		
-		home_tv_check_search_indecator = (TextView) findViewById(R.id.home_tv_check_search_indecator);
+		m_serachBtn = (Button) findViewById(R.id.search_result_btn_search);
+		
         ll_home_search_check_type = (ViewGroup) findViewById(R.id.ll_home_search_check_type);
         ll_home_search_check_type.setOnClickListener(this);
 		m_contentEt.setText(m_msg);
+		
+		home_tv_check_search_indecator = (TextView) findViewById(R.id.home_tv_check_search_indecator);
 		
 		mTabPager = (ViewPager) findViewById(R.id.account_query_result_panel);
 		//设置ViewPager的页面翻滚监听
@@ -271,9 +283,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 	 */
 	private void setListeners()
 	{
-		m_contentEt.setOnClickListener(this);
 		ll_home_search_check_type.setOnClickListener(this);
-		m_backBtn.setOnClickListener(this);
 		m_serachBtn.setOnClickListener(this);
 		m_memberXLv.setOnItemClickListener(this);
 		m_weiQiangXLv.setOnItemClickListener(this);
@@ -320,7 +330,6 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 				mTabPager.setCurrentItem(0);
 				if(m_memberAdapter == null){
 					no_data_img.setVisibility(View.VISIBLE);
-					getData(REQUEST_FLAG);
 				}else{
 					if(m_memberAdapter.getCount() == 0){
 						no_data_img.setVisibility(View.VISIBLE);
@@ -334,7 +343,6 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 				mTabPager.setCurrentItem(1);
 				if(m_weiqiangAdapter == null){
 					no_data_img.setVisibility(View.VISIBLE);
-					getData(REQUEST_FLAG);
 				}else{
 					if(m_weiqiangAdapter.getCount() == 0){
 						no_data_img.setVisibility(View.VISIBLE);
@@ -348,7 +356,6 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 				mTabPager.setCurrentItem(2);
 				if(m_showcaseAdapter == null){
 					no_data_img.setVisibility(View.VISIBLE);
-					getData(REQUEST_FLAG);
 				}else{
 					if(m_showcaseAdapter.getCount() == 0){
 						no_data_img.setVisibility(View.VISIBLE);
@@ -391,8 +398,13 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
      * 设置会员数据
      * @param list
      */
-    private void setMemberAdapter(ArrayList<UserBean> list)
+    private void setMemberAdapter(List<MemberBean> list)
     {
+    	if(null == list || list.size() ==0)
+    	{
+    		return;
+    	}
+    	
         m_memberList.addAll(list);
         
         if (m_memberAdapter == null)
@@ -410,8 +422,12 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
      * 设置微墙数据
      * @param list
      */
-    private void setWeiQiangAdapter(ArrayList<WeiQiangBean> list)
+    private void setWeiQiangAdapter(List<WeiQiangBean> list)
     {
+    	if(null == list || list.size() ==0)
+    	{
+    		return;
+    	}
         m_weiQiangList.addAll(list);
         if (m_weiqiangAdapter == null)
         {
@@ -428,8 +444,12 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
      * 设置橱窗数据
      * @param list
      */
-    private void setShowcaseAdapter(ArrayList<CabinetBean> list)
+    private void setShowcaseAdapter(List<CabinetBean> list)
     {
+    	if(null == list || list.size() ==0)
+    	{
+    		return;
+    	}
         m_showcaseList.addAll(list);
         if (m_showcaseAdapter == null)
         {
@@ -527,25 +547,25 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 			try {
 			switch (bNetWork.getMessageType()) {
 			case 840001://搜索结果
-				MemberLoginBean login = JSON.parseObject(strJson, MemberLoginBean.class);
-				StringBuilder sb = new StringBuilder();
-				sb.append("SessionID").append(login.userid).append("\n");
-				sb.append("Success").append(login.success).append("\n");
-				sb.append("token").append(login.token).append("\n");
-				sb.append("BServer").append(login.bserver).append("\n");
-				sb.append("FServer").append(login.fserver).append("\n");
-				SystemConfig.FILE_SERVER = login.fserver;
-				SystemConfig.BS_SERVER = login.bserver;
-				SystemConfig.SessionID = login.userid;
-				BToast.show(mContext, "消息："+sb.toString());
+				SearchResultBean resultBean = JSON.parseObject(strJson, SearchResultBean.class);
+				
+//				setMemberAdapter(resultBean.members);
+//				setWeiQiangAdapter(resultBean.weiqiang);
+//				setShowcaseAdapter(resultBean.cabinet);
+				
+				setMemberAdapter(resultBean.getMembers());
+				setWeiQiangAdapter(resultBean.getWeiqiang());
+				setShowcaseAdapter(resultBean.getCabinets());
+				
 				break;
 			case 840002:	//会员分页请求
-				ArrayList<UserBean> list = (ArrayList<UserBean>) JSON.parseArray(strJson, UserBean.class);
+				  stopLoad(m_memberXLv);
+				List<MemberBean> list = (ArrayList<MemberBean>) JSON.parseArray(strJson, MemberBean.class);
 		            if (list != null)
 		            {
 		                setMemberAdapter(list);
 		            }
-		            stopLoad(m_memberXLv);
+		          
 		            if (list.size() < PAGE_SIZE_ADD)
 		            {
 		                m_memberXLv.setPullLoadEnable(false);
@@ -558,12 +578,13 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		            }
 				break;
 			case 840003:	//微墙请求
+				   stopLoad(m_weiQiangXLv);
 				ArrayList<WeiQiangBean> listWeiqiang = (ArrayList<WeiQiangBean>) JSON.parseArray(strJson, WeiQiangBean.class);
 		            if (listWeiqiang != null)
 		            {
 		                setWeiQiangAdapter(listWeiqiang);
 		            }
-		            stopLoad(m_weiQiangXLv);
+		         
 		            if (listWeiqiang.size() < PAGE_SIZE_ADD)
 		            {
 		                m_weiQiangXLv.setPullLoadEnable(false);
@@ -576,13 +597,14 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		            }
 				break;
 			case 840004:	//橱窗请求
+			    stopLoad(m_showcaseXLv);
 				ArrayList<CabinetBean> listCabinet = (ArrayList<CabinetBean>) JSON.parseArray(strJson, CabinetBean.class);
 
 		            if (listCabinet != null)
 		            {
 		                setShowcaseAdapter(listCabinet);
 		            }
-		            stopLoad(m_showcaseXLv);
+		        
 		            if (listCabinet.size() < PAGE_SIZE_ADD)
 		            {
 		                m_showcaseXLv.setPullLoadEnable(false);
@@ -609,13 +631,53 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		}
 
 	@Override
-	public void onClick(View arg0) {
-		// TODO Auto-generated method stub
-		/**
-		 * @todo:TODO
-		 * @date:2014-10-22 下午6:10:24
-		 * @author:hg_liuzl@163.com
-		 */
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.ll_home_search_check_type:
+            View view = inflater.inflate(R.layout.popup_home_check_seach, null);
+            checkSearchType(view);
+            view.findViewById(R.id.home_ll_ican).setOnClickListener(this);
+            view.findViewById(R.id.home_ll_ithink).setOnClickListener(this);
+            popupWindowCheckSearchType = null;
+            popupWindowCheckSearchType = new PopupWindow(view, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+            popupWindowCheckSearchType.setBackgroundDrawable(getResources().getDrawable(R.drawable.img_home_check_popup));
+            popupWindowCheckSearchType.setOutsideTouchable(true);
+            popupWindowCheckSearchType.showAsDropDown(ll_home_search_check_type, 0, 10);
+            break;
+		  case R.id.home_ll_ican:
+	            search_type = 1;
+	            home_tv_check_search_indecator.setText("我能");
+	            popupWindowCheckSearchType.dismiss();
+	            break;
+	        case R.id.home_ll_ithink:
+	            search_type = 0;
+	            home_tv_check_search_indecator.setText("我想");
+	            popupWindowCheckSearchType.dismiss();
+	            break;
+		case R.id.search_result_btn_search:
+			 final String msg = m_contentEt.getText().toString().trim();
+  		    if (TextUtils.isEmpty(msg))
+  		    {
+  		        m_msg = msg;
+  		        m_start = 0;
+  		        m_memberStart = 0;
+  		        m_weiqiangStart = 0;
+  		        m_cabinetStart = 0;
+  		        m_memberList = null;
+  		        m_weiQiangList = null;
+  		        m_showcaseList = null;
+  				HomeRequest.getInstance().requestSearch(this, this, search_type, m_msg, 114.1917953491211f, 22.636533737182617f, m_start, m_start + PAGE_SIZE_ADD);
+  		    }
+  		    else
+  		    {
+  		    	BToast.show(mContext, "请输入搜索内容");
+  		        return;
+  		    }
+			break;
+
+		default:
+			break;
+		}
 		
 	}
 

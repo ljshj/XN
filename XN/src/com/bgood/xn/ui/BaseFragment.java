@@ -3,6 +3,7 @@ package com.bgood.xn.ui;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 
 /**
@@ -22,5 +23,10 @@ public class BaseFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 		mActivity = getActivity();
 		inflater = LayoutInflater.from(mActivity);
+	}
+	
+	public void finish() {
+		FragmentManager manager = getActivity().getSupportFragmentManager();
+		manager.popBackStack();
 	}
 }

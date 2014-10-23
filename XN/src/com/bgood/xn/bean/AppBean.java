@@ -5,10 +5,10 @@ package com.bgood.xn.bean;
  * @author:hg_liuzl@163.com
  */
 public class AppBean {
-	public String appId;       // 应用Id
-	public String appName;     // 应用名
-	public String appSize;     // 应用大小
-	public String appInfo;     // 应用详情
-	public String appImg;      // 应用图片
-	public String appImgThum;  // 应用缩略图
+	public String id;       // 应用Id
+	public String title;     // 应用名
+	public String size;     // 应用大小
+	public String intro;     // 应用详情
+	public String img;      // 应用图片
+	public String img_thum;  // 应用缩略图
 }

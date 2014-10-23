@@ -5,8 +5,8 @@ package com.bgood.xn.bean;
  */
 public class HallBean
 {
-	public String hallId;    // 临时群Id
-	public String hallName;  // 临时表群名字
-	public String hallIcon;  // 临时群图标
-	public String userCount; // 用户人总数
+	public String hallid;    // 临时群Id
+	public String title;  // 临时表群名字
+	public String img;  // 临时群图标
+	public String count; // 用户人总数
 }

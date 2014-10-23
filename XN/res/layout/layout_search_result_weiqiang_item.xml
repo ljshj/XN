@@ -29,7 +29,7 @@
             android:layout_marginLeft="5dp"
             android:orientation="vertical" >
 
-            <TextView
+            <!-- <TextView
                 android:id="@+id/result_weiqiang_item_tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
@@ -39,7 +39,7 @@
                 android:singleLine="true"
                 android:text="和哈哈热按体内that好热好热啊好热"
                 android:textColor="@color/black"
-                android:textSize="16dp" />
+                android:textSize="16dp" /> -->
 
             <TextView
                 android:id="@+id/result_weiqiang_item_tv_info"

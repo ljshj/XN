@@ -11,7 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 public class BaseActivity extends Activity {
 	
 	public LayoutInflater inflater = null;
-	public Context mContext = null;
+	public Activity mContext = null;
 	protected InputMethodManager im = null;
 	public static final int PAGE_SIZE_ADD = 10;
 	@Override

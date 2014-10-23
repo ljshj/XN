@@ -39,7 +39,7 @@
             android:visibility="gone" >
         </ListView>
 
-        <com.zhuozhong.widget.ZZPrivinceQuickAlphabeticBar
+        <com.bgood.xn.widget.ZZPrivinceQuickAlphabeticBar
             android:id="@+id/privince_qab_fast_scroller"
             android:layout_width="22dp"
             android:layout_height="match_parent"

@@ -13,7 +13,7 @@
         android:hint="请输入正文"
         android:padding="5dp" />
 
-    <com.zhuozhong.view.ImageGridView
+    <com.bgood.xn.view.ImageGridView
         android:id="@+id/gridview_images"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -26,6 +26,6 @@
         android:numColumns="5"
         android:stretchMode="columnWidth"
         android:verticalSpacing="5dp" >
-    </com.zhuozhong.view.ImageGridView>
+    </com.bgood.xn.view.ImageGridView>
 
 </LinearLayout>

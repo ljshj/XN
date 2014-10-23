@@ -61,7 +61,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1" />
 
-            <com.zhuozhong.widget.wheelview.WheelView
+            <com.bgood.xn.widget.wheelview.WheelView
                 android:id="@+id/birthday_dialog_wv_day"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"

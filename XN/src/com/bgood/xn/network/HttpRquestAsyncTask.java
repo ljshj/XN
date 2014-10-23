@@ -92,13 +92,13 @@ public class HttpRquestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo >
 		if(mListenerWithState!=null){
 			mListenerWithState.onTaskOver(mRequest, response);
 		}
-		LoadingProgress.getInstance().dismiss();
+		//LoadingProgress.getInstance().dismiss();
 	}
 	
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		LoadingProgress.getInstance().show(context);
+		//LoadingProgress.getInstance().show(context);
 	}
 
 	@Override

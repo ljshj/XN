@@ -5,9 +5,29 @@ package com.bgood.xn.bean;
  * @author:hg_liuzl@163.com
  */
 public class CabinetBean {
-	public String cabintId;      // 橱窗Id
-	public String cabintName;    // 橱窗名
-	public String cabintPrice;   // 橱窗价格
-	public String cabintImg;     // 橱窗图片
-	public String cabintImgThum; // 橱窗缩略图
+	public String productid;      // 橱窗Id
+	public String title;    // 橱窗名
+	public String img;   // 橱窗图片
+	public String img_thum;   // 橱窗图片
+	public String price;     // 橱窗价格
+	
+	
+	
+	public CabinetBean() {
+		super();
+	}
+
+
+
+	public CabinetBean(String productid, String title, String img,
+			String img_thum, String price) {
+		super();
+		this.productid = productid;
+		this.title = title;
+		this.img = img;
+		this.img_thum = img_thum;
+		this.price = price;
+	}
+	
+	
 }

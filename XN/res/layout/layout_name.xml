@@ -28,7 +28,7 @@
         android:background="@drawable/img_user_center_bg"
         android:orientation="horizontal" >
 
-        <com.zhuozhong.widget.CEditText
+        <com.bgood.xn.widget.CEditText
             android:id="@+id/name_et_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -42,7 +42,7 @@
             android:lines="1" >
 
             <requestFocus />
-        </com.zhuozhong.widget.CEditText>
+        </com.bgood.xn.widget.CEditText>
     </LinearLayout>
     
     <Button

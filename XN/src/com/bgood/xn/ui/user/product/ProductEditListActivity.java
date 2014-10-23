@@ -6,35 +6,28 @@
 //import android.content.Context;
 //import android.content.Intent;
 //import android.os.Bundle;
-//import android.os.Handler;
-//import android.os.Message;
+//import android.os.UserManager;
 //import android.view.LayoutInflater;
 //import android.view.View;
-//import android.view.ViewGroup;
 //import android.view.View.OnClickListener;
+//import android.view.ViewGroup;
 //import android.widget.AdapterView;
 //import android.widget.AdapterView.OnItemClickListener;
-//import android.widget.LinearLayout.LayoutParams;
 //import android.widget.BaseAdapter;
 //import android.widget.Button;
 //import android.widget.ImageView;
 //import android.widget.LinearLayout;
+//import android.widget.LinearLayout.LayoutParams;
 //import android.widget.ProgressBar;
 //import android.widget.RelativeLayout;
 //import android.widget.TextView;
 //import android.widget.Toast;
 //
+//import com.bgood.xn.R;
+//import com.bgood.xn.network.BaseNetWork.ReturnCode;
+//import com.bgood.xn.ui.BaseActivity;
+//import com.bgood.xn.widget.SwipeListView;
 //import com.squareup.picasso.Picasso;
-//import com.zhuozhong.bandgood.R;
-//import com.zhuozhong.bandgood.activity.BaseActivity;
-//import com.zhuozhong.bandgood.adapter.ProductEditListAdapter;
-//import com.zhuozhong.bandgood.bean.ProductDTO;
-//import com.zhuozhong.bandgood.bean.Reulst;
-//import com.zhuozhong.bandgood.messagemanager.ShowCaseMessageManager;
-//import com.zhuozhong.manager.UserManager;
-//import com.zhuozhong.util.WindowUtil;
-//import com.zhuozhong.widget.SwipeListView;
-//import com.zhuozhong.zzframework.session.Frame.ReturnCode;
 //
 ///**
 // * 产品编辑列表页面

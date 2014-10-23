@@ -49,12 +49,12 @@ public class ResultShowcaseAdapter extends KBaseAdapter
         
         CabinetBean cabinetDTO = (CabinetBean) mList.get(position);
         
-        if (!TextUtils.isEmpty(cabinetDTO.cabintImg)){
-            Picasso.with(mActivity).load(cabinetDTO.cabintImg).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
+        if (!TextUtils.isEmpty(cabinetDTO.img_thum)){
+            Picasso.with(mActivity).load(cabinetDTO.img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
         }
         
-        holder.nameTv.setText(cabinetDTO.cabintName);
-        holder.priceTv.setText(cabinetDTO.cabintPrice);
+        holder.nameTv.setText(cabinetDTO.title);
+        holder.priceTv.setText(cabinetDTO.price);
         
         return convertView;
     }

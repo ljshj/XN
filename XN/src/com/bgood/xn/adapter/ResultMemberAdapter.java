@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
+import com.bgood.xn.bean.MemberBean;
 import com.bgood.xn.bean.UserBean;
 import com.squareup.picasso.Picasso;
 
@@ -53,15 +54,15 @@ public class ResultMemberAdapter extends KBaseAdapter
             holder = (ViewHolder) convertView.getTag();
         }
         
-        UserBean userDTO = (UserBean) mList.get(position);
+       final MemberBean member = (MemberBean) mList.get(position);
         
-        if (!TextUtils.isEmpty(userDTO.userIcon)){
-            Picasso.with(mActivity).load(userDTO.userIcon).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
+        if (!TextUtils.isEmpty(member.img)){
+            Picasso.with(mActivity).load(member.img).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
         }
 
-        holder.nameTv.setText(userDTO.nickn);
+        holder.nameTv.setText(member.name);
         
-        if (userDTO.sex == 1)
+        if (member.sex.contains("男"))
         {
             holder.sexImgV.setImageResource(R.drawable.img_common_sex_male);
         }
@@ -70,7 +71,7 @@ public class ResultMemberAdapter extends KBaseAdapter
             holder.sexImgV.setImageResource(R.drawable.img_common_sex_female);
         }
         
-        if (userDTO.level.equals("1"))
+        if (member.level.equals("1"))
         {
             holder.identityImgV.setImageResource(R.drawable.img_common_sex_male);
         }
@@ -78,10 +79,10 @@ public class ResultMemberAdapter extends KBaseAdapter
         {
             holder.identityImgV.setImageResource(R.drawable.img_common_sex_female);
         }
-        holder.distanceTv.setText(userDTO.distance);
-        holder.signatureTv.setText(userDTO.signature);
-        holder.icanTv.setText(userDTO.ican);
-        holder.ineedTv.setText(userDTO.ineed);
+        holder.distanceTv.setText(member.distance);
+        holder.signatureTv.setText(member.signatrue);
+        holder.icanTv.setText(member.ican);
+        holder.ineedTv.setText(member.ineed);
         
         return convertView;
     }

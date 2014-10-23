@@ -81,7 +81,7 @@
             android:orientation="horizontal"
             android:visibility="gone" >
 
-            <com.zhuozhong.widget.CMyGridView
+            <com.bgood.xn.widget.CMyGridView
                 android:id="@+id/weiqiang_detail_imgv_image_one"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
                 android:numColumns="3"
                 android:stretchMode="columnWidth"
                 android:verticalSpacing="5dp" >
-            </com.zhuozhong.widget.CMyGridView>
+            </com.bgood.xn.widget.CMyGridView>
             
             <!-- <ImageView
                 android:id="@+id/weiqiang_detail_imgv_image_one"
