@@ -137,7 +137,7 @@ public class BloodGroupActivity extends BaseActivity implements TaskListenerWith
             {
                 if (!TextUtils.isEmpty(m_bloodGroup))
                 {
-                    UserCenterRequest.getInstance().requestUpdatePerson(BloodGroupActivity.this, mContext, "btype", m_bloodGroup);
+                    UserCenterRequest.getInstance().requestUpdatePerson(BloodGroupActivity.this, mActivity, "btype", m_bloodGroup);
                 }
                 else
                 {
@@ -153,21 +153,21 @@ public class BloodGroupActivity extends BaseActivity implements TaskListenerWith
 	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
 		switch (info.getState()) {
 		case STATE_ERROR_SERVER:
-			Toast.makeText(mContext, "服务器地址错误", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mActivity, "服务器地址错误", Toast.LENGTH_SHORT).show();
 			break;
 		case STATE_NO_NETWORK_CONNECT:
-			Toast.makeText(mContext, "没有网络，请检查您的网络连接", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mActivity, "没有网络，请检查您的网络连接", Toast.LENGTH_SHORT).show();
 			break;
 		case STATE_TIME_OUT:
-			Toast.makeText(mContext, "连接超时", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mActivity, "连接超时", Toast.LENGTH_SHORT).show();
 			break;
 		case STATE_UNKNOWN:
-			Toast.makeText(mContext, "未知错误", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mActivity, "未知错误", Toast.LENGTH_SHORT).show();
 			break;
 		case STATE_OK:
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			JSONObject body = bNetWork.getBody();
-				BToast.show(mContext, "修改成功");
+				BToast.show(mActivity, "修改成功");
 				Intent intent = getIntent();
 	            intent.putExtra("bloodGroup", m_bloodGroup);
 	            setResult(RESULT_OK, intent);

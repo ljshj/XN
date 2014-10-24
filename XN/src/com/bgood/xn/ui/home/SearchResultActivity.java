@@ -34,19 +34,15 @@ import com.bgood.xn.R;
 import com.bgood.xn.adapter.ResultMemberAdapter;
 import com.bgood.xn.adapter.ResultShowcaseAdapter;
 import com.bgood.xn.adapter.ResultWeiQiangAdapter;
-import com.bgood.xn.bean.CabinetBean;
-import com.bgood.xn.bean.HallBean;
-import com.bgood.xn.bean.MemberBean;
-import com.bgood.xn.bean.MemberLoginBean;
+import com.bgood.xn.bean.CabinetResultBean;
+import com.bgood.xn.bean.MemberResultBean;
 import com.bgood.xn.bean.SearchResultBean;
-import com.bgood.xn.bean.UserBean;
-import com.bgood.xn.bean.WeiQiangBean;
+import com.bgood.xn.bean.WeiQiangResultBean;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpRquestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.request.HomeRequest;
-import com.bgood.xn.system.SystemConfig;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
@@ -89,9 +85,9 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 	private XListView m_weiQiangXLv = null;    // 微墙
 	private XListView m_showcaseXLv = null;    // 橱窗
 	
-	ArrayList<MemberBean> m_memberList = new ArrayList<MemberBean>();
-	ArrayList<WeiQiangBean> m_weiQiangList = new ArrayList<WeiQiangBean>();
-	ArrayList<CabinetBean> m_showcaseList = new ArrayList<CabinetBean>();
+	ArrayList<MemberResultBean> m_memberList = new ArrayList<MemberResultBean>();
+	ArrayList<WeiQiangResultBean> m_weiQiangList = new ArrayList<WeiQiangResultBean>();
+	ArrayList<CabinetResultBean> m_showcaseList = new ArrayList<CabinetResultBean>();
 
 	private String m_msg = "";
 	
@@ -114,7 +110,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 	}
 	
 	private void initTitle() {
-		new TitleBar(mContext).initTitleBar("搜索结果");
+		new TitleBar(mActivity).initTitleBar("搜索结果");
 	}
 
 	/**
@@ -398,7 +394,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
      * 设置会员数据
      * @param list
      */
-    private void setMemberAdapter(List<MemberBean> list)
+    private void setMemberAdapter(List<MemberResultBean> list)
     {
     	if(null == list || list.size() ==0)
     	{
@@ -422,7 +418,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
      * 设置微墙数据
      * @param list
      */
-    private void setWeiQiangAdapter(List<WeiQiangBean> list)
+    private void setWeiQiangAdapter(List<WeiQiangResultBean> list)
     {
     	if(null == list || list.size() ==0)
     	{
@@ -444,7 +440,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
      * 设置橱窗数据
      * @param list
      */
-    private void setShowcaseAdapter(List<CabinetBean> list)
+    private void setShowcaseAdapter(List<CabinetResultBean> list)
     {
     	if(null == list || list.size() ==0)
     	{
@@ -529,16 +525,16 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
 		switch (info.getState()) {
 		case STATE_ERROR_SERVER:
-			Toast.makeText(mContext, "服务器地址错误", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mActivity, "服务器地址错误", Toast.LENGTH_SHORT).show();
 			break;
 		case STATE_NO_NETWORK_CONNECT:
-			Toast.makeText(mContext, "没有网络，请检查您的网络连接", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mActivity, "没有网络，请检查您的网络连接", Toast.LENGTH_SHORT).show();
 			break;
 		case STATE_TIME_OUT:
-			Toast.makeText(mContext, "连接超时", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mActivity, "连接超时", Toast.LENGTH_SHORT).show();
 			break;
 		case STATE_UNKNOWN:
-			Toast.makeText(mContext, "未知错误", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mActivity, "未知错误", Toast.LENGTH_SHORT).show();
 			break;
 		case STATE_OK:
 			BaseNetWork bNetWork = info.getmBaseNetWork();
@@ -560,7 +556,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 				break;
 			case 840002:	//会员分页请求
 				  stopLoad(m_memberXLv);
-				List<MemberBean> list = (ArrayList<MemberBean>) JSON.parseArray(strJson, MemberBean.class);
+				List<MemberResultBean> list = (ArrayList<MemberResultBean>) JSON.parseArray(strJson, MemberResultBean.class);
 		            if (list != null)
 		            {
 		                setMemberAdapter(list);
@@ -579,7 +575,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 				break;
 			case 840003:	//微墙请求
 				   stopLoad(m_weiQiangXLv);
-				ArrayList<WeiQiangBean> listWeiqiang = (ArrayList<WeiQiangBean>) JSON.parseArray(strJson, WeiQiangBean.class);
+				ArrayList<WeiQiangResultBean> listWeiqiang = (ArrayList<WeiQiangResultBean>) JSON.parseArray(strJson, WeiQiangResultBean.class);
 		            if (listWeiqiang != null)
 		            {
 		                setWeiQiangAdapter(listWeiqiang);
@@ -598,7 +594,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 				break;
 			case 840004:	//橱窗请求
 			    stopLoad(m_showcaseXLv);
-				ArrayList<CabinetBean> listCabinet = (ArrayList<CabinetBean>) JSON.parseArray(strJson, CabinetBean.class);
+				ArrayList<CabinetResultBean> listCabinet = (ArrayList<CabinetResultBean>) JSON.parseArray(strJson, CabinetResultBean.class);
 
 		            if (listCabinet != null)
 		            {
@@ -656,21 +652,21 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 	            break;
 		case R.id.search_result_btn_search:
 			 final String msg = m_contentEt.getText().toString().trim();
-  		    if (TextUtils.isEmpty(msg))
+  		    if (!TextUtils.isEmpty(msg))
   		    {
   		        m_msg = msg;
   		        m_start = 0;
   		        m_memberStart = 0;
   		        m_weiqiangStart = 0;
   		        m_cabinetStart = 0;
-  		        m_memberList = null;
-  		        m_weiQiangList = null;
-  		        m_showcaseList = null;
+  		        m_memberList.clear();
+  		        m_weiQiangList.clear();
+  		        m_showcaseList.clear();
   				HomeRequest.getInstance().requestSearch(this, this, search_type, m_msg, 114.1917953491211f, 22.636533737182617f, m_start, m_start + PAGE_SIZE_ADD);
   		    }
   		    else
   		    {
-  		    	BToast.show(mContext, "请输入搜索内容");
+  		    	BToast.show(mActivity, "请输入搜索内容");
   		        return;
   		    }
 			break;

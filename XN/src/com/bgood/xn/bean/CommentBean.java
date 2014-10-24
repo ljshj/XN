@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * @date:2014-10-21 下午6:27:34
  * @author:hg_liuzl@163.com
  */
-public class CommentBean {
+public class CommentBean implements Serializable {
 	public String commentId;// 评论的唯一ID
 	public String content;   // 内容
 	public String senderID;  // 发送用户Id
@@ -19,7 +19,7 @@ public class CommentBean {
 	public String commentObjectID;
 	public ArrayList<ImageBean> imageList;
 	public int revertCount;  // 评论数
-	public ArrayList<ReplyCommentBean> reverts = new ArrayList<ReplyCommentBean>();
+	public ArrayList<WeiqiangCommentBean> reverts = new ArrayList<WeiqiangCommentBean>();
 	public String reveredName;
 	public String distance;
 	public String from_userID;

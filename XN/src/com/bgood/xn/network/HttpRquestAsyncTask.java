@@ -19,34 +19,51 @@ public class HttpRquestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo >
 	private TaskListenerWithState mListenerWithState;
 	private Context context;
 	private BaseNetWork bNetWork;
+	private boolean mCommonLoading = true;	//进度条是通用的
+	
+	public HttpRquestAsyncTask(boolean commonLoading,ServerType type,BaseNetWork b,TaskListenerWithState listner,Context c) {
+		this.mCommonLoading = commonLoading;
+		this.bNetWork = b;
+		this.context=c;
+		this.mRequest = HttpRequestInfo.getHttpRequestInfoInstance();
+		setRequestUrl(type, b, listner);
+	}
 	
 	public HttpRquestAsyncTask(ServerType type,BaseNetWork b,TaskListenerWithState listner,Context c) {
 		this.bNetWork = b;
 		this.context=c;
 		this.mRequest = HttpRequestInfo.getHttpRequestInfoInstance();
 		
-		//1.服务器分配地址 2.登录后的操作要分配session
-		if(type == ServerType.LoginServer){
-			serverUrl = SystemConfig.HttpServer;
-			
-		}else if(type == ServerType.BusinessServer){
-			serverUrl = SystemConfig.BS_SERVER;
-			b.setSessionID(SystemConfig.SessionID);
-			
-		}else if(type == ServerType.IMServer){
-			serverUrl = SystemConfig.IM_SERVER;
-			b.setSessionID(SystemConfig.SessionID);
-			
-		}else if(type == ServerType.FileServer){
-			serverUrl = SystemConfig.FILE_SERVER;
-			b.setSessionID(SystemConfig.SessionID);
-			
-		}else{
-			serverUrl = SystemConfig.HttpServer;
-		}
-		mRequest.setRequesUrl("http://"+serverUrl);
-		this.mListenerWithState=listner;
+		setRequestUrl(type, b, listner);
 	}
+	
+	private void setRequestUrl(ServerType type,BaseNetWork b,TaskListenerWithState listner) {
+			//1.服务器分配地址 2.登录后的操作要分配session
+			if(type == ServerType.LoginServer){
+				serverUrl = SystemConfig.HttpServer;
+				
+			}else if(type == ServerType.BusinessServer){
+				serverUrl = SystemConfig.BS_SERVER;
+				b.setSessionID(SystemConfig.SessionID);
+				
+			}else if(type == ServerType.IMServer){
+				serverUrl = SystemConfig.IM_SERVER;
+				b.setSessionID(SystemConfig.SessionID);
+				
+			}else if(type == ServerType.FileServer){
+				serverUrl = SystemConfig.FILE_SERVER;
+				b.setSessionID(SystemConfig.SessionID);
+				
+			}else{
+				serverUrl = SystemConfig.HttpServer;
+			}
+			mRequest.setRequesUrl("http://"+serverUrl);
+			this.mListenerWithState=listner;
+
+	}
+
+	
+	
 	
 	
 	
@@ -92,13 +109,17 @@ public class HttpRquestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo >
 		if(mListenerWithState!=null){
 			mListenerWithState.onTaskOver(mRequest, response);
 		}
-		//LoadingProgress.getInstance().dismiss();
+		if(mCommonLoading){
+			LoadingProgress.getInstance().dismiss();
+		}
 	}
 	
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		//LoadingProgress.getInstance().show(context);
+		if(mCommonLoading){
+		LoadingProgress.getInstance().show(context);
+		}
 	}
 
 	@Override

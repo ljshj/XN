@@ -3,20 +3,14 @@ package com.bgood.xn.adapter;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.CommentBean;
-import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.squareup.picasso.Picasso;
 /**
  * 
@@ -89,64 +83,6 @@ public class WeiqiangAdapter extends KBaseAdapter
 		holder.transform_send_countTv.setText(commentsDTO.forward_count + "");
 		holder.share_countTv.setText(commentsDTO.share_count + "");
 		
-	
-		
-		if (commentsDTO.imageList != null && commentsDTO.imageList.size() > 0)
-		{
-		    if (commentsDTO.imageList.size() == 1)
-		    {
-		        holder.layout_images.setVisibility(View.VISIBLE);
-		        holder.oneImgV.setVisibility(View.VISIBLE);
-		        Picasso.with(mActivity).load(commentsDTO.imageList.get(0).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.oneImgV);
-		    }
-		    else if (commentsDTO.imageList.size() == 2)
-		    {
-		        holder.layout_images.setVisibility(View.VISIBLE);
-                holder.oneImgV.setVisibility(View.VISIBLE);
-                holder.twoImgV.setVisibility(View.VISIBLE);
-                Picasso.with(mActivity).load(commentsDTO.imageList.get(0).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.oneImgV);
-                Picasso.with(mActivity).load(commentsDTO.imageList.get(1).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.twoImgV);
-		    }
-		    else if (commentsDTO.imageList.size() > 2)
-            {
-                holder.layout_images.setVisibility(View.VISIBLE);
-                holder.oneImgV.setVisibility(View.VISIBLE);
-                holder.twoImgV.setVisibility(View.VISIBLE);
-                holder.threeImgV.setVisibility(View.VISIBLE);
-                Picasso.with(mActivity).load(commentsDTO.imageList.get(0).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.oneImgV);
-                Picasso.with(mActivity).load(commentsDTO.imageList.get(1).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.twoImgV);
-                Picasso.with(mActivity).load(commentsDTO.imageList.get(2).img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.threeImgV);
-            }
-		}
-		
-		// 分享
-		/*holder.layout_share_count.setOnClickListener(new OnClickListener()
-        {
-            
-            @Override
-            public void onClick(View v)
-            {
-                m_shareManager = new ShareManager((WeiqiangPersonActivity)m_context);
-
-                m_shareManager.shareContentInit("adg", "掌上有礼", "", "", "1", "d");
-                m_shareManager.openShare();
-            }
-        });
-		
-		
-		
-		//点赞
-		holder.layout_zan_count.setOnClickListener(new OnClickListener()
-        {
-            
-            @Override
-            public void onClick(View v)
-            {
-                WindowUtil.getInstance().progressDialogShow(m_context, "赞中...");
-                messageManager.registerObserver(WeiqiangAdapter.this);
-                messageManager.zanWeiqiang(commentsDTO.commentId);
-            }
-        });*/
 		
 		return convertView;
 	}

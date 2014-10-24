@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/common_page_bg"
+    
     android:orientation="vertical" >
 
     <RelativeLayout style="@style/common_top_title_style" >
@@ -28,14 +29,7 @@
 
             <include layout="@layout/layout_common_publish" />
 
-            <!-- <com.zhuozhong.widget.CHorizontialListView
-                android:id="@+id/product_info_hlv_guess"
-                android:layout_width="fill_parent"
-                android:layout_height="140dp"
-                android:layout_marginBottom="10.0dip"
-                android:layout_marginTop="5.0dip"
-                android:spacing="2dip" /> -->
-
+           
             <Button
                 android:id="@+id/weiqiang_publish_submit"
                 android:layout_width="match_parent"

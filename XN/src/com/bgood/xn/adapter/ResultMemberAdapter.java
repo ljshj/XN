@@ -10,8 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
-import com.bgood.xn.bean.MemberBean;
-import com.bgood.xn.bean.UserBean;
+import com.bgood.xn.bean.MemberResultBean;
 import com.squareup.picasso.Picasso;
 
 
@@ -54,7 +53,7 @@ public class ResultMemberAdapter extends KBaseAdapter
             holder = (ViewHolder) convertView.getTag();
         }
         
-       final MemberBean member = (MemberBean) mList.get(position);
+       final MemberResultBean member = (MemberResultBean) mList.get(position);
         
         if (!TextUtils.isEmpty(member.img)){
             Picasso.with(mActivity).load(member.img).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);

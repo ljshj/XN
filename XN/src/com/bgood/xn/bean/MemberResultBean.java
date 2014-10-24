@@ -4,7 +4,7 @@ package com.bgood.xn.bean;
  * @date:2014-10-23 下午3:45:30
  * @author:hg_liuzl@163.com
  */
-public class MemberBean {
+public class MemberResultBean {
 	
 /*	  <userid/>
       <img/>// 头像
@@ -30,14 +30,14 @@ public class MemberBean {
       
       
       
-	public MemberBean() {
+	public MemberResultBean() {
 		super();
 	}
 
 
 
 
-	public MemberBean(String userid, String img, String name, String sex,
+	public MemberResultBean(String userid, String img, String name, String sex,
 			String level, String distance, String signatrue, String ican,
 			String ineed) {
 		super();

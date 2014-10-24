@@ -96,11 +96,11 @@ public class AgeActivity extends BaseActivity implements OnClickListener,TaskLis
         String age = m_ageEt.getText().toString().trim();
         if (TextUtils.isEmpty(age))
         {
-            BToast.show(mContext, "请输入年龄！");
+            BToast.show(mActivity, "请输入年龄！");
             return;
         }else
         {
-		UserCenterRequest.getInstance().requestUpdatePerson(this, mContext, "age", age);
+		UserCenterRequest.getInstance().requestUpdatePerson(this, mActivity, "age", age);
         }
     }
   
@@ -124,21 +124,21 @@ public class AgeActivity extends BaseActivity implements OnClickListener,TaskLis
 	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
 		switch (info.getState()) {
 		case STATE_ERROR_SERVER:
-			Toast.makeText(mContext, "服务器地址错误", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mActivity, "服务器地址错误", Toast.LENGTH_SHORT).show();
 			break;
 		case STATE_NO_NETWORK_CONNECT:
-			Toast.makeText(mContext, "没有网络，请检查您的网络连接", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mActivity, "没有网络，请检查您的网络连接", Toast.LENGTH_SHORT).show();
 			break;
 		case STATE_TIME_OUT:
-			Toast.makeText(mContext, "连接超时", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mActivity, "连接超时", Toast.LENGTH_SHORT).show();
 			break;
 		case STATE_UNKNOWN:
-			Toast.makeText(mContext, "未知错误", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mActivity, "未知错误", Toast.LENGTH_SHORT).show();
 			break;
 		case STATE_OK:
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			JSONObject body = bNetWork.getBody();
-				BToast.show(mContext, "修改成功");
+				BToast.show(mActivity, "修改成功");
 				Intent intent = getIntent();
 	            intent.putExtra("age", m_age);
 	            setResult(RESULT_OK, intent);

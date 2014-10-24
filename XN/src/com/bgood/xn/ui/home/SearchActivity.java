@@ -3,6 +3,7 @@ package com.bgood.xn.ui.home;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -52,10 +53,7 @@ public class SearchActivity extends BaseActivity implements OnClickListener, OnI
 	 */
 	private void findView()
 	{
-		Bundle bundle = getIntent().getExtras();
-		if (bundle != null)
-			search_type = bundle.getInt("searchType");
-
+		search_type = getIntent().getIntExtra(HomeFragment.ACTION_TYPE, 0);
 		ll_home_search_check_type = (ViewGroup) findViewById(R.id.ll_home_search_check_type);
 		m_contentTv = (TextView) findViewById(R.id.search_tv_content);
 		m_contentTv.requestFocus();
@@ -146,7 +144,7 @@ public class SearchActivity extends BaseActivity implements OnClickListener, OnI
 		case R.id.search_btn_search:
 			saveHistory(m_contentTv.getText().toString());
 			String content = m_contentTv.getText().toString().trim();
-			if (content != null && !content.equals(""))
+			if (!TextUtils.isEmpty(content))
 			{
 				Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
 				intent.putExtra("msg", content);

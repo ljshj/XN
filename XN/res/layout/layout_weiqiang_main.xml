@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="关注"
+                android:text="全部"
                 android:textSize="18dp" />
 
             <View
@@ -61,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="全部"
+                android:text="关注"
                 android:textSize="18dp" />
 
             <View

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
+import android.view.View;
 
 /**
  * @todo:所有Fragment基类
@@ -17,6 +18,7 @@ public class BaseFragment extends Fragment {
 	
 	public Activity mActivity = null;
 	public LayoutInflater inflater = null;
+	public View layout;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

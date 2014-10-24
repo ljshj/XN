@@ -4,34 +4,36 @@ import java.io.Serializable;
 
 /**
  * @todo:微墙类
- * @date:2014-10-21 下午3:29:24
+ * @date:2014-10-24 下午2:10:40
  * @author:hg_liuzl@163.com
  */
 public class WeiQiangBean implements Serializable {
-	/**
-	 * @todo:TODO
-	 * @date:2014-10-23 下午5:11:25
-	 * @author:hg_liuzl@163.com
-	 */
-	private static final long serialVersionUID = 1L;
-	public String id;      // 微墙Id
-	public String name;    // 微墙名
-	public String content; // 微墙内容
-	public String img;     // 微墙图片
-	public String img_thum; // 微墙缩略图
-	public WeiQiangBean() {
-		super();
-	}
-	public WeiQiangBean(String id, String name, String content, String img,
-			String img_thum) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.content = content;
-		this.img = img;
-		this.img_thum = img_thum;
-	}
-	
+//	 <userid/>用户id
+//	    <weiboid/>//帖子id
+//	    <name/>
+//	<photo/>//用户头像
+//	<distance/>
+//	<date_time/>
+//	<fromuserid/>//来源用户ID，如果是转才有此字段
+//	<fromusername/>来源用户名
+//	<content/>
+//	<like_count/>
+//	<comment_count/>
+//	<forward_count/>
+//	<share_count/>
+
+	public String userid;
+	public String weiboid;
+	public String name;
+	public String phtot;
+	public String distance;
+	public String date_time;
+	public String fromuserid;
+	public String fromusername;
+	public String content;
+	public String like_count;
+	public String comment_count;
+	public String forward_count;
+	public String share_count;
 	
 }
-

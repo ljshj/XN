@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
-import com.bgood.xn.bean.WeiQiangBean;
+import com.bgood.xn.bean.WeiQiangResultBean;
 import com.squareup.picasso.Picasso;
 
 
@@ -43,7 +43,7 @@ public class ResultWeiQiangAdapter extends KBaseAdapter
             holder = (ViewHolder) convertView.getTag();
         }
         
-        WeiQiangBean weiqiangDTO = (WeiQiangBean) mList.get(position);
+       final WeiQiangResultBean weiqiangDTO = (WeiQiangResultBean) mList.get(position);
         
         if (!TextUtils.isEmpty(weiqiangDTO.img_thum))
         		{

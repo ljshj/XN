@@ -34,7 +34,7 @@ public class WeiqiangRequest extends BaseNetWork {
 	 * @params:@param context
 	 * @params:@param phone
 	 */
-	 public void requestWeiqianList(TaskListenerWithState mHttpTaskListener,Context context,String type,String start,String end){
+	 public void requestWeiqiangList(TaskListenerWithState mHttpTaskListener,Context context,String type,String start,String end){
 	 	setMessageType(60001);
 		JSONObject body = new JSONObject();
 		try {
@@ -57,7 +57,7 @@ public class WeiqiangRequest extends BaseNetWork {
 	 * @params:@param context
 	 * @params:@param phone
 	 */
-	 public void requestWeiqianContent(TaskListenerWithState mHttpTaskListener,Context context,String weiboid,String comment_start,String comment_end){
+	 public void requestWeiqiangContent(TaskListenerWithState mHttpTaskListener,Context context,String weiboid,String comment_start,String comment_end){
 		 	setMessageType(60002);
 			JSONObject body = new JSONObject();
 			try {
@@ -80,7 +80,7 @@ public class WeiqiangRequest extends BaseNetWork {
 	  * @params:@param context
 	  * @params:@param phone
 	  */
-	 public void requestWeiqianSend(TaskListenerWithState mHttpTaskListener,Context context,String content, String[] imgs, String[] smallImgs, String date_time, float longitude, float latitude){
+	 public void requestWeiqiangSend(TaskListenerWithState mHttpTaskListener,Context context,String content, String[] imgs, String[] smallImgs, String date_time, float longitude, float latitude){
 		 	setMessageType(60003);
 			JSONObject body = new JSONObject();
 			try
@@ -117,7 +117,7 @@ public class WeiqiangRequest extends BaseNetWork {
 	  * @params:@param context
 	  * @params:@param phone
 	  */
-	 public void requestWeiqianDel(TaskListenerWithState mHttpTaskListener,Context context,String weiboid){
+	 public void requestWeiqiangDel(TaskListenerWithState mHttpTaskListener,Context context,String weiboid){
 		 	setMessageType(60004);
 			JSONObject body = new JSONObject();
 			try {
@@ -137,7 +137,7 @@ public class WeiqiangRequest extends BaseNetWork {
 	 * @params:@param context
 	 * @params:@param phone
 	 */
-	 public void requestWeiqianTranspond(TaskListenerWithState mHttpTaskListener,Context context,String weiboid){
+	 public void requestWeiqiangTranspond(TaskListenerWithState mHttpTaskListener,Context context,String weiboid){
 		 	setMessageType(60005);
 			JSONObject body = new JSONObject();
 			try {
@@ -157,7 +157,7 @@ public class WeiqiangRequest extends BaseNetWork {
 	  * @params:@param context
 	  * @params:@param phone
 	  */
-	 public void requestWeiqianShare(TaskListenerWithState mHttpTaskListener,Context context,String weiboid){
+	 public void requestWeiqiangShare(TaskListenerWithState mHttpTaskListener,Context context,String weiboid){
 		 	setMessageType(60006);
 			JSONObject body = new JSONObject();
 			try {
@@ -177,7 +177,7 @@ public class WeiqiangRequest extends BaseNetWork {
 	  * @params:@param context
 	  * @params:@param phone
 	  */
-	 public void requestWeiqianReply(TaskListenerWithState mHttpTaskListener,Context context,String weiboid,String comments){
+	 public void requestWeiqiangReply(TaskListenerWithState mHttpTaskListener,Context context,String weiboid,String comments){
 		 	setMessageType(60007);
 			JSONObject body = new JSONObject();
 			try {
@@ -199,7 +199,7 @@ public class WeiqiangRequest extends BaseNetWork {
 	  * @params:@param context
 	  * @params:@param phone
 	  */
-	 public void requestWeiqianZan(TaskListenerWithState mHttpTaskListener,Context context,String weiboid){
+	 public void requestWeiqiangZan(TaskListenerWithState mHttpTaskListener,Context context,String weiboid){
 		 	setMessageType(60008);
 			JSONObject body = new JSONObject();
 			try {

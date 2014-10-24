@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
-import com.bgood.xn.bean.CabinetBean;
+import com.bgood.xn.bean.CabinetResultBean;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -47,7 +47,7 @@ public class ResultShowcaseAdapter extends KBaseAdapter
             holder = (ViewHolder) convertView.getTag();
         }
         
-        CabinetBean cabinetDTO = (CabinetBean) mList.get(position);
+        final CabinetResultBean cabinetDTO = (CabinetResultBean) mList.get(position);
         
         if (!TextUtils.isEmpty(cabinetDTO.img_thum)){
             Picasso.with(mActivity).load(cabinetDTO.img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
