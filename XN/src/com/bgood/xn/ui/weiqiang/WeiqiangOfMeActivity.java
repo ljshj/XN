@@ -3,23 +3,23 @@ package com.bgood.xn.ui.weiqiang;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Intent;
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.WeiqiangAdapter;
 import com.bgood.xn.bean.WeiQiangBean;
+import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
-import com.bgood.xn.network.HttpRquestAsyncTask.TaskListenerWithState;
+import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.view.xlistview.XListView;
@@ -77,5 +77,12 @@ public class WeiqiangOfMeActivity extends BaseActivity implements OnItemClickLis
 
 	@Override
 	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
+		if(info.getState() == HttpTaskState.STATE_OK){
+			BaseNetWork bNetWork = info.getmBaseNetWork();
+			JSONObject body = bNetWork.getBody();
+			String strJson = bNetWork.getStrJson();
+			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+			}
+			}
 	}
 }

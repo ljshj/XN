@@ -3,6 +3,7 @@ package com.bgood.xn.adapter;
 import java.util.List;
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.CommentBean;
+import com.bgood.xn.bean.WeiQiangBean;
 import com.squareup.picasso.Picasso;
 /**
  * 
@@ -58,30 +60,30 @@ public class WeiqiangAdapter extends KBaseAdapter
 			holder = (Holder) convertView.getTag();
 		}
 		
-		final CommentBean commentsDTO = (CommentBean) mList.get(position);
-		if (commentsDTO.senderIcon != null && !commentsDTO.senderIcon.equals(""))
+		final WeiQiangBean weiqiangBean = (WeiQiangBean) mList.get(position);
+		if (TextUtils.isEmpty(weiqiangBean.photo))
 		{
-			Picasso.with(mActivity).load(commentsDTO.senderIcon).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
+			Picasso.with(mActivity).load(weiqiangBean.photo).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
 		}
-		holder.nameTv.setText(commentsDTO.senderName);
-		holder.distanceTv.setText(commentsDTO.distance);
-		holder.timeTv.setText(commentsDTO.sendTime);
+		holder.nameTv.setText(weiqiangBean.name);
+		holder.distanceTv.setText(weiqiangBean.distance);
+		holder.timeTv.setText(weiqiangBean.date_time);
 		
-		if (commentsDTO.from_name != null && !commentsDTO.from_name.equals(""))
+		if (TextUtils.isEmpty(weiqiangBean.fromname))
 		{
 			holder.layout_transform_send_name.setVisibility(View.VISIBLE);
-			holder.transform_send_nameTv.setText(commentsDTO.from_name);
+			holder.transform_send_nameTv.setText(weiqiangBean.fromname);
 		}
 		else
 		{
 			holder.layout_transform_send_name.setVisibility(View.GONE);
 		}
 		
-		holder.contentTv.setText(commentsDTO.content);
-		holder.zan_countTv.setText(commentsDTO.like_count + "");
-		holder.reply_countTv.setText(commentsDTO.revertCount + "");
-		holder.transform_send_countTv.setText(commentsDTO.forward_count + "");
-		holder.share_countTv.setText(commentsDTO.share_count + "");
+		holder.contentTv.setText(weiqiangBean.content);
+		holder.zan_countTv.setText(weiqiangBean.like_count);
+		holder.reply_countTv.setText(weiqiangBean.comment_count);
+		holder.transform_send_countTv.setText(weiqiangBean.forward_count);
+		holder.share_countTv.setText(weiqiangBean.share_count);
 		
 		
 		return convertView;

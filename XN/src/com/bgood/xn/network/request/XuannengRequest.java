@@ -7,8 +7,8 @@ import org.json.JSONObject;
 import android.content.Context;
 
 import com.bgood.xn.network.BaseNetWork;
-import com.bgood.xn.network.HttpRquestAsyncTask;
-import com.bgood.xn.network.HttpRquestAsyncTask.TaskListenerWithState;
+import com.bgood.xn.network.HttpRequestAsyncTask;
+import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.system.SystemConfig.ServerType;
 
 /**
@@ -45,7 +45,7 @@ public class XuannengRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		 }
 	
 	 /**
@@ -69,7 +69,7 @@ public class XuannengRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		 }
 	 /**
 		 * 
@@ -101,7 +101,7 @@ public class XuannengRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		 }
 	
 	 /**
@@ -122,7 +122,7 @@ public class XuannengRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		 }
 	
 	 /**
@@ -143,7 +143,7 @@ public class XuannengRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		 }
 	 /**
 		 * 
@@ -164,7 +164,7 @@ public class XuannengRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		 }
 	 /**
 		 * 
@@ -184,7 +184,7 @@ public class XuannengRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		 }
 	 
 	 /**
@@ -207,7 +207,7 @@ public class XuannengRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		 }
 	 /**
 		 * 
@@ -229,7 +229,7 @@ public class XuannengRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		 }
 	 
 	 /**
@@ -243,7 +243,7 @@ public class XuannengRequest extends BaseNetWork {
 		 */
 		 public void requestJokeAd(TaskListenerWithState mHttpTaskListener,Context context,String itemid,String start,String end){
 		 	setMessageType(70010);
-			new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		 }
 	
 	 /**
@@ -264,6 +264,6 @@ public class XuannengRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		 }
 }

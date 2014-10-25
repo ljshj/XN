@@ -15,9 +15,11 @@ import android.widget.Toast;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.UserBean;
 import com.bgood.xn.network.BaseNetWork;
+import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
+import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
-import com.bgood.xn.network.HttpRquestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.view.BToast;
@@ -151,29 +153,15 @@ public class BloodGroupActivity extends BaseActivity implements TaskListenerWith
 
 	@Override
 	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
-		switch (info.getState()) {
-		case STATE_ERROR_SERVER:
-			Toast.makeText(mActivity, "服务器地址错误", Toast.LENGTH_SHORT).show();
-			break;
-		case STATE_NO_NETWORK_CONNECT:
-			Toast.makeText(mActivity, "没有网络，请检查您的网络连接", Toast.LENGTH_SHORT).show();
-			break;
-		case STATE_TIME_OUT:
-			Toast.makeText(mActivity, "连接超时", Toast.LENGTH_SHORT).show();
-			break;
-		case STATE_UNKNOWN:
-			Toast.makeText(mActivity, "未知错误", Toast.LENGTH_SHORT).show();
-			break;
-		case STATE_OK:
+		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			JSONObject body = bNetWork.getBody();
+			String strJson = bNetWork.getStrJson();
+			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				BToast.show(mActivity, "修改成功");
 				Intent intent = getIntent();
 	            intent.putExtra("bloodGroup", m_bloodGroup);
 	            setResult(RESULT_OK, intent);
 				finish();
-		default:
-			break;
-			}
-		}
+		}}}
 }

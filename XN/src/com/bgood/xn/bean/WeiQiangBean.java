@@ -25,15 +25,19 @@ public class WeiQiangBean implements Serializable {
 	public String userid;
 	public String weiboid;
 	public String name;
-	public String phtot;
+	public String photo;
 	public String distance;
 	public String date_time;
 	public String fromuserid;
-	public String fromusername;
+	public String fromname;
 	public String content;
 	public String like_count;
 	public String comment_count;
 	public String forward_count;
 	public String share_count;
+	public String type;
 	
 }
+
+
+

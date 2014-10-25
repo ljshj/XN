@@ -6,14 +6,17 @@ import java.net.UnknownHostException;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.bgood.xn.bean.response.WeiqiangResponse;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.system.SystemConfig;
 import com.bgood.xn.system.SystemConfig.ServerType;
 import com.bgood.xn.utils.ConfigUtil;
 import com.bgood.xn.view.LoadingProgress;
 
-public class HttpRquestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo > {
+public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo > {
 	private String serverUrl = null;	//服务器地址
 	private HttpRequestInfo mRequest;
 	private TaskListenerWithState mListenerWithState;
@@ -21,7 +24,7 @@ public class HttpRquestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo >
 	private BaseNetWork bNetWork;
 	private boolean mCommonLoading = true;	//进度条是通用的
 	
-	public HttpRquestAsyncTask(boolean commonLoading,ServerType type,BaseNetWork b,TaskListenerWithState listner,Context c) {
+	public HttpRequestAsyncTask(boolean commonLoading,ServerType type,BaseNetWork b,TaskListenerWithState listner,Context c) {
 		this.mCommonLoading = commonLoading;
 		this.bNetWork = b;
 		this.context=c;
@@ -29,7 +32,7 @@ public class HttpRquestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo >
 		setRequestUrl(type, b, listner);
 	}
 	
-	public HttpRquestAsyncTask(ServerType type,BaseNetWork b,TaskListenerWithState listner,Context c) {
+	public HttpRequestAsyncTask(ServerType type,BaseNetWork b,TaskListenerWithState listner,Context c) {
 		this.bNetWork = b;
 		this.context=c;
 		this.mRequest = HttpRequestInfo.getHttpRequestInfoInstance();
@@ -106,11 +109,58 @@ public class HttpRquestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo >
 	@Override
 	protected void onPostExecute(HttpResponseInfo response) {
 		super.onPostExecute(response);
+		
+		
 		if(mListenerWithState!=null){
 			mListenerWithState.onTaskOver(mRequest, response);
 		}
 		if(mCommonLoading){
 			LoadingProgress.getInstance().dismiss();
+		}
+		
+		switch (response.getState()) {
+		case STATE_ERROR_SERVER:
+			Toast.makeText(context, "服务器地址错误", Toast.LENGTH_SHORT).show();
+			break;
+		case STATE_NO_NETWORK_CONNECT:
+			Toast.makeText(context, "没有网络，请检查您的网络连接", Toast.LENGTH_SHORT).show();
+			break;
+		case STATE_TIME_OUT:
+			Toast.makeText(context, "连接超时", Toast.LENGTH_SHORT).show();
+			break;
+		case STATE_UNKNOWN:
+			Toast.makeText(context, "未知错误", Toast.LENGTH_SHORT).show();
+			break;
+		case STATE_OK:
+			BaseNetWork bNetWork = response.getmBaseNetWork();
+			switch (bNetWork.getReturnCode()) {
+			case RETURNCODE_OK:
+				break;
+			case RETURNCODE_FAIL:
+				Toast.makeText(context, "操作失败", Toast.LENGTH_SHORT).show();
+				break;
+			case RETURNCODE_MESSAGETYPE_ERROR:
+				Toast.makeText(context, "消息类型错误", Toast.LENGTH_SHORT).show();
+				break;
+			case RETURNCODE_DATA_ERROR:
+				Toast.makeText(context, "数据格式错误", Toast.LENGTH_SHORT).show();
+				break;
+			case RETURNCODE_SESSION_OVER:
+				Toast.makeText(context, "会话过期", Toast.LENGTH_SHORT).show();
+				break;
+			case RETURNCODE_CHAT_DISCONNECT:
+				Toast.makeText(context, "聊天连接已断开", Toast.LENGTH_SHORT).show();
+				break;
+			default:
+				Toast.makeText(context, "未知错误", Toast.LENGTH_SHORT).show();
+				break;
+			}
+			
+			
+			break;
+		default:
+			Toast.makeText(context, "未知错误", Toast.LENGTH_SHORT).show();
+			break;
 		}
 	}
 	

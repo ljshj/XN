@@ -5,8 +5,8 @@ import org.json.JSONObject;
 import android.content.Context;
 
 import com.bgood.xn.network.BaseNetWork;
-import com.bgood.xn.network.HttpRquestAsyncTask;
-import com.bgood.xn.network.HttpRquestAsyncTask.TaskListenerWithState;
+import com.bgood.xn.network.HttpRequestAsyncTask;
+import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.system.SystemConfig.ServerType;
 
 /**
@@ -36,7 +36,7 @@ public class UserCenterRequest extends BaseNetWork {
 			e.printStackTrace();
 		}
 		setBody(body);
-		 new HttpRquestAsyncTask(ServerType.LoginServer,this, mHttpTaskListener, context).execute();
+		 new HttpRequestAsyncTask(ServerType.LoginServer,this, mHttpTaskListener, context).execute();
 	 }
 	 
 	 /**验证手机号并获取备选邦固号列表*/
@@ -50,7 +50,7 @@ public class UserCenterRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		}
 	 
 	 /**更换邦固号列表*/
@@ -63,7 +63,7 @@ public class UserCenterRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		}
 	 
 	 /**发送注册请求*/
@@ -78,7 +78,7 @@ public class UserCenterRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRquestAsyncTask(ServerType.LoginServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(ServerType.LoginServer,this, mHttpTaskListener, context).execute();
 		}
 	
 	 /**会员登录*/
@@ -92,7 +92,7 @@ public class UserCenterRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRquestAsyncTask(ServerType.LoginServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(ServerType.LoginServer,this, mHttpTaskListener, context).execute();
 		}
 	 
 	 /**忘记密码时获取验证码*/
@@ -105,7 +105,7 @@ public class UserCenterRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRquestAsyncTask(ServerType.LoginServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(ServerType.LoginServer,this, mHttpTaskListener, context).execute();
 		}
 	 /**忘记密码时重置密码*/
 	 public void requestReSetPwd(TaskListenerWithState mHttpTaskListener,Context context,String userid,String pwd){
@@ -118,7 +118,7 @@ public class UserCenterRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRquestAsyncTask(ServerType.LoginServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(ServerType.LoginServer,this, mHttpTaskListener, context).execute();
 		}
 	 
 	 /**忘记密码时验证手机号*/
@@ -132,13 +132,13 @@ public class UserCenterRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRquestAsyncTask(ServerType.LoginServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(ServerType.LoginServer,this, mHttpTaskListener, context).execute();
 		}
 	 
 	 /**未登录时获取业务服务器的地址*/
 	 public void requestUnLoginBSServer(TaskListenerWithState mHttpTaskListener,Context context){
 		 	 setMessageType(10009);
-			 new HttpRquestAsyncTask(ServerType.LoginServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(ServerType.LoginServer,this, mHttpTaskListener, context).execute();
 		}
 	 
 	 /**获取个人资料*/
@@ -151,7 +151,7 @@ public class UserCenterRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		}
 	 
 	 /**修改个人资料
@@ -180,7 +180,7 @@ public class UserCenterRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		}
 	
 	 /**
@@ -203,7 +203,7 @@ public class UserCenterRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		}
 	 
 	 /**
@@ -226,7 +226,7 @@ public class UserCenterRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		}
 	 /**
 	  * @todo:我关注的对象与关注我的对象
@@ -248,6 +248,6 @@ public class UserCenterRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		}
 }

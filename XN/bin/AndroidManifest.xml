@@ -98,7 +98,7 @@
             </intent-filter>
         </activity>
         
-
+<!-- 首页模块 -->
         <activity
             android:name=".ui.home.SearchActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -112,398 +112,379 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity
-            android:name=".ui.home.TaShowcaseActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.home.TaWeiqiangActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" />
         
+    <!-- 消息模块 -->    
         <activity
-            android:name=".ui.home.CommentDetailActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" />
-
-  <!--       联系
-        <activity
-            android:name="com.zhuozhong.bandgood.activity.message.MessageMainActivity"
+            android:name=".ui.message.MessageMainActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.zhuozhong.bandgood.activity.message.MessageCenterActivity"
+            android:name=".ui.message.MessageCenterActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.zhuozhong.bandgood.activity.message.MessageFriendActivity"
+            android:name=".ui.message.MessageFriendActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.zhuozhong.bandgood.activity.message.MessageGroupActivity"
+            android:name=".ui.message.MessageGroupActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.zhuozhong.bandgood.activity.message.MessageCommunicationHallActivity"
+            android:name=".ui.message.MessageCommunicationHallActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.zhuozhong.bandgood.activity.message.CommunicationHallCardActivity"
+            android:name=".ui.message.CommunicationHallCardActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.zhuozhong.bandgood.activity.message.UserCardActivity"
+            android:name=".ui.message.UserCardActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.zhuozhong.bandgood.activity.message.UserDataActivity"
+            android:name=".ui.message.UserDataActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.zhuozhong.bandgood.activity.message.GroupDetailActivity"
+            android:name=".ui.message.GroupDetailActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.zhuozhong.bandgood.activity.message.ChatActivity"
+            android:name=".ui.message.ChatActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <activity
-            android:name="com.zhuozhong.bandgood.activity.message.GroupCardActivity"
+            android:name=".ui.message.GroupCardActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.zhuozhong.bandgood.activity.message.GroupAllMemberActivity"
+            android:name=".ui.message.GroupAllMemberActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.zhuozhong.bandgood.activity.message.SearchFriendOrGroupActivity"
+            android:name=".ui.message.SearchFriendOrGroupActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.zhuozhong.bandgood.activity.message.AddFriendActivity"
+            android:name=".ui.message.AddFriendActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
-
-        微墙
+        
+        
+        <!-- 微墙模块 -->
         <activity
-            android:name="com.zhuozhong.bandgood.activity.weiqiang.WeiqiangMainActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.zhuozhong.bandgood.activity.weiqiang.WeiqiangCommentDetailActivity"
+            android:name=".ui.weiqiang.WeiqiangDetailActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.zhuozhong.bandgood.activity.weiqiang.WeiqiangPublishActivity"
+            android:name=".ui.weiqiang.WeiqiangPublishActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.zhuozhong.bandgood.activity.weiqiang.WeiqiangPersonActivity"
+            android:name=".ui.weiqiang.WeiqiangOfMeActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
 
-        个人中心模块
+       <!-- 个人中心 -->
         <activity
-            android:name=".activity.usercenter.UserCenterMainActivity"
+            android:name=".ui.user.UserCenterMainActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.usercenter.AccountCenterActivity"
+            android:name=".ui.user.AccountCenterActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.usercenter.PersonalDataActivity"
+            android:name=".ui.user.PersonalDataActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.usercenter.ModifyPhoneActivity"
+            android:name=".ui.user.ModifyPhoneActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activity.usercenter.ModifyPhoneCodeActivity"
+            android:name=".ui.user.ModifyPhoneCodeActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activity.usercenter.NameActivity"
+            android:name=".ui.user.NameActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activity.usercenter.SignatureActivity"
+            android:name=".ui.user.SignatureActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activity.usercenter.SexActivity"
+            android:name=".ui.user.SexActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.usercenter.AgeActivity"
+            android:name=".ui.user.AgeActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activity.usercenter.BirthdayActivity"
+            android:name=".ui.user.BirthdayActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activity.usercenter.PrivinceActivity"
+            android:name=".ui.user.PrivinceActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.usercenter.CityActivity"
+            android:name=".ui.user.CityActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.usercenter.ConstellationActivity"
+            android:name=".ui.user.ConstellationActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.usercenter.EmailActivity"
+            android:name=".ui.user.EmailActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activity.usercenter.BloodGroupActivity"
+            android:name=".ui.user.BloodGroupActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.usercenter.MyCardActivity"
+            android:name=".ui.user.MyCardActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.usercenter.FollowActivity"
+            android:name=".ui.user.FollowActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.usercenter.VermicelliActivity"
+            android:name=".ui.user.VermicelliActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.usercenter.DynamicActivity"
+            android:name=".ui.user.DynamicActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.usercenter.IMissActivity"
+            android:name=".ui.user.IMissActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activity.usercenter.ICanActivity"
+            android:name=".ui.user.ICanActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activity.usercenter.ShowcaseActivity"
+            android:name=".ui.user.ShowcaseActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activity.usercenter.ProductListActivity"
+            android:name=".ui.user.ProductListActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.usercenter.ProductDetailActivity"
+            android:name=".ui.user.ProductDetailActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.usercenter.AddProductActivity"
+            android:name=".ui.user.AddProductActivity"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.usercenter.ProductEditListActivity"
+            android:name=".ui.user.ProductEditListActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.usercenter.ProductEditActivity"
+            android:name=".ui.user.ProductEditActivity"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" 
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.usercenter.ProductCommentActivity"
+            android:name=".ui.user.ProductCommentActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.usercenter.IndividuationActivity"
+            android:name=".ui.user.IndividuationActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.usercenter.ApplicationManagementActivity"
+            android:name=".ui.user.ApplicationManagementActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.usercenter.MyXuanNengActivity"
+            android:name=".ui.user.MyXuanNengActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.usercenter.MyXuanNengMainActivity"
+            android:name=".ui.user.MyXuanNengMainActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.usercenter.SettingsActivity"
+            android:name=".ui.user.SettingsActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.usercenter.LoginActivity"
+            android:name=".ui.user.LoginActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activity.usercenter.ForgetPasswordPhoneActivity"
+            android:name=".ui.user.ForgetPasswordPhoneActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activity.usercenter.ForgetPasswordCodeActivity"
+            android:name=".ui.user.ForgetPasswordCodeActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activity.usercenter.ForgetPasswordNewPassWordActivity"
+            android:name=".ui.user.ForgetPasswordNewPassWordActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activity.usercenter.RegisterActivity"
+            android:name=".ui.user.RegisterActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activity.usercenter.RegisterCodeActivity"
+            android:name=".ui.user.RegisterCodeActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activity.usercenter.RegisterSelectNumberActivity"
+            android:name=".ui.user.RegisterSelectNumberActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activity.usercenter.RegisterDoneActivity"
+            android:name=".ui.user.RegisterDoneActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activity.usercenter.ModifyPasswordActivity"
+            android:name=".ui.user.ModifyPasswordActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activity.usercenter.ModifyPasswordCodeActivity"
+            android:name=".ui.user.ModifyPasswordCodeActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
 
-        炫能
+       <!-- 炫能 -->
         <activity
-            android:name="com.zhuozhong.bandgood.activity.xuanneng.XuannengMainActivity"
+            android:name=".ui.xuanneng.XuannengMainActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.zhuozhong.bandgood.activity.xuanneng.XuannengHumorRankingActivity"
+            android:name=".ui.xuanneng.XuannengHumorRankingActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.zhuozhong.bandgood.activity.xuanneng.XuannengRankingActivity"
+            android:name=".ui.xuanneng.XuannengRankingActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.zhuozhong.bandgood.activity.xuanneng.XuannengDayActivity"
+            android:name=".ui.xuanneng.XuannengDayActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.zhuozhong.bandgood.activity.xuanneng.XuannengWeekActivity"
+            android:name=".ui.xuanneng.XuannengWeekActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.zhuozhong.bandgood.activity.xuanneng.XuannengMonthActivity"
+            android:name=".ui.xuanneng.XuannengMonthActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.zhuozhong.bandgood.activity.xuanneng.XuannengYearActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" >
-        </activity>
-        
-        <activity
-            android:name="com.zhuozhong.bandgood.activity.xuanneng.XuannengHumorRandomActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.zhuozhong.bandgood.activity.xuanneng.XuannengHumorOrderActivity"
+            android:name=".ui.xuanneng.XuannengYearActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         
         <activity
-            android:name="com.zhuozhong.bandgood.activity.xuanneng.XuanNengDetailActivity"
+            android:name=".ui.xuanneng.XuannengHumorRandomActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.zhuozhong.bandgood.activity.xuanneng.XuannengHumorMainActivity"
+            android:name=".ui.xuanneng.XuannengHumorOrderActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+        <activity
+            android:name=".ui.xuanneng.XuanNengDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.xuanneng.XuannengHumorMainActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Holo.Light.NoActionBar.Tab" >
         </activity>
         <activity
-            android:name="com.zhuozhong.bandgood.activity.xuanneng.XuannengResponseActivity"
+            android:name=".ui.xuanneng.XuannengResponseActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
 
-        <service android:name="com.zhuozhong.bandgood.service.StartUpService" >
-        </service> -->
 
         <!-- 极光推送 -->
         <activity

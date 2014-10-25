@@ -6,8 +6,8 @@ import org.json.JSONObject;
 import android.content.Context;
 
 import com.bgood.xn.network.BaseNetWork;
-import com.bgood.xn.network.HttpRquestAsyncTask;
-import com.bgood.xn.network.HttpRquestAsyncTask.TaskListenerWithState;
+import com.bgood.xn.network.HttpRequestAsyncTask;
+import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.system.SystemConfig.ServerType;
 /**
  * @todo:首页网络请求接口
@@ -50,7 +50,7 @@ public class HomeRequest  extends BaseNetWork {
 			e.printStackTrace();
 		}
 		setBody(body);
-		new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 	 }
 	 
 		
@@ -79,7 +79,7 @@ public class HomeRequest  extends BaseNetWork {
 			e.printStackTrace();
 		}
 		setBody(body);
-		new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 	}
 	
 	
@@ -107,7 +107,7 @@ public class HomeRequest  extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		}
 	
 	 /**
@@ -134,7 +134,7 @@ public class HomeRequest  extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		}
 	 /**
 	  * 
@@ -160,7 +160,7 @@ public class HomeRequest  extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		}
 	
 	 /**
@@ -176,7 +176,7 @@ public class HomeRequest  extends BaseNetWork {
 		public void requestHotWord(TaskListenerWithState mHttpTaskListener,Context context)
 		{
 			setMessageType(40007);
-			new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			new HttpRequestAsyncTask(false,ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		}
 }
 
@@ -206,5 +206,5 @@ public class HomeRequest  extends BaseNetWork {
 //			e.printStackTrace();
 //		}
 //		setBody(body);
-//		new HttpRquestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+//		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 //	}
