@@ -7,6 +7,6 @@
 
     <include
         android:id="@+id/xuanneng_humor_order_xlv"
-        layout="@layout/item_comment_xlistview" />
+        layout="@layout/item_weiqiang_xlistview" />
 
 </LinearLayout>

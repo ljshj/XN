@@ -153,11 +153,11 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		
 		//加载布局
 		LayoutInflater inflater = LayoutInflater.from(this);
-		View view1 = inflater.inflate(R.layout.result_listview, null);
+		View view1 = inflater.inflate(R.layout.home_layout_result_listview, null);
 		m_memberXLv = (XListView) view1.findViewById(R.id.xListView);
-		View view2 = inflater.inflate(R.layout.result_listview, null);
+		View view2 = inflater.inflate(R.layout.home_layout_result_listview, null);
 		m_weiQiangXLv = (XListView) view2.findViewById(R.id.xListView);
-		View view3 = inflater.inflate(R.layout.result_listview, null);
+		View view3 = inflater.inflate(R.layout.home_layout_result_listview, null);
 		m_showcaseXLv = (XListView) view3.findViewById(R.id.xListView);
 		
 		

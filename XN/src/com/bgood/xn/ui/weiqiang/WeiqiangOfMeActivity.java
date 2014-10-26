@@ -57,7 +57,7 @@ public class WeiqiangOfMeActivity extends BaseActivity implements OnItemClickLis
 	private void initViews()
 	{
 		m_weiqiang_person_listview = (XListView) findViewById(R.id.weiqiang_person_listview);
-		adapter = new WeiqiangAdapter(m_list,mActivity);
+		adapter = new WeiqiangAdapter(m_list,mActivity,this);
 		m_weiqiang_person_listview.setAdapter(adapter);
 		m_weiqiang_person_listview.setOnItemClickListener(this);
 	}

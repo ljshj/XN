@@ -21,6 +21,7 @@ import com.bgood.xn.R;
 import com.bgood.xn.bean.UserBean;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.ui.MainActivity;
+import com.bgood.xn.widget.TitleBar;
 
 /**
  * 账号中心页面
@@ -45,9 +46,10 @@ public class AccountCenterActivity extends BaseActivity implements OnClickListen
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_account_center);
+        setContentView(R.layout.user_layout_account_center);
         
         mUserBean = (UserBean) getIntent().getSerializableExtra("userDTO");
+        (new TitleBar(mActivity)).initTitleBar("账号中心");
         initView();
         setData();
     }
@@ -56,7 +58,6 @@ public class AccountCenterActivity extends BaseActivity implements OnClickListen
      */
     private void initView()
     {
-        m_backBtn = (Button) findViewById(R.id.account_center_btn_back);
         m_userPropertyTv = (TextView) findViewById(R.id.account_center_tv_user_property);
         m_experienceTv = (TextView) findViewById(R.id.account_center_tv_experience);
         m_totalExperienceTv = (TextView) findViewById(R.id.account_center_tv_total_experience);
@@ -92,9 +93,6 @@ public class AccountCenterActivity extends BaseActivity implements OnClickListen
     {
         switch(v.getId())
         {
-            case R.id.account_center_btn_back:
-                AccountCenterActivity.this.finish();
-                break;
             // 修改密码
 //            case R.id.account_center_rl_modify_password:
 //                Intent intent1 = new Intent(AccountCenterActivity.this, ModifyPasswordActivity.class);

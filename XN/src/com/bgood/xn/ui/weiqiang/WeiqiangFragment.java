@@ -86,7 +86,7 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-		layout = inflater.inflate(R.layout.layout_weiqiang_main, container, false);
+		layout = inflater.inflate(R.layout.weiqiang_layout_main, container, false);
 		initViews();
 		setListeners();
 		setAdapter();
@@ -104,8 +104,8 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 		vp_weiqiang_type_select = (ViewPager) layout.findViewById(R.id.vp_weiqiang_type_select);
 		checkType(0);
 		
-		m_followFriendsLayout = inflater.inflate(R.layout.item_comment_xlistview, null);
-		m_allFriendsLayout = inflater.inflate(R.layout.item_comment_xlistview, null);
+		m_followFriendsLayout = inflater.inflate(R.layout.item_weiqiang_xlistview, null);
+		m_allFriendsLayout = inflater.inflate(R.layout.item_weiqiang_xlistview, null);
 		m_pagerList = new ArrayList<View>();
 		m_pagerList.add(m_allFriendsLayout);
 		m_pagerList.add(m_followFriendsLayout);
@@ -114,10 +114,10 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 		
 		m_allFriendsXLv = (XListView) m_allFriendsLayout.findViewById(R.id.common_xlv); 
 		
-		m_followFriendsAdapter = new WeiqiangAdapter(m_followFriendsList,mActivity);
+		m_followFriendsAdapter = new WeiqiangAdapter(m_followFriendsList,mActivity,this);
 		m_followFriendsXLv.setAdapter(m_followFriendsAdapter);
 		
-		m_allFriendsAdapter = new WeiqiangAdapter(m_allFriendsList,mActivity);
+		m_allFriendsAdapter = new WeiqiangAdapter(m_allFriendsList,mActivity,this);
 		m_allFriendsXLv.setAdapter(m_allFriendsAdapter);
 	}
 	
@@ -228,6 +228,7 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 	public void onClick(View v)
 	{
 		Intent intent = null;
+		final WeiQiangBean wqb = (WeiQiangBean) v.getTag();
 		switch (v.getId())
 		{
 		case R.id.layout_weiqiang_type_left_select:

@@ -39,7 +39,7 @@ public class XuanNengAdapter extends KBaseAdapter
 		if (convertView == null)
 		{
 			holder = new Holder();
-			convertView = mInflater.inflate(R.layout.item_weiqiang_comment, parent, false);
+			convertView = mInflater.inflate(R.layout.item_weiqiang, parent, false);
 			holder.iconImgV = (ImageView) convertView.findViewById(R.id.weiqiang_detail_item_imgv_icon);
 			holder.nameTv = (TextView) convertView.findViewById(R.id.weiqiang_detail_item_tv_name);
 			holder.distanceTv = (TextView) convertView.findViewById(R.id.weiqiang_detail_item_tv_distance);
@@ -48,13 +48,9 @@ public class XuanNengAdapter extends KBaseAdapter
 			holder.layout_transform_send_name = (LinearLayout) convertView.findViewById(R.id.layout_transform_send);
 			holder.transform_send_nameTv = (TextView) convertView.findViewById(R.id.weiqiang_detail_item_tv_transform_send_by_name);
 			holder.contentTv = (TextView) convertView.findViewById(R.id.weiqiang_detail_item_tv_content);
-			holder.layout_zan_count = (LinearLayout) convertView.findViewById(R.id.weiqiang_detail_item_ll_zan_count);
 			holder.zan_countTv = (TextView) convertView.findViewById(R.id.weiqiang_detail_item_tv_zan_count);
-			holder.layout_reply_count = (LinearLayout) convertView.findViewById(R.id.weiqiang_detail_item_ll_reply_count);
 			holder.reply_countTv = (TextView) convertView.findViewById(R.id.weiqiang_detail_item_tv_reply_count);
-			holder.layout_transform_send_count = (LinearLayout) convertView.findViewById(R.id.weiqiang_detail_item_ll_transform_send_count);
 			holder.transform_send_countTv = (TextView) convertView.findViewById(R.id.weiqiang_detail_item_tv_transform_send_count);
-			holder.layout_share_count = (LinearLayout) convertView.findViewById(R.id.weiqiang_detail_item_ll_share_count);
 			holder.share_countTv = (TextView) convertView.findViewById(R.id.weiqiang_detail_item_tv_share_count);
 			holder.layout_images = (LinearLayout) convertView.findViewById(R.id.weiqiang_detail_item_ll_comment_images);
 			holder.oneImgV = (ImageView) convertView.findViewById(R.id.weiqiang_detail_item_imgv_one);
@@ -163,13 +159,9 @@ public class XuanNengAdapter extends KBaseAdapter
 		public LinearLayout layout_transform_send_name;
 		public TextView transform_send_nameTv;
 		public TextView contentTv;
-		public LinearLayout layout_zan_count;
 		public TextView zan_countTv;
-		public LinearLayout layout_reply_count;
 		public TextView reply_countTv;
-		public LinearLayout layout_transform_send_count;
 		public TextView transform_send_countTv;
-		public LinearLayout layout_share_count;
 		public TextView share_countTv;
 		public LinearLayout layout_images;
 		public ImageView oneImgV;

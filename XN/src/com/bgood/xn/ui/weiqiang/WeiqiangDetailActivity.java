@@ -30,6 +30,7 @@ import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.widget.CMyGridView;
+import com.bgood.xn.widget.TitleBar;
 
 
 /**
@@ -73,6 +74,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_weiqiang_detail);
 		mWeiQiangBean = (WeiQiangBean) getIntent().getSerializableExtra(BEAN_WEIQIANG_KEY);
+		(new TitleBar(mActivity)).initTitleBar("微墙正文");
 		findView();
 		setListener();
 		WeiqiangRequest.getInstance().requestWeiqiangContent(this, this, mWeiQiangBean.userid, String.valueOf(comment_start), String.valueOf(comment_start+PAGE_SIZE_ADD));
@@ -84,7 +86,6 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	 */
 	private void findView()
 	{
-	    m_replyLl = (LinearLayout) findViewById(R.id.weiqiang_detail_ll_reply);  // 评论
 	    m_replyContentEt = (EditText) findViewById(R.id.weiqiang_detail_et_reply_content);  // 评论内容
 	    m_replySendBtn = (Button) findViewById(R.id.weiqiang_detail_btn_reply_send);  // 发送评论按钮
 	    
@@ -212,7 +213,9 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			JSONObject body = bNetWork.getBody();
 			String strJson = bNetWork.getStrJson();
-			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){}}
-			
+			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+				
+			}
+		}
 	}
 }
