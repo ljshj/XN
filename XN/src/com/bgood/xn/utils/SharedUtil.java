@@ -26,9 +26,9 @@ import com.umeng.socialize.sso.UMWXHandler;
  */
 public class SharedUtil {
 	
-	public static final String WX_APP_ID = "";
+	public static final String WX_APP_ID = "wx2a2f1b0337ef4fe3";
 	
-	public static final String QQ_APP_ID = "";
+	public static final String QQ_APP_ID = "101075738";
 	
 	// 首先在您的Activity中添加如下成员变量
 	private static final UMSocialService sController = UMServiceFactory.getUMSocialService("com.umeng.share", RequestType.SOCIAL);

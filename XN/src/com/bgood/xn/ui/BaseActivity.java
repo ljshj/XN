@@ -1,11 +1,12 @@
 package com.bgood.xn.ui;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.inputmethod.InputMethodManager;
+
+import com.bgood.xn.db.PreferenceUtil;
 
 
 public class BaseActivity extends Activity {
@@ -14,11 +15,13 @@ public class BaseActivity extends Activity {
 	public Activity mActivity = null;
 	protected InputMethodManager im = null;
 	public static final int PAGE_SIZE_ADD = 10;
+	public PreferenceUtil pUitl;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		inflater = LayoutInflater.from(this);
 		im = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+		pUitl = new PreferenceUtil(this, PreferenceUtil.PREFERENCE_FILE);
 		this.mActivity = this;
 	}
 	

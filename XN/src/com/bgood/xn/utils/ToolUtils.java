@@ -4,6 +4,7 @@ package com.bgood.xn.utils;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
@@ -12,6 +13,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -485,17 +487,7 @@ public class ToolUtils {
 		}
 		return str;
 	}
-	
-	/**
-	 * 获取当前时间（格式:2013-06-18 17:36:00）
-	 * @return
-	 */
-	public static String getNowTime(){
-		Date now = new Date();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm:ss");
-		String str = dateFormat.format( now ); 
-		return str;
-	}
+
 	
 	/**
 	 * 手机号验证
@@ -532,5 +524,62 @@ public class ToolUtils {
  			b = m.matches(); 
 		}  
 		return b;
+	}
+	
+	/**
+	 * 时间格式
+	 * date (MM-dd HH:mm:ss)
+	 * @return
+	 */
+	@SuppressWarnings("deprecation")
+	public static String getFormatDate(String date){
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date currentDate = new Date();
+		Date fromDate = null;
+		StringBuffer sb = new StringBuffer();
+		try {
+			fromDate = dateFormat.parse(date);
+			
+			if(fromDate.getYear() == currentDate.getYear() && fromDate.getMonth() == currentDate.getMonth()){	//如果是同年同月
+				if(fromDate.getDate() == currentDate.getDate()){
+					sb.append("今天");
+				}else if(fromDate.getDate() == currentDate.getDate()-1){
+					sb.append("昨天");
+				}else if(fromDate.getDate() == currentDate.getDate()-2){
+					sb.append("前天");
+				}else{
+					sb.append(fromDate.getMonth()+1).append("月").append(fromDate.getDate()).append("日");
+				}
+				sb.append(" ").append(fromDate.getHours()).append(":").append(fromDate.getMinutes());
+				sb.append(fromDate.getHours()>12 ? "PM":"AM");
+				return sb.toString();
+				
+			}else if(fromDate.getYear() == currentDate.getYear() && fromDate.getMonth() != currentDate.getMonth()){//同年不同月
+				return new SimpleDateFormat("MM-dd HH:mm").format(fromDate);
+			}else if(fromDate.getYear() == currentDate.getYear() && fromDate.getMonth() == currentDate.getMonth()){//不同年且不同月
+				return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(fromDate);
+			}
+			
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @todo:获取当前时间
+	 * @date:2014-10-27 下午4:33:32
+	 * @author:hg_liuzl@163.com
+	 * @params:
+	 */
+	public static String getNowTime() {
+		
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		String nowTime = sdf.format(date);
+		
+		return getFormatDate(nowTime);
 	}
 }

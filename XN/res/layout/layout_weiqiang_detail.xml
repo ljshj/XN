@@ -5,14 +5,13 @@
     android:orientation="vertical"
      >
      
-     <include layout="@layout/title_bar"/>
+    	 <include layout="@layout/title_bar"/>
  			<com.bgood.xn.view.xlistview.XListView
                 android:id="@+id/weiqiang_detail_xlv"
                 style="@style/common_listview"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="#000000"
                 android:dividerHeight="1dp"
                 >
             </com.bgood.xn.view.xlistview.XListView>

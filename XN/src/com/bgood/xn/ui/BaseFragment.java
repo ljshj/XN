@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.bgood.xn.db.PreferenceUtil;
+
 /**
  * @todo:所有Fragment基类
  * @date:2014-10-22 下午1:39:05
@@ -19,12 +21,14 @@ public class BaseFragment extends Fragment {
 	public Activity mActivity = null;
 	public LayoutInflater inflater = null;
 	public View layout;
+	public PreferenceUtil pUitl;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mActivity = getActivity();
 		inflater = LayoutInflater.from(mActivity);
+		pUitl = new PreferenceUtil(mActivity, PreferenceUtil.PREFERENCE_FILE);
 	}
 	
 	public void finish() {

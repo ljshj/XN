@@ -598,7 +598,7 @@
         <!-- ###################添加UmengAppkey###################### -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="541a53e8fd98c5b09d0276e5" >
+            android:value="544e311cfd98c5dc4e00a0de" >
         </meta-data>
         <meta-data
             android:name="UMENG_CHANNEL"

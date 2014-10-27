@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.CommentBean;
 import com.bgood.xn.bean.WeiQiangBean;
+import com.bgood.xn.utils.ToolUtils;
 import com.squareup.picasso.Picasso;
 /**
  * 
@@ -23,8 +24,6 @@ import com.squareup.picasso.Picasso;
  */
 public class WeiqiangAdapter extends KBaseAdapter 
 {
-
-	
 
 	public WeiqiangAdapter(List<?> mList, Activity mActivity,OnClickListener listener) {
 		super(mList, mActivity, listener);
@@ -61,16 +60,17 @@ public class WeiqiangAdapter extends KBaseAdapter
 		}
 		
 		final WeiQiangBean weiqiangBean = (WeiQiangBean) mList.get(position);
-		convertView.setTag(weiqiangBean);
+		
 		if (TextUtils.isEmpty(weiqiangBean.photo))
 		{
 			Picasso.with(mActivity).load(weiqiangBean.photo).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
 		}
 		holder.nameTv.setText(weiqiangBean.name);
 		holder.distanceTv.setText(weiqiangBean.distance);
-		holder.timeTv.setText(weiqiangBean.date_time);
+		holder.distanceTv.setVisibility(View.GONE);
+		holder.timeTv.setText(ToolUtils.getFormatDate(weiqiangBean.date_time));
 		
-		if (TextUtils.isEmpty(weiqiangBean.fromname))
+		if (!TextUtils.isEmpty(weiqiangBean.fromname))
 		{
 			holder.layout_transform_send_name.setVisibility(View.VISIBLE);
 			holder.transform_send_nameTv.setText(weiqiangBean.fromname);
@@ -79,15 +79,27 @@ public class WeiqiangAdapter extends KBaseAdapter
 		{
 			holder.layout_transform_send_name.setVisibility(View.GONE);
 		}
+		
+		holder.deleteImgV.setOnClickListener(mListener);
+		holder.deleteImgV.setTag(weiqiangBean);
+		holder.deleteImgV.setVisibility(View.GONE);
+		
 		holder.contentTv.setText(weiqiangBean.content);
 		holder.zan_countTv.setText(weiqiangBean.like_count);
 		holder.zan_countTv.setOnClickListener(mListener);
+		holder.zan_countTv.setTag(weiqiangBean);
+		
 		holder.reply_countTv.setText(weiqiangBean.comment_count);
 		holder.reply_countTv.setOnClickListener(mListener);
+		holder.reply_countTv.setTag(weiqiangBean);
+		
 		holder.transform_send_countTv.setText(weiqiangBean.forward_count);
 		holder.transform_send_countTv.setOnClickListener(mListener);
+		holder.transform_send_countTv.setTag(weiqiangBean);
+		
 		holder.share_countTv.setText(weiqiangBean.share_count);
 		holder.share_countTv.setOnClickListener(mListener);
+		holder.share_countTv.setTag(weiqiangBean);
 		
 		
 		return convertView;

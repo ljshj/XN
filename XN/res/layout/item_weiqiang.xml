@@ -2,28 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+	android:descendantFocusability="blocksDescendants"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:background="@drawable/img_user_center_bg"
         android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:filterTouchesWhenObscured="true"
+            android:layout_margin="10dp"
             android:orientation="vertical" >
 
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:orientation="horizontal" >
 
@@ -31,13 +28,13 @@
                     android:id="@+id/weiqiang_detail_item_imgv_icon"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:layout_centerVertical="true"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_launcher" />
 
                 <LinearLayout
                     android:id="@+id/layout_comment"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:orientation="vertical" >
@@ -61,40 +58,15 @@
                             android:textColor="@color/black"
                             android:textSize="@dimen/weiqiang_comment" />
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="horizontal" >
-
-                            <ImageView
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:background="@drawable/img_weiqiang_distance_indicator" />
 
                             <TextView
                                 android:id="@+id/weiqiang_detail_item_tv_distance"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="1KM"
+                                android:drawableLeft="@drawable/img_weiqiang_distance_indicator"
                                 android:textColor="@color/grey1"
                                 android:textSize="13dp" />
-                        </LinearLayout>
-                        
-                        <RelativeLayout 
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-                            
-                            <ImageView 
-                            android:id="@+id/weiqiang_detail_item_imgv_delete"
-                            android:layout_width="50dp"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:src="@drawable/img_common_delete"/>
-                            
-                        </RelativeLayout>
-                        
-                        
                         
                     </LinearLayout>
 
@@ -106,9 +78,14 @@
                         android:focusableInTouchMode="true"
                         android:singleLine="true"
                         android:text="昨天 4:45PM"
-                        android:textColor="@color/grey1"
-                        android:textSize="13dp" />
+                        android:textColor="@color/grey1"/>
                 </LinearLayout>
+                   <ImageView 
+                            android:id="@+id/weiqiang_detail_item_imgv_delete"
+                            android:layout_width="50dp"
+                            android:layout_gravity="top|right"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/img_common_delete"/>
             </LinearLayout>
 
             <LinearLayout
@@ -196,58 +173,50 @@
             android:layout_height="50dp"
             android:background="@drawable/img_weiqiang_more_bg"
             android:divider="@drawable/img_common_ll_divider"
-            android:dividerPadding="10dp"
-            android:gravity="center"
+            android:dividerPadding="5dp"
             android:orientation="horizontal"
             android:showDividers="middle" >
             
+	            <LinearLayout 
+	               style="@style/action_layout"
+	                >
+			    <TextView
+                   android:id="@+id/weiqiang_detail_item_tv_zan_count"
+                   android:text="(1)"
+                   android:drawableLeft="@drawable/img_common_zan"
+                   style="@style/action_text"/>
+			    </LinearLayout>
 
-                <TextView
-                    android:id="@+id/weiqiang_detail_item_tv_zan_count"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
-                    android:text="(244)"
-                    android:drawableLeft="@drawable/img_common_zan"
-                    android:textColor="@color/grey2"
-                    android:textSize="@dimen/weiqiang_comment" />
-
-
+	             <LinearLayout 
+	               style="@style/action_layout"
+	                >
                 <TextView
                     android:id="@+id/weiqiang_detail_item_tv_reply_count"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
                     android:text="(1)"
-                    android:drawableLeft="@drawable/img_weiqiang_reply_indicator"
-                    android:textColor="@color/grey2"
-                    android:textSize="@dimen/weiqiang_comment" />
+                    android:drawableStart="@drawable/img_weiqiang_reply_indicator"
+                    style="@style/action_text"/>
+                </LinearLayout>
 
-
-
+	             <LinearLayout 
+	               style="@style/action_layout"
+	                >
                 <TextView
                     android:id="@+id/weiqiang_detail_item_tv_transform_send_count"
-                   android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
-                    android:text="(244)"
+                    android:text="(1)"
                     android:drawableLeft="@drawable/img_weiqiang_send_indicator"
-                    android:textColor="@color/grey2"
-                    android:textSize="@dimen/weiqiang_comment" />
-
+                    style="@style/action_text"/>
+				</LinearLayout>
+				
+				 <LinearLayout 
+	                style="@style/action_layout"
+	                >
                 <TextView
                     android:id="@+id/weiqiang_detail_item_tv_share_count"
-                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
-                    android:text="(244)"
+                    android:text="(1)"
                     android:drawableLeft="@drawable/img_weiqiang_share_indicator"
-                    android:textColor="@color/grey2"
-                    android:textSize="@dimen/weiqiang_comment" />
+                    style="@style/action_text"/>
+                </LinearLayout>
+                
         </LinearLayout>
     </LinearLayout>
 
