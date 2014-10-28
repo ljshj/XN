@@ -163,8 +163,9 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 		if (popupWindow_more == null)
 		{
 			View contentView = inflater.inflate(R.layout.popup_weiqiang_main_more_operate, null);
-			contentView.findViewById(R.id.weiqiang_main_ll_publish).setOnClickListener(this);
-			contentView.findViewById(R.id.weiqiang_main_ll_my_weiqiang).setOnClickListener(this);
+			contentView.findViewById(R.id.tv_weiqiang_publish).setOnClickListener(this);
+			contentView.findViewById(R.id.tv_weiqiang_me).setOnClickListener(this);
+			contentView.findViewById(R.id.tv_weiqiang_mention).setOnClickListener(this);
 			popupWindow_more = new PopupWindow(contentView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			popupWindow_more.setFocusable(true);
 			popupWindow_more.setOnDismissListener(new OnDismissListener()
@@ -244,38 +245,55 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 				showPopupMore();
 			}
 			break;
-		case R.id.weiqiang_main_ll_my_weiqiang:
+		case R.id.tv_weiqiang_me:
 			dissmissPopupMore();
 			intent = new Intent(mActivity, WeiqiangOfMeActivity.class);
 			mActivity.startActivity(intent);
 			break;
-		case R.id.weiqiang_main_ll_publish:
+		case R.id.tv_weiqiang_publish:
 			dissmissPopupMore();
 			intent = new Intent(mActivity, WeiqiangPublishActivity.class);
 			mActivity.startActivity(intent);
 			break;
-		case R.id.weiqiang_detail_item_imgv_delete:	//删除
+		case R.id.tv_weiqiang_mention:
+			dissmissPopupMore();
+			intent = new Intent(mActivity, WeiqiangMentionActivity.class);
+			mActivity.startActivity(intent);
+			break;
+		case R.id.iv_delete:	//删除
 			wqb = (WeiQiangBean) v.getTag();
 			BToast.show(mActivity, "删除"+wqb.weiboid);
 			break;
-		case R.id.weiqiang_detail_item_tv_zan_count:	//赞
+		case R.id.tv_zan_count:	//赞
 			wqb = (WeiQiangBean) v.getTag();
 			mActionWeiqiang = wqb;
+			if(m_type == WEIQIANG_ALL){
+				mActionWeiqiang.like_count = String.valueOf(Integer.valueOf(mActionWeiqiang.like_count)+1);
+				m_allFriendsAdapter.notifyDataSetChanged();
+			}else{
+				mActionWeiqiang.like_count = String.valueOf(Integer.valueOf(mActionWeiqiang.like_count)+1);
+				m_followFriendsAdapter.notifyDataSetChanged();
+			}
 			WeiqiangRequest.getInstance().requestWeiqiangZan(this, mActivity, wqb.weiboid);
 			break;
-		case R.id.weiqiang_detail_item_tv_reply_count:	//评论
+		case R.id.tv_comment_count:	//评论
 			wqb = (WeiQiangBean) v.getTag();
 			BToast.show(mActivity, "评论"+wqb.weiboid);
 			break;
-		case R.id.weiqiang_detail_item_tv_transform_send_count:	//转发
+		case R.id.tv_transpont_count:	//转发
 			wqb = (WeiQiangBean) v.getTag();
+			if(m_type == WEIQIANG_ALL){
+				mActionWeiqiang.forward_count = String.valueOf(Integer.valueOf(mActionWeiqiang.forward_count)+1);
+				m_allFriendsAdapter.notifyDataSetChanged();
+			}else{
+				mActionWeiqiang.forward_count = String.valueOf(Integer.valueOf(mActionWeiqiang.forward_count)+1);
+				m_followFriendsAdapter.notifyDataSetChanged();
+			}
 			WeiqiangRequest.getInstance().requestWeiqiangTranspond(this, mActivity, wqb.weiboid);
 			break;
-		case R.id.weiqiang_detail_item_tv_share_count:	//分享
+		case R.id.tv_share_count:	//分享
 			wqb = (WeiQiangBean) v.getTag();
-			
 			SharedUtil.openShare(getActivity(), "炫能App",wqb.content, wqb.photo);
-			
 			break;
 		}
 	}
@@ -462,26 +480,12 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 				case 860004:
 					break;
 				case 860005:	//转发微墙
-					if(m_type == WEIQIANG_ALL){
-						mActionWeiqiang.forward_count = String.valueOf(Integer.valueOf(mActionWeiqiang.forward_count)+1);
-						m_allFriendsAdapter.notifyDataSetChanged();
-					}else{
-						mActionWeiqiang.forward_count = String.valueOf(Integer.valueOf(mActionWeiqiang.forward_count)+1);
-						m_followFriendsAdapter.notifyDataSetChanged();
-					}
 					break;
 				case 860006:
 					break;
 				case 860007:
 					break;
 				case 860008:	//赞微墙
-					if(m_type == WEIQIANG_ALL){
-						mActionWeiqiang.like_count = String.valueOf(Integer.valueOf(mActionWeiqiang.like_count)+1);
-						m_allFriendsAdapter.notifyDataSetChanged();
-					}else{
-						mActionWeiqiang.like_count = String.valueOf(Integer.valueOf(mActionWeiqiang.like_count)+1);
-						m_followFriendsAdapter.notifyDataSetChanged();
-					}
 					break;
 				}
 				

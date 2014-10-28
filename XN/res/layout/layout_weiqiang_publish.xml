@@ -4,16 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <RelativeLayout style="@style/common_top_title_style" >
-
-        <Button
-            android:id="@+id/return_btn"
-            style="@style/common_btn_back_style" />
-
-        <TextView
-            style="@style/common_tv_title_style"
-            android:text="发微墙" />
-    </RelativeLayout>
+	<include layout="@layout/title_bar"/>
 
     <ScrollView
         android:layout_width="fill_parent"

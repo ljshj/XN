@@ -533,7 +533,7 @@ public class ToolUtils {
 	 */
 	@SuppressWarnings("deprecation")
 	public static String getFormatDate(String date){
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date currentDate = new Date();
 		Date fromDate = null;
 		StringBuffer sb = new StringBuffer();

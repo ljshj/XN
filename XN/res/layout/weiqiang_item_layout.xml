@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_user_center_bg"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical" >
+    
+               <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/iv_author"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_launcher" />
+
+                <LinearLayout
+                    android:id="@+id/layout_comment"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/tv_weiqiang_author"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:ellipsize="marquee"
+                            android:focusableInTouchMode="true"
+                            android:marqueeRepeatLimit="1"
+                            android:singleLine="true"
+                            android:text="追求永恒"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/weiqiang_comment" />
+
+
+                            <TextView
+                                android:id="@+id/tv_weiqiang_distance"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="1KM"
+                                android:drawableLeft="@drawable/img_weiqiang_distance_indicator"
+                                android:textColor="@color/grey1"
+                                android:textSize="13dp" />
+                        
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_weiqiang_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:focusableInTouchMode="true"
+                        android:singleLine="true"
+                        android:text="昨天 4:45PM"
+                        android:textColor="@color/grey1"/>
+                </LinearLayout>
+                   <ImageView 
+                            android:id="@+id/iv_delete"
+                            android:layout_width="50dp"
+                            android:layout_gravity="top|right"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/img_common_delete"/>
+            </LinearLayout>
+            
+             <TextView
+             android:id="@+id/tv_content_fromuser"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="愤怒的小鸟"
+             android:textColor="@color/home_type_text_select"
+             android:textSize="@dimen/weiqiang_comment" />
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:focusableInTouchMode="true"
+                android:maxLines="5"
+                android:text="内容"
+                android:textColor="@color/black"
+                android:textSize="@dimen/weiqiang_comment" />
+
+                    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/img_weiqiang_more_bg"
+            android:divider="@drawable/img_common_ll_divider"
+            android:dividerPadding="5dp"
+            android:orientation="horizontal"
+            android:showDividers="middle" >
+            
+	            <LinearLayout 
+	               style="@style/action_layout"
+	                >
+			    <TextView
+                   android:id="@+id/tv_zan_count"
+                   android:text="(1)"
+                   android:drawableLeft="@drawable/img_common_zan"
+                   style="@style/action_text"/>
+			    </LinearLayout>
+
+	             <LinearLayout 
+	               style="@style/action_layout"
+	                >
+                <TextView
+                    android:id="@+id/tv_comment_count"
+                    android:text="(1)"
+                    android:drawableStart="@drawable/img_weiqiang_reply_indicator"
+                    style="@style/action_text"/>
+                </LinearLayout>
+
+	             <LinearLayout 
+	               style="@style/action_layout"
+	                >
+                <TextView
+                    android:id="@+id/tv_transpont_count"
+                    android:text="(1)"
+                    android:drawableLeft="@drawable/img_weiqiang_send_indicator"
+                    style="@style/action_text"/>
+				</LinearLayout>
+				
+				 <LinearLayout 
+	                style="@style/action_layout"
+	                >
+                <TextView
+                    android:id="@+id/tv_share_count"
+                    android:text="(1)"
+                    android:drawableLeft="@drawable/img_weiqiang_share_indicator"
+                    style="@style/action_text"/>
+                </LinearLayout>
+                
+        </LinearLayout>
+            
+</LinearLayout>

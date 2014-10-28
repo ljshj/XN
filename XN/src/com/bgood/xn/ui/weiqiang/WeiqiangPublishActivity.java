@@ -27,6 +27,7 @@ import com.bgood.xn.adapter.WeiqiangPublishAdapter;
 import com.bgood.xn.bean.UserBean.UserState;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.widget.TitleBar;
 
 /**
  * 
@@ -48,6 +49,7 @@ public class WeiqiangPublishActivity extends BaseActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_weiqiang_publish);
+		(new TitleBar(mActivity)).initTitleBar("发微墙");
 		initViews();
 	}
 

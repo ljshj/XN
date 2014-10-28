@@ -16,7 +16,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <!-- Required  极光推送 -->
-    <uses-permission android:name="com.zhuozhong.bandgood.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="com.bgood.xn.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -203,7 +203,12 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
-
+        <activity
+            android:name=".ui.weiqiang.WeiqiangMentionActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        
        <!-- 个人中心 -->
         <activity
             android:name=".ui.user.UserCenterMainActivity"
@@ -495,7 +500,7 @@
                 <action android:name="cn.jpush.android.ui.PushActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="com.zhuozhong.bandgood" />
+                <category android:name="com.bgood.xn" />
             </intent-filter>
         </activity>
 
@@ -521,7 +526,7 @@
             android:enabled="true" >
             <intent-filter android:priority="1000" >
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" /> <!-- Required  显示通知栏 -->
-                <category android:name="com.zhuozhong.bandgood" />
+                <category android:name="com.bgood.xn" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.USER_PRESENT" />
@@ -604,6 +609,12 @@
             android:name="UMENG_CHANNEL"
             android:value="Umeng" >
         </meta-data>
+        
+           <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" >
+        </service>
             
     </application>
 

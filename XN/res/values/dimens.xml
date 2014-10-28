@@ -8,7 +8,7 @@
     <dimen name="indicator_internal_padding">4dp</dimen>
     <dimen name="head_icon">60dp</dimen>
     <dimen name="chat_keybord_button_indicator">30dp</dimen>
-    <dimen name="weiqiang_comment">17dp</dimen>
+    <dimen name="weiqiang_comment">17sp</dimen>
     <dimen name="right_menu_width">200dp</dimen>
     <dimen name="home_ithink">12dp</dimen>
 

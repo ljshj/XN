@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.WeiqiangCommentBean;
+import com.bgood.xn.utils.ToolUtils;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -32,10 +33,11 @@ public class WeiqiangCommentAdapter extends KBaseAdapter
         if (convertView == null)
         {
             holder = new Holder();
-            convertView = mInflater.inflate(R.layout.item_weiqiang_detail, parent, false);
-            holder.iconImgV = (ImageView) convertView.findViewById(R.id.icon);
-            holder.nameTv = (TextView) convertView.findViewById(R.id.name);
-            holder.contentTv = (TextView) convertView.findViewById(R.id.content);
+            convertView = mInflater.inflate(R.layout.weiqiang_comment_item, parent, false);
+            holder.ivComment = (ImageView) convertView.findViewById(R.id.iv_comment_author);
+            holder.tvCommentAuthor = (TextView) convertView.findViewById(R.id.tv_comment_author);
+            holder.tvCommentTime = (TextView) convertView.findViewById(R.id.tv_comment_time);
+            holder.tvCommentContent = (TextView) convertView.findViewById(R.id.tv_comment_content);
             convertView.setTag(holder);
         } else
         {
@@ -45,18 +47,20 @@ public class WeiqiangCommentAdapter extends KBaseAdapter
        final WeiqiangCommentBean wComment = (WeiqiangCommentBean) mList.get(position);
         if (TextUtils.isEmpty(wComment.photo))
         {
-            Picasso.with(mActivity).load(wComment.photo).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
+            Picasso.with(mActivity).load(wComment.photo).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into( holder.ivComment);
         }
-        holder.nameTv.setText(wComment.name);
-        holder.contentTv.setText(wComment.content);
+        holder.tvCommentAuthor.setText(wComment.name);
+        holder.tvCommentTime.setText(ToolUtils.getFormatDate(wComment.commenttime));
+        holder.tvCommentContent.setText(wComment.content);
         
 		return convertView;
 	}
 
 	class Holder
     {
-        public ImageView iconImgV;
-        public TextView nameTv;
-        public TextView contentTv;
+        public ImageView ivComment;
+        public TextView tvCommentAuthor;
+        public TextView tvCommentTime;
+        public TextView tvCommentContent;
     }
 }

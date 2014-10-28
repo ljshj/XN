@@ -38,6 +38,16 @@ public class PreferenceUtil {
 //		return mb;
 //		
 //	}
+	
+	/**设置是否展示微墙页**/
+	public void setShowWelcomePage(boolean isShow) {
+		editor.putBoolean("welcome_show", isShow);
+		editor.commit();
+	}
+
+	public boolean getShowWelcomePage() {
+		return sp.getBoolean("welcome_show", false);
+	}
 
 	
 	/**设置微墙中所有微墙刷新时间**/
@@ -60,5 +70,14 @@ public class PreferenceUtil {
 		return sp.getString("weiqiang_attion", "");
 	}
 	
+	/**设置微墙中关注的微墙刷新时间**/
+	public void setWeiqiangDetailRefreshTime(String refreshTime) {
+		editor.putString("weiqiang_detail", refreshTime);
+		editor.commit();
+	}
+
+	public String getWeiqiangDetailRefreshTime() {
+		return sp.getString("weiqiang_detail", "");
+	}
 	
 }
