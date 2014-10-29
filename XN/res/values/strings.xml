@@ -25,5 +25,10 @@
     <!-- 语音页面 -->
     <!-- 听写 -->
     <string name="speech_text_begin">请开始说话&#8230;</string>
+    
+    
+    
+    <!-- 个人中心 -->
+    <string name="account_number">能能号：%s</string>
 
 </resources>

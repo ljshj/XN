@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.bgood.xn.bean.UserBean;
+
 public class PreferenceUtil {
 	
 	public static final  String PREFERENCE_FILE = "tb_preference";
@@ -16,28 +18,6 @@ public class PreferenceUtil {
 		sp = context.getSharedPreferences(file, Context.MODE_PRIVATE);
 		editor = sp.edit();
 	}
-	
-//	public void setMemberBean(final MemberBean bean){
-//		editor.putString("phonenumber", bean.phoneNumber);
-//		editor.putString("memberName", bean.memberName);
-//		editor.putString("password", bean.password);
-//		editor.putString("email", bean.email);
-//		editor.putString("areaCode", bean.areaCode);
-//		editor.putString("lastLoginOS", bean.lastLoginOS);
-//		editor.commit();
-//	}
-//	
-//	public MemberBean getMemberBean() {
-//		final MemberBean mb = new MemberBean();
-//		mb.phoneNumber = sp.getString("phonenumber", "");
-//		mb.memberName = sp.getString("memberName", "");
-//		mb.password = sp.getString("password", "");
-//		mb.email = sp.getString("email", "");
-//		mb.areaCode = sp.getString("areaCode", "");
-//		mb.lastLoginOS = sp.getString("lastLoginOS", "");
-//		return mb;
-//		
-//	}
 	
 	/**设置是否展示微墙页**/
 	public void setShowWelcomePage(boolean isShow) {

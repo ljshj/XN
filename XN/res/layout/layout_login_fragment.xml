@@ -5,19 +5,8 @@
     android:background="@color/common_page_bg"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:id="@+id/account_center_rl_title"
-        style="@style/common_top_title_style" >
-
-        <Button
-            android:id="@+id/login_btn_back"
-            style="@style/common_btn_back_style" />
-
-        <TextView
-            style="@style/common_tv_title_style"
-            android:text="登录" />
-    </RelativeLayout>
-
+	<include layout="@layout/title_bar"/>
+    
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
@@ -57,7 +46,8 @@
                     android:background="@null"
                     android:gravity="center_vertical"
                     android:hint="请输入能能号或手机号"
-                    android:lines="1" >
+                    android:singleLine="true"
+                    >
 
                     <requestFocus />
                 </EditText>
@@ -93,8 +83,9 @@
                     android:background="@null"
                     android:gravity="center_vertical"
                     android:hint="请输入密码"
-                    android:password="true"
-                    android:lines="1" />
+                    android:singleLine="true"
+                    android:inputType="textPassword"
+                    />
             </LinearLayout>
 
             <LinearLayout

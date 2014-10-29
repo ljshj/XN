@@ -21,11 +21,11 @@ import com.squareup.picasso.Picasso;
  * @author:hg_liuzl@163.com
  */
 
-public class VermicelliAdapter extends KBaseAdapter 
+public class FansAdapter extends KBaseAdapter 
 {
    
 
-    public VermicelliAdapter(List<?> mList, Activity mActivity) {
+    public FansAdapter(List<?> mList, Activity mActivity) {
 		super(mList, mActivity);
 	}
 
@@ -72,47 +72,16 @@ public class VermicelliAdapter extends KBaseAdapter
         
         holder.userInfoTv.setText(userDTO.signature);
         
-        if (userDTO.guanzhuType == 1)
-        {
-            holder.followConfirmBtn.setVisibility(View.INVISIBLE);
-            holder.followCancelBtn.setVisibility(View.VISIBLE);
-        }
-        else
-        {
-            holder.followConfirmBtn.setVisibility(View.VISIBLE);
-            holder.followCancelBtn.setVisibility(View.INVISIBLE);
-        }
-//        
-//        // 关注
-//        holder.followConfirmBtn.setOnClickListener(new OnClickListener()
+//        if (userDTO.guanzhuType == 1)
 //        {
-//            
-//            @Override
-//            public void onClick(View v)
-//            {
-//                WindowUtil.getInstance().progressDialogShow(m_context, "关注中...");
-//                messageManager.registerObserver(VermicelliAdapter.this);
-//                messageManager.follow(userDTO.userId, UserManager.getInstance().m_user.userId, 0);
-//                index = 0;
-//                m_position = position;
-//            }
-//        });
-//        
-//        // 取消关注
-//        holder.followCancelBtn.setOnClickListener(new OnClickListener()
+//            holder.followConfirmBtn.setVisibility(View.INVISIBLE);
+//            holder.followCancelBtn.setVisibility(View.VISIBLE);
+//        }
+//        else
 //        {
-//            
-//            @Override
-//            public void onClick(View v)
-//            {
-//                WindowUtil.getInstance().progressDialogShow(m_context, "取消关注中...");
-//                messageManager.registerObserver(VermicelliAdapter.this);
-//                messageManager.follow(userDTO.userId, UserManager.getInstance().m_user.userId, 1);
-//                index = 1;
-//                m_position = position;
-//            }
-//        });
-//        
+//            holder.followConfirmBtn.setVisibility(View.VISIBLE);
+//            holder.followCancelBtn.setVisibility(View.INVISIBLE);
+//        }
         return convertView;
     }
     

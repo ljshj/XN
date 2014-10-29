@@ -56,5 +56,5 @@ public class BaseActivity extends Activity {
 		
 		im.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.SHOW_FORCED);
 	}
-	
+
 }

@@ -14,8 +14,6 @@ import android.widget.ImageView;
 import com.bgood.xn.R;
 
 /**
- * 用户帮助适配器
- * @author ld 20130418
  *
  */
 public class NavigatePagerAdapter extends PagerAdapter {
@@ -50,7 +48,7 @@ public class NavigatePagerAdapter extends PagerAdapter {
 		final FrameLayout imageLayout = (FrameLayout) inflater.inflate(R.layout.item_naviagte_pager_image, null);
 		final ImageView imageView = (ImageView) imageLayout.findViewById(R.id.image);
 		final ImageButton start_btn = (ImageButton)imageLayout.findViewById(R.id.start_btn);
-		if(position == 2){
+		if(position == 3){
 			start_btn.setVisibility(View.VISIBLE);
 			start_btn.setOnClickListener(mOnClickListener);
 		}

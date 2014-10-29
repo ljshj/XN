@@ -39,6 +39,11 @@
     <color name="home_check_search_normal">#494949</color>
     <color name="home_check_search_checked">#ff5c30</color>
     
+    
+    <color name="text_select_color">#343434</color>
+    
+    
+    
     <!-- 个性化模块 -->
     <color name="individuation_blue1">#5cb9e0</color>
     <color name="individuation_white2">#ffffff</color>

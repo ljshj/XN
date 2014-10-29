@@ -74,46 +74,16 @@ public class FollowAdapter extends KBaseAdapter
         
         holder.userInfoTv.setText(userDTO.signature);
         
-        if (userDTO.follow == 0)
-        {
-            holder.followConfirmBtn.setVisibility(View.INVISIBLE);
-            holder.followCancelBtn.setVisibility(View.VISIBLE);
-        }
-        else
-        {
-            holder.followConfirmBtn.setVisibility(View.VISIBLE);
-            holder.followCancelBtn.setVisibility(View.INVISIBLE);
-        }
-//        
-//        // 关注
-//        holder.followConfirmBtn.setOnClickListener(new OnClickListener()
+//        if (userDTO.follow == 0)
 //        {
-//            
-//            @Override
-//            public void onClick(View v)
-//            {
-//                WindowUtil.getInstance().progressDialogShow(m_context, "关注中...");
-//                messageManager.registerObserver(FollowAdapter.this);
-//                messageManager.follow(userDTO.userId, UserManager.getInstance().m_user.userId, 0);
-//                index = 0;
-//                m_position = position;
-//            }
-//        });
-//        
-//        // 取消关注
-//        holder.followCancelBtn.setOnClickListener(new OnClickListener()
+//            holder.followConfirmBtn.setVisibility(View.INVISIBLE);
+//            holder.followCancelBtn.setVisibility(View.VISIBLE);
+//        }
+//        else
 //        {
-//            
-//            @Override
-//            public void onClick(View v)
-//            {
-//                WindowUtil.getInstance().progressDialogShow(m_context, "取消关注中...");
-//                messageManager.registerObserver(FollowAdapter.this);
-//                messageManager.follow(userDTO.userId, UserManager.getInstance().m_user.userId, 1);
-//                index = 1;
-//                m_position = position;
-//            }
-//        });
+//            holder.followConfirmBtn.setVisibility(View.VISIBLE);
+//            holder.followCancelBtn.setVisibility(View.INVISIBLE);
+//        }
         
         return convertView;
     }

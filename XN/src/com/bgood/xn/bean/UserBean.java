@@ -26,31 +26,6 @@ public class UserBean implements Serializable {
 	public String userPassword; // 密码
 	public String userId;       // 用户Id号
 	public String userIcon;     // 用户头像
-	public String ican;         // 我能
-	public String ineed;        // 我想
-	public String nickn;        // 昵称
-	public String signature;    // 个性签名
-	public int sex;          // 性别
-	public String birthday;     // 生日
-	public String conste;       // 星座
-	public String hometown;     // 故乡
-	public String loplace;      // 现居住地
-	public String email;        // 邮箱
-	public String btype;        // 血型
-	public String nicktitle;    // 头衔
-    public String level;        // 用户等级
-    public String favor;        // 好评
-    public String credit;       // 好评
-    public String exp;          // 经验值
-    public String guanzhu;      // 我的关注数
-    public String fansnumber;   // 我的粉丝数
-    public String weiqiang;     // 我的微墙数
-    public String age;          // 年龄
-    public int follow;          // 关注
-    public String distance;     // 距离
-    public int searchType;      // 关注
-    public int guanzhuType;     // 关注 0 单方关注 1 相互关注
-
 
 	/**
 	 * 登录用户类型
@@ -67,4 +42,73 @@ public class UserBean implements Serializable {
 		UserRelation_NONE, UserRelation_NO, UserRelation_FRIEND, UserRelation_MAX
 	};
 
+//	<username/>//能能号
+//	<ican/>//我能
+//	<ineed/>//我想
+//	<photo/>//头像
+//	<nickn/>//昵称
+//	<signature/>//签名
+//	<sex/>//性别
+//	<birthday/>//生日
+//	<conste/>//星座
+//	<hometown/>//家乡
+//	<loplace/>//当前住址
+//	<email/>//邮箱
+//	<btype/>//血型
+//	<nicktitle/>//头衔
+//	<level/>//用户等级
+//	<favor/>//好评
+//	<credit/>//好评
+//	<exp/>//经验值
+//	<age/>
+//	<phonenumber/>
+//
+//	<guanzhu/>//我的关注数
+//	<fansnumber/>//我的粉丝数
+//	<weiqiang/>//我的微墙数
+	
+	public String username;
+	public String ican;
+	public String ineed;
+	public String photo;
+	public String nickn;
+	public String signature;
+	public int sex;
+	public String conste;
+	public String loplace;
+	public String email;
+	public String btype;
+	public String nicktitle;
+	public String level;
+	public String credit;
+	public String favor;
+	public String exp;
+	public String age;
+	public String phonenumber;
+	public String guanzhu;
+	public String fansnumber;
+	public String weiqiang;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

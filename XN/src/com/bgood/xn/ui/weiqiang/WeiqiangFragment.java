@@ -224,6 +224,8 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 	@Override
 	public void onClick(View v)
 	{
+		
+		judgeLogin();
 		Intent intent = null;
 		WeiQiangBean wqb = null;
 		switch (v.getId())

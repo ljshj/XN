@@ -435,58 +435,7 @@ public class ToolUtils {
         }
     } 
     
-    
-    /**
-	 * 设置最后刷新时间（格式:今天 17:36:00）
-	 * date (MM-dd HH:mm:ss)
-	 * @return
-	 */
-	public static String getRefreshTime(String date){
-		Date now = new Date();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm:ss");
-		String str = dateFormat.format(now); 
-		try{
-		if(date == null || date.equals("")){
-			dateFormat = new SimpleDateFormat("HH:mm:ss");
-			str = dateFormat.format(now); 
-			return "";
-//			return "今天  " + str;
-		}
-		String[] p = date.split(" ");
-		String days[] = p[0].split("-");
-		String m_b = days[0];
-		String d_b = days[1];
-		
-		
-		String[] p_ = date.split(" ");
-		String days_n[] = p_[0].split("-");
-		String m_n = days_n[0];
-		String d_n = days_n[1];
-		if(m_b.equals("m_n")){
-			int margin = Integer.parseInt(d_n) - Integer.parseInt(d_b);
-			dateFormat = new SimpleDateFormat("HH:mm:ss");
-			str = dateFormat.format(now); 
-			if(margin == 0){
-				return "今天 " + str;
-			}else if(margin == 1){
-				return "昨天 " + str;
-			}else if(margin == 2){
-				return "前天 " + str;
-			}else{
-				dateFormat = new SimpleDateFormat("MM-dd HH:mm:ss");
-				str = dateFormat.format(now); 
-				return str;
-			}
-		}else{
-			dateFormat = new SimpleDateFormat("HH:mm:ss");
-			str = dateFormat.format(now); 
-			return "今天  " + str;
-		}
-		}catch (Exception e) {
-			// TODO: handle exception
-		}
-		return str;
-	}
+ 
 
 	
 	/**
