@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
-import com.bgood.xn.bean.UserBean;
+import com.bgood.xn.bean.UserInfoBean;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -51,9 +51,9 @@ public class FansAdapter extends KBaseAdapter
             holder = (ViewHolder)convertView.getTag();
         }
         
-        final UserBean userDTO = (UserBean) mList.get(position);
-        if (userDTO != null &&TextUtils.isEmpty(userDTO.userIcon)){
-            Picasso.with(mActivity).load(userDTO.userIcon).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.userIconImgV);
+        final UserInfoBean userDTO = (UserInfoBean) mList.get(position);
+        if (userDTO != null &&TextUtils.isEmpty(userDTO.photo)){
+            Picasso.with(mActivity).load(userDTO.photo).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.userIconImgV);
         }
         holder.userNameTv.setText(userDTO.nickn);
         int sex = userDTO.sex;

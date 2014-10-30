@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.bgood.xn.R;
-import com.bgood.xn.bean.UserBean;
+import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
@@ -21,26 +21,27 @@ import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.view.BToast;
+import com.bgood.xn.widget.TitleBar;
 
 /**
  * 修改年龄页面
  */
 public class AgeActivity extends BaseActivity implements OnClickListener,TaskListenerWithState
 {
-    private Button m_backBtn = null;  // 返回按钮
     private EditText m_ageEt = null;  // 昵称编辑框
     private Button m_doneBtn = null;  // 确定按钮
     
     
     private String m_age = "";
-    private UserBean mUserBean = null;
+    private UserInfoBean mUserBean = null;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_age);
-        mUserBean = (UserBean) getIntent().getSerializableExtra(UserBean.KEY_USER_BEAN);
+        (new TitleBar(mActivity)).initTitleBar("设置年龄");
+        mUserBean = (UserInfoBean) getIntent().getSerializableExtra(UserInfoBean.KEY_USER_BEAN);
         findView();
     }
   
@@ -49,14 +50,12 @@ public class AgeActivity extends BaseActivity implements OnClickListener,TaskLis
      */
     private void findView()
     {
-        m_backBtn = (Button) findViewById(R.id.age_btn_back);
         m_ageEt = (EditText) findViewById(R.id.age_et_age);
         m_doneBtn = (Button) findViewById(R.id.age_btn_done);
         
         m_ageEt.setText(mUserBean.age);
         m_ageEt.setSelection(mUserBean.age.length());
         
-        m_backBtn.setOnClickListener(this);
         m_doneBtn.setOnClickListener(this);
     }
     
@@ -65,16 +64,6 @@ public class AgeActivity extends BaseActivity implements OnClickListener,TaskLis
      */
     private void setListener()
     {
-        // 返回按钮
-        m_backBtn.setOnClickListener(new OnClickListener()
-        {
-            
-            @Override
-            public void onClick(View v)
-            {
-                AgeActivity.this.finish();
-            }
-        });
         
         // 确定按钮
         m_doneBtn.setOnClickListener(new OnClickListener()
@@ -109,9 +98,6 @@ public class AgeActivity extends BaseActivity implements OnClickListener,TaskLis
 	@Override
 	public void onClick(View v) {
 	switch (v.getId()) {
-	case R.id.age_btn_back:
-		finish();
-		break;
 	case R.id.age_btn_done:
 		checkInfo();
 		break;

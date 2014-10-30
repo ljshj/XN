@@ -12,42 +12,43 @@ import com.bgood.xn.R;
 import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.widget.CEditText;
 
 /**
- * 修改邮箱页面
+ * 修改姓名页面
  */
-public class EmailActivity extends BaseActivity
+public class NameActivity extends BaseActivity
 {
     private Button m_backBtn = null;  // 返回按钮
-    private CEditText m_emailEt = null;  // 昵称编辑框
+    private CEditText m_nameEt = null;  // 昵称编辑框
     private Button m_doneBtn = null;  // 确定按钮
     
-
-    private String m_email = "";
+    
+    private String m_name = "";
     private UserInfoBean m_userDTO = null;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_email);
-        m_userDTO = (UserInfoBean) getIntent().getSerializableExtra(UserInfoBean.KEY_USER_BEAN);
+        setContentView(R.layout.layout_name);
+        
+        mUserBean = (UserInfoBean) getIntent().getSerializableExtra(UserInfoBean.KEY_USER_BEAN);
         findView();
         setListener();
     }
-  
     
     /**
      * 控件初始化方法
      */
     private void findView()
     {
-        m_backBtn = (Button) findViewById(R.id.email_btn_back);
-        m_emailEt = (CEditText) findViewById(R.id.email_et_email);
-        m_doneBtn = (Button) findViewById(R.id.email_btn_done);
+        m_backBtn = (Button) findViewById(R.id.name_btn_back);
+        m_nameEt = (CEditText) findViewById(R.id.name_et_name);
+        m_doneBtn = (Button) findViewById(R.id.name_btn_done);
         
-        m_emailEt.setText(m_userDTO.email);
-        m_emailEt.setSelection(m_userDTO.email.length());
+        m_nameEt.setText(m_userDTO.nickn);
+        m_nameEt.setSelection(m_userDTO.nickn.length());
     }
     
     /**
@@ -62,7 +63,7 @@ public class EmailActivity extends BaseActivity
             @Override
             public void onClick(View v)
             {
-                EmailActivity.this.finish();
+                NameActivity.this.finish();
             }
         });
         
@@ -84,41 +85,34 @@ public class EmailActivity extends BaseActivity
     private void checkInfo()
     {
         // 用户手机号码查询
-        String email = m_emailEt.getText().toString().trim();
-        if (email == null || email.equals(""))
+        String name = m_nameEt.getText().toString().trim();
+        if (name == null || name.equals(""))
         {
-            Toast.makeText(EmailActivity.this, "邮箱不能为空！", 0).show();
+            Toast.makeText(NameActivity.this, "昵称不能为空！", 0).show();
             return;
         }
-        else if (!RegularExpression.isEmail(email))
+        
+        else if (name.length() > 8)
         {
-            Toast.makeText(EmailActivity.this, "邮箱格式不正确！", 0).show();
+            Toast.makeText(NameActivity.this, "昵称不能过长！", 0).show();
             return;
         }
+        
         else
         {
-            m_email = email;
+            m_name = name;
         }
         
         // 隐藏软键盘
         ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
-                .hideSoftInputFromWindow(EmailActivity.this
+                .hideSoftInputFromWindow(NameActivity.this
                         .getCurrentFocus().getWindowToken(),
                         InputMethodManager.HIDE_NOT_ALWAYS);
         
-        loadData(m_email);
+        WindowUtil.getInstance().progressDialogShow(NameActivity.this, "数据请求中...");
+		messageManager.modifyPersonalInfo("nickname", m_name);
     }
-    
-    /**
-     * 加载数据方法
-     * @param value 修改内容
-     */
-    private void loadData(String value)
-    {
-    	WindowUtil.getInstance().progressDialogShow(EmailActivity.this, "数据请求中...");
-		messageManager.modifyPersonalInfo("email", value);
-    }
-    
+
     @Override
 	public void modifyPersonalInfoCB(Reulst result_state)
 	{
@@ -129,7 +123,7 @@ public class EmailActivity extends BaseActivity
 		{
 			Toast.makeText(this, "修改成功！", Toast.LENGTH_LONG).show();
 			Intent intent = getIntent();
-            intent.putExtra("email", m_email);
+            intent.putExtra("userName", m_name);
             setResult(RESULT_OK, intent);
 			finish();
 		}
@@ -138,5 +132,4 @@ public class EmailActivity extends BaseActivity
 			Toast.makeText(this, "修改失败！", Toast.LENGTH_LONG).show();
 		}
 	}
-
 }

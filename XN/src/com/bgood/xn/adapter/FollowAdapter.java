@@ -1,25 +1,17 @@
 package com.bgood.xn.adapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Context;
-import android.os.UserManager;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bgood.xn.R;
-import com.bgood.xn.bean.UserBean;
-import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.bean.UserInfoBean;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -38,7 +30,7 @@ public class FollowAdapter extends KBaseAdapter
         if (convertView == null)
         {
             holder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.layout_follow_item, null);
+            convertView = mInflater.inflate(R.layout.user_layout_attention_item, null);
             holder.userIconImgV = (ImageView) convertView.findViewById(R.id.follow_item_imgv_user_icon);
             holder.userNameTv = (TextView) convertView.findViewById(R.id.follow_item_tv_user_name);
             holder.userSexImgV = (ImageView) convertView.findViewById(R.id.follow_item_imgv_sex);
@@ -53,9 +45,9 @@ public class FollowAdapter extends KBaseAdapter
             holder = (ViewHolder)convertView.getTag();
         }
         
-        final UserBean userDTO = (UserBean) mList.get(position);
-        if (userDTO != null &&!TextUtils.isEmpty(userDTO.userIcon)){
-            Picasso.with(mActivity).load(userDTO.userIcon).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.userIconImgV);
+        final UserInfoBean userDTO = (UserInfoBean) mList.get(position);
+        if (userDTO != null &&!TextUtils.isEmpty(userDTO.photo)){
+            Picasso.with(mActivity).load(userDTO.photo).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.userIconImgV);
         }
         holder.userNameTv.setText(userDTO.nickn);
         int sex = userDTO.sex;

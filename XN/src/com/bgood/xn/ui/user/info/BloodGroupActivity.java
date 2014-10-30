@@ -13,13 +13,13 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Toast;
 
 import com.bgood.xn.R;
-import com.bgood.xn.bean.UserBean;
+import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
-import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
+import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.view.BToast;
@@ -36,14 +36,14 @@ public class BloodGroupActivity extends BaseActivity implements TaskListenerWith
     private RadioGroup m_bloodGroupRg = null;  // 血型分组
     private Button m_confirmBtn = null; // 确定按钮
     private String m_bloodGroup = "";
-    private UserBean mUserBean = null;
+    private UserInfoBean mUserBean = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_blood_group);
-        mUserBean =  (UserBean) getIntent().getSerializableExtra(UserBean.KEY_USER_BEAN);
+        mUserBean =  (UserInfoBean) getIntent().getSerializableExtra(UserInfoBean.KEY_USER_BEAN);
         findView();
         setListener();
         setData();

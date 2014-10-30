@@ -250,4 +250,28 @@ public class UserCenterRequest extends BaseNetWork {
 			setBody(body);
 			new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		}
+	 
+	/**
+	 * 
+	 * @todo:修改密码
+	 * @date:2014-10-30 下午3:46:38
+	 * @author:hg_liuzl@163.com
+	 * @params:@param mHttpTaskListener
+	 * @params:@param context
+	 * @params:@param type
+	 * @params:@param start
+	 * @params:@param end
+	 */
+	 public void requestModifyPWD(TaskListenerWithState mHttpTaskListener,Context context,String oldPwd,String newPwd){
+		 	setMessageType(20006);
+			JSONObject body = new JSONObject();
+			try {
+				body.put("oldpassword", oldPwd);
+				body.put("newpassword", newPwd);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			setBody(body);
+			new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+		}
 }

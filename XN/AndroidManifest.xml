@@ -300,60 +300,55 @@
             android:name=".ui.user.MyCardActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
+            
         <activity
-            android:name=".ui.user.FollowActivity"
+            android:name=".ui.user.AttentionActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.user.VermicelliActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" />
+            
         <activity
             android:name=".ui.user.DynamicActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.user.IMissActivity"
-            android:alwaysRetainTaskState="true"
+            android:name=".ui.user.info.IThinkActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".ui.user.ICanActivity"
-            android:alwaysRetainTaskState="true"
+            android:name=".ui.user.info.ICanActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".ui.user.ShowcaseActivity"
-            android:alwaysRetainTaskState="true"
+            android:name=".ui.user.product.ShowcaseActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".ui.user.ProductListActivity"
+            android:name=".ui.user.product.ProductListActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.user.ProductDetailActivity"
+            android:name=".ui.user.product.ProductDetailActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.user.AddProductActivity"
+            android:name=".ui.user.product.AddProductActivity"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.user.ProductEditListActivity"
+            android:name=".ui.user.product.ProductEditListActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.user.ProductEditActivity"
+            android:name=".ui.user.product.ProductEditActivity"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" 
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.user.ProductCommentActivity"
+            android:name=".ui.user.product.ProductCommentActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
@@ -436,6 +431,11 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        
+         <activity
+            android:name=".ui.user.MoreActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
 
        <!-- 炫能 -->
         <activity

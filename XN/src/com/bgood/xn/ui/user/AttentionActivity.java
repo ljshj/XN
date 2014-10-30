@@ -23,6 +23,7 @@ import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
+import com.bgood.xn.widget.TitleBar;
 
 
 /**
@@ -43,8 +44,12 @@ public class AttentionActivity extends BaseActivity implements IXListViewListene
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.user_layout_attention);
+        
         mType = getIntent().getIntExtra(KEY_ATTENTION, 0);
-        setContentView(R.layout.layout_follow);
+        
+        (new TitleBar(mActivity)).initTitleBar(mType == 0 ?"我的关注":"我的粉丝");
+        
         m_listLv = (XListView) findViewById(R.id.follow_xlv_list);
         m_listLv.setPullRefreshEnable(false);
         m_listLv.setPullLoadEnable(false);

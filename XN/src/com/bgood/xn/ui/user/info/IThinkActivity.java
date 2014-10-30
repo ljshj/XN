@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
-import com.bgood.xn.bean.UserBean;
+import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
@@ -28,7 +28,7 @@ public class IThinkActivity extends BaseActivity
 
     
     private String m_content = "";
-    private UserBean mUserBean;
+    private UserInfoBean mUserBean;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -36,7 +36,7 @@ public class IThinkActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_layout_i_miss);
         (new TitleBar(mActivity)).initTitleBar("我想");
-        mUserBean = (UserBean) getIntent().getSerializableExtra(UserBean.KEY_USER_BEAN);;
+        mUserBean = (UserInfoBean) getIntent().getSerializableExtra(UserInfoBean.KEY_USER_BEAN);;
         findView();
         setListener();
     }

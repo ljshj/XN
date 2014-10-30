@@ -1,21 +1,12 @@
 package com.bgood.xn.ui.user.info;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.UserManager;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bgood.xn.R;
-import com.bgood.xn.bean.UserBean;
-import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.widget.TitleBar;
 
@@ -30,7 +21,7 @@ public class ICanActivity extends BaseActivity
     private TextView tvWordCount;	//字数显示
     private String mContent;
     
-    private UserBean mUserBean = null;
+    private UserInfoBean mUserBean = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -38,7 +29,7 @@ public class ICanActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_layout_i_can);
         (new TitleBar(mActivity)).initTitleBar("我能");
-        mUserBean = (UserBean) getIntent().getSerializableExtra(UserBean.KEY_USER_BEAN);;
+        mUserBean = (UserInfoBean) getIntent().getSerializableExtra(UserInfoBean.KEY_USER_BEAN);;
         findView();
     }
 	/**

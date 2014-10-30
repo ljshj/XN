@@ -207,7 +207,7 @@
         <item name="android:drawablePadding">10dp</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:background">@drawable/selector_layout_select</item>
-        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:paddingLeft">20dp</item>
     </style>
     
     <!-- 分割线 -->

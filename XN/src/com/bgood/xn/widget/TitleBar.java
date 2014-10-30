@@ -3,6 +3,7 @@ package com.bgood.xn.widget;
 import android.app.Activity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
@@ -17,6 +18,19 @@ public class TitleBar {
 	private Activity mContext;
 
 	private BaseFragment mFragment;
+	
+	private View layout;
+	
+	private Button backBtn;
+	
+	private Button rightBtn;
+	
+	private TextView titleTV;
+	
+	public TitleBar(Activity context,View v){
+		this.mContext = context;
+		this.layout = v;
+	}
 
 	public TitleBar(Activity context) {
 		this.mContext = context;
@@ -35,9 +49,15 @@ public class TitleBar {
 		initBackBtn();
 		initTitle(title);
 	}
+	
+	public void initAllBar(String title) {
+		initBackBtn();
+		initRightBtn();
+		initTitle(title);
+	}
 
 	public void initBackTitleMenuBar(View container, String title) {
-		View backBtn = container.findViewById(R.id.btn_back);
+		backBtn = (Button) container.findViewById(R.id.btn_back);
 		TextView titleTV = (TextView) container.findViewById(R.id.tv_title);
 		titleTV.setText(title);
 		View menuBtn = container.findViewById(R.id.btn_right);
@@ -47,12 +67,36 @@ public class TitleBar {
 	}
 
 	private void initBackBtn() {
-		View backBtn = mContext.findViewById(R.id.btn_back);
+		if(layout!= null){
+			backBtn = (Button) layout.findViewById(R.id.btn_back);
+		}else{
+			backBtn = (Button) mContext.findViewById(R.id.btn_back);
+		}
 		backBtn.setOnClickListener(new ClickListener());
+	}
+	
+	private void initRightBtn() {
+		if(layout!= null){
+			rightBtn = (Button) layout.findViewById(R.id.btn_right);
+		}else{
+			rightBtn = (Button) mContext.findViewById(R.id.btn_right);
+		}
+		rightBtn.setText("确定");
+		rightBtn.setOnClickListener(new ClickListener());
+	}
+	
+	public void setBackBtnVisible(int visibility){
+		backBtn.setVisibility(visibility);
 	}
 
 	private void initTitle(String title) {
-		TextView titleTV = (TextView) mContext.findViewById(R.id.tv_title);
+		
+		if(layout!= null){
+			titleTV = (TextView) layout.findViewById(R.id.tv_title);
+		}else{
+			titleTV = (TextView) mContext.findViewById(R.id.tv_title);
+		}
+		
 		titleTV.setText(title);
 	}
 
@@ -69,10 +113,15 @@ public class TitleBar {
 				}
 				break;
 			case R.id.btn_right:
+				doRightAction();
 				break;
 			default:
 				break;
 			}
 		}
+	}
+	
+	public void doRightAction(){
+		
 	}
 }

@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.bgood.xn.bean.UserBean;
-
 public class PreferenceUtil {
 	
 	public static final  String PREFERENCE_FILE = "tb_preference";
@@ -59,5 +57,26 @@ public class PreferenceUtil {
 	public String getWeiqiangDetailRefreshTime() {
 		return sp.getString("weiqiang_detail", "");
 	}
+	
+	/**设置用户名*/
+	public void setAccountNumber(String accountNumber){
+		editor.putString("user_account_number", accountNumber);
+		editor.commit();
+	}
+	
+	public String getAccountNumber(){
+		return sp.getString("user_account_number", "");
+	}
+	
+	/**设置密码*/
+	public void setAccountPassword(String accountPassword){
+		editor.putString("user_account_password", accountPassword);
+		editor.commit();
+	}
+	
+	public String getAccountPassword(){
+		return sp.getString("user_account_password", "");
+	}
+	
 	
 }

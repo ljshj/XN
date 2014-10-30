@@ -526,7 +526,7 @@ public class ToolUtils {
 	public static String getNowTime() {
 		
 		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String nowTime = sdf.format(date);
 		
 		return getFormatDate(nowTime);

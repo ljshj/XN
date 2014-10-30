@@ -3,7 +3,7 @@ package com.bgood.xn.system;
 import android.app.Application;
 
 import com.bgood.xn.bean.MemberLoginBean;
-import com.bgood.xn.bean.UserBean;
+import com.bgood.xn.bean.UserInfoBean;
 import com.iflytek.cloud.SpeechUtility;
 
 public class BGApp extends Application {
@@ -14,7 +14,7 @@ public class BGApp extends Application {
 	public static MemberLoginBean mLoginBean;
 	
 	/**存放用户资料*/
-	public static UserBean mUserBean;
+	public static UserInfoBean mUserBean;
 	
 
 	@Override

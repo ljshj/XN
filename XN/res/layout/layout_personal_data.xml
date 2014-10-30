@@ -5,18 +5,7 @@
     android:background="@color/common_page_bg"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:id="@+id/presonal_data_rl_title"
-        style="@style/common_top_title_style" >
-
-        <Button
-            android:id="@+id/presonal_data_btn_back"
-            style="@style/common_btn_back_style" />
-
-        <TextView
-            style="@style/common_tv_title_style"
-            android:text="个人资料" />
-    </RelativeLayout>
+	<include layout="@layout/title_bar"/>
 
     <ScrollView
         android:layout_width="fill_parent"
