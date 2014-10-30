@@ -1,7 +1,5 @@
 package com.bgood.xn.ui.user.info;
 
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -155,13 +153,15 @@ public class BloodGroupActivity extends BaseActivity implements TaskListenerWith
 	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
-			JSONObject body = bNetWork.getBody();
-			String strJson = bNetWork.getStrJson();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				BToast.show(mActivity, "修改成功");
 				Intent intent = getIntent();
 	            intent.putExtra("bloodGroup", m_bloodGroup);
 	            setResult(RESULT_OK, intent);
 				finish();
-		}}}
+			}else{
+				BToast.show(mActivity, "修改失败");
+			}
+		}
+	}
 }

@@ -23,7 +23,7 @@ public class TitleBar {
 	
 	private Button backBtn;
 	
-	private Button rightBtn;
+	public Button rightBtn;
 	
 	private TextView titleTV;
 	
@@ -82,7 +82,6 @@ public class TitleBar {
 			rightBtn = (Button) mContext.findViewById(R.id.btn_right);
 		}
 		rightBtn.setText("确定");
-		rightBtn.setOnClickListener(new ClickListener());
 	}
 	
 	public void setBackBtnVisible(int visibility){
@@ -112,9 +111,7 @@ public class TitleBar {
 					mContext.finish();
 				}
 				break;
-			case R.id.btn_right:
-				doRightAction();
-				break;
+			
 			default:
 				break;
 			}

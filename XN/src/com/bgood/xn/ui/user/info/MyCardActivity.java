@@ -15,6 +15,9 @@ import android.widget.Toast;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
+import com.bgood.xn.network.HttpRequestInfo;
+import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.ui.BaseActivity;
 import com.squareup.picasso.Picasso;
 import com.tencent.connect.UserInfo;
@@ -22,9 +25,8 @@ import com.tencent.connect.UserInfo;
 /**
  * 我的名片
  */
-public class MyCardActivity extends BaseActivity implements OnClickListener
+public class MyCardActivity extends BaseActivity implements OnClickListener,TaskListenerWithState
 {
-    private Button m_backBtn = null;  // 返回按钮
     private ProgressBar m_progressBar = null;  // 进度条
     private ScrollView m_showSl = null;  // 显示内容
     private RelativeLayout m_infoRl = null;  // 个人信息
@@ -57,8 +59,6 @@ public class MyCardActivity extends BaseActivity implements OnClickListener
 	 */
 	private void findView()
 	{
-	    m_backBtn = (Button) findViewById(R.id.user_card_btn_back);
-	    m_progressBar = (ProgressBar) findViewById(R.id.user_card_progress);
 	    m_showSl = (ScrollView) findViewById(R.id.user_card_sl);
 	    m_infoRl = (RelativeLayout) findViewById(R.id.user_card_rl_user_info);
 	    m_userIconImgV = (ImageView) findViewById(R.id.user_card_imgv_user_icon);
@@ -77,7 +77,6 @@ public class MyCardActivity extends BaseActivity implements OnClickListener
 	 */
 	private void setListener()
 	{
-	    m_backBtn.setOnClickListener(this);
 	    m_infoRl.setOnClickListener(this);
 	    m_followLl.setOnClickListener(this);
 		m_addFriendLl.setOnClickListener(this);
@@ -98,55 +97,20 @@ public class MyCardActivity extends BaseActivity implements OnClickListener
 	{
 		switch (v.getId())
 		{
-		    // 返回按钮
-            case R.id.user_card_btn_back:
-            {
-                finish();
-                break;
-            }
-		    
 		    // 账户信息
             case R.id.user_card_rl_user_info:
-            {
-//                Intent intent = new Intent(MyCardActivity.this, UserDataActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("userDTO", user);
-//                intent.putExtras(bundle);
-//                startActivity(intent);
                 break;
-            }
             
             // 关注
             case R.id.user_card_ll_follow:
-            {
                 Toast.makeText(MyCardActivity.this, "不能关注自己", Toast.LENGTH_SHORT).show();
-//                WindowUtil.getInstance().progressDialogShow(this, "关注中...");
-//                messageManager.follow(user.userId, UserManager.getInstance().m_user.userId, 0);
                 break;
-            }
-		    
     		case R.id.user_card_ll_add_friend:
-    		{
     		    Toast.makeText(MyCardActivity.this, "不能加自己为好友", Toast.LENGTH_SHORT).show();
-//    			Bundle bundle = new Bundle();
-//    			bundle.putSerializable("user", user);
-//    			toActivity(AddFriendActivity.class, bundle);
     			break;
-    		}	
-    			
     		case R.id.user_card_ll_message:
-    		{
     		    Toast.makeText(MyCardActivity.this, "不能与自己发起临时会话", Toast.LENGTH_SHORT).show();
-//    			MessageCenterMessageDTO message = new MessageCenterMessageDTO();
-//    			message.m_senderID = user.userId;
-//    			message.m_senderName = user.userName;
-//    			message.m_messageClass = MessageCenterMessageDTO.FDSMessageCenterMessage_Class.FDSMessageCenterMessage_Class_USER;
-//    			message.m_messageType = MessageCenterMessageDTO.FDSMessageCenterMessage_Type.FDSMessageCenterMessage_Type_CHAT_PERSON;
-//    			Bundle bundle = new Bundle();
-//    			bundle.putSerializable("messageCenterMessage", message);
-//    			toActivity(ChatActivity.class, bundle);
     			break;
-    		}
 		}
 	}
 	
@@ -184,31 +148,11 @@ public class MyCardActivity extends BaseActivity implements OnClickListener
         m_icanTv.setText(userDTO.ican); // 我能
     }
 
-	
+
 	@Override
-    public void getPersonalDataCB(Reulst result_state, UserDTO userDTO)
-    {
-        super.getPersonalDataCB(result_state, userDTO);
-        
-        if (result_state.resultCode == ReturnCode.RETURNCODE_OK)
-        {
-//            user.copy(userDTO);
-            setData(userDTO);
-        }
-    }
-	
-	@Override
-    public void followCB(Reulst result_state)
-    {
-        WindowUtil.getInstance().DismissAllDialog();
-        messageManager.unregisterObserver(MyCardActivity.this);
-        if (result_state.resultCode == ReturnCode.RETURNCODE_OK)
-        {
-                Toast.makeText(MyCardActivity.this, "关注成功", Toast.LENGTH_SHORT).show();
-        } else
-        {
-            Toast.makeText(MyCardActivity.this, "操作失败", Toast.LENGTH_SHORT).show();
-        }
-    }
+	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

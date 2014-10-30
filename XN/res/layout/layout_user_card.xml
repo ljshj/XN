@@ -5,19 +5,7 @@
     android:background="@color/common_page_bg"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:id="@+id/user_card_rl_title"
-        style="@style/common_top_title_style" >
-
-        <Button
-            android:id="@+id/user_card_btn_back"
-            style="@style/common_btn_back_style" />
-
-        <TextView
-            android:id="@+id/user_card_tv_title"
-            style="@style/common_tv_title_style"
-            android:text="名片" />
-    </RelativeLayout>
+	<include layout="@layout/title_bar"/>
 
     <RelativeLayout
         android:layout_width="fill_parent"

@@ -2,6 +2,7 @@ package com.bgood.xn.ui.user.info;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -10,15 +11,24 @@ import android.widget.Toast;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.UserInfoBean;
+import com.bgood.xn.network.BaseNetWork;
+import com.bgood.xn.network.HttpRequestInfo;
+import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
+import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
+import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.utils.ToolUtils;
+import com.bgood.xn.view.BToast;
+import com.bgood.xn.widget.CEditText;
+import com.bgood.xn.widget.TitleBar;
 
 /**
  * 修改邮箱页面
  */
-public class EmailActivity extends BaseActivity
+public class EmailActivity extends BaseActivity implements TaskListenerWithState
 {
-    private Button m_backBtn = null;  // 返回按钮
     private CEditText m_emailEt = null;  // 昵称编辑框
     private Button m_doneBtn = null;  // 确定按钮
     
@@ -31,6 +41,7 @@ public class EmailActivity extends BaseActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_email);
+        (new TitleBar(mActivity)).initTitleBar("修改邮箱");
         m_userDTO = (UserInfoBean) getIntent().getSerializableExtra(UserInfoBean.KEY_USER_BEAN);
         findView();
         setListener();
@@ -42,10 +53,8 @@ public class EmailActivity extends BaseActivity
      */
     private void findView()
     {
-        m_backBtn = (Button) findViewById(R.id.email_btn_back);
         m_emailEt = (CEditText) findViewById(R.id.email_et_email);
         m_doneBtn = (Button) findViewById(R.id.email_btn_done);
-        
         m_emailEt.setText(m_userDTO.email);
         m_emailEt.setSelection(m_userDTO.email.length());
     }
@@ -55,21 +64,9 @@ public class EmailActivity extends BaseActivity
      */
     private void setListener()
     {
-        // 返回按钮
-        m_backBtn.setOnClickListener(new OnClickListener()
-        {
-            
-            @Override
-            public void onClick(View v)
-            {
-                EmailActivity.this.finish();
-            }
-        });
-        
         // 确定按钮
         m_doneBtn.setOnClickListener(new OnClickListener()
         {
-            
             @Override
             public void onClick(View v)
             {
@@ -83,59 +80,36 @@ public class EmailActivity extends BaseActivity
      */
     private void checkInfo()
     {
-        // 用户手机号码查询
-        String email = m_emailEt.getText().toString().trim();
-        if (email == null || email.equals(""))
+    	m_email	 = m_emailEt.getText().toString().trim();
+        if (TextUtils.isEmpty(m_email))
         {
-            Toast.makeText(EmailActivity.this, "邮箱不能为空！", 0).show();
+            BToast.show(mActivity, "请输入您的邮箱");
             return;
         }
-        else if (!RegularExpression.isEmail(email))
+        else if (ToolUtils.isEmail(m_email))
         {
-            Toast.makeText(EmailActivity.this, "邮箱格式不正确！", 0).show();
+            BToast.show(mActivity, "邮箱格式不正确");
             return;
         }
         else
         {
-            m_email = email;
+            UserCenterRequest.getInstance().requestUpdatePerson(this, mActivity, "email", m_email);
         }
-        
-        // 隐藏软键盘
-        ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
-                .hideSoftInputFromWindow(EmailActivity.this
-                        .getCurrentFocus().getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);
-        
-        loadData(m_email);
     }
-    
-    /**
-     * 加载数据方法
-     * @param value 修改内容
-     */
-    private void loadData(String value)
-    {
-    	WindowUtil.getInstance().progressDialogShow(EmailActivity.this, "数据请求中...");
-		messageManager.modifyPersonalInfo("email", value);
-    }
-    
-    @Override
-	public void modifyPersonalInfoCB(Reulst result_state)
-	{
-		super.modifyPersonalInfoCB(result_state);
-		WindowUtil.getInstance().DismissAllDialog();
-		
-		if (result_state.resultCode == ReturnCode.RETURNCODE_OK)
-		{
-			Toast.makeText(this, "修改成功！", Toast.LENGTH_LONG).show();
-			Intent intent = getIntent();
-            intent.putExtra("email", m_email);
-            setResult(RESULT_OK, intent);
-			finish();
-		}
-		else
-		{
-			Toast.makeText(this, "修改失败！", Toast.LENGTH_LONG).show();
+
+	@Override
+	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
+		if(info.getState() == HttpTaskState.STATE_OK){
+			BaseNetWork bNetWork = info.getmBaseNetWork();
+			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+				BToast.show(mActivity, "修改成功");
+				Intent intent = getIntent();
+	            intent.putExtra("email", m_email);
+	            setResult(RESULT_OK, intent);
+				finish();
+			}else{
+				BToast.show(mActivity, "修改失败");
+			}
 		}
 	}
 

@@ -5,19 +5,7 @@
     android:background="@color/common_page_bg"
     android:orientation="vertical" >
     
-    <RelativeLayout
-        android:id="@+id/name_rl_title"
-        style="@style/common_top_title_style" >
-
-        <Button
-            android:id="@+id/name_btn_back"
-            style="@style/common_btn_back_style" />
-
-        <TextView
-            style="@style/common_tv_title_style"
-            android:text="昵称" />
-
-    </RelativeLayout>
+<include layout="@layout/title_bar"/>
     
     <LinearLayout
         android:layout_width="fill_parent"

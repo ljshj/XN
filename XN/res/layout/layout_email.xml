@@ -5,19 +5,7 @@
     android:background="@color/common_page_bg"
     android:orientation="vertical" >
     
-    <RelativeLayout
-        android:id="@+id/email_rl_title"
-        style="@style/common_top_title_style" >
-
-        <Button
-            android:id="@+id/email_btn_back"
-            style="@style/common_btn_back_style" />
-
-        <TextView
-            style="@style/common_tv_title_style"
-            android:text="邮箱" />
-
-    </RelativeLayout>
+	<include layout="@layout/title_bar"/>
     
     <LinearLayout
         android:layout_width="fill_parent"
@@ -28,7 +16,7 @@
         android:background="@drawable/img_user_center_bg"
         android:orientation="horizontal" >
 
-        <com.zhuozhong.widget.CEditText
+        <com.bgood.xn.widget.CEditText
             android:id="@+id/email_et_email"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -41,7 +29,7 @@
             android:singleLine="true" >
 
             <requestFocus />
-        </com.zhuozhong.widget.CEditText>
+        </com.bgood.xn.widget.CEditText>
     </LinearLayout>
     
     <Button
