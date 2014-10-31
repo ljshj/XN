@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +23,11 @@ import android.widget.Toast;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
+import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
+import com.bgood.xn.network.BaseNetWork;
+import com.bgood.xn.network.HttpRequestInfo;
+import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.widget.wheelview.OnWheelChangedListener;
 import com.bgood.xn.widget.wheelview.WheelView;
@@ -29,7 +36,7 @@ import com.bgood.xn.widget.wheelview.adapters.NumericWheelAdapter;
 /**
  * 生日编写页面
  */
-public class BirthdayActivity extends BaseActivity implements OnClickListener
+public class BirthdayActivity extends BaseActivity implements OnClickListener,TaskListenerWithState
 {
     private Button m_backBtn = null;  // 返回
     private TextView m_dayTv = null;  // 生日填写
@@ -290,4 +297,31 @@ public class BirthdayActivity extends BaseActivity implements OnClickListener
 //		 */
 //		
 //	}
+
+
+	@Override
+	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
+		if(info.getState() == HttpTaskState.STATE_OK){
+			BaseNetWork bNetWork = info.getmBaseNetWork();
+			JSONObject body = bNetWork.getBody();
+			String strJson = bNetWork.getStrJson();
+			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+				Intent intent = getIntent();
+				 intent.putExtra("birthday", m_birthday);
+	            setResult(RESULT_OK, intent);
+	            finish();
+			}
+		}
+	}
+
+	@Override
+	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
+		/**
+		 * @todo:TODO
+		 * @date:2014-10-31 下午3:26:06
+		 * @author:hg_liuzl@163.com
+		 */
+		
+	}
 }

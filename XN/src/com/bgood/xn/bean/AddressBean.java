@@ -30,4 +30,66 @@ public class AddressBean implements Serializable,Comparator
 		String str2 = PingYinUtil.getPingYin(o2.regionName);
 		return str1.compareTo(str2);
 	}
+
+
+
+	public String getRegionId() {
+		return regionId;
+	}
+
+
+
+	public void setRegionId(String regionId) {
+		this.regionId = regionId;
+	}
+
+
+
+	public String getParentId() {
+		return parentId;
+	}
+
+
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
+
+
+
+	public String getRegionName() {
+		return regionName;
+	}
+
+
+
+	public void setRegionName(String regionName) {
+		this.regionName = regionName;
+	}
+
+
+
+	public String getRegionType() {
+		return regionType;
+	}
+
+
+
+	public void setRegionType(String regionType) {
+		this.regionType = regionType;
+	}
+
+
+
+	public String getAgencyId() {
+		return agencyId;
+	}
+
+
+
+	public void setAgencyId(String agencyId) {
+		this.agencyId = agencyId;
+	}
+	
+	
 }

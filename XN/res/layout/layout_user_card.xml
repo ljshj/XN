@@ -20,8 +20,7 @@
         <ScrollView
             android:id="@+id/user_card_sl"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone" >
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -40,98 +39,54 @@
                     android:showDividers="middle" >
 
                     <RelativeLayout
-                        android:id="@+id/user_card_rl_user_info"
-                        android:layout_width="fill_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="2" >
-
-                        <ImageView
-                            android:id="@+id/user_card_imgv_user_icon"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="15dp"
-                            android:src="@drawable/ic_launcher" />
-
-                        <ImageView
-                            android:id="@+id/user_card_imgv_hint1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:src="@drawable/img_common_right" />
-
-                        <LinearLayout
+                            android:id="@+id/user_center_rl_user_info"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_toLeftOf="@id/user_card_imgv_hint1"
-                            android:layout_toRightOf="@id/user_card_imgv_user_icon"
-                            android:orientation="vertical" >
+                            android:layout_weight="2" 
+                            android:layout_height="0dp"
+                            android:background="@drawable/selector_layout_select"
+                            android:layout_gravity="center_vertical"
+                            >
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="0dp"
-                                android:layout_marginLeft="5dp"
-                                android:layout_marginTop="15dp"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal" >
+                            <ImageView
+                                android:id="@+id/user_center_imgv_user_icon"
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                android:scaleType="fitXY"
+                                android:layout_margin="10dp"
+                                android:src="@drawable/ic_launcher" />
 
-                                <TextView
-                                    android:id="@+id/user_card_tv_user_name"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="fill_parent"
-                                    android:gravity="center_vertical"
-                                    android:textColor="#626262"
-                                    android:textSize="18dp" />
+                                  <TextView
+                                      android:id="@+id/user_center_tv_user_name"
+                                      android:text="笑笑"
+                                      style="@style/text_common"
+                                      android:layout_toRightOf="@id/user_center_imgv_user_icon"
+                                      android:layout_marginTop="25dp"
+                                      android:drawablePadding="5dp"
+                                      />
 
-                                <ImageView
-                                    android:id="@+id/user_card_imgv_sex"
-                                    android:layout_width="18dp"
-                                    android:layout_height="18dp"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginLeft="5dp"
-                                    android:src="@drawable/img_common_sex_male" />
 
-                                <ImageView
-                                    android:id="@+id/user_card_imgv_identity"
-                                    android:layout_width="18dp"
-                                    android:layout_height="18dp"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginLeft="5dp"
-                                    android:visibility="gone"
-                                    android:src="@drawable/img_common_sex_male" />
-                            </LinearLayout>
+                                  <ImageView
+                                      android:id="@+id/iv_identity"
+                                      android:layout_width="18dp"
+                                      android:layout_height="18dp"
+                                      android:layout_gravity="center_vertical"
+                                      android:layout_marginLeft="10dp"
+                                      android:layout_alignTop="@id/user_center_tv_user_name"
+                                      android:layout_toRightOf="@id/user_center_tv_user_name"
+                                      android:src="@drawable/img_common_sex_male" />
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="0dp"
-                                android:layout_marginBottom="5dp"
-                                android:layout_marginLeft="5dp"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal" >
+                                    <TextView
+                                        android:id="@+id/user_center_tv_account_number"
+                                        style="@style/text_common"
+                                        android:layout_below="@id/user_center_tv_user_name"
+                                        android:layout_alignLeft="@id/user_center_tv_user_name"
+                                        android:layout_marginTop="10dp"
+                                        android:text="能能"
+                                        />
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="fill_parent"
-                                    android:gravity="center_vertical"
-                                    android:text="账号："
-                                    android:textColor="#626262"
-                                    android:textSize="16dp" />
+                                   
 
-                                <TextView
-                                    android:id="@+id/user_card_tv_account_number"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="fill_parent"
-                                    android:gravity="center_vertical"
-                                    android:textColor="#626262"
-                                    android:textSize="16dp" />
-                            </LinearLayout>
-                        </LinearLayout>
-                    </RelativeLayout>
+                        </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="fill_parent"
@@ -140,299 +95,67 @@
                         android:divider="@drawable/img_user_center_y_line"
                         android:orientation="horizontal"
                         android:showDividers="middle" >
+                         
+	                         <LinearLayout  style="@style/action_layout">
+				                  <TextView android:id="@+id/tv_add_attention"
+				                            style="@style/action_text"
+				                            android:text="立即关注"
+				                            android:drawableLeft="@drawable/img_user_card_iv_attention"/>
+	              		    </LinearLayout>
+	
+	
+	                        <LinearLayout  style="@style/action_layout">
+	                
+	                			  <TextView android:id="@+id/tv_add_friend"
+				                            style="@style/action_text"
+				                            android:text="加为好友"
+				                            android:drawableLeft="@drawable/img_user_card_iv_add_friend"
+				                            />
+	                        </LinearLayout>
+	                        <LinearLayout  style="@style/action_layout">
+	                
+				                  <TextView android:id="@+id/tv_call_message"
+				                            style="@style/action_text"
+				                            android:text="发起会话"
+				                            android:drawableLeft="@drawable/img_user_card_iv_chat"
+				                            />
+	               			 </LinearLayout>
+                          
+                   	 </LinearLayout>
+                    
+                    
+                     <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="220dp"
+                        android:orientation="vertical"
+                         >
+                          
+							<TextView android:drawableLeft="@drawable/icon_i_can"
+                             		  android:text="我能"
+                             		  style="@style/select_layout"/>
 
-                        <LinearLayout
-                            android:id="@+id/user_card_ll_follow"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="horizontal" >
+ 						   <TextView android:drawableLeft="@drawable/icon_i_want"
+                                     android:text="我想"
+                                     style="@style/select_layout"/>
 
-                            <ImageView
-                                android:id="@+id/user_card_iv_attention"
-                                android:layout_width="24dp"
-                                android:layout_height="16dp"
-                                android:background="@drawable/img_user_card_iv_attention" />
+                        
+                           <TextView android:id="@+id/tv_xuanneng"
+                                     android:drawableLeft="@drawable/img_user_card_xuanneng"
+                                     android:text="我的炫能"
+                                     style="@style/select_layout"/>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="立即关注"
-                                android:textColor="#626262"
-                                android:textSize="14dp" />
-                        </LinearLayout>
+                       
+                          <TextView android:id="@+id/tv_weiqiang"
+                                    android:drawableLeft="@drawable/img_user_card_weiqiang"
+                                    android:text="我的微墙"
+                                    style="@style/select_layout" />
 
-                        <LinearLayout
-                            android:id="@+id/user_card_ll_add_friend"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="horizontal" >
-
-                            <ImageView
-                                android:id="@+id/user_card_iv_attention"
-                                android:layout_width="24dp"
-                                android:layout_height="16dp"
-                                android:background="@drawable/img_user_card_iv_add_friend" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="加为好友"
-                                android:textColor="#626262"
-                                android:textSize="14dp" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="1px"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/img_user_center_y_line" />
-
-                        <LinearLayout
-                            android:id="@+id/user_card_ll_message"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="horizontal" >
-
-                            <ImageView
-                                android:id="@+id/user_card_iv_attention"
-                                android:layout_width="24dp"
-                                android:layout_height="16dp"
-                                android:background="@drawable/img_user_card_iv_chat" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="发起会话"
-                                android:textColor="#626262"
-                                android:textSize="14dp" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/user_card_rl_imiss"
-                        android:layout_width="fill_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal" >
-
-                        <ImageView
-                            android:id="@+id/user_card_imgv_hint2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:visibility="invisible"
-                            android:src="@drawable/img_common_right" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_toLeftOf="@id/user_card_imgv_hint2"
-                            android:orientation="horizontal" >
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="15dp"
-                                android:gravity="center_vertical"
-                                android:text="我想"
-                                android:textColor="#343434"
-                                android:textSize="16dp" />
-
-                            <TextView
-                                android:id="@+id/user_card_tv_imiss"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="10dp"
-                                android:ellipsize="end"
-                                android:gravity="center_vertical"
-                                android:lines="2"
-                                android:textColor="#343434"
-                                android:textSize="14dp" />
-                        </LinearLayout>
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/user_card_rl_ican"
-                        android:layout_width="fill_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal" >
-
-                        <ImageView
-                            android:id="@+id/user_card_imgv_hint3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:visibility="invisible"
-                            android:src="@drawable/img_common_right" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_toLeftOf="@id/user_card_imgv_hint3"
-                            android:orientation="horizontal" >
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="15dp"
-                                android:gravity="center_vertical"
-                                android:text="我能"
-                                android:textColor="#343434"
-                                android:textSize="16dp" />
-
-                            <TextView
-                                android:id="@+id/user_card_tv_ican"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="10dp"
-                                android:ellipsize="end"
-                                android:gravity="center_vertical"
-                                android:lines="2"
-                                android:textColor="#343434"
-                                android:textSize="14dp" />
-                        </LinearLayout>
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/user_card_rl_xuanneng"
-                        android:layout_width="fill_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal" >
-
-                        <ImageView
-                            android:id="@+id/user_card_imgv_hint4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:src="@drawable/img_common_right" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_toLeftOf="@id/user_card_imgv_hint4"
-                            android:orientation="horizontal" >
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="15dp"
-                                android:src="@drawable/img_user_card_xuanneng" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="10dp"
-                                android:ellipsize="end"
-                                android:gravity="center_vertical"
-                                android:lines="2"
-                                android:text="TA的炫能"
-                                android:textColor="#343434"
-                                android:textSize="16dp" />
-                        </LinearLayout>
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/user_card_rl_weiqiang"
-                        android:layout_width="fill_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal" >
-
-                        <ImageView
-                            android:id="@+id/user_card_imgv_hint4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:src="@drawable/img_common_right" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_toLeftOf="@id/user_card_imgv_hint4"
-                            android:orientation="horizontal" >
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="15dp"
-                                android:src="@drawable/img_user_card_weiqiang" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="10dp"
-                                android:ellipsize="end"
-                                android:gravity="center_vertical"
-                                android:lines="2"
-                                android:text="TA的微墙"
-                                android:textColor="#343434"
-                                android:textSize="16dp" />
-                        </LinearLayout>
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/user_card_rl_shop"
-                        android:layout_width="fill_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal" >
-
-                        <ImageView
-                            android:id="@+id/user_card_imgv_hint5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:src="@drawable/img_common_right" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_toLeftOf="@id/user_card_imgv_hint5"
-                            android:orientation="horizontal" >
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="15dp"
-                                android:src="@drawable/img_user_center_shop" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="10dp"
-                                android:ellipsize="end"
-                                android:gravity="center_vertical"
-                                android:lines="2"
-                                android:text="TA的店铺"
-                                android:textColor="#343434"
-                                android:textSize="16dp" />
-                        </LinearLayout>
-                    </RelativeLayout>
+                     	  <TextView android:id="@+id/tv_shop"
+                                    android:drawableLeft="@drawable/img_user_center_shop"
+                                    android:text="我的店铺"
+                                    style="@style/select_layout"/>
+                   
+                    </LinearLayout>       
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

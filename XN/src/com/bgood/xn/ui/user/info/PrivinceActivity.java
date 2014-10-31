@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.PrivinceAdapter;
+import com.bgood.xn.bean.AddressBean;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.widget.ZZPrivinceQuickAlphabeticBar;
 
@@ -46,7 +47,7 @@ public class PrivinceActivity extends BaseActivity implements OnItemClickListene
 	
 	private PrivinceAdapter m_privinceAdapter;
     
-    private List<AddressDTO> m_privinceList = null;    // 省份/直辖市列表
+    private List<AddressBean> m_privinceList = null;    // 省份/直辖市列表
     
     private String[] searchsHead;
 	private String[] searchs;
@@ -150,12 +151,9 @@ public class PrivinceActivity extends BaseActivity implements OnItemClickListene
 		}
 
 		@Override
-		protected List<AddressDTO> doInBackground(ListView... params)
+		protected List<AddressBean> doInBackground(ListView... params)
 		{
-//			CCityNetDBHelper helper = new CCityNetDBHelper(PrivinceActivity.this);
-//			List<AddressDTO> privinceList = helper.getProvinceList("1");
 			data();
-//			m_privinceList = privinceList;
 			for (int i = 0; i < m_privinceList.size(); i++)
 	        {
 	        	Collections.sort(m_privinceList, m_privinceList.get(i));
@@ -168,7 +166,7 @@ public class PrivinceActivity extends BaseActivity implements OnItemClickListene
 		
 		@SuppressWarnings("unchecked")
 		@Override
-		protected void onPostExecute(List<AddressDTO> result)
+		protected void onPostExecute(List<AddressBean> result)
 		{
 			super.onPostExecute(result);
 			m_progressBar.setVisibility(View.GONE);
@@ -188,7 +186,7 @@ public class PrivinceActivity extends BaseActivity implements OnItemClickListene
 		StringBuilder stringBuilder = new StringBuilder();
 		for (int j = 0; j < m_privinceList.size(); j++)
 		{
-			AddressDTO record = m_privinceList.get(j);
+			AddressBean record = m_privinceList.get(j);
 			stringBuilder.delete(0, stringBuilder.length());
 			stringBuilder.append(record.getRegionName());
 			String s = stringBuilder.toString();
@@ -202,11 +200,11 @@ public class PrivinceActivity extends BaseActivity implements OnItemClickListene
 		}
 	}
     
-    private void setAdapter(List<AddressDTO> records)
+    private void setAdapter(List<AddressBean> records)
 	{
     	m_privinceLv.setVisibility(View.VISIBLE);
     	m_alphaBar.setVisibility(View.VISIBLE);
-    	m_privinceAdapter = new PrivinceAdapter(PrivinceActivity.this, m_privinceList);
+    	m_privinceAdapter = new PrivinceAdapter(m_privinceList,PrivinceActivity.this);
     	m_privinceLv.setAdapter(m_privinceAdapter);
 		if (m_alphaBar != null)
 		{

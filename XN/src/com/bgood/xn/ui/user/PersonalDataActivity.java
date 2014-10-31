@@ -177,6 +177,9 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
     @Override
     public void onClick(View v)
     {
+    	
+    	Intent intent = null;
+    	
         switch (v.getId())
         {
             // 头像
@@ -184,109 +187,81 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
                 break;
             // 称昵
             case R.id.presonal_data_rl_name:
-            {
-                Intent intent = new Intent(PersonalDataActivity.this, NameActivity.class);
+                intent = new Intent(PersonalDataActivity.this, NameActivity.class);
                 intent.putExtra(UserInfoBean.KEY_USER_BEAN, mUserBean);
                 startActivityForResult(intent, INTENR_NAME);
                 break;
-            }
-
             // 个性签名
             case R.id.presonal_data_rl_signature:
-            {
-                Intent intent = new Intent(PersonalDataActivity.this, SignatureActivity.class);
+                intent = new Intent(PersonalDataActivity.this, SignatureActivity.class);
                 intent.putExtra(UserInfoBean.KEY_USER_BEAN, mUserBean);
                 startActivityForResult(intent, INTENR_SIGNATURE);
                 break;
-            }
-
             // 性别
             case R.id.presonal_data_rl_sex:
-            {
-                Intent intent = new Intent(PersonalDataActivity.this, SexActivity.class);
+                intent = new Intent(PersonalDataActivity.this, SexActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(UserInfoBean.KEY_USER_BEAN, mUserBean);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, INTENR_SEX);
                 break;
-            }
 
             // 年龄
             case R.id.presonal_data_rl_age:
-            {
-                Intent intent = new Intent(PersonalDataActivity.this, AgeActivity.class);
+                intent = new Intent(PersonalDataActivity.this, AgeActivity.class);
                 intent.putExtra(UserInfoBean.KEY_USER_BEAN, mUserBean);
                 startActivityForResult(intent, INTENR_AGE);
                 break;
-            }
 
             // 生日
             case R.id.presonal_data_rl_birthday:
-            {
-                Intent intent = new Intent(PersonalDataActivity.this, BirthdayActivity.class);
+                intent = new Intent(PersonalDataActivity.this, BirthdayActivity.class);
                 intent.putExtra(UserInfoBean.KEY_USER_BEAN, mUserBean);
                 startActivityForResult(intent, INTENR_BIRTHDAY);
                 break;
-            }
 
             // 星座
             case R.id.presonal_data_rl_constellation:
-            {
-                Intent intent = new Intent(PersonalDataActivity.this, ConstellationActivity.class);
+                intent = new Intent(PersonalDataActivity.this, ConstellationActivity.class);
                 intent.putExtra(UserInfoBean.KEY_USER_BEAN, mUserBean);
                 startActivityForResult(intent, INTENR_CONSTELL);
                 break;
-            }
 
             // 家乡
             case R.id.presonal_data_rl_hometown:
-            {
-                Intent intent = new Intent(PersonalDataActivity.this, PrivinceActivity.class);
+                intent = new Intent(PersonalDataActivity.this, PrivinceActivity.class);
                 intent.putExtra("index", 0);
                 startActivity(intent);
                 break;
-            }
 
             // 所在地
             case R.id.presonal_data_rl_locus:
-            {
-                Intent intent = new Intent(PersonalDataActivity.this, PrivinceActivity.class);
+                intent = new Intent(PersonalDataActivity.this, PrivinceActivity.class);
                 intent.putExtra("index", 1);
                 startActivity(intent);
                 break;
-            }
 
             // 邮箱
             case R.id.presonal_data_rl_email:
-            {
-                Intent intent = new Intent(PersonalDataActivity.this, EmailActivity.class);
+                intent = new Intent(PersonalDataActivity.this, EmailActivity.class);
                 intent.putExtra(UserInfoBean.KEY_USER_BEAN, mUserBean);
                 startActivityForResult(intent, INTENR_EMAIL);
                 break;
-            }
 
             // 血型
             case R.id.presonal_data_rl_blood_group:
-            {
-                Intent intent = new Intent(PersonalDataActivity.this, BloodGroupActivity.class);
+                intent = new Intent(PersonalDataActivity.this, BloodGroupActivity.class);
                 intent.putExtra(UserInfoBean.KEY_USER_BEAN, mUserBean);
                 startActivityForResult(intent, INTENR_BLOOD);
                 break;
-            }
-
             // 名片预览按钮
             case R.id.presonal_data_btn_done:
-            {
-                Intent intent = new Intent(PersonalDataActivity.this, MyCardActivity.class);
+                intent = new Intent(PersonalDataActivity.this, MyCardActivity.class);
                 intent.putExtra(UserInfoBean.KEY_USER_BEAN, mUserBean);
                 startActivity(intent);
                 break;
-            }
-
             default:
-            {
                 break;
-            }
         }
     }
  
