@@ -65,15 +65,14 @@
                                       />
 
 
-                                  <ImageView
-                                      android:id="@+id/iv_identity"
+                                  <TextView
+                                      android:id="@+id/tv_identity"
                                       android:layout_width="18dp"
                                       android:layout_height="18dp"
                                       android:layout_gravity="center_vertical"
                                       android:layout_marginLeft="10dp"
                                       android:layout_alignTop="@id/user_center_tv_user_name"
-                                      android:layout_toRightOf="@id/user_center_tv_user_name"
-                                      android:src="@drawable/img_common_sex_male" />
+                                      android:layout_toRightOf="@id/user_center_tv_user_name"/>
 
                                     <TextView
                                         android:id="@+id/user_center_tv_account_number"

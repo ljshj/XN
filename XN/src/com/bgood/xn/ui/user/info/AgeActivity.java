@@ -19,6 +19,7 @@ import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
@@ -29,9 +30,6 @@ import com.bgood.xn.widget.TitleBar;
 public class AgeActivity extends BaseActivity implements OnClickListener,TaskListenerWithState
 {
     private EditText m_ageEt = null;  // 昵称编辑框
-    private Button m_doneBtn = null;  // 确定按钮
-    
-    
     private String m_age = "";
     private UserInfoBean mUserBean = null;
     
@@ -51,22 +49,11 @@ public class AgeActivity extends BaseActivity implements OnClickListener,TaskLis
     private void findView()
     {
         m_ageEt = (EditText) findViewById(R.id.age_et_age);
-        m_doneBtn = (Button) findViewById(R.id.age_btn_done);
         
         m_ageEt.setText(mUserBean.age);
         m_ageEt.setSelection(mUserBean.age.length());
         
-        m_doneBtn.setOnClickListener(this);
-    }
-    
-    /**
-     * 控件事件监听方法
-     */
-    private void setListener()
-    {
-        
-        // 确定按钮
-        m_doneBtn.setOnClickListener(new OnClickListener()
+        findViewById(R.id.age_btn_done).setOnClickListener(new OnClickListener()
         {
             
             @Override
@@ -76,21 +63,21 @@ public class AgeActivity extends BaseActivity implements OnClickListener,TaskLis
             }
         });
     }
-    
+ 
     /**
      * 检查用户信息方法
      */
     private void checkInfo()
     {
         // 用户手机号码查询
-        String age = m_ageEt.getText().toString().trim();
-        if (TextUtils.isEmpty(age))
+       m_age = m_ageEt.getText().toString().trim();
+        if (TextUtils.isEmpty(m_age))
         {
             BToast.show(mActivity, "请输入年龄！");
             return;
         }else
         {
-		UserCenterRequest.getInstance().requestUpdatePerson(this, mActivity, "age", age);
+		UserCenterRequest.getInstance().requestUpdatePerson(this, mActivity, "age", m_age);
         }
     }
   
@@ -111,13 +98,14 @@ public class AgeActivity extends BaseActivity implements OnClickListener,TaskLis
 	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
-			JSONObject body = bNetWork.getBody();
-			String strJson = bNetWork.getStrJson();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
-				Intent intent = getIntent();
-	            intent.putExtra("age", m_age);
-	            setResult(RESULT_OK, intent);
-	            finish();
+				BToast.show(mActivity, "修改成功");
+				final UserInfoBean ufb = BGApp.mUserBean;
+				ufb.age = m_age;
+				BGApp.mUserBean = ufb;
+				finish();
+			}else{
+				BToast.show(mActivity, "修改失败");
 			}
 		}
 	}

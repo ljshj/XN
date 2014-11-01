@@ -237,7 +237,7 @@ public class UserCenterRequest extends BaseNetWork {
 	  * @params:@param type 我关注的是 0，关注我的是1
 	  * @params:@param value
 	  */
-	 public void requestAttentionOfMe(TaskListenerWithState mHttpTaskListener,Context context,String type,int start,int end){
+	 public void requestAttentionOfMe(TaskListenerWithState mHttpTaskListener,Context context,String type,String start,String end){
 		 	setMessageType(20005);
 			JSONObject body = new JSONObject();
 			try {

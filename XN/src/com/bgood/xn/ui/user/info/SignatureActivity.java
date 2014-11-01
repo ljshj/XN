@@ -22,6 +22,7 @@ import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
@@ -85,9 +86,9 @@ public class SignatureActivity extends BaseActivity implements TaskListenerWithS
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				BToast.show(mActivity, "修改成功");
-				Intent intent = getIntent();
-				intent.putExtra("signature", m_content);
-	            setResult(RESULT_OK, intent);
+				final UserInfoBean ufb = BGApp.mUserBean;
+				ufb.signature = m_content;
+				BGApp.mUserBean = ufb;
 				finish();
 			}else{
 				BToast.show(mActivity, "修改失败");

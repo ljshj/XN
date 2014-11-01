@@ -1,50 +1,45 @@
-package com.bgood.xn.ui.user.info;
-
-import org.json.JSONObject;
-
+package com.bgood.xn.ui.user.more;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.UserInfoBean;
+import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
-import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
-import com.bgood.xn.network.request.UserCenterRequest;
-import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
+import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
+import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
 
-
 /**
- * 我想页面
+ * 
+ * @todo:意见反馈
+ * @date:2014-11-1 下午2:48:49
+ * @author:hg_liuzl@163.com
  */
-public class IThinkActivity extends BaseActivity implements TaskListenerWithState
+public class FeedbackActivity extends BaseActivity implements TaskListenerWithState
 {
     private EditText m_contentEt = null;  // 内容
     private TextView m_wordcountTv = null;  // 字数显示
-    private Button m_doneBtn = null;  // 确定按钮
     private String mContent;
-    private UserInfoBean mUserBean;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_layout_i_miss);
-        (new TitleBar(mActivity)).initTitleBar("我想");
-        mUserBean = (UserInfoBean) getIntent().getSerializableExtra(UserInfoBean.KEY_USER_BEAN);;
+        setContentView(R.layout.user_layout_feedback);
+        (new TitleBar(mActivity)).initTitleBar("意见反馈");
         findView();
     }
 
@@ -55,14 +50,8 @@ public class IThinkActivity extends BaseActivity implements TaskListenerWithStat
 	 */
     private void findView()
     {
-        m_contentEt = (EditText) findViewById(R.id.imiss_edit_content);
-        m_wordcountTv = (TextView) findViewById(R.id.imiss_tv_wordcount);
-        if (!TextUtils.isEmpty(mUserBean.ineed))
-        {
-        	m_contentEt.setText(mUserBean.ineed);
-        	m_contentEt.setSelection(mUserBean.ineed.length());
-        	m_wordcountTv.setText(mUserBean.ineed.length()+"/30");
-        }
+        m_contentEt = (EditText) findViewById(R.id.feedback_edit_content);
+        m_wordcountTv = (TextView) findViewById(R.id.feedback_tv_wordcount);
         
         m_contentEt.addTextChangedListener(new TextWatcher()
         {
@@ -76,18 +65,18 @@ public class IThinkActivity extends BaseActivity implements TaskListenerWithStat
 
             public void onTextChanged(CharSequence s, int paramInt1, int paramInt2, int paramInt3)
             {
-            	m_wordcountTv.setText(s.length()+"/30");
+            	m_wordcountTv.setText(s.length()+"/200");
             }
         });
         
         // 确定按钮
-        findViewById(R.id.imiss_btn_done).setOnClickListener(new OnClickListener()
+        findViewById(R.id.feedback_btn_done).setOnClickListener(new OnClickListener()
         {
             
             @Override
             public void onClick(View v)
             {
-            	checkContent();
+            //	checkContent();
 
             }
         });

@@ -23,8 +23,7 @@
             android:gravity="top"
             android:hint="请输入您的想法;例如:去旅游"
             android:lines="4"
-            android:maxLength="35"
-            android:text=""
+            android:maxLength="30"
             android:textSize="16dp" >
 
             <requestFocus />

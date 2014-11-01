@@ -10,9 +10,8 @@
           style="@style/common_listview"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:divider="@android:color/transparent"
-          android:dividerHeight="1dp"
-          android:visibility="gone" >
+          android:divider="@color/gray"
+          android:dividerHeight="1px">
       </com.bgood.xn.view.xlistview.XListView>
     
 </LinearLayout>

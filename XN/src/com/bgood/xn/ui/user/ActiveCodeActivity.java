@@ -1,3 +1,4 @@
+package com.bgood.xn.ui.user;
 //package com.bgood.xn.ui.user;
 //
 //import android.os.Bundle;

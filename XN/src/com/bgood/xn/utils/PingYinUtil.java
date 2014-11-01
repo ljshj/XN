@@ -67,4 +67,40 @@ public class PingYinUtil
 			return "#";
 		}
 	}
+	/**
+	 * 提取每个汉字的首字母
+	 * 
+	 * @param str
+	 * @return String
+	 */
+	public static String getPinYinHeadChar(String str)
+	{
+		String convert = "";
+		HanyuPinyinOutputFormat t3 = new HanyuPinyinOutputFormat();
+		t3.setCaseType(HanyuPinyinCaseType.LOWERCASE);
+
+		for (int j = 0; j < str.length(); j++)
+		{
+			char word = str.charAt(j);
+			// 提取汉字的首字母
+
+			String[] pinyinArray = null;
+			try
+			{
+				pinyinArray = PinyinHelper.toHanyuPinyinStringArray(word, t3);
+			} catch (BadHanyuPinyinOutputFormatCombination e)
+			{
+				e.printStackTrace();
+			}
+			if (pinyinArray != null)
+			{
+				convert += pinyinArray[0].charAt(0);
+			} else
+			{
+				convert += word;
+			}
+		}
+		return convert;
+	}
+	
 }

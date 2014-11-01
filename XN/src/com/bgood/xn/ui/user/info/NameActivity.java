@@ -18,6 +18,7 @@ import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.CEditText;
@@ -65,20 +66,16 @@ public class NameActivity extends BaseActivity implements TaskListenerWithState
      */
     private void checkInfo()
     {
-    		m_name = m_nameEt.getText().toString().trim();
+    	m_name = m_nameEt.getText().toString().trim();
         if (TextUtils.isEmpty(m_name))
         {
             BToast.show(mActivity, "请输入您的昵称");
             return;
-        }
-        
-        else if (m_name.length() >=3 && m_name.length() <=8)
+        }else if (m_name.length() >=3 && m_name.length() <=8)
         {
         	 BToast.show(mActivity, "请输入3-8位长度昵称");
             return;
-        }
-        
-        else
+        }else
         {
            UserCenterRequest.getInstance().requestUpdatePerson(this, mActivity, "nickname", m_name);
         }
@@ -90,9 +87,9 @@ public class NameActivity extends BaseActivity implements TaskListenerWithState
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				BToast.show(mActivity, "修改成功");
-				Intent intent = new Intent();
-				intent.putExtra("userName", m_name);
-	            setResult(RESULT_OK, intent);
+				final UserInfoBean ufb = BGApp.mUserBean;
+				ufb.username = m_name;
+				BGApp.mUserBean = ufb;
 				finish();
 			}else{
 				BToast.show(mActivity, "修改失败");

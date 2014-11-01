@@ -57,20 +57,7 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
     private RelativeLayout m_bloodGroupRl    = null; // 血型布局
     private TextView       m_bloodGroupTv    = null; // 血型
     private Button         m_doneBtn         = null; // 立即预览我的名片按钮
-    
     private UserInfoBean mUserBean = null;
-    
-    public final static int INTENR_PHONE = 100;      // 手机号
-    public final static int INTENR_NAME = 101;       // 昵称
-    public final static int INTENR_SIGNATURE = 102;  // 个性签名
-    public final static int INTENR_SEX = 103;        // 性别
-    public final static int INTENR_AGE = 104;        // 年龄
-    public final static int INTENR_BIRTHDAY = 105;   // 生日
-    public final static int INTENR_CONSTELL = 106;   // 星座
-    public final static int INTENR_HOMETOWN = 107;   // 家乡
-    public final static int INTENR_LOCUSE = 108;     // 现居住地
-    public final static int INTENR_EMAIL = 109;      // 邮箱
-    public final static int INTENR_BLOOD = 110;      // 血型
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -189,13 +176,13 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
             case R.id.presonal_data_rl_name:
                 intent = new Intent(PersonalDataActivity.this, NameActivity.class);
                 intent.putExtra(UserInfoBean.KEY_USER_BEAN, mUserBean);
-                startActivityForResult(intent, INTENR_NAME);
+                startActivity(intent);
                 break;
             // 个性签名
             case R.id.presonal_data_rl_signature:
                 intent = new Intent(PersonalDataActivity.this, SignatureActivity.class);
                 intent.putExtra(UserInfoBean.KEY_USER_BEAN, mUserBean);
-                startActivityForResult(intent, INTENR_SIGNATURE);
+                startActivity(intent);
                 break;
             // 性别
             case R.id.presonal_data_rl_sex:
@@ -203,28 +190,28 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(UserInfoBean.KEY_USER_BEAN, mUserBean);
                 intent.putExtras(bundle);
-                startActivityForResult(intent, INTENR_SEX);
+                startActivity(intent);
                 break;
 
             // 年龄
             case R.id.presonal_data_rl_age:
                 intent = new Intent(PersonalDataActivity.this, AgeActivity.class);
                 intent.putExtra(UserInfoBean.KEY_USER_BEAN, mUserBean);
-                startActivityForResult(intent, INTENR_AGE);
+                startActivity(intent);
                 break;
 
             // 生日
             case R.id.presonal_data_rl_birthday:
                 intent = new Intent(PersonalDataActivity.this, BirthdayActivity.class);
                 intent.putExtra(UserInfoBean.KEY_USER_BEAN, mUserBean);
-                startActivityForResult(intent, INTENR_BIRTHDAY);
+                startActivity(intent);
                 break;
 
             // 星座
             case R.id.presonal_data_rl_constellation:
                 intent = new Intent(PersonalDataActivity.this, ConstellationActivity.class);
                 intent.putExtra(UserInfoBean.KEY_USER_BEAN, mUserBean);
-                startActivityForResult(intent, INTENR_CONSTELL);
+                startActivity(intent);
                 break;
 
             // 家乡
@@ -245,14 +232,14 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
             case R.id.presonal_data_rl_email:
                 intent = new Intent(PersonalDataActivity.this, EmailActivity.class);
                 intent.putExtra(UserInfoBean.KEY_USER_BEAN, mUserBean);
-                startActivityForResult(intent, INTENR_EMAIL);
+                startActivity(intent);
                 break;
 
             // 血型
             case R.id.presonal_data_rl_blood_group:
                 intent = new Intent(PersonalDataActivity.this, BloodGroupActivity.class);
                 intent.putExtra(UserInfoBean.KEY_USER_BEAN, mUserBean);
-                startActivityForResult(intent, INTENR_BLOOD);
+                startActivity(intent);
                 break;
             // 名片预览按钮
             case R.id.presonal_data_btn_done:
@@ -265,51 +252,4 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
         }
     }
  
-
-    
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        
-        if(resultCode != RESULT_OK){
-        	return;
-        }
-			switch (requestCode)
-			{	
-			case INTENR_PHONE:
-				 mUserBean.phonenumber = data.getStringExtra("userPhone");
-				break;
-			case INTENR_NAME:
-				 mUserBean.nickn = data.getStringExtra("userName");
-				break;
-			case INTENR_SIGNATURE:
-				 mUserBean.signature = data.getStringExtra("signature");
-				break;
-			case INTENR_AGE:
-				 mUserBean.age = data.getStringExtra("age");
-				break;
-			case INTENR_SEX:
-				  mUserBean.sex = data.getIntExtra("sex", 0);
-				break;
-			case INTENR_BIRTHDAY:
-				 mUserBean.birthday = data.getStringExtra("birthday");
-				break;
-			case INTENR_CONSTELL:
-				 mUserBean.conste = data.getStringExtra("constell");
-				break;
-			case INTENR_HOMETOWN:
-				  mUserBean.hometown = data.getStringExtra("hometown");
-				break;
-			case INTENR_LOCUSE:
-				 mUserBean.loplace = data.getStringExtra("loplace");
-				break;
-			case INTENR_EMAIL:
-				 mUserBean.email = data.getStringExtra("email");
-				break;
-			case INTENR_BLOOD:
-				mUserBean.btype = data.getStringExtra("bloodGroup");
-				break;
-			    }
-			setData(mUserBean);
-    	}
 }

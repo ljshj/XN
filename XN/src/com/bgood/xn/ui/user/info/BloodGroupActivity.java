@@ -19,6 +19,7 @@ import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.view.BToast;
 
@@ -155,9 +156,9 @@ public class BloodGroupActivity extends BaseActivity implements TaskListenerWith
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				BToast.show(mActivity, "修改成功");
-				Intent intent = getIntent();
-	            intent.putExtra("bloodGroup", m_bloodGroup);
-	            setResult(RESULT_OK, intent);
+				final UserInfoBean ufb = BGApp.mUserBean;
+				ufb.btype = m_bloodGroup;
+				BGApp.mUserBean = ufb;
 				finish();
 			}else{
 				BToast.show(mActivity, "修改失败");

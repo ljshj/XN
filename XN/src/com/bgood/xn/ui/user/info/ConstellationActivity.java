@@ -2,6 +2,7 @@ package com.bgood.xn.ui.user.info;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RadioGroup;
@@ -17,6 +18,7 @@ import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
@@ -116,9 +118,9 @@ public class ConstellationActivity extends BaseActivity implements TaskListenerW
             @Override
             public void onClick(View v)
             {
-                if (m_constellation != null && !m_constellation.equals(""))
+                if (!TextUtils.isEmpty(m_constellation))
                 {
-                    loadData(m_constellation);
+                    loadData();
                 }
                 else
                 {
@@ -185,9 +187,9 @@ public class ConstellationActivity extends BaseActivity implements TaskListenerW
     /**
      * 加载数据方法
      */
-    private void loadData(String value)
+    private void loadData()
     {
-		UserCenterRequest.getInstance().requestUpdatePerson(this, mActivity, "conste", value);
+		UserCenterRequest.getInstance().requestUpdatePerson(this, mActivity, "conste", m_constellation);
     }
     
 
@@ -198,13 +200,12 @@ public class ConstellationActivity extends BaseActivity implements TaskListenerW
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				BToast.show(mActivity, "修改成功");
-				Intent intent = getIntent();
-	            intent.putExtra("constell", m_constellation);
-	            setResult(RESULT_OK, intent);
+				final UserInfoBean ufb = BGApp.mUserBean;
+				ufb.birthday = m_constellation;
+				BGApp.mUserBean = ufb;
 				finish();
 			}else{
 				BToast.show(mActivity, "修改失败");
-				
 			}
 		}
 	}

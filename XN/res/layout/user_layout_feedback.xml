@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_page_bg"
+    android:orientation="vertical" >
+
+	<include layout="@layout/title_bar"/>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="180dp"
+        android:layout_margin="10.0dp"
+        android:background="@drawable/img_user_center_bg" >
+
+        <EditText
+            android:id="@+id/feedback_edit_content"
+            android:layout_width="fill_parent"
+            android:layout_height="170dp"
+            android:layout_alignParentTop="true"
+            android:layout_margin="5dp"
+            android:background="@null"
+            android:gravity="top"
+            android:hint="您的每一个意见都对我们很重要"
+            android:maxLength="200"
+            android:textSize="16sp" >
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
+            android:id="@+id/feedback_tv_wordcount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="5.0dip"
+            android:layout_marginRight="5.0dip"
+            android:text="0/200" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/feedback_btn_done"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/login_btn_selector"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+</LinearLayout>

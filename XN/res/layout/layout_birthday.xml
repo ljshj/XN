@@ -5,24 +5,7 @@
     android:background="@color/common_page_bg"
     android:orientation="vertical" >
     
-    <RelativeLayout
-        android:id="@+id/birthday_rl_title"
-        style="@style/common_top_title_style" >
-
-        <Button
-            android:id="@+id/birthday_btn_back"
-            style="@style/common_btn_back_style" />
-
-        <TextView
-            style="@style/common_tv_title_style"
-            android:text="生日" />
-        
-        <Button
-            android:id="@+id/birthday_btn_confirm"
-            style="@style/common_btn_title_right_style"
-            android:text="确定" />
-
-    </RelativeLayout>
+	<include layout="@layout/title_bar"/>
     
     <LinearLayout
         android:layout_width="fill_parent"

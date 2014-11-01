@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,11 @@ import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
+import com.bgood.xn.network.request.UserCenterRequest;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.view.BToast;
+import com.bgood.xn.widget.TitleBar;
 import com.bgood.xn.widget.wheelview.OnWheelChangedListener;
 import com.bgood.xn.widget.wheelview.WheelView;
 import com.bgood.xn.widget.wheelview.adapters.NumericWheelAdapter;
@@ -36,36 +41,26 @@ import com.bgood.xn.widget.wheelview.adapters.NumericWheelAdapter;
 /**
  * 生日编写页面
  */
-public class BirthdayActivity extends BaseActivity implements OnClickListener,TaskListenerWithState
+public class BirthdayActivity extends BaseActivity implements TaskListenerWithState
 {
-    private Button m_backBtn = null;  // 返回
     private TextView m_dayTv = null;  // 生日填写
-    private Button m_confirmBtn = null; // 确定按钮
     
     private static int START_YEAR = 1900, END_YEAR = 2100;
     private UserInfoBean mUserBean = null;
     private String m_birthday = "";
-
+    private TitleBar titleBar = null;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_birthday);
+        titleBar = new TitleBar(mActivity);
+        titleBar.initAllBar("生日");
         mUserBean = (UserInfoBean) getIntent().getSerializableExtra(UserInfoBean.KEY_USER_BEAN);
-        findView();
-        setListener();
-    }
-  
-
-    /**
-     * 控件初始化方法
-     */
-    private void findView()
-    {
-        m_backBtn = (Button) findViewById(R.id.birthday_btn_back);
         m_dayTv = (TextView) findViewById(R.id.birthday_tv_day);
-        m_confirmBtn = (Button) findViewById(R.id.birthday_btn_confirm);
         m_dayTv.setText(mUserBean.birthday);
+        setListener();
     }
     
     /**
@@ -73,16 +68,6 @@ public class BirthdayActivity extends BaseActivity implements OnClickListener,Ta
      */
     private void setListener()
     {
-        m_backBtn.setOnClickListener(new OnClickListener()
-        {
-            
-            @Override
-            public void onClick(View v)
-            {
-                BirthdayActivity.this.finish();
-            }
-        });
-        
         m_dayTv.setOnClickListener(new OnClickListener()
         {
             
@@ -94,17 +79,16 @@ public class BirthdayActivity extends BaseActivity implements OnClickListener,Ta
         });
         
         // 确定按钮
-        m_confirmBtn.setOnClickListener(new OnClickListener()
+        titleBar.rightBtn.setOnClickListener(new OnClickListener()
         {
             
             @Override
             public void onClick(View v)
             {
-                String birthday = m_dayTv.getText().toString();
-                if (birthday != null && !birthday.equals(""))
+            	m_birthday = m_dayTv.getText().toString();
+                if (TextUtils.isEmpty(m_birthday))
                 {
-                    m_birthday = birthday;
-                    loadData(birthday);
+                    loadData();
                 }
                 else
                 {
@@ -256,72 +240,33 @@ public class BirthdayActivity extends BaseActivity implements OnClickListener,Ta
         window.setWindowAnimations(R.style.birthday_time_dialog_animation);
         dialog_more.show();
     }
-//    
-//    /**
-//     * 加载数据方法
-//     * @param value 修改内容
-//     */
-//    private void loadData(String value)
-//    {
-//    	WindowUtil.getInstance().progressDialogShow(BirthdayActivity.this, "数据请求中...");
-//		messageManager.modifyPersonalInfo("birthday", value);
-//    }
-//    
-//    @Override
-//	public void modifyPersonalInfoCB(Reulst result_state)
-//	{
-//		super.modifyPersonalInfoCB(result_state);
-//		WindowUtil.getInstance().DismissAllDialog();
-//		
-//		if (result_state.resultCode == ReturnCode.RETURNCODE_OK)
-//		{
-//			Toast.makeText(this, "修改成功！", Toast.LENGTH_LONG).show();
-//			Intent intent = getIntent();
-//            intent.putExtra("birthday", m_birthday);
-//            setResult(RESULT_OK, intent);
-//			finish();
-//		}
-//		else
-//		{
-//			Toast.makeText(this, "修改失败！", Toast.LENGTH_LONG).show();
-//		}
-//	}
-//
-//
-//	@Override
-//	public void onClick(View arg0) {
-//		// TODO Auto-generated method stub
-//		/**
-//		 * @todo:TODO
-//		 * @author:hg_liuzl@163.com
-//		 */
-//		
-//	}
+    
+    /**
+     * 加载数据方法
+     * @param value 修改内容
+     */
+    private void loadData()
+    {
+		UserCenterRequest.getInstance().requestUpdatePerson(this, mActivity, "birthday", m_birthday);
+    }
+    
+
 
 
 	@Override
 	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
-			JSONObject body = bNetWork.getBody();
-			String strJson = bNetWork.getStrJson();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
-				Intent intent = getIntent();
-				 intent.putExtra("birthday", m_birthday);
-	            setResult(RESULT_OK, intent);
-	            finish();
+				BToast.show(mActivity, "修改成功");
+				final UserInfoBean ufb = BGApp.mUserBean;
+				ufb.birthday = m_birthday;
+				BGApp.mUserBean = ufb;
+				finish();
+			}else{
+				BToast.show(mActivity, "修改失败");
 			}
 		}
 	}
 
-	@Override
-	public void onClick(View arg0) {
-		// TODO Auto-generated method stub
-		/**
-		 * @todo:TODO
-		 * @date:2014-10-31 下午3:26:06
-		 * @author:hg_liuzl@163.com
-		 */
-		
-	}
 }

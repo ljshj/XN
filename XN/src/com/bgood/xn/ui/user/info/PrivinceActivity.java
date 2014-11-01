@@ -32,6 +32,7 @@ import com.bgood.xn.R;
 import com.bgood.xn.adapter.PrivinceAdapter;
 import com.bgood.xn.bean.AddressBean;
 import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.utils.PingYinUtil;
 import com.bgood.xn.widget.ZZPrivinceQuickAlphabeticBar;
 
 /**
@@ -133,7 +134,7 @@ public class PrivinceActivity extends BaseActivity implements OnItemClickListene
     /**
 	 * 通过异步加载类得到地址列表
 	 */
-	private class GetAddressListTask extends AsyncTask<ListView, String, List<AddressDTO>>
+	private class GetAddressListTask extends AsyncTask<ListView, String, List<AddressBean>>
 	{
 		private Context context;
 		
@@ -195,8 +196,8 @@ public class PrivinceActivity extends BaseActivity implements OnItemClickListene
 				continue;
 			String str = s.toLowerCase();
 			searchsCH[j] = str;
-			searchs[j] = DataUtil.getPinYin(str);
-			searchsHead[j] = DataUtil.getPinYinHeadChar(str);
+			searchs[j] = PingYinUtil.getPingYin(str);
+			searchsHead[j] = PingYinUtil.getPinYinHeadChar(str);
 		}
 	}
     
@@ -225,7 +226,7 @@ public class PrivinceActivity extends BaseActivity implements OnItemClickListene
 		for (int index = 0; index < m_privinceList.size(); index++)
 		{
 			// String name = getAlpha(list.get(i).getAsString(SORT_KEY));
-			String name = ZZPingYinUtil.getAlpha(ZZPingYinUtil.getPingYin(m_privinceList.get(index).getRegionName().toString().trim()));
+			String name = PingYinUtil.getAlpha(PingYinUtil.getPingYin(m_privinceList.get(index).getRegionName().toString().trim()));
 			if (!alphaIndexer.containsKey(name))
 			{// 只记录在list中首次出现的位置
 				alphaIndexer.put(name, index);
@@ -241,7 +242,7 @@ public class PrivinceActivity extends BaseActivity implements OnItemClickListene
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) 
 	{
-		AddressDTO addressDTO = (AddressDTO) arg0.getItemAtPosition(position);
+		AddressBean addressDTO = (AddressBean) arg0.getItemAtPosition(position);
 		Intent intent = new Intent(PrivinceActivity.this, CityActivity.class);
 		Bundle data = new Bundle();
         data.putSerializable("AddressDTO", addressDTO);
@@ -263,7 +264,7 @@ public class PrivinceActivity extends BaseActivity implements OnItemClickListene
 			// 得到所有的province节点
 			NodeList provinces = document.getElementsByTagName("province");
 			
-			m_privinceList = new ArrayList<AddressDTO>();
+			m_privinceList = new ArrayList<AddressBean>();
 			
 			for (int i = 0; i < provinces.getLength(); i++) 
 			{
@@ -271,7 +272,7 @@ public class PrivinceActivity extends BaseActivity implements OnItemClickListene
 				Element eleNode = (Element) provinces.item(i);
 				String provincename = eleNode.getAttribute("name");
 				
-				AddressDTO addressDTO = new AddressDTO();
+				AddressBean addressDTO = new AddressBean();
 				addressDTO.setRegionName(provincename);
 				addressDTO.setRegionId(i+"");
 				m_privinceList.add(addressDTO);

@@ -8,8 +8,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
-import com.bgood.xn.adapter.FansAdapter;
-import com.bgood.xn.adapter.FollowAdapter;
+import com.bgood.xn.adapter.AttentionAdapter;
 import com.bgood.xn.bean.AttentionBean;
 import com.bgood.xn.bean.response.AttentionResponse;
 import com.bgood.xn.network.BaseNetWork;
@@ -34,8 +33,7 @@ public class AttentionActivity extends BaseActivity implements IXListViewListene
 	/**我关注的，与关注我的key*/
 	public static final String KEY_ATTENTION = "key_attention";
     private XListView m_listLv = null;  // 列表数据
-    private FollowAdapter followAdapter = null;
-    private FansAdapter fansAdapter = null;
+    private AttentionAdapter attentionAdapter = null;
     private List<AttentionBean> m_list = new ArrayList<AttentionBean>();
     private int m_start = 0;
     private int mType = 0;
@@ -53,7 +51,7 @@ public class AttentionActivity extends BaseActivity implements IXListViewListene
         m_listLv = (XListView) findViewById(R.id.follow_xlv_list);
         m_listLv.setPullRefreshEnable(false);
         m_listLv.setPullLoadEnable(false);
-        UserCenterRequest.getInstance().requestAttention(this, mActivity, String.valueOf(mType));
+        UserCenterRequest.getInstance().requestAttentionOfMe(this, mActivity, String.valueOf(mType),String.valueOf(m_start),String.valueOf(m_start+PAGE_SIZE_ADD));
     }
     
 
@@ -62,14 +60,8 @@ public class AttentionActivity extends BaseActivity implements IXListViewListene
      */
     private void setAdapter()
     {
-    	if(0 == mType){
-            followAdapter = new FollowAdapter(m_list,mActivity);
-            m_listLv.setAdapter(followAdapter);
-    	}else{
-            fansAdapter = new FansAdapter(m_list,mActivity);
-            m_listLv.setAdapter(fansAdapter);
-    	}
-
+		attentionAdapter = new AttentionAdapter(m_list,mActivity,mType);
+        m_listLv.setAdapter(attentionAdapter);
     }
 
     

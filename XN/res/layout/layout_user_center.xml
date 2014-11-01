@@ -175,7 +175,7 @@
                                     android:layout_height="0dp"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="我的动态"
+                                    android:text="我的微墙"
                                     android:textColor="#626262"
                                     android:textSize="14dp" />
                             </LinearLayout>
@@ -305,7 +305,7 @@
                       	 <TextView
                              android:id="@+id/tv_settings"
                              android:drawableLeft="@drawable/img_user_center_settings"
-                             android:text="本地应用管理"
+                             android:text="设置"
                              style="@style/select_layout"
                              />
 

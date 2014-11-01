@@ -17,6 +17,7 @@ import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
@@ -115,7 +116,7 @@ public class SexActivity extends BaseActivity implements TaskListenerWithState
             {
                 if (m_sex != -1)
                 {
-                    loadData(m_sex);
+                    loadData();
                 }
                 else
                 {
@@ -130,9 +131,9 @@ public class SexActivity extends BaseActivity implements TaskListenerWithState
     /**
      * 加载数据方法
      */
-    private void loadData(int sex)
+    private void loadData()
     {
-		UserCenterRequest.getInstance().requestUpdatePerson(this, mActivity, "sex", String.valueOf(sex));
+		UserCenterRequest.getInstance().requestUpdatePerson(this, mActivity, "sex", String.valueOf(m_sex));
     }
     
 
@@ -143,13 +144,12 @@ public class SexActivity extends BaseActivity implements TaskListenerWithState
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				BToast.show(mActivity, "修改成功");
-				Intent intent = new Intent();
-				intent.putExtra("sex", String.valueOf(m_sex));
-	            setResult(RESULT_OK, intent);
+				final UserInfoBean ufb = BGApp.mUserBean;
+				ufb.sex = m_sex;
+				BGApp.mUserBean = ufb;
 				finish();
 			}else{
 				BToast.show(mActivity, "修改失败");
-				
 			}
 		}
 	}

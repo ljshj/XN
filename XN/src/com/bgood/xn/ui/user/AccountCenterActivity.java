@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.UserInfoBean;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.widget.TitleBar;
 
@@ -87,15 +88,22 @@ public class AccountCenterActivity extends BaseActivity implements OnClickListen
                 break;
             // 注销
             case R.id.tv_quit_login:
-            	pUitl.setAccountNumber(null);
-            	pUitl.setAccountPassword(null);
-            	intent = new Intent(mActivity, LoginActivity.class);
-            	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            	startActivity(intent);
+            	quitLogin();
                 break;
-            
             default:
                 break;
         }
     }
+    
+    private void quitLogin() {
+    	pUitl.setAccountNumber(null);
+    	pUitl.setAccountPassword(null);
+    	BGApp.isUserLogin = false;
+    	BGApp.mLoginBean = null;
+    	BGApp.mUserBean = null;
+    	Intent intent = new Intent(mActivity, LoginActivity.class);
+    	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    	startActivity(intent);
+    	finish();
+	}
 }

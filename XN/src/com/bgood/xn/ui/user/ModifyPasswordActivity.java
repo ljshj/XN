@@ -16,6 +16,7 @@ import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.view.BToast;
+import com.bgood.xn.widget.TitleBar;
 
 /**
  * 修改密码页面
@@ -31,6 +32,7 @@ public class ModifyPasswordActivity extends BaseActivity implements TaskListener
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_modify_password);
+        (new TitleBar(mActivity)).initTitleBar("修改密码");
         findView();
     }
  

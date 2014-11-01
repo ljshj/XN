@@ -1,4 +1,4 @@
-package com.bgood.xn.ui.user;
+package com.bgood.xn.ui.user.more;
 
 
 import android.content.Intent;
@@ -34,15 +34,13 @@ public class MoreActivity extends BaseActivity implements OnClickListener {
 		findViewById(R.id.tv_about_xuanneng).setOnClickListener(this);
 	}
 
-
-
-
-
 	@Override
 	public void onClick(View v) {
+		Intent intent = null;
 		switch (v.getId()) {
 		case R.id.tv_feedback:
-			
+			intent = new Intent(mActivity, FeedbackActivity.class);
+			startActivity(intent);
 			break;
 		
 		case R.id.tv_comment_score:
@@ -53,7 +51,8 @@ public class MoreActivity extends BaseActivity implements OnClickListener {
 			
 			break;
 		case R.id.tv_about_xuanneng:
-			
+			intent = new Intent(mActivity, AboutUsActivity.class);
+			startActivity(intent);
 			break;
 
 		default:
