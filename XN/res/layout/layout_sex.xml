@@ -59,6 +59,7 @@
             android:layout_marginRight="25dp"
             android:textColor="@color/color_sex_radiobutton"
             android:text="保密"
+            android:visibility="gone"
             android:button="@null"
             android:drawableRight="@drawable/sex_radiobutton_selector"/>
         <View 

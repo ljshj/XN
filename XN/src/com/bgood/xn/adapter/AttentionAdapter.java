@@ -49,7 +49,7 @@ public class AttentionAdapter extends KBaseAdapter
         
         final AttentionBean mAttentionBean = (AttentionBean) mList.get(position);
         if (!TextUtils.isEmpty(mAttentionBean.img)){
-            Picasso.with(mActivity).load(mAttentionBean.img).placeholder(R.drawable.default_icon).error(R.drawable.ic_launcher).into(holder.userIconImgV);
+            Picasso.with(mActivity).load(mAttentionBean.img).placeholder(R.drawable.default_icon).error(R.drawable.icon_default).into(holder.userIconImgV);
         }
         holder.userNameTv.setText(mAttentionBean.name);
         
@@ -57,7 +57,7 @@ public class AttentionAdapter extends KBaseAdapter
         
         holder.userSexIV.setImageDrawable(mActivity.getResources().getDrawable(mAttentionBean.sex == 1? R.drawable.img_common_sex_male:R.drawable.img_common_sex_female));
 
-        holder.userIdentitytV.setText(String.valueOf(mAttentionBean.level));
+        holder.userIdentitytV.setText(mActivity.getResources().getString(R.string.account_vip,mAttentionBean.level));
 
         holder.userIdentitytV.setVisibility(mAttentionBean.level<1 ? View.GONE:View.VISIBLE);
         

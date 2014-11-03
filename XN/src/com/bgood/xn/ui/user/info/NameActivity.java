@@ -71,7 +71,7 @@ public class NameActivity extends BaseActivity implements TaskListenerWithState
         {
             BToast.show(mActivity, "请输入您的昵称");
             return;
-        }else if (m_name.length() >=3 && m_name.length() <=8)
+        }else if (m_name.length() <3 && m_name.length() >8)
         {
         	 BToast.show(mActivity, "请输入3-8位长度昵称");
             return;

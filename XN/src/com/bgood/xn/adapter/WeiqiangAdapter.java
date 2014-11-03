@@ -57,7 +57,7 @@ public class WeiqiangAdapter extends KBaseAdapter
 		
 		if (TextUtils.isEmpty(weiqiangBean.photo))
 		{
-			Picasso.with(mActivity).load(weiqiangBean.photo).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.ivAuthorImg);
+			Picasso.with(mActivity).load(weiqiangBean.photo).placeholder(R.drawable.icon_default).error(R.drawable.icon_default).into(holder.ivAuthorImg);
 		}
 		holder.tvAuthorName.setText(weiqiangBean.name);
 		

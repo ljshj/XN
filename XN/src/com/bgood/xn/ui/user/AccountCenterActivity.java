@@ -2,6 +2,7 @@ package com.bgood.xn.ui.user;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
@@ -24,7 +25,6 @@ public class AccountCenterActivity extends BaseActivity implements OnClickListen
     private TextView m_highOpinionTv = null;  // 好评值
     private TextView m_gradeTv = null;  // 用户等级
     private TextView m_vermicelliTv = null;  // 粉丝数量
-    
     private UserInfoBean mUserBean = null;
     
     @Override
@@ -32,8 +32,8 @@ public class AccountCenterActivity extends BaseActivity implements OnClickListen
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_layout_account_center);
-        mUserBean = (UserInfoBean) getIntent().getSerializableExtra(UserInfoBean.KEY_USER_BEAN);
         (new TitleBar(mActivity)).initTitleBar("账号中心");
+        mUserBean = (UserInfoBean) getIntent().getSerializableExtra(UserInfoBean.KEY_USER_BEAN);
         initView();
         setData();
     }
@@ -60,12 +60,15 @@ public class AccountCenterActivity extends BaseActivity implements OnClickListen
      */
     private void setData()
     {
-        m_userPropertyTv.setText(mUserBean.level);
+        if(!TextUtils.isEmpty(mUserBean.nicktitle)){
+        	m_userPropertyTv.setText(mUserBean.nicktitle);
+        }
+        
         m_experienceTv.setText(mUserBean.exp);
         m_totalExperienceTv.setText(mUserBean.exp);
         m_creditsTv.setText(mUserBean.credit);
         m_highOpinionTv.setText(mUserBean.favor);
-        m_gradeTv.setText(mUserBean.level);
+        m_gradeTv.setText(String.valueOf(mUserBean.level));
         m_vermicelliTv.setText(mUserBean.fansnumber);
     }
     

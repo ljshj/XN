@@ -47,7 +47,7 @@ public class ShowcaseAllProductAdapter extends KBaseAdapter
         }
 		
 		final ProductBean productDTO = (ProductBean) mList.get(position);
-		Picasso.with(mActivity).load(productDTO.productSmallIcon).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
+		Picasso.with(mActivity).load(productDTO.productSmallIcon).placeholder(R.drawable.icon_default).error(R.drawable.icon_default).into(holder.iconImgV);
 		holder.nameTv.setText(productDTO.productName);
 		holder.priceTv.setText(productDTO.productPrice);
 		

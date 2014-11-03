@@ -47,7 +47,7 @@ public class ResultAppAdapter extends KBaseAdapter
         AppBean appDTO = (AppBean) mList.get(position);
         
         if (!TextUtils.isEmpty(appDTO.img)){
-            Picasso.with(mActivity).load(appDTO.img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
+            Picasso.with(mActivity).load(appDTO.img_thum).placeholder(R.drawable.icon_default).error(R.drawable.icon_default).into(holder.iconImgV);
         }
         holder.nameTv.setText(appDTO.title);
         holder.sizeTv.setText(appDTO.size);

@@ -42,7 +42,7 @@
                                 android:layout_height="70dp"
                                 android:scaleType="fitXY"
                                 android:layout_margin="10dp"
-                                android:src="@drawable/ic_launcher" />
+                                android:src="@drawable/icon_default" />
 
                                   <TextView
                                       android:id="@+id/user_center_tv_user_name"
@@ -53,9 +53,8 @@
                                       android:drawablePadding="5dp"
                                       />
 
-
-                                  <ImageView
-                                      android:id="@+id/iv_identity"
+                                   <ImageView
+                                      android:id="@+id/iv_sex"
                                       android:layout_width="18dp"
                                       android:layout_height="18dp"
                                       android:layout_gravity="center_vertical"
@@ -63,6 +62,12 @@
                                       android:layout_alignTop="@id/user_center_tv_user_name"
                                       android:layout_toRightOf="@id/user_center_tv_user_name"
                                       android:src="@drawable/img_common_sex_male" />
+
+                                  <TextView
+                                      android:id="@+id/tv_identity"
+                                      android:layout_alignTop="@id/iv_sex"
+                                      android:layout_toRightOf="@id/iv_sex"
+                                      style="@style/text_vip"/>
 
                                     <TextView
                                         android:id="@+id/user_center_tv_account_number"

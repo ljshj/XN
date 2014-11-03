@@ -25,10 +25,25 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.bgood.xn.R;
 
 public class ToolUtils {
+	
+	
+	/**
+	 * 
+	 * @todo 隐藏键盘
+	 * @param v
+	 */
+	public static void hiddenKeybroad(View v, Context context) {
+		InputMethodManager imm = (InputMethodManager) context
+				.getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+	}
+	
 	/**
 	 * 判断网络是否可用
 	 * 
@@ -499,7 +514,7 @@ public class ToolUtils {
 				}else{
 					sb.append(fromDate.getMonth()+1).append("月").append(fromDate.getDate()).append("日");
 				}
-				sb.append(" ").append(fromDate.getHours()).append(":").append(fromDate.getMinutes());
+				sb.append(" ").append(fromDate.getHours()>12?fromDate.getHours()-12:fromDate.getHours()).append(":").append(fromDate.getMinutes());
 				sb.append(fromDate.getHours()>12 ? "PM":"AM");
 				return sb.toString();
 				
@@ -530,5 +545,29 @@ public class ToolUtils {
 		String nowTime = sdf.format(date);
 		
 		return getFormatDate(nowTime);
+	}
+	
+	
+	/**
+	 * 
+	 * @author lzlong@zwmob.com
+	 * @time 2014-3-24 下午4:28:40
+	 * @todo  格式化10以下的数据
+	 *  @param num
+	 *  @return
+	 */
+	public static String formateTenNum(int num){
+		return num < 10 ? "0"+num:""+num;
+	}
+	
+	/**
+	 * 获取yyyy-MM-dd格式的日期字符串
+	 * @param date
+	 * @return
+	 */
+	public static String getDate(Date date){
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String str = dateFormat.format( date ); 
+		return str;
 	}
 }

@@ -56,7 +56,7 @@ public class ResultMemberAdapter extends KBaseAdapter
        final MemberResultBean member = (MemberResultBean) mList.get(position);
         
         if (!TextUtils.isEmpty(member.img)){
-            Picasso.with(mActivity).load(member.img).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
+            Picasso.with(mActivity).load(member.img).placeholder(R.drawable.icon_default).error(R.drawable.icon_default).into(holder.iconImgV);
         }
 
         holder.nameTv.setText(member.name);

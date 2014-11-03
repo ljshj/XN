@@ -14,6 +14,7 @@ import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.system.SystemConfig;
 import com.bgood.xn.system.SystemConfig.ServerType;
 import com.bgood.xn.utils.ConfigUtil;
+import com.bgood.xn.utils.LogUtils;
 import com.bgood.xn.view.LoadingProgress;
 
 public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo > {
@@ -135,6 +136,7 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 			BaseNetWork bNetWork = response.getmBaseNetWork();
 			switch (bNetWork.getReturnCode()) {
 			case RETURNCODE_OK:
+				LogUtils.i("-----------------"+bNetWork.getStrJson());
 				break;
 			case RETURNCODE_FAIL:
 				Toast.makeText(context, "操作失败", Toast.LENGTH_SHORT).show();

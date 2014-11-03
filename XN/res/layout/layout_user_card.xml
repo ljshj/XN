@@ -53,7 +53,7 @@
                                 android:layout_height="70dp"
                                 android:scaleType="fitXY"
                                 android:layout_margin="10dp"
-                                android:src="@drawable/ic_launcher" />
+                                android:src="@drawable/icon_default" />
 
                                   <TextView
                                       android:id="@+id/user_center_tv_user_name"
@@ -64,15 +64,21 @@
                                       android:drawablePadding="5dp"
                                       />
 
-
-                                  <TextView
-                                      android:id="@+id/tv_identity"
+                                   <ImageView
+                                      android:id="@+id/iv_sex"
                                       android:layout_width="18dp"
                                       android:layout_height="18dp"
                                       android:layout_gravity="center_vertical"
                                       android:layout_marginLeft="10dp"
                                       android:layout_alignTop="@id/user_center_tv_user_name"
-                                      android:layout_toRightOf="@id/user_center_tv_user_name"/>
+                                      android:layout_toRightOf="@id/user_center_tv_user_name"
+                                      android:src="@drawable/img_common_sex_male" />
+
+                                  <TextView
+                                      android:id="@+id/tv_identity"
+                                      android:layout_alignTop="@id/iv_sex"
+                                      android:layout_toRightOf="@id/iv_sex"
+                                      style="@style/text_vip"/>
 
                                     <TextView
                                         android:id="@+id/user_center_tv_account_number"
@@ -82,8 +88,6 @@
                                         android:layout_marginTop="10dp"
                                         android:text="能能"
                                         />
-
-                                   
 
                         </RelativeLayout>
 
@@ -129,11 +133,15 @@
                         android:orientation="vertical"
                          >
                           
-							<TextView android:drawableLeft="@drawable/icon_i_can"
+							<TextView 
+							    android:id="@+id/tv_ican"
+							    	  android:drawableLeft="@drawable/icon_i_can"
                              		  android:text="我能"
                              		  style="@style/select_layout"/>
 
- 						   <TextView android:drawableLeft="@drawable/icon_i_want"
+ 						   <TextView 
+ 						       android:id="@+id/tv_iwant"
+ 						       android:drawableLeft="@drawable/icon_i_want"
                                      android:text="我想"
                                      style="@style/select_layout"/>
 

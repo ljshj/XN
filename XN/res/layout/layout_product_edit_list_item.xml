@@ -24,7 +24,7 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_marginLeft="10dp"
-                    android:src="@drawable/ic_launcher" />
+                    android:src="@drawable/icon_default" />
 
                 <View
                     android:layout_width="1px"

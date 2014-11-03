@@ -16,7 +16,7 @@
             android:id="@+id/my_xuanneng_item_imgv_icon"
             android:layout_width="72dp"
             android:layout_height="72dp"
-            android:src="@drawable/ic_launcher" >
+            android:src="@drawable/icon_default" >
         </ImageView>
     </LinearLayout>
 

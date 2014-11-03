@@ -4,9 +4,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,28 +27,24 @@ import com.squareup.picasso.Picasso;
  */
 public class MyCardActivity extends BaseActivity implements OnClickListener,TaskListenerWithState
 {
-    private RelativeLayout m_infoRl = null;  // 个人信息
+	private UserInfoBean user;
     private ImageView m_userIconImgV = null;  // 用户头像
     private TextView m_userNicteTv = null;  // 用户昵称
+    private TextView m_identityTv = null;  // 性别
     private ImageView m_sexImgV = null;  // 性别
     private TextView m_userNumberTv = null;  // 用户账号信息
-    private LinearLayout m_followLl = null;  // 立即关注
-    private LinearLayout m_addFriendLl = null;  // 加为好友
-    private LinearLayout m_messageLl = null;  // 聊天
     private TextView m_icanTv = null;  // 我能
     private TextView m_ineedTv = null;  // 我想
-    
-	private UserInfoBean user;
-
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		user = (UserInfoBean) getIntent().getSerializableExtra(UserInfoBean.KEY_USER_BEAN);
 		setContentView(R.layout.layout_user_card);
 		(new TitleBar(mActivity)).initTitleBar("我的名片");
-		user = (UserInfoBean) getIntent().getSerializableExtra(UserInfoBean.KEY_USER_BEAN);
 		findView();
-		setListener();
 		setData(user);
 	}
 
@@ -54,37 +53,31 @@ public class MyCardActivity extends BaseActivity implements OnClickListener,Task
 	 */
 	private void findView()
 	{
-//	    m_infoRl = (RelativeLayout) findViewById(R.id.user_card_rl_user_info);
-//	    m_userIconImgV = (ImageView) findViewById(R.id.user_card_imgv_user_icon);
-//	    m_userNicteTv = (TextView) findViewById(R.id.user_card_tv_user_name);
-//	    m_sexImgV = (ImageView) findViewById(R.id.user_card_imgv_sex);
-//	    m_userNumberTv = (TextView) findViewById(R.id.user_card_tv_account_number);
-//	    m_followLl = (LinearLayout) findViewById(R.id.user_card_ll_follow);
-//	    m_addFriendLl = (LinearLayout) findViewById(R.id.user_card_ll_add_friend);
-//	    m_messageLl = (LinearLayout) findViewById(R.id.user_card_ll_message);
-//	    m_icanTv = (TextView) findViewById(R.id.user_card_tv_ican);
-//	    m_ineedTv = (TextView) findViewById(R.id.user_card_tv_imiss);
+	    m_userIconImgV = (ImageView) findViewById(R.id.user_center_imgv_user_icon);
+	    m_userNicteTv = (TextView) findViewById(R.id.user_center_tv_user_name);
+	    m_sexImgV = (ImageView) findViewById(R.id.iv_sex);
+	    m_identityTv = (TextView) findViewById(R.id.tv_identity);
+	    m_userNumberTv = (TextView) findViewById(R.id.user_center_tv_account_number);
+	   
+	    m_icanTv = (TextView) findViewById(R.id.tv_ican);
+	    m_ineedTv = (TextView) findViewById(R.id.tv_iwant);
+		
+		
+		
+		findViewById(R.id.tv_add_attention).setOnClickListener(this);
+		findViewById(R.id.tv_add_friend).setOnClickListener(this);
+		findViewById(R.id.tv_call_message).setOnClickListener(this);
+		findViewById(R.id.tv_xuanneng).setOnClickListener(this);
+		findViewById(R.id.tv_weiqiang).setOnClickListener(this);
+		findViewById(R.id.tv_shop).setOnClickListener(this);
 	}
 
-	/**
-	 * 控件事件监听方法
-	 */
-	private void setListener()
-	{
-	    m_infoRl.setOnClickListener(this);
-	    m_followLl.setOnClickListener(this);
-		m_addFriendLl.setOnClickListener(this);
-		m_messageLl.setOnClickListener(this);
-	}
 
 	@Override
 	public void onClick(View v)
 	{
 		switch (v.getId())
 		{
-//		    // 账户信息
-//            case R.id.user_card_rl_user_info:
-//                break;
             // 关注
             case R.id.tv_add_attention:
                 Toast.makeText(MyCardActivity.this, "不能关注自己", Toast.LENGTH_SHORT).show();
@@ -106,7 +99,7 @@ public class MyCardActivity extends BaseActivity implements OnClickListener,Task
     {
         
         if (TextUtils.isEmpty(userDTO.photo)){
-            Picasso.with(this).load(userDTO.photo).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(m_userIconImgV);
+            Picasso.with(this).load(userDTO.photo).placeholder(R.drawable.icon_default).error(R.drawable.icon_default).into(m_userIconImgV);
         }
         
         // 昵称
@@ -125,6 +118,9 @@ public class MyCardActivity extends BaseActivity implements OnClickListener,Task
         {
             m_sexImgV.setVisibility(View.GONE);
         }
+        
+        m_identityTv.setText(mActivity.getResources().getString(R.string.account_vip, userDTO.level));
+        m_identityTv.setVisibility(userDTO.getLevel()<1 ? View.GONE:View.VISIBLE);
         
         m_userNumberTv.setText(userDTO.username);
         m_ineedTv.setText(userDTO.ineed); // 我想

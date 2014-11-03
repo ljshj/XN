@@ -1,6 +1,5 @@
 package com.bgood.xn.ui.user.info;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -201,7 +200,7 @@ public class ConstellationActivity extends BaseActivity implements TaskListenerW
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				BToast.show(mActivity, "修改成功");
 				final UserInfoBean ufb = BGApp.mUserBean;
-				ufb.birthday = m_constellation;
+				ufb.conste = m_constellation;
 				BGApp.mUserBean = ufb;
 				finish();
 			}else{

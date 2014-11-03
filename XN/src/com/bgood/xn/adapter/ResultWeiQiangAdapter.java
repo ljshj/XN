@@ -47,7 +47,7 @@ public class ResultWeiQiangAdapter extends KBaseAdapter
         
         if (!TextUtils.isEmpty(weiqiangDTO.img_thum))
         		{
-            Picasso.with(mActivity).load(weiqiangDTO.img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
+            Picasso.with(mActivity).load(weiqiangDTO.img_thum).placeholder(R.drawable.icon_default).error(R.drawable.icon_default).into(holder.iconImgV);
         }
         
         holder.infoTv.setText(weiqiangDTO.content);

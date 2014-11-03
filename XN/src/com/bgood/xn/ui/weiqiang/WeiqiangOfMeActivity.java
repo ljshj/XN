@@ -29,6 +29,7 @@ import com.bgood.xn.utils.SharedUtil;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
+import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.TitleBar;
 
 /**
@@ -37,7 +38,7 @@ import com.bgood.xn.widget.TitleBar;
  * @date:2014-10-24 下午3:50:55
  * @author:hg_liuzl@163.com
  */
-public class WeiqiangOfMeActivity extends BaseActivity implements OnItemClickListener,TaskListenerWithState,OnClickListener
+public class WeiqiangOfMeActivity extends BaseActivity implements OnItemClickListener,TaskListenerWithState,OnClickListener,IXListViewListener
 {
 	/**我自己的微墙**/
 	public static final int WEI_QIANG_ME = 0;
@@ -54,13 +55,9 @@ public class WeiqiangOfMeActivity extends BaseActivity implements OnItemClickLis
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_weiqiang_person);
-		initTitle();
+		(new TitleBar(mActivity)).initTitleBar("我的微墙");
 		initViews();
 		WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(WEI_QIANG_ME), String.valueOf(start_size), String.valueOf(start_size+PAGE_SIZE_ADD));
-	}
-	
-	private void initTitle() {
-		(new TitleBar(mActivity)).initTitleBar("我的微墙");
 	}
 	
 	private void initViews()
@@ -118,7 +115,6 @@ public class WeiqiangOfMeActivity extends BaseActivity implements OnItemClickLis
 	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
-			JSONObject body = bNetWork.getBody();
 			String strJson = bNetWork.getStrJson();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				switch(bNetWork.getMessageType()){
@@ -203,5 +199,17 @@ public class WeiqiangOfMeActivity extends BaseActivity implements OnItemClickLis
 		
 		this.mWeiqiangList.addAll(weiqiangs);
 		weiqiangAdapter.notifyDataSetChanged();
+	}
+
+	@Override
+	public void onRefresh() {
+		isRefresh = true;
+			start_size = 0;
+			WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(WEI_QIANG_ME), String.valueOf(start_size), String.valueOf(start_size+PAGE_SIZE_ADD));
+	}
+	@Override
+	public void onLoadMore() {
+		isRefresh = false;
+			WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(WEI_QIANG_ME), String.valueOf(start_size), String.valueOf(start_size+PAGE_SIZE_ADD));
 	}
 }

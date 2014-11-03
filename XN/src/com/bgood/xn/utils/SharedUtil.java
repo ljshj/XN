@@ -40,7 +40,7 @@ public class SharedUtil {
 	// private static final String IMAGE_URL = HttpUrl.PREFIX
 	// + "images/share/sharepic2.png";
 
-	private static int IMAGE_URL = R.drawable.ic_launcher;
+	private static int IMAGE_URL = R.drawable.icon_default;
 
 	private static String sQQImgUrl;
 

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.UserInfoBean;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.ui.user.info.AgeActivity;
 import com.bgood.xn.ui.user.info.BirthdayActivity;
@@ -23,6 +24,7 @@ import com.bgood.xn.ui.user.info.NameActivity;
 import com.bgood.xn.ui.user.info.PrivinceActivity;
 import com.bgood.xn.ui.user.info.SexActivity;
 import com.bgood.xn.ui.user.info.SignatureActivity;
+import com.bgood.xn.widget.TitleBar;
 import com.squareup.picasso.Picasso;
 
 
@@ -64,10 +66,16 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_personal_data);
-        mUserBean = (UserInfoBean) getIntent().getSerializableExtra(UserInfoBean.KEY_USER_BEAN);
+        (new TitleBar(mActivity)).initTitleBar("编辑个人资料");
         findView();
         setListener();
-        setData(mUserBean);
+    }
+    
+    @Override
+    protected void onResume() {
+    	super.onResume();
+    	mUserBean = BGApp.mUserBean;
+    	setData(BGApp.mUserBean);
     }
 
     
@@ -130,7 +138,7 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
     private void setData(UserInfoBean userDTO)
     {
         if (TextUtils.isEmpty(userDTO.photo)){
-            Picasso.with(this).load(userDTO.photo).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(m_iconImgV);
+            Picasso.with(this).load(userDTO.photo).placeholder(R.drawable.icon_default).error(R.drawable.icon_default).into(m_iconImgV);
         }
         m_idTv.setText(userDTO.username);
         m_phoneTv.setText(userDTO.phonenumber);
@@ -251,5 +259,4 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
                 break;
         }
     }
- 
 }

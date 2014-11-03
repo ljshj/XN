@@ -50,7 +50,7 @@ public class ResultShowcaseAdapter extends KBaseAdapter
         final CabinetResultBean cabinetDTO = (CabinetResultBean) mList.get(position);
         
         if (!TextUtils.isEmpty(cabinetDTO.img_thum)){
-            Picasso.with(mActivity).load(cabinetDTO.img_thum).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
+            Picasso.with(mActivity).load(cabinetDTO.img_thum).placeholder(R.drawable.icon_default).error(R.drawable.icon_default).into(holder.iconImgV);
         }
         
         holder.nameTv.setText(cabinetDTO.title);

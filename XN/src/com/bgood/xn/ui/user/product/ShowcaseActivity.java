@@ -477,7 +477,7 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 			}
 			
 			if (showcaseDTO.shopLogo != null && !showcaseDTO.shopLogo.equals(""))
-	            Picasso.with(this).load(showcaseDTO.shopLogo).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(m_showcaseIconImgV);
+	            Picasso.with(this).load(showcaseDTO.shopLogo).placeholder(R.drawable.icon_default).error(R.drawable.icon_default).into(m_showcaseIconImgV);
 			m_recommendTv.setText("(" + showcaseDTO.goodCount + ")");
 			m_allProductTv.setText("(" + showcaseDTO.productCount + ")");
 			

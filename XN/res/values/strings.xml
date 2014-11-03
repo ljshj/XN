@@ -44,6 +44,7 @@
     
     
     <!-- 个人中心 -->
+    <string name="account_vip">VIP%s</string>
     <string name="account_number">能能号：%s</string>
 
 </resources>

@@ -69,7 +69,7 @@ public class ModifyPasswordActivity extends BaseActivity implements TaskListener
         }else if(TextUtils.isEmpty(newPassword)){
         	 BToast.show(mActivity, "请输入新密码");
              return;
-        }else if(newPassword.length() >=6 && newPassword.length() <=10){
+        }else if(newPassword.length() < 6 && newPassword.length() > 10){
         	 BToast.show(mActivity, "新密码长度必须为6-10位");
              return;
         }else if(!newPassword.equals(confirmPassword)){

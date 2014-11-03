@@ -33,6 +33,7 @@ import com.bgood.xn.adapter.PrivinceAdapter;
 import com.bgood.xn.bean.AddressBean;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.utils.PingYinUtil;
+import com.bgood.xn.widget.TitleBar;
 import com.bgood.xn.widget.ZZPrivinceQuickAlphabeticBar;
 
 /**
@@ -40,8 +41,6 @@ import com.bgood.xn.widget.ZZPrivinceQuickAlphabeticBar;
  */
 public class PrivinceActivity extends BaseActivity implements OnItemClickListener
 {
-	private Button m_backBtn = null;
-	private TextView m_titleTv = null;
 	private ListView m_privinceLv = null;
 	private ProgressBar m_progressBar = null;
 	private ZZPrivinceQuickAlphabeticBar m_alphaBar = null;
@@ -62,73 +61,24 @@ public class PrivinceActivity extends BaseActivity implements OnItemClickListene
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_privince);
 		
-		getIntentData();
+		index = getIntent().getIntExtra("index", 0);
+		(new TitleBar(mActivity)).initTitleBar(index == 0 ?"家乡(省)":"所在地(省)");
+		
 		findView();
-		setListener();
 		
 		new GetAddressListTask(PrivinceActivity.this).execute(m_privinceLv);
-		
-//		getProvinceList();
-//		
-//		initSearchDate();
-//		
-//		setAdapter(m_privinceList);
-		
-		/*for(int i = 0; i < m_privinceList.size(); i++)
-		{
-			list.add(m_privinceList.get(i).getRegionName());
-		}
-		
-		ContentAdapter adapter = new ContentAdapter(this,
-                android.R.layout.simple_list_item_1, list);
-        
-		m_privinceLv.setAdapter(adapter);
-		m_privinceLv.setFastScrollEnabled(true);*/
+
 	}
-	
-	private void getIntentData()
-	{
-	    Intent intent = getIntent();
-	    index = intent.getIntExtra("index", 0);
-	}
-	
 
 	/**
 	 * 控件初始化方法
 	 */
 	private void findView()
 	{
-	    m_titleTv = (TextView) findViewById(R.id.privince_tv_title);
-		m_backBtn = (Button) findViewById(R.id.privince_btn_back);
 		m_progressBar = (ProgressBar) findViewById(R.id.privince_progress);
 		m_privinceLv = (ListView) findViewById(R.id.privince_lv_privince);
-		m_alphaBar = (ZZPrivinceQuickAlphabeticBar) findViewById(R.id.privince_qab_fast_scroller);
-		
-		if (index == 0)
-		{
-		    m_titleTv.setText("家乡（省）");
-		}
-		else
-		{
-		    m_titleTv.setText("所在地（省）");
-		}
-	}
-	
-	/**
-	 * 控件事件监听方法
-	 */
-	private void setListener()
-	{
-		m_backBtn.setOnClickListener(new View.OnClickListener() 
-		{
-			@Override
-			public void onClick(View v) 
-			{
-				PrivinceActivity.this.finish();
-			}
-		});
-		
 		m_privinceLv.setOnItemClickListener(this);
+		m_alphaBar = (ZZPrivinceQuickAlphabeticBar) findViewById(R.id.privince_qab_fast_scroller);
 	}
 	
     /**

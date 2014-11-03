@@ -146,7 +146,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	private void setData(WeiQiangBean weiQiangBean)
 	{
 		if (weiQiangBean != null && !TextUtils.isEmpty(weiQiangBean.photo))
-			Picasso.with(this).load(weiQiangBean.photo).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(ivAuthorImg);
+			Picasso.with(this).load(weiQiangBean.photo).placeholder(R.drawable.icon_default).error(R.drawable.icon_default).into(ivAuthorImg);
 		
 		distanceTv.setText(weiQiangBean.distance);
 		distanceTv.setVisibility(View.GONE);

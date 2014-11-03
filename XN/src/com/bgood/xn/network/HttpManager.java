@@ -33,6 +33,7 @@ import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.json.JSONException;
 
 import com.bgood.xn.utils.FormatTransfer;
+import com.bgood.xn.utils.LogUtils;
 
 public class HttpManager {
 
@@ -71,6 +72,7 @@ public class HttpManager {
 			}
 			try {
 				mBaseNetWork = BaseNetWork.parseB(bs, bs.length);
+				LogUtils.i("----------------------"+mBaseNetWork.getBody());
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}

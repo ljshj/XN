@@ -87,7 +87,7 @@ public class EmailActivity extends BaseActivity implements TaskListenerWithState
             BToast.show(mActivity, "请输入您的邮箱");
             return;
         }
-        else if (ToolUtils.isEmail(m_email))
+        else if (!ToolUtils.isEmail(m_email))
         {
             BToast.show(mActivity, "邮箱格式不正确");
             return;

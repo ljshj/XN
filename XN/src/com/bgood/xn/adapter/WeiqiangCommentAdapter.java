@@ -47,7 +47,7 @@ public class WeiqiangCommentAdapter extends KBaseAdapter
        final WeiqiangCommentBean wComment = (WeiqiangCommentBean) mList.get(position);
         if (TextUtils.isEmpty(wComment.photo))
         {
-            Picasso.with(mActivity).load(wComment.photo).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into( holder.ivComment);
+            Picasso.with(mActivity).load(wComment.photo).placeholder(R.drawable.icon_default).error(R.drawable.icon_default).into( holder.ivComment);
         }
         holder.tvCommentAuthor.setText(wComment.name);
         holder.tvCommentTime.setText(ToolUtils.getFormatDate(wComment.commenttime));

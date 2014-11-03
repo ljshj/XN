@@ -44,7 +44,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="35dp"
-                    android:src="@drawable/ic_launcher" />
+                    android:src="@drawable/icon_default" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -137,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="35dp"
+                    android:layout_marginRight="15dp"
                     android:ellipsize="end"
                     android:focusableInTouchMode="true"
                     android:marqueeRepeatLimit="1"
@@ -146,14 +146,6 @@
                     android:textColor="#626262"
                     android:textSize="18sp" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:visibility="invisible"
-                    android:background="@drawable/img_common_right" />
 
                 <ImageView
                     android:layout_width="fill_parent"
@@ -251,6 +243,7 @@
                     android:layout_marginRight="35dp"
                     android:layout_toRightOf="@id/presonal_data_tv_signature_hint"
                     android:ellipsize="end"
+                    android:gravity="center_vertical|right"
                     android:focusableInTouchMode="true"
                     android:marqueeRepeatLimit="1"
                     android:singleLine="true"

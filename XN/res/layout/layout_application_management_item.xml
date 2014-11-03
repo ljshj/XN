@@ -15,7 +15,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/icon_default" />
 
         <View
             android:layout_width="1px"
@@ -39,7 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
-                    android:background="@drawable/ic_launcher"
+                    android:background="@drawable/icon_default"
                     android:text="打开" />
 
                 <LinearLayout

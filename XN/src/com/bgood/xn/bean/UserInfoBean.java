@@ -86,7 +86,7 @@ public class UserInfoBean implements Serializable {
 	public String email;
 	public String btype;
 	public String nicktitle;
-	public String level;
+	public int level;
 	public String favor;
 	public String credit;
 	public String exp;
@@ -95,6 +95,14 @@ public class UserInfoBean implements Serializable {
 	public String guanzhu;
 	public String fansnumber;
 	public String weiqiang;
+	
+	
+	public int getLevel() {
+		return 3;
+	}
+	
+	
+	
 	
 	
 	

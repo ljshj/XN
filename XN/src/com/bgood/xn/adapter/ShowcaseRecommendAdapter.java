@@ -53,7 +53,7 @@ public class ShowcaseRecommendAdapter extends KBaseAdapter
 		
 		final ProductBean productDTO = (ProductBean) mList.get(position);
 		holder.timeTv.setText(productDTO.productAddTime);
-		Picasso.with(mActivity).load(productDTO.productBigIcon).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(holder.iconImgV);
+		Picasso.with(mActivity).load(productDTO.productBigIcon).placeholder(R.drawable.icon_default).error(R.drawable.icon_default).into(holder.iconImgV);
 		holder.nameTv.setText(productDTO.productName);
 		holder.priceTv.setText(productDTO.productPrice);
 		
