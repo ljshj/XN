@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.view.dialog.BottomDialog;
 import com.bgood.xn.widget.TitleBar;
 
 /**
@@ -91,12 +94,34 @@ public class AccountCenterActivity extends BaseActivity implements OnClickListen
                 break;
             // 注销
             case R.id.tv_quit_login:
-            	quitLogin();
+            	doLoginOutDialog();
                 break;
+            case R.id.log_off_btn_confirm:
+            	quitLogin();
+            	dialog.dismiss();
+            	break;
+            case R.id.log_off_btn_cancel:
+            	dialog.dismiss();
+            	break;
             default:
                 break;
         }
     }
+    
+	BottomDialog dialog = null;
+	private void doLoginOutDialog() {
+		if(dialog == null) {
+			dialog = new BottomDialog(this);
+		}
+		
+		LinearLayout ll = (LinearLayout) inflater.inflate(R.layout.layout_log_off_dialog, null);
+		ll.setLayoutParams(new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+		ll.findViewById(R.id.log_off_btn_confirm).setOnClickListener(this);
+		ll.findViewById(R.id.log_off_btn_cancel).setOnClickListener(this);
+		dialog.setvChild(ll);
+		dialog.show();
+	}
+    
     
     private void quitLogin() {
     	pUitl.setAccountNumber(null);

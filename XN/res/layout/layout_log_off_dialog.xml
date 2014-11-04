@@ -1,55 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/translucent" >
-
-    <!--  <View
-        android:id="@+id/log_off_v_show"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@color/color_search_dialog_bg_translucent" />
-        -->
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@color/common_page_bg"
-        android:orientation="vertical" >
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/img_user_center_bg"
+    android:orientation="vertical" >
 
         <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
             android:text="注销登录后您将不能使用会员权限及更多功能是否注销"
-            android:textSize="16dp" />
+			style="@style/text_dialog"
+          />
+        <View 
+            style="@style/cut_line"
+            />
 
-        <Button
+        <TextView
             android:id="@+id/log_off_btn_confirm"
-            android:layout_width="260dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/myself_info_log_off_btn_selector"
-            android:textColor="@color/white"
-            android:textSize="16dp"
-            android:text="注销" />
-
-        <Button
+            android:text="确定"
+			style="@style/text_dialog"
+             />
+         <View 
+            style="@style/cut_line"
+            />
+        <TextView
             android:id="@+id/log_off_btn_cancel"
-            android:layout_width="260dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="25dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/myself_info_cancel_selector"
-            android:textColor="@color/white"
-            android:textSize="16dp"
-            android:text="取消" />
-    </LinearLayout>
+            android:text="取消"
+			style="@style/text_dialog"/>
 
-</FrameLayout>
+</LinearLayout>
+

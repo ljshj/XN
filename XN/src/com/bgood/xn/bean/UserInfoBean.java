@@ -95,35 +95,4 @@ public class UserInfoBean implements Serializable {
 	public String guanzhu;
 	public String fansnumber;
 	public String weiqiang;
-	
-	
-	public int getLevel() {
-		return 3;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

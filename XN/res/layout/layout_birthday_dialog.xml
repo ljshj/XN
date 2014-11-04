@@ -41,7 +41,7 @@
                 android:textSize="20dp" />
         </RelativeLayout>
 
-      <!--   <LinearLayout
+        <LinearLayout
             android:id="@+id/timePicker1"
             android:layout_width="match_parent"
             android:layout_height="220dp"
@@ -52,7 +52,7 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center"
-                android:layout_weight="1" />
+                android:layout_weight="2" />
 
             <com.bgood.xn.widget.wheel.WheelView
                 android:id="@+id/birthday_dialog_wv_month"
@@ -68,34 +68,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1" />
 
-        </LinearLayout> -->
-        
-        
-          <LinearLayout
-        android:id="@+id/timePicker1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|center"
-        android:orientation="horizontal"
-        android:background="@drawable/wheel_layout_bg" 
-        android:padding="10dp">
-   		 <com.bgood.xn.widget.wheel.WheelView
-			android:id="@+id/birthday_dialog_wv_year" 
-			android:layout_height="wrap_content"
-			android:layout_width="0dp"
-			android:layout_weight="1"
-			 />
-		<com.bgood.xn.widget.wheel.WheelView
-			android:id="@+id/birthday_dialog_wv_month" 
-			android:layout_height="wrap_content"
-				android:layout_width="0dp"
-			android:layout_weight="1" />
-		<com.bgood.xn.widget.wheel.WheelView
-			android:id="@+id/birthday_dialog_wv_day"
-			 android:layout_height="wrap_content"
-				android:layout_width="0dp"
-			android:layout_weight="1"/>
-    </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>

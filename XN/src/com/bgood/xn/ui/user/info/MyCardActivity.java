@@ -120,7 +120,7 @@ public class MyCardActivity extends BaseActivity implements OnClickListener,Task
         }
         
         m_identityTv.setText(mActivity.getResources().getString(R.string.account_vip, userDTO.level));
-        m_identityTv.setVisibility(userDTO.getLevel()<1 ? View.GONE:View.VISIBLE);
+        m_identityTv.setVisibility(userDTO.level < 1 ? View.GONE:View.VISIBLE);
         
         m_userNumberTv.setText(userDTO.username);
         m_ineedTv.setText(userDTO.ineed); // 我想
