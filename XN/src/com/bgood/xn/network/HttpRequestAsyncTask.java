@@ -24,11 +24,13 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 	private Context context;
 	private BaseNetWork bNetWork;
 	private boolean mCommonLoading = true;	//进度条是通用的
+	private ServerType type;
 	
 	public HttpRequestAsyncTask(boolean commonLoading,ServerType type,BaseNetWork b,TaskListenerWithState listner,Context c) {
 		this.mCommonLoading = commonLoading;
 		this.bNetWork = b;
 		this.context=c;
+		this.type = type;
 		this.mRequest = HttpRequestInfo.getHttpRequestInfoInstance();
 		setRequestUrl(type, b, listner);
 	}
@@ -36,10 +38,12 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 	public HttpRequestAsyncTask(ServerType type,BaseNetWork b,TaskListenerWithState listner,Context c) {
 		this.bNetWork = b;
 		this.context=c;
+		this.type = type;
 		this.mRequest = HttpRequestInfo.getHttpRequestInfoInstance();
-		
 		setRequestUrl(type, b, listner);
 	}
+	
+
 	
 	private void setRequestUrl(ServerType type,BaseNetWork b,TaskListenerWithState listner) {
 			//1.服务器分配地址 2.登录后的操作要分配session
@@ -55,7 +59,7 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 				b.setSessionID(SystemConfig.SessionID);
 				
 			}else if(type == ServerType.FileServer){
-				serverUrl = SystemConfig.FILE_SERVER;
+				serverUrl = SystemConfig.FILE_SERVER+"/Upload.ashx"+b.getConnUrl();	//注意这里是文件类型
 				b.setSessionID(SystemConfig.SessionID);
 				
 			}else{
@@ -63,13 +67,7 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 			}
 			mRequest.setRequesUrl("http://"+serverUrl);
 			this.mListenerWithState=listner;
-
 	}
-
-	
-	
-	
-	
 	
 	@Override
 	protected HttpResponseInfo doInBackground(Void... params) {
@@ -78,13 +76,12 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 		}
 		try {
 			if (mRequest != null) {
-				if (mRequest.getRequestID() == -2) {                       
-					return new HttpResponseInfo(
-							HttpManager.postHttpRequest(mRequest,bNetWork),
-							HttpTaskState.STATE_OK);
+			
+				if(type == ServerType.FileServer){	//如果是上传文件，请注意一下。
+					return new HttpResponseInfo(HttpManager.getHttpRequest(mRequest,bNetWork),	HttpTaskState.STATE_OK);		
+				}else{
+					return new HttpResponseInfo(HttpManager.postHttpRequest(mRequest,bNetWork),	HttpTaskState.STATE_OK);		
 				}
-				
-				return new HttpResponseInfo(HttpManager.postHttpRequest(mRequest,bNetWork),	HttpTaskState.STATE_OK);		//针对http
 			}
 		} catch (SocketTimeoutException e) {
 			e.printStackTrace();
@@ -110,13 +107,17 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 	@Override
 	protected void onPostExecute(HttpResponseInfo response) {
 		super.onPostExecute(response);
+		if(mCommonLoading){
+			LoadingProgress.getInstance().dismiss();
+		}
+		
+		if(null == response){
+			return;
+		}
 		
 		
 		if(mListenerWithState!=null){
 			mListenerWithState.onTaskOver(mRequest, response);
-		}
-		if(mCommonLoading){
-			LoadingProgress.getInstance().dismiss();
 		}
 		
 		switch (response.getState()) {
@@ -133,6 +134,9 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 			Toast.makeText(context, "未知错误", Toast.LENGTH_SHORT).show();
 			break;
 		case STATE_OK:
+			if(type == ServerType.FileServer){
+				return;
+			}
 			BaseNetWork bNetWork = response.getmBaseNetWork();
 			switch (bNetWork.getReturnCode()) {
 			case RETURNCODE_OK:

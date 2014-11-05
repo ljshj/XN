@@ -31,7 +31,12 @@ import android.view.inputmethod.InputMethodManager;
 import com.bgood.xn.R;
 
 public class ToolUtils {
-	
+	// 用当前时间给取得的图片命名
+	public static String getPhotoFileName() {
+		Date date = new Date(System.currentTimeMillis());
+		SimpleDateFormat dateFormat = new SimpleDateFormat("'IMG'_yyyyMMdd_HHmmss");
+		return dateFormat.format(date) + ".jpg";
+	}
 	
 	/**
 	 * 

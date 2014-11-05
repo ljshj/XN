@@ -1,7 +1,20 @@
 package com.bgood.xn.ui.user;
 
+import java.io.File;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,7 +25,16 @@ import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.UserInfoBean;
+import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
+import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
+import com.bgood.xn.network.BaseNetWork;
+import com.bgood.xn.network.HttpRequestInfo;
+import com.bgood.xn.network.HttpResponseInfo;
+import com.bgood.xn.network.request.FileRequest;
+import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.system.Const;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.ui.user.info.AgeActivity;
 import com.bgood.xn.ui.user.info.BirthdayActivity;
@@ -24,6 +46,9 @@ import com.bgood.xn.ui.user.info.NameActivity;
 import com.bgood.xn.ui.user.info.PrivinceActivity;
 import com.bgood.xn.ui.user.info.SexActivity;
 import com.bgood.xn.ui.user.info.SignatureActivity;
+import com.bgood.xn.utils.pic.CropImageActivity;
+import com.bgood.xn.view.BToast;
+import com.bgood.xn.view.dialog.BottomDialog;
 import com.bgood.xn.widget.TitleBar;
 import com.squareup.picasso.Picasso;
 
@@ -31,8 +56,19 @@ import com.squareup.picasso.Picasso;
 /**
  * 个人资料页面
  */
-public class PersonalDataActivity extends BaseActivity implements OnClickListener
+public class PersonalDataActivity extends BaseActivity implements OnClickListener,TaskListenerWithState
 {
+	
+	/** 从相册选择照片 **/
+	private static final int FLAG_CHOOSE_FROM_IMGS = 100;
+	/** 从手机获取照片 **/
+	private static final int FLAG_CHOOSE_FROM_CAMERA = FLAG_CHOOSE_FROM_IMGS + 1;
+	/** 选择完过后 **/
+	private static final int FLAG_MODIFY_FINISH = FLAG_CHOOSE_FROM_CAMERA + 1;
+
+	private File tempFile = null; // 文件
+	private Bitmap mBitmapUploaded;
+	
     private RelativeLayout m_iconRl          = null; // 头像布局
     private ImageView      m_iconImgV        = null; // 头像
     private TextView       m_idTv            = null; // ID号
@@ -179,6 +215,7 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
         {
             // 头像
             case R.id.presonal_data_rl_icon:
+            	showPicDialog();
                 break;
             // 称昵
             case R.id.presonal_data_rl_name:
@@ -255,8 +292,139 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
                 intent.putExtra(UserInfoBean.KEY_USER_BEAN, mUserBean);
                 startActivity(intent);
                 break;
+            case R.id.btn_take_photo:
+            	dialog.dismiss();
+            	doTakeCamera();
+            	break;
+            case R.id.btn_select_photo:
+            	dialog.dismiss();
+            	doSelectPhoto();
+            	break;
+            case R.id.btn_cancel:
+            	dialog.dismiss();
+            	break;
             default:
                 break;
         }
     }
+    
+    private BottomDialog dialog = null;
+    private void showPicDialog() {
+		if(null == dialog){
+			dialog = new BottomDialog(mActivity);
+		}
+		View v = inflater.inflate(R.layout.item_get_pic, null);
+		v.findViewById(R.id.btn_take_photo).setOnClickListener(this);
+		v.findViewById(R.id.btn_select_photo).setOnClickListener(this);
+		v.findViewById(R.id.btn_cancel).setOnClickListener(this);
+		dialog.setvChild(v);
+		dialog.show();
+	}    
+    
+	/**
+	 * 
+	 * @todo 照相
+	 * @author liuzenglong163@gmail.com
+	 */
+	private void doTakeCamera() {
+		String status = Environment.getExternalStorageState();
+		if (status.equals(Environment.MEDIA_MOUNTED)) {
+			try {
+				Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+				tempFile = new File(Const.CID_IMG_STRING_PATH);
+				Uri u = Uri.fromFile(tempFile);
+				intent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
+				intent.putExtra(MediaStore.EXTRA_OUTPUT, u);
+				startActivityForResult(intent, FLAG_CHOOSE_FROM_CAMERA);
+			} catch (ActivityNotFoundException e) {
+			}
+		} else {
+			BToast.show(mActivity, "没有SD卡");
+		}
+	}
+    
+	/**
+	 * 
+	 * @todo 从相册选择照片
+	 * @author liuzenglong163@gmail.com
+	 */
+	private void doSelectPhoto() {
+		Intent intent = new Intent();
+		intent.setAction(Intent.ACTION_PICK);
+		intent.setType("image/*");
+		startActivityForResult(intent, FLAG_CHOOSE_FROM_IMGS);
+	}
+	
+	
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode != RESULT_OK)
+			return;
+		if (requestCode == FLAG_CHOOSE_FROM_IMGS) {
+			if (data != null) {
+				Uri uri = data.getData();
+				if (!TextUtils.isEmpty(uri.getAuthority())) {
+					Cursor cursor = getContentResolver().query(uri,new String[] { MediaStore.Images.Media.DATA },null, null, null);
+					if (null == cursor) {
+						BToast.show(mActivity, "图片没有找到");
+						return;
+					}
+					cursor.moveToFirst();
+					String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+					cursor.close();
+					Intent intent = new Intent(this, CropImageActivity.class);
+					intent.putExtra("path", path);
+					startActivityForResult(intent, FLAG_MODIFY_FINISH);
+				} else {
+					Intent intent = new Intent(this, CropImageActivity.class);
+					intent.putExtra("path", uri.getPath());
+					startActivityForResult(intent, FLAG_MODIFY_FINISH);
+				}
+			}
+		} else if (requestCode == FLAG_CHOOSE_FROM_CAMERA) {
+			if (tempFile == null) {
+				BToast.show(mActivity, "拍照出错，请重拍");
+				return;
+			}
+			Intent intent = new Intent(this, CropImageActivity.class);
+			intent.putExtra("path", tempFile.getAbsolutePath());
+			startActivityForResult(intent, FLAG_MODIFY_FINISH);
+		} else if (requestCode == FLAG_MODIFY_FINISH) {
+			if (data != null) {
+				final String path = data.getStringExtra("path");
+				tempFile = new File(path);
+				mBitmapUploaded = BitmapFactory.decodeFile(path);
+				m_iconImgV.setImageBitmap(mBitmapUploaded);
+				FileRequest.getInstance().requestUpLoadFile(PersonalDataActivity.this,mActivity, new File[]{tempFile}, String.valueOf(BGApp.mLoginBean.userid), "userInfo", "png");
+			}
+		}
+	}
+
+	@Override
+	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
+		if(info.getState() == HttpTaskState.STATE_OK){
+			BaseNetWork bNetWork = info.getmBaseNetWork();
+			switch (bNetWork.getMessageType()) {
+			case 820002:
+				BToast.show(mActivity, bNetWork.getReturnCode() ==  ReturnCode.RETURNCODE_OK?"头像修改成功":"头像修改失败");
+				break;					
+			default:	//因为上传图片 没有设置messageType
+				JSONObject object = bNetWork.getBody();
+				String status = object.optString("success");
+				if(status.equalsIgnoreCase("true")){
+					mUserBean.photo = object.optString("smallurl");
+					BGApp.mUserBean = mUserBean;
+					UserCenterRequest.getInstance().requestUpdatePerson(this, mActivity, "photo", mUserBean.photo);
+					//BToast.show(mActivity, "图片上传成功");
+				}else{
+					BToast.show(mActivity, "图片上传失败");
+				}
+				break;
+			}}
+			
+		
+	}
+
 }

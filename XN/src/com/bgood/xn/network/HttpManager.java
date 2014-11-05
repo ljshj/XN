@@ -1,10 +1,14 @@
 package com.bgood.xn.network;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -31,6 +35,7 @@ import javax.net.ssl.X509TrustManager;
 
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.bgood.xn.utils.FormatTransfer;
 import com.bgood.xn.utils.LogUtils;
@@ -96,219 +101,106 @@ public class HttpManager {
 	}
 	
 	
+	
+	
+	public static BaseNetWork getHttpRequest(HttpRequestInfo info,BaseNetWork bNetWork)throws IOException {
+		BaseNetWork mBNetWork = null;
+		File[] files = bNetWork.getFiles();
+		FileInputStream stream = null;
+		InputStream is = null;
+		OutputStream ot = null;
+		try
+		{
+			URL url = new URL(info.getRequestUrl());
+			HttpURLConnection request = (HttpURLConnection) url.openConnection();
+			request.setDoOutput(true);
+			request.setRequestMethod("GET");
+			for(File f:files){
+				if(!f.exists()){
+					continue;
+				}
+				stream = new FileInputStream(f);
+				byte[] file_arr = new byte[(int) f.length()];
+				stream.read(file_arr);
+				ot = request.getOutputStream();
+				ot.write(file_arr);
+			}
+			ot.flush();
+			request.connect();
+			if (200 == request.getResponseCode())
+			{
+				is = request.getInputStream(); // 获取输入�?
+				byte[] data = readStream(is); // 把输入流转换成字节数�?
+				String json = new String(data); // 把字符数组转换成字符�?
+				mBNetWork = new BaseNetWork();
+				JSONObject object = new JSONObject(json);
+				mBNetWork.setBody(object);
+			}
+
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		} finally
+		{
+			if (stream != null)
+			{
+				try
+				{
+					stream.close();
+				} catch (IOException e)
+				{
+					e.printStackTrace();
+				}
+				stream = null;
+			}
+			if (is != null)
+			{
+				try
+				{
+					is.close();
+				} catch (IOException e)
+				{
+					e.printStackTrace();
+				}
+				is = null;
+			}
+			if (ot != null)
+			{
+				try
+				{
+					ot.close();
+				} catch (IOException e)
+				{
+					e.printStackTrace();
+				}
+				ot = null;
+			}
+		}
+		return mBNetWork;
+	}
+
+
 	/**
-	 * 以POST方式发请求，把返回的结果以字符串的方式返回
+	 * 把输入流转换成字节数数组
 	 * 
-	 * @param posturl
-	 *            请求的url
-	 * @return http响应内容转换成字符串
-	 * @throws IOException
+	 * @param inputStream
+	 *            输入流
+	 * @return 字节数组
 	 */
-	public static String postHttpRequest(HttpRequestInfo info)
-			throws IOException {
-		String contentAsString = null;
-		URL url = new URL(info.getRequestUrl());
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setReadTimeout(8000 /* milliseconds */);
-		conn.setConnectTimeout(8000 /* milliseconds */);
-		conn.setRequestMethod("POST");
-		conn.setDoInput(true);
-		conn.setDoOutput(true);
-		String paramsStr = info.getParamsStr();
-		if (paramsStr != null) {
-			conn.getOutputStream().write(paramsStr.getBytes(STR_ENCODE));
-			conn.getOutputStream().flush();
-			conn.getOutputStream().close();
-		}
-		conn.connect();
-		switch (conn.getResponseCode()) {
-		case 200:
-			InputStream is = conn.getInputStream();
-			contentAsString = readIt(is, conn.getContentLength());
-			is.close();
-			break;
-		default:
-			// TODO:错误处理
-			contentAsString = "服务器返回错误";
-			break;
-		}
-		return contentAsString;
-	}
-
-	// Reads an InputStream and converts it to a String.
-	private static String readIt(InputStream stream, int len)
-			throws IOException {
-		StringBuilder sb = new StringBuilder();
-		BufferedReader br = new BufferedReader(new InputStreamReader(stream,Charset.forName(STR_ENCODE)));
-		String str;
-		while ((str = br.readLine()) != null) {
-			sb.append(str);
-		}
-		return new String(sb.toString());
-	}
-
-	public static String postHttpsRequest(HttpRequestInfo info) {
-		String contentAsString = null;
-		URL url = null;
-		try {
-			url = new URL(info.getRequestUrl());
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		SSLContext sc = null;
-		try {
-			sc = SSLContext.getInstance("TLS");
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			sc.init(null, new TrustManager[] { new MyTrustManager() },
-					new SecureRandom());
-		} catch (KeyManagementException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-		HttpsURLConnection.setDefaultHostnameVerifier(new MyHostnameVerifier());
-		HttpsURLConnection conn = null;
-		try {
-			conn = (HttpsURLConnection) url.openConnection();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		conn.setReadTimeout(8000 /* milliseconds */);// 设置10秒居然会超时
-		conn.setConnectTimeout(8000 /* milliseconds */);
-		try {
-			conn.setRequestMethod("POST");
-		} catch (ProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		conn.setDoInput(true);
-		conn.setDoOutput(true);
-		String paramsStr = info.getParamsStr();
-		if (paramsStr != null) {
-			try {
-				conn.getOutputStream().write(paramsStr.getBytes(STR_ENCODE));
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+	public static byte[] readStream(InputStream inputStream) throws Exception
+	{
+		ByteArrayOutputStream bout = new ByteArrayOutputStream();
+		if (null != inputStream)
+		{
+			byte[] buffer = new byte[1024];
+			int len = 0;
+			while ((len = inputStream.read(buffer)) != -1)
+			{
+				bout.write(buffer, 0, len);
 			}
-			try {
-				conn.getOutputStream().flush();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			try {
-				conn.getOutputStream().close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			bout.close();
+			inputStream.close();
 		}
-		try {
-			conn.connect();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			switch (conn.getResponseCode()) {
-			case 200:
-				InputStream is = conn.getInputStream();
-				contentAsString = readIt(is, conn.getContentLength());
-				is.close();
-				break;
-			default:
-				// TODO:错误处理
-				contentAsString = "服务器返回错误";
-				break;
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return contentAsString;
-	}
-}
-
-class SSLSocketFactoryEx extends SSLSocketFactory {
-
-	SSLContext sslContext = SSLContext.getInstance("TLS");
-
-	public SSLSocketFactoryEx(KeyStore truststore)
-			throws NoSuchAlgorithmException, KeyManagementException,
-			KeyStoreException, UnrecoverableKeyException {
-		super(truststore);
-
-		TrustManager tm = new X509TrustManager() {
-			public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-				return null;
-			}
-
-			@Override
-			public void checkClientTrusted(
-					java.security.cert.X509Certificate[] chain, String authType)
-					throws java.security.cert.CertificateException {
-			}
-
-			@Override
-			public void checkServerTrusted(
-					java.security.cert.X509Certificate[] chain, String authType)
-					throws java.security.cert.CertificateException {
-			}
-		};
-		sslContext.init(null, new TrustManager[] { tm }, null);
-	}
-
-	@Override
-	public Socket createSocket(Socket socket, String host, int port,
-			boolean autoClose) throws IOException, UnknownHostException {
-		return sslContext.getSocketFactory().createSocket(socket, host, port,
-				autoClose);
-	}
-
-	@Override
-	public Socket createSocket() throws IOException {
-		return sslContext.getSocketFactory().createSocket();
-	}
-}
-
-class MyHostnameVerifier implements HostnameVerifier {
-
-	@Override
-	public boolean verify(String hostname, SSLSession session) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-}
-
-class MyTrustManager implements X509TrustManager {
-
-	@Override
-	public void checkClientTrusted(X509Certificate[] chain, String authType)
-			throws CertificateException {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void checkServerTrusted(X509Certificate[] chain, String authType)
-			throws CertificateException {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public X509Certificate[] getAcceptedIssuers() {
-		// TODO Auto-generated method stub
-		return null;
+		return bout.toByteArray();
 	}
 }

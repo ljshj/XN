@@ -13,7 +13,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
-            class="com.hct.zc.pic.CropImageView" />
+            class="com.bgood.xn.utils.pic.CropImageView" />
     </RelativeLayout>
     <LinearLayout
         android:id="@+id/gl_modify_avatar_bottom"

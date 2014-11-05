@@ -69,4 +69,11 @@
      <declare-styleable name="swipelistviewstyle">
         <attr name="right_width" format="dimension"></attr>
     </declare-styleable>
+    
+      <string-array name="phtot_select">
+           <item name="1">照相</item>
+           <item name="2">选择图片</item>
+           <item name="3">取消</item>
+       </string-array>
+     
 </resources>
