@@ -37,6 +37,13 @@ public class WeiQiangBean implements Serializable {
 	public String share_count;
 	public String type;
 	
+	/**操作微墙
+	 * 转发，还是评论
+	 * */
+	public enum WeiqiangActionType{		
+		RESPONSE,TRANSPOND
+	}
+	
 }
 
 

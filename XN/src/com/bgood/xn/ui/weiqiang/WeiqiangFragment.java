@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,6 +20,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
@@ -27,6 +29,7 @@ import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.WeiqiangAdapter;
 import com.bgood.xn.bean.WeiQiangBean;
+import com.bgood.xn.bean.WeiQiangBean.WeiqiangActionType;
 import com.bgood.xn.bean.response.WeiqiangResponse;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
@@ -34,11 +37,13 @@ import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
+import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.ui.BaseFragment;
 import com.bgood.xn.utils.SharedUtil;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
+import com.bgood.xn.view.dialog.BottomDialog;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 
@@ -87,6 +92,7 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
     private boolean isRefresh = true;
 	
     private WeiQiangBean mActionWeiqiang = null;
+    private WeiqiangActionType type;
     
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -263,8 +269,8 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 			mActivity.startActivity(intent);
 			break;
 		case R.id.iv_delete:	//删除
-			wqb = (WeiQiangBean) v.getTag();
-			BToast.show(mActivity, "删除"+wqb.weiboid);
+//			wqb = (WeiQiangBean) v.getTag();
+//			BToast.show(mActivity, "删除"+wqb.weiboid);
 			break;
 		case R.id.tv_zan_count:	//赞
 			wqb = (WeiQiangBean) v.getTag();
@@ -280,18 +286,17 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 			break;
 		case R.id.tv_comment_count:	//评论
 			wqb = (WeiQiangBean) v.getTag();
-			BToast.show(mActivity, "评论"+wqb.weiboid);
+			mActionWeiqiang = wqb;
+			
+			type = WeiqiangActionType.RESPONSE;
+			
+			showSendDialog();
 			break;
 		case R.id.tv_transpont_count:	//转发
 			wqb = (WeiQiangBean) v.getTag();
-			if(m_type == WEIQIANG_ALL){
-				mActionWeiqiang.forward_count = String.valueOf(Integer.valueOf(mActionWeiqiang.forward_count)+1);
-				m_allFriendsAdapter.notifyDataSetChanged();
-			}else{
-				mActionWeiqiang.forward_count = String.valueOf(Integer.valueOf(mActionWeiqiang.forward_count)+1);
-				m_followFriendsAdapter.notifyDataSetChanged();
-			}
-			WeiqiangRequest.getInstance().requestWeiqiangTranspond(this, mActivity, wqb.weiboid);
+			mActionWeiqiang = wqb;
+			type = WeiqiangActionType.TRANSPOND;
+			showSendDialog();
 			break;
 		case R.id.tv_share_count:	//分享
 			wqb = (WeiQiangBean) v.getTag();
@@ -299,6 +304,53 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 			break;
 		}
 	}
+	
+	private BottomDialog dialog = null;
+	
+	private void showSendDialog() {
+		if(null == dialog){
+			dialog = new BottomDialog(mActivity);
+			View v = inflater.inflate(R.layout.dialog_send, null);
+			final EditText etcontent = (EditText) v.findViewById(R.id.et_content);
+			v.findViewById(R.id.btn_send).setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					dialog.dismiss();
+					String content = etcontent.getText().toString();
+					if(TextUtils.isEmpty(content))
+					{
+						return;
+					}else{
+						etcontent.setText("");
+						if(type == WeiqiangActionType.TRANSPOND){
+							if(m_type == WEIQIANG_ALL){
+								mActionWeiqiang.forward_count = String.valueOf(Integer.valueOf(mActionWeiqiang.forward_count)+1);
+								m_allFriendsAdapter.notifyDataSetChanged();
+							}else{
+								mActionWeiqiang.forward_count = String.valueOf(Integer.valueOf(mActionWeiqiang.forward_count)+1);
+								m_followFriendsAdapter.notifyDataSetChanged();
+							}
+							WeiqiangRequest.getInstance().requestWeiqiangTranspond(WeiqiangFragment.this, mActivity, mActionWeiqiang.weiboid);
+						}else{
+							if(m_type == WEIQIANG_ALL){
+								mActionWeiqiang.comment_count = String.valueOf(Integer.valueOf(mActionWeiqiang.comment_count)+1);
+								m_allFriendsAdapter.notifyDataSetChanged();
+							}else{
+								mActionWeiqiang.comment_count = String.valueOf(Integer.valueOf(mActionWeiqiang.comment_count)+1);
+								m_followFriendsAdapter.notifyDataSetChanged();
+							}
+							WeiqiangRequest.getInstance().requestWeiqiangReply(WeiqiangFragment.this, mActivity, mActionWeiqiang.weiboid,content);
+						}
+						
+					}
+				}
+			});
+			dialog.setvChild(v);
+		}
+		dialog.show();
+	}
+	
 	
 	class TableVPAdapter extends PagerAdapter
 	{

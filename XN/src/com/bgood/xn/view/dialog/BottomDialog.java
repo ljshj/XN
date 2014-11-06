@@ -17,7 +17,7 @@ import com.bgood.xn.R;
  * @date:2014-11-4 上午10:09:37
  * @author:hg_liuzl@163.com
  */
-public class BottomDialog extends AlertDialog {
+public class BottomDialog extends Dialog {
 	private View vChild;
 	protected Context mContext;
 	protected Window window;
