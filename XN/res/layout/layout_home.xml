@@ -34,7 +34,7 @@
                     android:layout_margin="5dp"
                     android:text="我想"
                     android:textColor="@color/text_color_normal"
-                    android:textSize="15dp"
+                    android:textSize="@dimen/pop_size_context"
                     tools:ignore="HardcodedText" />
 
                 <View
@@ -78,6 +78,7 @@
                 android:gravity="center_vertical"
                 android:hint="动词+名词;例如: &apos;&apos;打篮球&apos;&apos;"
                 android:paddingLeft="5dp"
+                android:textSize="@dimen/edit_size_context"
                 tools:ignore="HardcodedText" />
         </RelativeLayout>
 
@@ -101,21 +102,14 @@
 
                     <TextView
                         android:id="@+id/tv_home_type_left_select"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
                         android:text="我想"
-                        android:textSize="16dp" />
+                       style="@style/text_select"/>
+                    
 
                     <TextView
                         android:id="@+id/tv_home_type_right_select"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
                         android:text="我能"
-                        android:textSize="16dp" />
+                        style="@style/text_select"/>
                 </LinearLayout>
 
                 <View

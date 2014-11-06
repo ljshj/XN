@@ -34,51 +34,41 @@
     <RadioGroup
             android:id="@+id/main_tab_group"
             android:layout_width="fill_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_gravity="bottom"
+            android:gravity="center_vertical"
             android:background="@drawable/img_menu_bottom_title_bar"
-            android:gravity="bottom"
             android:orientation="horizontal" >
 
             <RadioButton
                 android:id="@+id/main_tab_home"
-                style="@style/home_tab_button"
-                android:layout_gravity="center|bottom"
-                android:checked="true"
                 android:drawableTop="@drawable/bg_checkbox_icon_menu_home"
                 android:text="首页"
-                android:textColor="@color/color_home_radiobutton_text" />
+                android:checked="true"
+                style="@style/home_tab_button"/>
 
             <RadioButton
                 android:id="@+id/main_tab_communication"
                 style="@style/home_tab_button"
                 android:drawableTop="@drawable/bg_checkbox_icon_menu_communication"
-                android:gravity="center|bottom"
-                android:text="联系"
-                android:textColor="@color/color_home_radiobutton_text" />
+                android:text="联系"/>
 
             <RadioButton
                 android:id="@+id/main_tab_weiqiang"
                 style="@style/home_tab_button"
                 android:drawableTop="@drawable/bg_checkbox_icon_menu_weiqiang"
-                android:gravity="center|bottom"
-                android:text="微墙"
-                android:textColor="@color/color_home_radiobutton_text" />
+                android:text="微墙"/>
 
             <RadioButton
                 android:id="@+id/main_tab_xuanneng"
                 style="@style/home_tab_button"
                 android:drawableTop="@drawable/bg_checkbox_icon_menu_xuanneng"
-                android:gravity="center|bottom"
-                android:text="炫能"
-                android:textColor="@color/color_home_radiobutton_text" />
+                android:text="炫能"/>
 
             <RadioButton
                 android:id="@+id/main_tab_me"
                 style="@style/home_tab_button"
                 android:drawableTop="@drawable/bg_checkbox_icon_menu_me"
-                android:gravity="center|bottom"
-                android:text="我"
-                android:textColor="@color/color_home_radiobutton_text" />
+                android:text="我"/>
         </RadioGroup>
 </LinearLayout>

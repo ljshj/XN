@@ -31,8 +31,10 @@ import com.bgood.xn.widget.TitleBar;
 public class FeedbackActivity extends BaseActivity implements TaskListenerWithState
 {
     private EditText m_contentEt = null;  // 内容
+    private EditText m_commact;//联系方式
     private TextView m_wordcountTv = null;  // 字数显示
     private String mContent;
+    private String mCommact;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -42,15 +44,13 @@ public class FeedbackActivity extends BaseActivity implements TaskListenerWithSt
         (new TitleBar(mActivity)).initTitleBar("意见反馈");
         findView();
     }
-
-
-	
 	/**
 	 * 控件初始化方法
 	 */
     private void findView()
     {
-        m_contentEt = (EditText) findViewById(R.id.feedback_edit_content);
+    	m_contentEt = (EditText) findViewById(R.id.feedback_edit_content);
+    	m_commact = (EditText) findViewById(R.id.feedback_edit_commact);
         m_wordcountTv = (TextView) findViewById(R.id.feedback_tv_wordcount);
         
         m_contentEt.addTextChangedListener(new TextWatcher()
@@ -76,7 +76,7 @@ public class FeedbackActivity extends BaseActivity implements TaskListenerWithSt
             @Override
             public void onClick(View v)
             {
-            //	checkContent();
+            	checkContent();
 
             }
         });
@@ -85,11 +85,15 @@ public class FeedbackActivity extends BaseActivity implements TaskListenerWithSt
     
     private void checkContent() {
     	mContent = m_contentEt.getText().toString().trim();
-    	if(TextUtils.isEmpty(mContent)){
-    		 BToast.show(mActivity, "内容不能为空!");
+    	mCommact = m_commact.getText().toString().trim();
+    	if(TextUtils.isEmpty(mCommact)){
+    		 BToast.show(mActivity, "请输入您的反馈意见!");
              return;
+    	}else if(TextUtils.isEmpty(mContent)){
+    		BToast.show(mActivity, "请输入您的联系方式!");
+    		return;
     	}
-    	UserCenterRequest.getInstance().requestUpdatePerson(this, this, "ineed", mContent);
+    	UserCenterRequest.getInstance().requestFeedbackInsert(this, this, mContent, mCommact);
 	}
    
 	@Override
@@ -97,13 +101,10 @@ public class FeedbackActivity extends BaseActivity implements TaskListenerWithSt
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
-				BToast.show(mActivity, "修改成功");
-				final UserInfoBean ufb = BGApp.mUserBean;
-				ufb.ineed = mContent;
-				BGApp.mUserBean = ufb;
+				BToast.show(mActivity, "反馈成功");
 				finish();
 			}else{
-				BToast.show(mActivity, "修改失败");
+				BToast.show(mActivity, "反馈失败");
 			}
 		}
 	}

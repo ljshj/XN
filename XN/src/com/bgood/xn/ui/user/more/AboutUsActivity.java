@@ -21,7 +21,7 @@ public class AboutUsActivity extends BaseActivity  {
 		initView();
 	}
 	public void initView() {
-		(new TitleBar(mActivity)).initTitleBar("关于我们");
+		(new TitleBar(mActivity)).initTitleBar("关于炫能");
 		TextView tvVersion = (TextView)findViewById(R.id.tv_version);
 		tvVersion.setText(getString(R.string.app_version, ConfigUtil.getVersionName(mActivity)));
 	}

@@ -78,5 +78,13 @@ public class PreferenceUtil {
 		return sp.getString("user_account_password", "");
 	}
 	
-	
+	/**设置意见反馈的刷新时间**/
+	public void setFeedbackRefreshTime(String refreshTime) {
+		editor.putString("Feedback", refreshTime);
+		editor.commit();
+	}
+
+	public String getFeedbackRefreshTime() {
+		return sp.getString("Feedback", "");
+	}
 }

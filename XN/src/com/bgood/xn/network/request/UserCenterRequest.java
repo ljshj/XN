@@ -274,4 +274,47 @@ public class UserCenterRequest extends BaseNetWork {
 			setBody(body);
 			new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		}
+	 
+		/**
+		 * 
+		 * @todo:添加意见反馈
+		 */
+		 public void requestFeedbackInsert(TaskListenerWithState mHttpTaskListener,Context context,String message,String contactnum){
+			 	setMessageType(20007);
+				JSONObject body = new JSONObject();
+				try {
+					body.put("message", message);
+					body.put("contactnum", contactnum);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				setBody(body);
+				new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			}
+		 
+		/**
+		 * 
+		 * @todo:获取意见反馈列表
+		 */
+		 public void requestFeedbackList(TaskListenerWithState mHttpTaskListener,Context context){
+			setMessageType(20008);
+			new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+		}
+		 
+		/**
+		 * 
+		 * @todo:检查版本升级
+		 */
+		 public void requestCheckVesion(TaskListenerWithState mHttpTaskListener,Context context,String version){
+			    setMessageType(80001);
+				JSONObject body = new JSONObject();
+				try {
+					body.put("version", version);
+					body.put("os", "android");
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				setBody(body);
+			new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+		}
 }

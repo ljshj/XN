@@ -18,6 +18,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -31,6 +32,42 @@ import android.view.inputmethod.InputMethodManager;
 import com.bgood.xn.R;
 
 public class ToolUtils {
+	
+	
+
+	/**
+	 * 
+	 * 获取版本名称
+	 * */
+	public static String getVersionName(Context app) {
+		PackageInfo packageInfo = null;
+		try {
+			packageInfo = app.getPackageManager().getPackageInfo(
+					app.getPackageName(), 0);
+			return packageInfo.versionName;
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+
+	/**
+	 * 获取版本号
+	 * 
+	 * */
+	public static int getVersionCode(Context app) {
+		PackageInfo packageInfo = null;
+		try {
+			packageInfo = app.getPackageManager().getPackageInfo(
+					app.getPackageName(), 0);
+			return packageInfo.versionCode;
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		return 1;
+	}
+
+	
 	// 用当前时间给取得的图片命名
 	public static String getPhotoFileName() {
 		Date date = new Date(System.currentTimeMillis());

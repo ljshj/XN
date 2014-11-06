@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">炫能</string>
-    <string name="app_version">版本号:%s</string>
+    <string name="app_version">"邦固科技 版本所有 BANDGOOD "%s</string>
     
     	<!-- 版本更新 -->
 	<string name="soft_update_no">已经是最新版本</string>

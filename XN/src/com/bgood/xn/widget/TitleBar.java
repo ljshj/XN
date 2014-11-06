@@ -1,6 +1,7 @@
 package com.bgood.xn.widget;
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -52,7 +53,13 @@ public class TitleBar {
 	
 	public void initAllBar(String title) {
 		initBackBtn();
-		initRightBtn();
+		initRightBtn(null);
+		initTitle(title);
+	}
+	
+	public void initAllBar(String title,String rightBtnTitle) {
+		initBackBtn();
+		initRightBtn(rightBtnTitle);
 		initTitle(title);
 	}
 
@@ -75,13 +82,13 @@ public class TitleBar {
 		backBtn.setOnClickListener(new ClickListener());
 	}
 	
-	private void initRightBtn() {
+	private void initRightBtn(String rightBtnTitle) {
 		if(layout!= null){
 			rightBtn = (Button) layout.findViewById(R.id.btn_right);
 		}else{
 			rightBtn = (Button) mContext.findViewById(R.id.btn_right);
 		}
-		rightBtn.setText("确定");
+		rightBtn.setText(TextUtils.isEmpty(rightBtnTitle)?"确定":rightBtnTitle);
 	}
 	
 	public void setBackBtnVisible(int visibility){

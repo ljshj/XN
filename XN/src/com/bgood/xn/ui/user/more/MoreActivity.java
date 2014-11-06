@@ -1,19 +1,33 @@
 package com.bgood.xn.ui.user.more;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
+import com.bgood.xn.bean.ApkBean;
+import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
+import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
+import com.bgood.xn.network.BaseNetWork;
+import com.bgood.xn.network.HttpRequestInfo;
+import com.bgood.xn.network.HttpResponseInfo;
+import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.utils.ConfigUtil;
+import com.bgood.xn.utils.update.UpdateService;
+import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
-import com.tencent.connect.UserInfo;
 
 /**
  * 
@@ -21,7 +35,7 @@ import com.tencent.connect.UserInfo;
  * @date:2014-10-29 下午2:54:47
  * @author:hg_liuzl@163.com
  */
-public class MoreActivity extends BaseActivity implements OnClickListener {
+public class MoreActivity extends BaseActivity implements OnClickListener,TaskListenerWithState {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +53,7 @@ public class MoreActivity extends BaseActivity implements OnClickListener {
 		Intent intent = null;
 		switch (v.getId()) {
 		case R.id.tv_feedback:
-			intent = new Intent(mActivity, FeedbackActivity.class);
+			intent = new Intent(mActivity, FeedbackShowActivity.class);
 			startActivity(intent);
 			break;
 		
@@ -48,7 +62,7 @@ public class MoreActivity extends BaseActivity implements OnClickListener {
 			break;
 
 		case R.id.tv_update_version:
-			
+			UserCenterRequest.getInstance().requestCheckVesion(this, mActivity, String.valueOf(ConfigUtil.getVersionCode(mActivity)));
 			break;
 		case R.id.tv_about_xuanneng:
 			intent = new Intent(mActivity, AboutUsActivity.class);
@@ -73,5 +87,43 @@ public class MoreActivity extends BaseActivity implements OnClickListener {
 		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
+	}
+	
+
+	private void doUpdate(final ApkBean apkBean) {
+		new AlertDialog.Builder(mActivity).setTitle("发现新版本")
+				.setMessage(apkBean.explain)
+				.setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(android.content.DialogInterface dialog, int which) {
+						dialog.dismiss();
+						yesBtnWork(apkBean);
+					}
+				}).setNegativeButton("取消", null).create().show();
+	}
+
+	/**
+	 * @time 2014-5-22 下午2:19:22
+	 * @author liuzenglong163@gmail.com
+	 */
+	private void yesBtnWork(ApkBean apkBean) {
+		Intent updateIntent = new Intent(mActivity, UpdateService.class);
+		updateIntent.putExtra("titleId", R.string.app_name);
+		updateIntent.putExtra("downloadUrl", apkBean.url);
+		mActivity.startService(updateIntent);
+	}
+
+	@Override
+	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
+		if(info.getState() == HttpTaskState.STATE_OK){
+			BaseNetWork bNetWork = info.getmBaseNetWork();
+			String strJson = bNetWork.getStrJson();
+			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_MAX){
+				final ApkBean apk = JSON.parseObject(strJson, ApkBean.class);
+				doUpdate(apk);
+			}else{
+				BToast.show(mActivity, "已经是最新版本");
+			}
+		}
 	}
 }

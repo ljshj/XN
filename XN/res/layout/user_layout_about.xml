@@ -11,26 +11,29 @@
 		android:gravity="center_horizontal"  
        >
        <ImageView 
-           android:layout_marginTop="30dp"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
+           android:layout_marginTop="40dp"
+           android:layout_width="80dp"
+           android:layout_height="80dp"
+           android:scaleType="fitXY"
            android:background="@drawable/icon_app"
            />
 	     <TextView 
 	         android:layout_marginTop="10dp"
 	         style="@style/text_common"
-	         android:text="@string/app_name"
+	         android:text="炫  能"
 	         /> 
 	      <TextView
-	          android:id="@+id/tv_version"
 	         android:layout_marginTop="10dp"
 	          style="@style/text_common"
+	          android:textColor="@color/gray"
+	           android:text="炫了就有可能"
 	          />
+	      	     
        
    </LinearLayout>
    <TextView 
+         android:id="@+id/tv_version"
        style="@style/text_common"
        android:layout_gravity="center_horizontal"
-       android:text="Copyright 深圳邦固科技 有限公司 \n版权所有"
        />
 </LinearLayout>
