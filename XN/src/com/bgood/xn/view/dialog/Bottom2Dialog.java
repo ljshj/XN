@@ -17,17 +17,17 @@ import com.bgood.xn.R;
  * @date:2014-11-4 上午10:09:37
  * @author:hg_liuzl@163.com
  */
-public class BottomDialog extends AlertDialog {
+public class Bottom2Dialog extends Dialog {
 	private View vChild;
 	protected Context mContext;
 	protected Window window;
 
-	public BottomDialog(Context context) {
+	public Bottom2Dialog(Context context) {
 		super(context);
 		this.mContext = context;
 	}
 
-	public BottomDialog(Context context, int theme) {
+	public Bottom2Dialog(Context context, int theme) {
 		super(context, theme);
 		this.mContext = context;
 		
