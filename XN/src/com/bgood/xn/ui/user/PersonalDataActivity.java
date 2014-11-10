@@ -397,7 +397,7 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
 				tempFile = new File(path);
 				mBitmapUploaded = BitmapFactory.decodeFile(path);
 				m_iconImgV.setImageBitmap(mBitmapUploaded);
-				FileRequest.getInstance().requestUpLoadFile(PersonalDataActivity.this,mActivity, new File[]{tempFile}, String.valueOf(BGApp.mLoginBean.userid), "userInfo", "png");
+				FileRequest.getInstance().requestUpLoadFile(PersonalDataActivity.this,mActivity, tempFile, String.valueOf(BGApp.mLoginBean.userid), "userInfo", "png");
 			}
 		}
 	}

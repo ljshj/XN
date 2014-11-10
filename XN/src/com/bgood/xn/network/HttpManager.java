@@ -105,7 +105,10 @@ public class HttpManager {
 	
 	public static BaseNetWork getHttpRequest(HttpRequestInfo info,BaseNetWork bNetWork)throws IOException {
 		BaseNetWork mBNetWork = null;
-		File[] files = bNetWork.getFiles();
+		File f = bNetWork.getFile();
+		if(!f.exists()){
+			return mBNetWork;
+		}
 		FileInputStream stream = null;
 		InputStream is = null;
 		OutputStream ot = null;
@@ -115,16 +118,13 @@ public class HttpManager {
 			HttpURLConnection request = (HttpURLConnection) url.openConnection();
 			request.setDoOutput(true);
 			request.setRequestMethod("GET");
-			for(File f:files){
-				if(!f.exists()){
-					continue;
-				}
-				stream = new FileInputStream(f);
-				byte[] file_arr = new byte[(int) f.length()];
-				stream.read(file_arr);
-				ot = request.getOutputStream();
-				ot.write(file_arr);
-			}
+			
+			stream = new FileInputStream(f);
+			byte[] file_arr = new byte[(int) f.length()];
+			stream.read(file_arr);
+			ot = request.getOutputStream();
+			ot.write(file_arr);
+				
 			ot.flush();
 			request.connect();
 			if (200 == request.getResponseCode())

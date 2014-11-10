@@ -26,7 +26,7 @@ import com.umeng.socialize.sso.UMWXHandler;
  */
 public class SharedUtil {
 	
-	public static final String WX_APP_ID = "wx2a2f1b0337ef4fe3";
+	public static final String WX_APP_ID = "wx15a1087ed6bf4bb3";
 	
 	public static final String QQ_APP_ID = "101075738";
 	
@@ -49,9 +49,15 @@ public class SharedUtil {
 			return;
 		}
 
-		sharePlatOrder(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,
-				SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.SINA,
-				SHARE_MEDIA.TENCENT, SHARE_MEDIA.SMS);
+		sharePlatOrder(
+				SHARE_MEDIA.WEIXIN,
+				SHARE_MEDIA.WEIXIN_CIRCLE,
+//				SHARE_MEDIA.QQ,
+//				SHARE_MEDIA.QZONE,
+				SHARE_MEDIA.SINA,
+				SHARE_MEDIA.TENCENT,
+				SHARE_MEDIA.SMS
+				);
 		sHaveInitailed = true;
 	}
 

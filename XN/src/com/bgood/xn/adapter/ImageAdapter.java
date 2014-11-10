@@ -18,12 +18,19 @@ import android.widget.ImageView;
 
 import com.bgood.xn.R;
 
-public class WeiqiangPublishAdapter extends BaseAdapter {
+
+/***
+ * 
+ * @todo:图片适配器
+ * @date:2014-11-10 下午6:00:55
+ * @author:hg_liuzl@163.com
+ */
+public class ImageAdapter extends BaseAdapter {
 	private Activity context;
 	private List<String> imgList;
 	private LayoutInflater inflater;
 
-	public WeiqiangPublishAdapter(Activity context, List<String> strings) {
+	public ImageAdapter(Activity context, List<String> strings) {
 		this.context = context;
 		this.imgList = strings;
 		this.inflater = LayoutInflater.from(context);

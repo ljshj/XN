@@ -12,6 +12,5 @@ public class Const {
 	public static final String BASE_BEGIN = Environment.getExternalStorageDirectory().getAbsolutePath() + "/xuanneng/";
 	public static final String BASE_END = ".jpg";
 	public static final String CID_IMG_STRING_PATH = BASE_BEGIN + System.currentTimeMillis() + BASE_END;
-
 	
 }

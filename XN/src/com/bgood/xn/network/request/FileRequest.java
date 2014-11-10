@@ -32,10 +32,10 @@ public class FileRequest extends BaseNetWork {
 	 * @params:@param context
 	 * @params:@param phone
 	 */
-	 public void requestUpLoadFile(TaskListenerWithState mHttpTaskListener,Context context,File[] files,String userid,String tag,String extra){
+	 public void requestUpLoadFile(TaskListenerWithState mHttpTaskListener,Context context,File files,String userid,String tag,String extra){
 			String url = "?userid=" + userid + "&tag=" + tag + "&extra=" + extra;
 			setConnUrl(url);
-			setFiles(files);
+			setFile(files);
 			new HttpRequestAsyncTask(ServerType.FileServer,this, mHttpTaskListener, context).execute();
 	 }
 	

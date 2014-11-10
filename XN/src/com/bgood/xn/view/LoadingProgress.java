@@ -1,14 +1,14 @@
 package com.bgood.xn.view;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
+
+import com.bgood.xn.view.dialog.CustomLoadingDialog;
 
 public class LoadingProgress {
 
 	private static LoadingProgress intance = null;
 
-	private ProgressDialog mDialog;
+	private CustomLoadingDialog mDialog;
 
 	private int mShownCount;
 
@@ -46,12 +46,10 @@ public class LoadingProgress {
 	}
 
 	private void createLoadingDialog(Context context, String message) {
-		mDialog = new ProgressDialog(context);
+		mDialog = new CustomLoadingDialog(context);
 		mDialog.setCancelable(true);
 		mDialog.setCanceledOnTouchOutside(false);
-		mDialog.setIndeterminate(false);
-		mDialog.setInverseBackgroundForced(false);
-		mDialog.setMessage(message);
+		//mDialog.setMessage(message);
 	}
 
 	public void dismiss() {

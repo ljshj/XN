@@ -80,7 +80,7 @@ public class WeiqiangRequest extends BaseNetWork {
 	  * @params:@param context
 	  * @params:@param phone
 	  */
-	 public void requestWeiqiangSend(TaskListenerWithState mHttpTaskListener,Context context,String content, String[] imgs, String[] smallImgs, String date_time, float longitude, float latitude){
+	 public void requestWeiqiangSend(TaskListenerWithState mHttpTaskListener,Context context,String content, String[] imgs, String[] smallImgs, String date_time, String longitude, String latitude){
 		 	setMessageType(60003);
 			JSONObject body = new JSONObject();
 			try
