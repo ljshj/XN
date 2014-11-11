@@ -17,6 +17,12 @@
     <string name="soft_update_cancel_alert">确定取消更新吗？</string>
     <string name="soft_update_check_now">正在检查新版本&#8230;</string>
     <string name="dlg_sdcard_load_err">SD卡空间不足或已卸载，无法下载安装应用</string>
+    
+    
+     <string name="errcode_success">发送成功</string>
+	<string name="errcode_cancel">发送取消</string>
+	<string name="errcode_deny">发送被拒绝</string>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+	<string name="errcode_unknown">发送返回</string>
 
     <!-- 下拉刷新 -->
     <string name="about_company">欧必了巴网络有限公司</string>
@@ -29,6 +35,12 @@
     <string name="pull_to_refresh_from_bottom_refreshing_label">正在刷新…</string>
 
     <!-- Xlistview -->
+    
+    <string name="pull_to_refresh_pull_label" translatable="false">向下拉动可以刷新</string>
+    <string name="pull_to_refresh_release_label" translatable="false">松开可以刷新</string>
+    <string name="pull_to_refresh_refreshing_label" translatable="false">加载中&#8230;</string>
+    <string name="pull_to_refresh_tap_label" translatable="false">点击刷新</string>
+    
     <string name="xlistview_header_hint_normal">下拉刷新</string>
     <string name="xlistview_header_hint_ready">松开刷新数据</string>
     <string name="xlistview_header_hint_loading">正在加载...</string>

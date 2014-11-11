@@ -36,7 +36,6 @@ import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.BaseActivity;
-import com.bgood.xn.utils.SharedUtil;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.dialog.BGDialog;
@@ -165,7 +164,6 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	@Override
 	public void onResume() {
 		super.onResume();
-		SharedUtil.initSharedPane(mActivity);
 		mRefreshDetailWeiqiangTime = pUitl.getWeiqiangDetailRefreshTime();
 		listview.setRefreshTime(mRefreshDetailWeiqiangTime);
 		
@@ -254,7 +252,6 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
                 break;
             // 分享
             case R.id.tv_share_count:
-              SharedUtil.openShare(mActivity, "炫能App", mWeiQiangBean.content, mWeiQiangBean.photo);
                 break;
             default:
                 break;

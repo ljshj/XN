@@ -3,8 +3,6 @@ package com.bgood.xn.ui.weiqiang;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -25,7 +23,6 @@ import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.ui.BaseActivity;
-import com.bgood.xn.utils.SharedUtil;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
@@ -104,7 +101,6 @@ public class WeiqiangOfMeActivity extends BaseActivity implements OnItemClickLis
 			break;
 		case R.id.tv_share_count:	//分享
 			wqb = (WeiQiangBean) v.getTag();
-			SharedUtil.openShare(mActivity, "炫能App",wqb.content, wqb.photo);
 			break;
 		default:
 			break;

@@ -43,7 +43,6 @@ import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.ui.BaseFragment;
-import com.bgood.xn.utils.SharedUtil;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.dialog.BGDialog;
@@ -115,8 +114,6 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 	@Override
 	public void onResume() {
 		super.onResume();
-		
-		SharedUtil.initSharedPane(getActivity());
 		
 		mAllWeiqiangRefreshTime = pUitl.getWeiqiangAllRefreshTime();
 		m_allFriendsXLv.setRefreshTime(mAllWeiqiangRefreshTime);
@@ -310,7 +307,6 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 			break;
 		case R.id.tv_share_count:	//分享
 			wqb = (WeiQiangBean) v.getTag();
-			SharedUtil.openShare(getActivity(), "炫能App",wqb.content, wqb.photo);
 			break;
 		}
 	}
