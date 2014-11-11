@@ -2,8 +2,6 @@ package com.bgood.xn.ui.user;
 
 import java.io.File;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.ActivityNotFoundException;
@@ -18,6 +16,8 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -25,12 +25,12 @@ import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.UserInfoBean;
+import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
-import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
-import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
+import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.FileRequest;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.system.BGApp;
@@ -50,7 +50,10 @@ import com.bgood.xn.utils.pic.CropImageActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.dialog.BottomDialog;
 import com.bgood.xn.widget.TitleBar;
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 
 /**
@@ -173,9 +176,28 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
      */
     private void setData(UserInfoBean userDTO)
     {
-        if (TextUtils.isEmpty(userDTO.photo)){
-            Picasso.with(this).load(userDTO.photo).placeholder(R.drawable.icon_default).error(R.drawable.icon_default).into(m_iconImgV);
-        }
+		ImageLoader mImageLoader;
+		DisplayImageOptions options;
+		options = new DisplayImageOptions.Builder()
+		.showStubImage(R.drawable.icon_default)
+		.showImageForEmptyUri(R.drawable.icon_default)
+		.cacheInMemory()
+		.cacheOnDisc()
+		.build();
+		mImageLoader = ImageLoader.getInstance();
+		mImageLoader.init(ImageLoaderConfiguration.createDefault(mActivity));
+		
+        mImageLoader.displayImage(userDTO.photo,m_iconImgV, options, new SimpleImageLoadingListener() {
+			@Override
+			public void onLoadingComplete() {
+				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
+				m_iconImgV.setAnimation(anim);
+				anim.start();
+			}
+		});
+        
+        
+        
         m_idTv.setText(userDTO.username);
         m_phoneTv.setText(userDTO.phonenumber);
         m_nameTv.setText(userDTO.nickn);

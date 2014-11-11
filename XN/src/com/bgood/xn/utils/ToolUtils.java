@@ -592,6 +592,23 @@ public class ToolUtils {
 	
 	/**
 	 * 
+	 * @todo:获取当前时间
+	 * @date:2014-10-27 下午4:33:32
+	 * @author:hg_liuzl@163.com
+	 * @params:
+	 */
+	public static String getStandardTime() {
+		
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String nowTime = sdf.format(date);
+		return nowTime;
+		
+	}
+	
+	
+	/**
+	 * 
 	 * @author lzlong@zwmob.com
 	 * @time 2014-3-24 下午4:28:40
 	 * @todo  格式化10以下的数据

@@ -1,15 +1,11 @@
 package com.bgood.xn.ui.user.info;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +16,10 @@ import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.widget.TitleBar;
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 /**
  * 我的名片
@@ -97,10 +96,25 @@ public class MyCardActivity extends BaseActivity implements OnClickListener,Task
      */
     private void setData(UserInfoBean userDTO)
     {
-        
-        if (TextUtils.isEmpty(userDTO.photo)){
-            Picasso.with(this).load(userDTO.photo).placeholder(R.drawable.icon_default).error(R.drawable.icon_default).into(m_userIconImgV);
-        }
+		ImageLoader mImageLoader;
+		DisplayImageOptions options;
+		options = new DisplayImageOptions.Builder()
+		.showStubImage(R.drawable.icon_default)
+		.showImageForEmptyUri(R.drawable.icon_default)
+		.cacheInMemory()
+		.cacheOnDisc()
+		.build();
+		mImageLoader = ImageLoader.getInstance();
+		mImageLoader.init(ImageLoaderConfiguration.createDefault(mActivity));
+		
+        mImageLoader.displayImage(userDTO.photo,m_userIconImgV, options, new SimpleImageLoadingListener() {
+			@Override
+			public void onLoadingComplete() {
+				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
+				m_userIconImgV.setAnimation(anim);
+				anim.start();
+			}
+		});
         
         // 昵称
         m_userNicteTv.setText(userDTO.nickn);

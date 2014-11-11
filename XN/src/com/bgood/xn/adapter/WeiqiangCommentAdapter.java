@@ -3,16 +3,17 @@ package com.bgood.xn.adapter;
 import java.util.List;
 
 import android.app.Activity;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.WeiqiangCommentBean;
 import com.bgood.xn.utils.ToolUtils;
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 /**
  * @todo:微墙评论适配器
@@ -29,7 +30,7 @@ public class WeiqiangCommentAdapter extends KBaseAdapter
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
-	    Holder holder;
+	   final Holder holder;
         if (convertView == null)
         {
             holder = new Holder();
@@ -45,10 +46,16 @@ public class WeiqiangCommentAdapter extends KBaseAdapter
         }
         
        final WeiqiangCommentBean wComment = (WeiqiangCommentBean) mList.get(position);
-        if (TextUtils.isEmpty(wComment.photo))
-        {
-            Picasso.with(mActivity).load(wComment.photo).placeholder(R.drawable.icon_default).error(R.drawable.icon_default).into( holder.ivComment);
-        }
+        
+        mImageLoader.displayImage(wComment.photo,holder.ivComment, options, new SimpleImageLoadingListener() {
+			@Override
+			public void onLoadingComplete() {
+				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
+				holder.ivComment.setAnimation(anim);
+				anim.start();
+			}
+		});
+        
         holder.tvCommentAuthor.setText(wComment.name);
         holder.tvCommentTime.setText(ToolUtils.getFormatDate(wComment.commenttime));
         holder.tvCommentContent.setText(wComment.content);

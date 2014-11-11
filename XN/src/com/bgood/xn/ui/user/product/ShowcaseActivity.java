@@ -2,12 +2,12 @@ package com.bgood.xn.ui.user.product;
 
 import java.util.ArrayList;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.UserManager;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -24,12 +24,14 @@ import com.bgood.xn.adapter.ShowcaseAllProductAdapter;
 import com.bgood.xn.adapter.ShowcaseRecommendAdapter;
 import com.bgood.xn.bean.ProductBean;
 import com.bgood.xn.bean.ShowcaseBean;
-import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.view.CBaseSlidingMenu;
 import com.bgood.xn.view.slidingmenu.lib.SlidingMenu.OnClosedListener;
 import com.bgood.xn.view.slidingmenu.lib.SlidingMenu.OnOpenedListener;
 import com.bgood.xn.view.xlistview.XListView;
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 /**
  * 我的橱窗页面
@@ -476,8 +478,29 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 				setCredibility(0);
 			}
 			
-			if (showcaseDTO.shopLogo != null && !showcaseDTO.shopLogo.equals(""))
-	            Picasso.with(this).load(showcaseDTO.shopLogo).placeholder(R.drawable.icon_default).error(R.drawable.icon_default).into(m_showcaseIconImgV);
+			
+			ImageLoader mImageLoader;
+			DisplayImageOptions options;
+			options = new DisplayImageOptions.Builder()
+			.showStubImage(R.drawable.icon_default)
+			.showImageForEmptyUri(R.drawable.icon_default)
+			.cacheInMemory()
+			.cacheOnDisc()
+			.build();
+			mImageLoader = ImageLoader.getInstance();
+			mImageLoader.init(ImageLoaderConfiguration.createDefault(this));
+			
+	        mImageLoader.displayImage(showcaseDTO.shopLogo,m_showcaseIconImgV, options, new SimpleImageLoadingListener() {
+				@Override
+				public void onLoadingComplete() {
+					Animation anim = AnimationUtils.loadAnimation(ShowcaseActivity.this, R.anim.fade_in);
+					m_showcaseIconImgV.setAnimation(anim);
+					anim.start();
+				}
+			});
+			
+			
+			
 			m_recommendTv.setText("(" + showcaseDTO.goodCount + ")");
 			m_allProductTv.setText("(" + showcaseDTO.productCount + ")");
 			

@@ -131,7 +131,7 @@ public class SharedUtil {
 				.supportWXCirclePlatform(context, appID, urlContent);
 		circleHandler.setCircleTitle(textContent);
 
-		initQQ(context, title, textContent, urlContent);
+		//initQQ(context, title, textContent, urlContent);
 	}
 
 	/**

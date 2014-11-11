@@ -3,15 +3,16 @@ package com.bgood.xn.adapter;
 import java.util.List;
 
 import android.app.Activity;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.MemberResultBean;
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 
 /**
@@ -32,7 +33,7 @@ public class ResultMemberAdapter extends KBaseAdapter
     public View getView(int position, View convertView, ViewGroup parent)
     {
         
-        ViewHolder holder;
+        final ViewHolder holder;
         if (convertView == null)
         {
             holder = new ViewHolder();
@@ -55,10 +56,18 @@ public class ResultMemberAdapter extends KBaseAdapter
         
        final MemberResultBean member = (MemberResultBean) mList.get(position);
         
-        if (!TextUtils.isEmpty(member.img)){
-            Picasso.with(mActivity).load(member.img).placeholder(R.drawable.icon_default).error(R.drawable.icon_default).into(holder.iconImgV);
-        }
 
+        
+        mImageLoader.displayImage(member.img,holder.iconImgV, options, new SimpleImageLoadingListener() {
+			@Override
+			public void onLoadingComplete() {
+				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
+				holder.iconImgV.setAnimation(anim);
+				anim.start();
+			}
+		});
+        
+        
         holder.nameTv.setText(member.name);
         
         if (member.sex.contains("男"))

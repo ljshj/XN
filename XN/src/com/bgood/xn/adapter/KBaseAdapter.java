@@ -1,6 +1,11 @@
 package com.bgood.xn.adapter;
 import java.util.List;
 
+import com.bgood.xn.R;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +26,8 @@ public class KBaseAdapter extends BaseAdapter {
 	public Activity mActivity;
 	public int mLayout;
 	public OnClickListener mListener;
+	public ImageLoader mImageLoader;
+	public DisplayImageOptions options;
 
 
 	public KBaseAdapter(List<?> mList, Activity mActivity) {
@@ -28,6 +35,15 @@ public class KBaseAdapter extends BaseAdapter {
 		this.mList = mList;
 		this.mActivity = mActivity;
 		this.mInflater = LayoutInflater.from(mActivity);
+		
+		options = new DisplayImageOptions.Builder()
+		.showStubImage(R.drawable.icon_default)
+		.showImageForEmptyUri(R.drawable.icon_default)
+		.cacheInMemory()
+		.cacheOnDisc()
+		.build();
+		mImageLoader = ImageLoader.getInstance();
+		mImageLoader.init(ImageLoaderConfiguration.createDefault(mActivity));
 	}
 
 	public KBaseAdapter(List<?> mList,Activity mActivity,int resLayout) {
@@ -35,6 +51,15 @@ public class KBaseAdapter extends BaseAdapter {
 		this.mActivity = mActivity;
 		this.mInflater = LayoutInflater.from(mActivity);
 		this.mLayout = resLayout;
+		
+		options = new DisplayImageOptions.Builder()
+		.showStubImage(R.drawable.icon_default)
+		.showImageForEmptyUri(R.drawable.icon_default)
+		.cacheInMemory()
+		.cacheOnDisc()
+		.build();
+		mImageLoader = ImageLoader.getInstance();
+		mImageLoader.init(ImageLoaderConfiguration.createDefault(mActivity));
 	}
 	
 	public KBaseAdapter(List<?> mList,Activity mActivity,OnClickListener listener) {
@@ -42,6 +67,15 @@ public class KBaseAdapter extends BaseAdapter {
 		this.mActivity = mActivity;
 		this.mInflater = LayoutInflater.from(mActivity);
 		this.mListener = listener;
+		
+		options = new DisplayImageOptions.Builder()
+		.showStubImage(R.drawable.icon_default)
+		.showImageForEmptyUri(R.drawable.icon_default)
+		.cacheInMemory()
+		.cacheOnDisc()
+		.build();
+		mImageLoader = ImageLoader.getInstance();
+		mImageLoader.init(ImageLoaderConfiguration.createDefault(mActivity));
 	}
 	
 	public KBaseAdapter(List<?> mList,Activity mActivity,int resLayout,OnClickListener listener) {
@@ -50,6 +84,15 @@ public class KBaseAdapter extends BaseAdapter {
 		this.mInflater = LayoutInflater.from(mActivity);
 		this.mLayout = resLayout;
 		this.mListener = listener;
+		
+		options = new DisplayImageOptions.Builder()
+		.showStubImage(R.drawable.icon_default)
+		.showImageForEmptyUri(R.drawable.icon_default)
+		.cacheInMemory()
+		.cacheOnDisc()
+		.build();
+		mImageLoader = ImageLoader.getInstance();
+		mImageLoader.init(ImageLoaderConfiguration.createDefault(mActivity));
 	}
 
 	@Override

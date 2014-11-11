@@ -3,18 +3,17 @@ package com.bgood.xn.adapter;
 import java.util.List;
 
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.AttentionBean;
-import com.bgood.xn.bean.UserInfoBean;
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 /**
  * 我的关注适配器
@@ -30,7 +29,7 @@ public class AttentionAdapter extends KBaseAdapter
 	@Override
     public View getView(final int position, View convertView, ViewGroup parent)
     {
-        ViewHolder holder;
+       final ViewHolder holder;
         if (convertView == null)
         {
             holder = new ViewHolder();
@@ -48,9 +47,21 @@ public class AttentionAdapter extends KBaseAdapter
         }
         
         final AttentionBean mAttentionBean = (AttentionBean) mList.get(position);
-        if (!TextUtils.isEmpty(mAttentionBean.img)){
-            Picasso.with(mActivity).load(mAttentionBean.img).placeholder(R.drawable.default_icon).error(R.drawable.icon_default).into(holder.userIconImgV);
-        }
+        
+        
+        
+        mImageLoader.displayImage(mAttentionBean.img,holder.userIconImgV, options, new SimpleImageLoadingListener() {
+			@Override
+			public void onLoadingComplete() {
+				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
+				holder.userIconImgV.setAnimation(anim);
+				anim.start();
+			}
+		});
+        
+        
+        
+        
         holder.userNameTv.setText(mAttentionBean.name);
         
         holder.userSignName.setText(mAttentionBean.signatrue);

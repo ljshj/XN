@@ -7,14 +7,18 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.utils.ToolUtils;
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 /**
  * 
  * @todo:微墙适配器
@@ -23,15 +27,25 @@ import com.squareup.picasso.Picasso;
  */
 public class WeiqiangAdapter extends KBaseAdapter 
 {
+	private ImageLoader mImageLoader;
+	private DisplayImageOptions options;
 
 	public WeiqiangAdapter(List<?> mList, Activity mActivity,OnClickListener listener) {
 		super(mList, mActivity, listener);
+		options = new DisplayImageOptions.Builder()
+		.showStubImage(R.drawable.icon_default)
+		.showImageForEmptyUri(R.drawable.icon_default)
+		.cacheInMemory()
+		.cacheOnDisc()
+		.build();
+		mImageLoader = ImageLoader.getInstance();
+		mImageLoader.init(ImageLoaderConfiguration.createDefault(mActivity));
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
-		Holder holder;
+		final Holder holder;
 		if (convertView == null)
 		{
 			holder = new Holder();
@@ -55,10 +69,16 @@ public class WeiqiangAdapter extends KBaseAdapter
 		
 		final WeiQiangBean weiqiangBean = (WeiQiangBean) mList.get(position);
 		
-		if (TextUtils.isEmpty(weiqiangBean.photo))
-		{
-			Picasso.with(mActivity).load(weiqiangBean.photo).placeholder(R.drawable.icon_default).error(R.drawable.icon_default).into(holder.ivAuthorImg);
-		}
+		mImageLoader.displayImage(weiqiangBean.photo,holder.ivAuthorImg, options, new SimpleImageLoadingListener() {
+			@Override
+			public void onLoadingComplete() {
+				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
+				holder.ivAuthorImg.setAnimation(anim);
+				anim.start();
+			}
+		});
+		
+		
 		holder.tvAuthorName.setText(weiqiangBean.name);
 		
 		holder.distanceTv.setText(weiqiangBean.distance);

@@ -3,19 +3,16 @@ package com.bgood.xn.adapter;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.ProductBean;
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 /**
  * 橱窗中产品所有页面的适配器
@@ -30,7 +27,7 @@ public class ShowcaseAllProductAdapter extends KBaseAdapter
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
-		ViewHolder holder = null;
+		final ViewHolder holder;
 		
 		if (convertView == null)
 		{
@@ -47,7 +44,18 @@ public class ShowcaseAllProductAdapter extends KBaseAdapter
         }
 		
 		final ProductBean productDTO = (ProductBean) mList.get(position);
-		Picasso.with(mActivity).load(productDTO.productSmallIcon).placeholder(R.drawable.icon_default).error(R.drawable.icon_default).into(holder.iconImgV);
+		
+		
+        mImageLoader.displayImage(productDTO.productSmallIcon,holder.iconImgV, options, new SimpleImageLoadingListener() {
+			@Override
+			public void onLoadingComplete() {
+				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
+				holder.iconImgV.setAnimation(anim);
+				anim.start();
+			}
+		});
+		
+		
 		holder.nameTv.setText(productDTO.productName);
 		holder.priceTv.setText(productDTO.productPrice);
 		

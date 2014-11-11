@@ -2,14 +2,19 @@ package com.bgood.xn.ui.weiqiang;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import org.json.JSONObject;
-
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,6 +24,7 @@ import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.WeiqiangCommentAdapter;
 import com.bgood.xn.bean.WeiQiangBean;
+import com.bgood.xn.bean.WeiQiangBean.WeiqiangActionType;
 import com.bgood.xn.bean.WeiqiangCommentBean;
 import com.bgood.xn.bean.response.WeiqiangDetailResponse;
 import com.bgood.xn.network.BaseNetWork;
@@ -28,13 +34,18 @@ import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.WeiqiangRequest;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.utils.SharedUtil;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
+import com.bgood.xn.view.dialog.BGDialog;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.widget.TitleBar;
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 
 /**
@@ -47,9 +58,6 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	public static final String BEAN_WEIQIANG_KEY = "bean_weiqiang_key";
 	private XListView listview;
 	
-	private LinearLayout m_replyLl = null;  // 评论
-	private EditText m_replyContentEt = null;  // 评论内容
-	private Button m_replySendBtn = null;  // 发送评论按钮
 	
 	public ImageView ivAuthorImg;
 	public TextView tvAuthorName;
@@ -69,19 +77,48 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	private String mRefreshDetailWeiqiangTime;
 	
 	private int comment_start = 0;
+	private String mContent;
+	private WeiqiangActionType type;
+	private TitleBar titleBar;
 
+
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_weiqiang_detail);
 		mWeiQiangBean = (WeiQiangBean) getIntent().getSerializableExtra(BEAN_WEIQIANG_KEY);
-		(new TitleBar(mActivity)).initTitleBar("微墙正文");
+		titleBar = new TitleBar(mActivity);
+		titleBar.initTitleBar("微墙详情");
 		findView();
-		setListener();
 		setData(mWeiQiangBean);
 		WeiqiangRequest.getInstance().requestWeiqiangContent(this, this, mWeiQiangBean.weiboid, String.valueOf(comment_start), String.valueOf(comment_start+PAGE_SIZE_ADD));
+		titleBar.backBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				backIndex();
+			}
+		});
+	}
+	
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if(keyCode == KeyEvent.KEYCODE_BACK){
+			backIndex();
+		}
 		
+		return super.onKeyDown(keyCode, event);
+	}
+	
+	/**返回列表页*/
+	private void backIndex() {
+		Intent intent = new Intent();
+		intent.putExtra(BEAN_WEIQIANG_KEY, mWeiQiangBean);
+		setResult(RESULT_OK, intent);
+		finish();
 	}
 	
 
@@ -90,14 +127,13 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	 */
 	private void findView()
 	{
-	    m_replyContentEt = (EditText) findViewById(R.id.weiqiang_detail_et_reply_content);  // 评论内容
-	    m_replySendBtn = (Button) findViewById(R.id.weiqiang_detail_btn_reply_send);  // 发送评论按钮
-	    
 		listview = (XListView) findViewById(R.id.weiqiang_detail_xlv);
 		listview.setPullLoadEnable(true);
 		listview.setPullRefreshEnable(false);
 	   
 	   	View head_weiqiang_detail = inflater.inflate(R.layout.weiqiang_item_layout, listview, false);
+	  
+	   	
 		ivAuthorImg = (ImageView) head_weiqiang_detail.findViewById(R.id.iv_author);
 		tvAuthorName = (TextView) head_weiqiang_detail.findViewById(R.id.tv_weiqiang_author);
 		distanceTv = (TextView) head_weiqiang_detail.findViewById(R.id.tv_weiqiang_distance);
@@ -105,26 +141,24 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		tvTime = (TextView) head_weiqiang_detail.findViewById(R.id.tv_weiqiang_time);
 		tvOldAuthorName = (TextView) head_weiqiang_detail.findViewById(R.id.tv_content_fromuser);
 		tvContent = (TextView) head_weiqiang_detail.findViewById(R.id.tv_content);
-		tvZanCount = (TextView) head_weiqiang_detail.findViewById(R.id.tv_zan_count);
-		tvReplyCount = (TextView) head_weiqiang_detail.findViewById(R.id.tv_comment_count);
-		tvTranspontCount = (TextView) head_weiqiang_detail.findViewById(R.id.tv_transpont_count);
-		tvShareCount = (TextView) head_weiqiang_detail.findViewById(R.id.tv_share_count);
 		
-		listview.addHeaderView(head_weiqiang_detail);
-		weiQiangCommentAdapter = new WeiqiangCommentAdapter(weiqiangComments,this);
-		listview.setAdapter(weiQiangCommentAdapter);
-	}
-	
-	/**
-	 * 控件时间监听方法
-	 */
-	private void setListener()
-	{
+		LinearLayout ll_action = (LinearLayout) head_weiqiang_detail.findViewById(R.id.ll_action);
+		ll_action.setVisibility(View.GONE);
+		
+		
+		tvZanCount = (TextView) findViewById(R.id.tv_zan_count);
+		tvReplyCount = (TextView) findViewById(R.id.tv_comment_count);
+		tvTranspontCount = (TextView) findViewById(R.id.tv_transpont_count);
+		tvShareCount = (TextView) findViewById(R.id.tv_share_count);
+		
 		tvZanCount.setOnClickListener(this);
 		tvReplyCount.setOnClickListener(this);
 		tvTranspontCount.setOnClickListener(this);
 		tvShareCount.setOnClickListener(this);
-	    m_replySendBtn.setOnClickListener(this);
+		
+		listview.addHeaderView(head_weiqiang_detail);
+		weiQiangCommentAdapter = new WeiqiangCommentAdapter(weiqiangComments,this);
+		listview.setAdapter(weiQiangCommentAdapter);
 	}
 	
 	
@@ -145,8 +179,26 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	
 	private void setData(WeiQiangBean weiQiangBean)
 	{
-		if (weiQiangBean != null && !TextUtils.isEmpty(weiQiangBean.photo))
-			Picasso.with(this).load(weiQiangBean.photo).placeholder(R.drawable.icon_default).error(R.drawable.icon_default).into(ivAuthorImg);
+		ImageLoader mImageLoader;
+		DisplayImageOptions options;
+		options = new DisplayImageOptions.Builder()
+		.showStubImage(R.drawable.icon_default)
+		.showImageForEmptyUri(R.drawable.icon_default)
+		.cacheInMemory()
+		.cacheOnDisc()
+		.build();
+		mImageLoader = ImageLoader.getInstance();
+		mImageLoader.init(ImageLoaderConfiguration.createDefault(mActivity));
+		
+        mImageLoader.displayImage(weiQiangBean.photo,ivAuthorImg, options, new SimpleImageLoadingListener() {
+			@Override
+			public void onLoadingComplete() {
+				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
+				ivAuthorImg.setAnimation(anim);
+				anim.start();
+			}
+		});
+		
 		
 		distanceTv.setText(weiQiangBean.distance);
 		distanceTv.setVisibility(View.GONE);
@@ -172,7 +224,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
     	
 		tvZanCount.setText(weiQiangBean.like_count);
     	
-		tvReplyCount.setText(weiQiangBean.forward_count);
+		tvReplyCount.setText(weiQiangBean.comment_count);
     	
 		tvTranspontCount.setText(weiQiangBean.forward_count);
     	
@@ -185,35 +237,25 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
         switch (v.getId())
         {
             // 赞
-            case R.id.weiqiang_detail_ll_zan_count:
+            case R.id.tv_zan_count:
+            	mWeiQiangBean.like_count = String.valueOf(Integer.valueOf(mWeiQiangBean.like_count)+1);
+            	tvZanCount.setText(mWeiQiangBean.like_count);
                 zanWeiqiang();
                 break;
             // 评论
-            case R.id.weiqiang_detail_ll_reply_count:
-                m_replyLl.setVisibility(View.VISIBLE);
-                commentWeiqiang("");
+            case R.id.tv_comment_count:
+            	type = WeiqiangActionType.RESPONSE;
+                createSendDialog();
                 break;
             // 转发
-            case R.id.weiqiang_detail_ll_transform_send_count:
-            	transportWeiqiang();
+            case R.id.tv_transpont_count:
+            	type = WeiqiangActionType.TRANSPOND;
+            	createSendDialog();
                 break;
             // 分享
-            case R.id.weiqiang_detail_ll_share_count:
+            case R.id.tv_share_count:
               SharedUtil.openShare(mActivity, "炫能App", mWeiQiangBean.content, mWeiQiangBean.photo);
                 break;
-            
-            // 发送评论
-            case R.id.weiqiang_detail_btn_reply_send:
-                String content = m_replyContentEt.getText().toString().trim();
-                if (!TextUtils.isEmpty(content))
-                {
-                	commentWeiqiang(content);
-                }else{
-                	BToast.show(mActivity, "请输入评论内容");
-                	return;
-                }
-                break;
-            
             default:
                 break;
         }
@@ -226,26 +268,6 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
     {
        WeiqiangRequest.getInstance().requestWeiqiangZan(this, mActivity, mWeiQiangBean.weiboid);
     }
-    
-    /**
-     * 评论
-     */
-    private void commentWeiqiang(final String content)
-    {
-    	WeiqiangRequest.getInstance().requestWeiqiangReply(this, mActivity, mWeiQiangBean.weiboid, content);
-    }
-    
-    /**
-     * 转发
-     */
-    private void transportWeiqiang()
-    {
-    	WeiqiangRequest.getInstance().requestWeiqiangTranspond(this, mActivity, mWeiQiangBean.weiboid);
-    }
-
-
-  
-  
 
 	@Override
 	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
@@ -253,7 +275,6 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		listview.stopLoadMore();
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
-			JSONObject body = bNetWork.getBody();
 			String strJson = bNetWork.getStrJson();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				switch (bNetWork.getMessageType()) {
@@ -291,6 +312,72 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 
 		this.weiqiangComments.addAll(comments);
 		weiQiangCommentAdapter.notifyDataSetChanged();
+	}
+	
+	
+	/**
+	 * 
+	 * @todo 时间选择器
+	 * @author lzlong@zwmob.com
+	 * @time 2014-3-26 下午2:09:30
+	 */
+	private void createSendDialog() {
+
+		int screenWidth = (int) (mActivity.getWindowManager().getDefaultDisplay().getWidth()); // 屏幕宽
+		int screenHeight = (int) (mActivity.getWindowManager().getDefaultDisplay().getHeight()*0.3); // 屏幕高
+
+		final BGDialog dialog = new BGDialog(mActivity,R.style.dialog_no_thing,screenWidth, screenHeight);
+
+		View vSend = inflater.inflate(R.layout.dialog_send, null);
+
+		vSend.requestFocus();
+
+		final EditText etcontent = (EditText) vSend.findViewById(R.id.et_content);
+		vSend.findViewById(R.id.btn_send).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+				String content = etcontent.getText().toString();
+				if(TextUtils.isEmpty(content))
+				{
+					return;
+				}else{
+					etcontent.setText("");
+					if(type == WeiqiangActionType.TRANSPOND){
+							mWeiQiangBean.forward_count = String.valueOf(Integer.valueOf(mWeiQiangBean.forward_count)+1);
+							tvTranspontCount.setText(mWeiQiangBean.forward_count);
+							WeiqiangRequest.getInstance().requestWeiqiangTranspond(WeiqiangDetailActivity.this, mActivity, mWeiQiangBean.weiboid,mContent);
+					}else{
+						
+						WeiqiangCommentBean wcb = new WeiqiangCommentBean();
+						wcb.userid = String.valueOf(BGApp.mLoginBean.userid);
+						wcb.name = BGApp.mUserBean.nickn;
+						wcb.photo = BGApp.mUserBean.photo;
+						wcb.content = content;
+						wcb.commenttime = ToolUtils.getStandardTime();
+						weiqiangComments.add(0, wcb);
+						weiQiangCommentAdapter.notifyDataSetChanged();
+						
+						mWeiQiangBean.comment_count = String.valueOf(Integer.valueOf(mWeiQiangBean.comment_count)+1);
+						tvReplyCount.setText(mWeiQiangBean.comment_count);
+						WeiqiangRequest.getInstance().requestWeiqiangReply(WeiqiangDetailActivity.this, mActivity, mWeiQiangBean.weiboid,content);
+					}
+				}
+			}
+		});
+		
+		//弹出键盘
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				((InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(0,InputMethodManager.HIDE_NOT_ALWAYS);
+			}
+		},100);
+		
+		dialog.setCancelable(true);
+		dialog.showDialog(vSend);
 	}
 	
 }

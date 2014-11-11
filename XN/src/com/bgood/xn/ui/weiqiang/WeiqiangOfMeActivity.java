@@ -100,7 +100,7 @@ public class WeiqiangOfMeActivity extends BaseActivity implements OnItemClickLis
 			wqb = (WeiQiangBean) v.getTag();
 				mActionWeiqiang.forward_count = String.valueOf(Integer.valueOf(mActionWeiqiang.forward_count)+1);
 				weiqiangAdapter.notifyDataSetChanged();
-			WeiqiangRequest.getInstance().requestWeiqiangTranspond(this, mActivity, wqb.weiboid);
+			WeiqiangRequest.getInstance().requestWeiqiangTranspond(this, mActivity, wqb.weiboid,"");
 			break;
 		case R.id.tv_share_count:	//分享
 			wqb = (WeiQiangBean) v.getTag();

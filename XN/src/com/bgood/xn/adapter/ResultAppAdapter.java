@@ -4,16 +4,17 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.AppBean;
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 /**
  * 本地应用程序适配器
  */
@@ -27,7 +28,7 @@ public class ResultAppAdapter extends KBaseAdapter
 	@Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        ViewHolder holder;
+        final ViewHolder holder;
         if (convertView == null)
         {
             holder = new ViewHolder();
@@ -45,10 +46,18 @@ public class ResultAppAdapter extends KBaseAdapter
         }
         
         AppBean appDTO = (AppBean) mList.get(position);
+
         
-        if (!TextUtils.isEmpty(appDTO.img)){
-            Picasso.with(mActivity).load(appDTO.img_thum).placeholder(R.drawable.icon_default).error(R.drawable.icon_default).into(holder.iconImgV);
-        }
+        mImageLoader.displayImage(appDTO.img_thum,holder.iconImgV, options, new SimpleImageLoadingListener() {
+			@Override
+			public void onLoadingComplete() {
+				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
+				holder.iconImgV.setAnimation(anim);
+				anim.start();
+			}
+		});
+        
+        
         holder.nameTv.setText(appDTO.title);
         holder.sizeTv.setText(appDTO.size);
         holder.infoTv.setText(appDTO.intro);

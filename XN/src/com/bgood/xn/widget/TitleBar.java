@@ -22,7 +22,7 @@ public class TitleBar {
 	
 	private View layout;
 	
-	private Button backBtn;
+	public Button backBtn;
 	
 	public Button rightBtn;
 	
@@ -123,9 +123,5 @@ public class TitleBar {
 				break;
 			}
 		}
-	}
-	
-	public void doRightAction(){
-		
 	}
 }

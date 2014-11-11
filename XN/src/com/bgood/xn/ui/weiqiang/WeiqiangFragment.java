@@ -57,6 +57,9 @@ import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
  */
 public class WeiqiangFragment extends BaseFragment implements OnItemClickListener,TaskListenerWithState,OnClickListener,OnPageChangeListener,IXListViewListener
 {
+	/**请示去查看微墙详情**/
+	public static final int REQUEST_WEIQIANG_DETAIL = 100;
+	
 	private TextView tv_weiqiang_type_left_select;
 	private TextView tv_weiqiang_type_right_select;
 	private View v_weiqiang_type_select_left_underline;
@@ -96,6 +99,8 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 	
     private WeiQiangBean mActionWeiqiang = null;
     private WeiqiangActionType type;
+    
+	private int mSelectPosition = -1;	//选中的微墙
     
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -293,13 +298,6 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 			type = WeiqiangActionType.RESPONSE;
 			
 			int position = m_allFriendsList.indexOf(wqb);
-			
-	//		m_allFriendsXLv.setSelection(position);
-			
-			//m_allFriendsXLv.smoothScrollToPosition(position);
-			
-			
-			
 			createSendDialog();
 			m_allFriendsXLv.setSelection(position);
 			
@@ -354,7 +352,7 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 							mActionWeiqiang.forward_count = String.valueOf(Integer.valueOf(mActionWeiqiang.forward_count)+1);
 							m_followFriendsAdapter.notifyDataSetChanged();
 						}
-						WeiqiangRequest.getInstance().requestWeiqiangTranspond(WeiqiangFragment.this, mActivity, mActionWeiqiang.weiboid);
+						WeiqiangRequest.getInstance().requestWeiqiangTranspond(WeiqiangFragment.this, mActivity, mActionWeiqiang.weiboid,content);
 					}else{
 						if(m_type == WEIQIANG_ALL){
 							mActionWeiqiang.comment_count = String.valueOf(Integer.valueOf(mActionWeiqiang.comment_count)+1);
@@ -382,37 +380,6 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 		dialog.setCancelable(true);
 		dialog.showDialog(vSend);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	class TableVPAdapter extends PagerAdapter
 	{
@@ -451,11 +418,36 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View v, int location, long arg3) {
+		
+		mSelectPosition = location;
 	 	final WeiQiangBean weiqiang = (WeiQiangBean) adapter.getAdapter().getItem(location);
         Intent intent = new Intent(mActivity, WeiqiangDetailActivity.class);
         intent.putExtra(WeiqiangDetailActivity.BEAN_WEIQIANG_KEY, weiqiang);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_WEIQIANG_DETAIL);
 	}
+	
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+		case REQUEST_WEIQIANG_DETAIL:
+			
+			WeiQiangBean wqb = (WeiQiangBean) data.getSerializableExtra(WeiqiangDetailActivity.BEAN_WEIQIANG_KEY);
+			m_allFriendsList.remove(mSelectPosition);
+			m_allFriendsList.add(mSelectPosition, wqb);
+			m_allFriendsAdapter.notifyDataSetChanged();
+			
+			break;
+
+		default:
+			break;
+		}
+	}
+	
+	
+	
+	
 	@Override
 	public void onRefresh() {
 		isRefresh = true;
