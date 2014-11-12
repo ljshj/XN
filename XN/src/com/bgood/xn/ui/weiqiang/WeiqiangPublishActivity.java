@@ -50,8 +50,6 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 	private static final int FLAG_CHOOSE_FROM_IMGS = 100;
 	/** 从手机获取照片 **/
 	private static final int FLAG_CHOOSE_FROM_CAMERA = FLAG_CHOOSE_FROM_IMGS + 1;
-	/** 选择完过后 **/
-	private static final int FLAG_MODIFY_FINISH = FLAG_CHOOSE_FROM_CAMERA + 1;
 
 	private File tempFile = null; // 文件
 	
@@ -63,9 +61,7 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
     private double m_latitude = 0;     // 纬度
     
     private String m_content = null;
-    private int ib_add_image_position;
     
-    private List<String> filePath = new ArrayList<String>();
     private List<File> files = new ArrayList<File>();	//文件集合
     
     private String[] imgs;
@@ -86,7 +82,7 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 	private void initViews()
 	{
 		gridview_images = (GridView) findViewById(R.id.gridview_images);
-		adapter = new ImageAdapter(this, filePath);
+		adapter = new ImageAdapter(files,this);
 		gridview_images.setAdapter(adapter);
 		gridview_images.setOnItemClickListener(this);
 		comment_content = (EditText) findViewById(R.id.comment_content);
@@ -97,7 +93,7 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	{
-		if(position == filePath.size()){
+		if(position == files.size()){
 			showPicDialog();
 		}
 	}
@@ -204,7 +200,7 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 	 * @params:@param path
 	 */
 	private void afterGetFile(String path) {
-		filePath.add(path);
+		//filePath.add(path);
 		tempFile = new File(path);
 		files.add(tempFile);
 		adapter.notifyDataSetChanged();

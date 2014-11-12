@@ -43,12 +43,12 @@ public class BottomDialog extends AlertDialog {
 		setCancelable(true);
 		setCanceledOnTouchOutside(true);
 		window = getWindow();
+		window.setWindowAnimations(R.style.dialog_bottom);
 		window.setGravity(Gravity.BOTTOM);
 		WindowManager.LayoutParams p = window.getAttributes(); // 获取对话框当前的参数值
    	    p.width = LayoutParams.MATCH_PARENT;
         p.height = LayoutParams.WRAP_CONTENT;
 		window.setAttributes(p);
-		window.setWindowAnimations(R.style.dialog_bottom);
 		setContentView(vChild);
 	}
 }
