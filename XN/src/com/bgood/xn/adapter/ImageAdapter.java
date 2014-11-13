@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -22,8 +23,10 @@ import com.bgood.xn.R;
  */
 public class ImageAdapter extends KBaseAdapter {
 	
-	public ImageAdapter(List<?> mList, Activity mActivity) {
-		super(mList, mActivity);
+
+	public ImageAdapter(List<?> mList, Activity mActivity,
+			OnClickListener listener) {
+		super(mList, mActivity, listener);
 	}
 
 	@Override
@@ -41,15 +44,16 @@ public class ImageAdapter extends KBaseAdapter {
 			holder = (Holder) convertView.getTag();
 		}
 		
-		if(mList.size() == 0){
-			holder.imageImgV.setImageResource(R.drawable.icon_add_photo);
-		}
 		
-		if (position < mList.size()) {
+		
+		final File file = (File)mList.get(position);
+		holder.deleteImgV.setOnClickListener(mListener);
+		holder.deleteImgV.setTag(position);
+		if (file != null && file.exists()) {
 			FileInputStream fis = null;
 			BufferedInputStream bis = null;
 			try {
-				fis = new FileInputStream((File)mList.get(position));
+				fis = new FileInputStream(file);
 				bis = new BufferedInputStream(fis);
 				Bitmap bitmap = BitmapFactory.decodeStream(bis);
 				holder.imageImgV.setImageBitmap(bitmap);
@@ -68,11 +72,20 @@ public class ImageAdapter extends KBaseAdapter {
 						e.printStackTrace();
 					}
 				}
+			holder.deleteImgV.setVisibility(View.VISIBLE);
 		} 
 		else
 		{
 			holder.imageImgV.setImageResource(R.drawable.icon_add_photo);
+			holder.deleteImgV.setVisibility(View.GONE);
 		}
+		
+		if(position >= 9){
+			holder.imageImgV.setVisibility(View.GONE);
+		}else{
+			holder.imageImgV.setVisibility(View.VISIBLE);
+		}
+		
 		return convertView;
 	}
 

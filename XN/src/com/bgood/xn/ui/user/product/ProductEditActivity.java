@@ -31,24 +31,12 @@
 // */
 //public class ProductEditActivity extends BaseActivity
 //{
-//    private Button    m_backBtn       = null; // 返回按钮
 //    private ImageView m_photoImgV     = null; // 图片
 //    private EditText  m_productNameEt = null; // 添加姓名输入框
 //    private EditText  m_productPriceEt = null; // 添加产品价格
 //    private CheckBox  m_recommendCb   = null; // 是否推荐选择
 //    private EditText  m_infoEt        = null; // 产品信息输入框
 //    private Button    m_doneBtn       = null; // 确认添加按钮
-//    
-//    ShowCaseMessageManager messageManager = ShowCaseMessageManager.getInstance();
-//    
-//    private FDSUtil fdsUtil;
-//    
-//    private int m_recommend = 1;
-//    ProductDTO m_productDTO = new ProductDTO();;
-//    ProductDTO productDTOIntent = null;
-//    private SubmitInterface submit;
-//    
-//    private int m_loadIndex = 0;
 //    
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState)
@@ -61,40 +49,7 @@
 //        setListener();
 //        setData(productDTOIntent);
 //    }
-//    
-//    @Override
-//    public void onResume()
-//    {
-//        super.onResume();
-//        
-//        if (messageManager != null)
-//        {
-//            // 消息注册
-//            messageManager.registerObserver(this);
-//        }
-//    }
 //
-//    @Override
-//    public void onPause()
-//    {
-//        super.onPause();
-//        
-//        if (messageManager != null)
-//        {
-//            // 消息注销
-//            messageManager.unregisterObserver(this);
-//        }
-//    }
-//
-//    /**
-//     * 得到传值数据方法
-//     */
-//    private void getIntentData()
-//    {
-//        Intent intent = getIntent();
-//        productDTOIntent = (ProductDTO)intent.getSerializableExtra("productDTO");
-//        m_productDTO.productId = productDTOIntent.productId;
-//    }
 //    
 //    /**
 //     * 设置数据显示方法
@@ -193,48 +148,6 @@
 //        });
 //    }
 //    
-//    private FDSUtil getFdsUtil() {
-//        if (fdsUtil == null) {
-//            fdsUtil = new FDSUtil(ProductEditActivity.this, new onPhotoReceiverListeners() {
-//
-//                @Override
-//                public void onReceive(File file) {
-//                    fdsUtil.progressDialogDismiss();
-//                    String imagePath = file.getAbsolutePath();
-//                    String end = FDSUtil.getFileName(imagePath);
-//                    String imgName = null;
-//                    try
-//                    {
-//                        imgName = fdsUtil.getFileName(imagePath);
-//                    }
-//                    catch (Exception e)
-//                    {
-//                        // TODO Auto-generated catch block
-//                        e.printStackTrace();
-//                    }
-//                    Bitmap bitmap = fdsUtil.loadImgThumbnail(ProductEditActivity.this, imgName, MediaStore.Images.Thumbnails.MINI_KIND);
-//                    m_photoImgV.setImageBitmap(bitmap);
-//                    m_loadIndex = 1;
-////                    if (ib_add_image_position >= listImges.size())
-//                        selFilepaPathList.add(imagePath);
-//                        endFilepaPathList.add(end);
-////                    else {
-////                        listImges.add(ib_add_image_position, imagePath);
-////                        listImges.remove(ib_add_image_position + 1);
-////                    }
-////                    adapter.notifyDataSetChanged();
-//                }
-//            });
-//        }
-//        return fdsUtil;
-//    }
-//    
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (fdsUtil != null)
-//            fdsUtil.onActivityResult(requestCode, resultCode, data);
-//        super.onActivityResult(requestCode, resultCode, data);
-//    }
 //    
 //    /**
 //     * 检查信息
@@ -310,97 +223,5 @@
 //            Toast.makeText(this, "修改失败！", Toast.LENGTH_LONG).show();
 //        }
 //    }
-//    
-//    private List<String> selFilepaPathList = new ArrayList<String>();
-//    private List<String> endFilepaPathList = new ArrayList<String>();
-//    private int uploadImageSuccessCount;
-//    
-//    interface SubmitInterface {
-//        void sendComment();
 //
-//        void sendReply(FDSState state, String ID);
-//    }
-//
-//    
-//    class SubmitPostBar implements SubmitInterface {
-//
-//        public SubmitPostBar() {
-//        }
-//
-//        @Override
-//        public void sendComment() {
-//            hideSoftInputFromWindow();
-//            if (UserManager.getInstance().m_userState != UserState.UserState_LOGINED) {
-//                WindowUtil.getInstance().dialogLoginShow(ProductEditActivity.this);
-//                return;
-//            }
-//             if (chenkInfo())
-//             {
-//                if (selFilepaPathList != null && selFilepaPathList.size() > 0) {
-//                    final String[] images = new String[selFilepaPathList.size()];
-//                    uploadImageSuccessCount = 0;
-//                    WindowUtil.getInstance().progressDialogShow(ProductEditActivity.this, "正在上传图片" + "0 /" + images.length);
-//
-//                    for (int i = 0; i < selFilepaPathList.size(); i++) {
-//                        final String image = selFilepaPathList.get(i);
-//                        if (image == null || image.trim().length() <= 0)
-//                            continue;
-//                        final int index = i;
-//                        getFdsUtil().uploadPic(image, "1",
-//                                PathManager.FILE_UPDATE_TAG_USERINFO, endFilepaPathList.get(i), new onReceiverListeners() {
-//
-//                                    @Override
-//                                    public void onReceive(String isSuccess, String bigPath, String smallPath) {
-//                                        if (isSuccess != null && isSuccess.equalsIgnoreCase("true")) {
-//                                            images[index] = bigPath;
-//                                            m_productDTO.productBigIcon = bigPath;
-//                                            m_productDTO.productSmallIcon = smallPath;
-//                                        }
-//                                        else
-//                                        {
-//                                            Toast.makeText(ProductEditActivity.this, "上传图片失败！", Toast.LENGTH_LONG).show();
-//                                            WindowUtil.getInstance().DismissAllDialog();
-//                                            return;
-//                                        }
-//                                        uploadImageSuccessCount++;
-//                                        WindowUtil.getInstance().progressDialogShow(ProductEditActivity.this,
-//                                                "正在上传图片" + uploadImageSuccessCount + "/" + images.length);
-//                                        if (uploadImageSuccessCount >= images.length) {
-//                                            WindowUtil.getInstance().progressDialogShow(ProductEditActivity.this, "正在评论");
-//                                            send();
-//                                        }
-//                                    }
-//
-//                                });
-//                    }
-//                } else {
-//                    WindowUtil.getInstance().progressDialogShow(ProductEditActivity.this, "正在上传数据");
-//                    send();
-//                }
-//            }
-//        }
-//
-//        private void send() {
-//            
-//            load(m_productDTO, m_recommend);
-////          postBarMessageManager
-////                  .sendPostComment("comment", postID, null, UserManager.getInstance().m_user.m_userID, comment_send.content, comment_send.images);
-//        }
-//
-//        @Override
-//        public void sendReply(FDSState state, String ID) {
-//            WindowUtil.getInstance().DismissAllDialog();
-//            if (state != null && state.result.equals("OK")) {
-//                finish();
-//            }
-//
-//        }
-//    }
-//    
-//    public static String getTheUUID()
-//    {
-//        String uniqueid;
-//        uniqueid = UUID.randomUUID().toString();
-//        return uniqueid;
-//    }
 //}

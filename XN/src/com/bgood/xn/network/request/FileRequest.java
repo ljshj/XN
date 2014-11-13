@@ -36,7 +36,7 @@ public class FileRequest extends BaseNetWork {
 			String url = "?userid=" + userid + "&tag=" + tag + "&extra=" + extra;
 			setConnUrl(url);
 			setFile(files);
-			new HttpRequestAsyncTask(ServerType.FileServer,this, mHttpTaskListener, context).execute();
+			new HttpRequestAsyncTask(false,ServerType.FileServer,this, mHttpTaskListener, context).execute();
 	 }
 	
 }

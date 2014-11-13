@@ -47,9 +47,9 @@ public class ShowcaseRecommendAdapter extends KBaseAdapter
         }
 		
 		final ProductBean productDTO = (ProductBean) mList.get(position);
-		holder.timeTv.setText(productDTO.productAddTime);
+		holder.timeTv.setText(productDTO.date_time);
 		
-        mImageLoader.displayImage(productDTO.productBigIcon,holder.iconImgV, options, new SimpleImageLoadingListener() {
+        mImageLoader.displayImage(productDTO.img,holder.iconImgV, options, new SimpleImageLoadingListener() {
 			@Override
 			public void onLoadingComplete() {
 				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
@@ -58,8 +58,8 @@ public class ShowcaseRecommendAdapter extends KBaseAdapter
 			}
 		});
 		
-		holder.nameTv.setText(productDTO.productName);
-		holder.priceTv.setText(productDTO.productPrice);
+		holder.nameTv.setText(productDTO.product_name);
+		holder.priceTv.setText(productDTO.price);
 		return convertView;
 	}
 

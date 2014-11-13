@@ -28,10 +28,6 @@
             android:background="@drawable/more_btn_selector" />
     </RelativeLayout>
 
-    <!--
-         <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >    -->
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent" >
@@ -343,11 +339,7 @@
                     </com.bgood.xn.view.xlistview.XListView>
                 </RelativeLayout>
 
-                <!--
-                <include layout="@layout/layout_showcase_recommend" />
-
-                <include layout="@layout/layout_showcase_all_product" />                -->
-            </LinearLayout>
+                </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 

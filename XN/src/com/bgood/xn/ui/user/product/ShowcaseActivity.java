@@ -2,8 +2,10 @@ package com.bgood.xn.ui.user.product;
 
 import java.util.ArrayList;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -24,6 +26,7 @@ import com.bgood.xn.adapter.ShowcaseAllProductAdapter;
 import com.bgood.xn.adapter.ShowcaseRecommendAdapter;
 import com.bgood.xn.bean.ProductBean;
 import com.bgood.xn.bean.ShowcaseBean;
+import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.CBaseSlidingMenu;
 import com.bgood.xn.view.slidingmenu.lib.SlidingMenu.OnClosedListener;
 import com.bgood.xn.view.slidingmenu.lib.SlidingMenu.OnOpenedListener;
@@ -74,8 +77,6 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 	
 	
 	private int m_loadAllProduct = 1;
-	private int m_start = 0;
-	private int m_addStart = 10;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -87,8 +88,6 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 		setListener();
 		setRightMenu();
 		load();
-
-//		setCredibility(3);
 	}
 	/**
 	 * 控件初始化方法
@@ -132,8 +131,6 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 		m_searchBtn.setOnClickListener(this);
 		m_recommendLl.setOnClickListener(this);
 		m_allProductLl.setOnClickListener(this);
-//		m_recommendXLv.setOnItemClickListener(this);
-//		m_allProductXLv.setOnItemClickListener(this);
 
 		m_moreBtn.setOnClickListener(new OnClickListener()
 		{
@@ -213,11 +210,6 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 	 **/
 	private void setRightMenu()
 	{
-		/*
-		 * FragmentTransaction transaction = this.getSupportFragmentManager()
-		 * .beginTransaction(); m_rightFragment = new RightFragment();
-		 */
-
 		m_slidingMenu.setSecondaryMenu(R.layout.right_frame);
 		m_slidingMenu.setOnOpenedListener(new OnOpenedListener()
 		{
@@ -237,10 +229,6 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 				m_menuShowing = false;
 			}
 		});
-		/*
-		 * transaction.replace(R.id.right_frame, m_rightFragment);
-		 * transaction.commit();
-		 */
 
 	}
 
@@ -251,44 +239,31 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 		{
     		// 返回
     		case R.id.showcase_btn_back:
-    		{
     			ShowcaseActivity.this.finish();
     			break;
-    		}
-    		
     		// 返回
             case R.id.showcase_btn_search:
-            {
                 String searchContent = m_searchEt.getText().toString().trim();
-                if (searchContent == null || searchContent.equals(""))
+                if (TextUtils.isEmpty(searchContent))
                 {
-                    Toast.makeText(ShowcaseActivity.this, "请输入搜索内容！", Toast.LENGTH_LONG).show();
+                    BToast.show(ShowcaseActivity.this,  "请输入搜索内容！");
                     return;
                 }
                 else
                 {
-//                    Intent intent = new Intent(ShowcaseActivity.this, ProductListActivity.class);
-//                    intent.putExtra("content", searchContent);
-//                    startActivity(intent);
+                    Intent intent = new Intent(ShowcaseActivity.this, ProductListActivity.class);
+                    intent.putExtra("content", searchContent);
+                    startActivity(intent);
                 }
                 break;
-            }
-    
     		// 推荐产品
     		case R.id.showcase_ll_recommend:
-    		{
     			setProduct(0);
     			break;
-    		}
-    
     		// 全部产品
     		case R.id.showcase_ll_all_product:
-    		{
     			setProduct(1);
-    //			Intent intent = new Intent(ShowcaseActivity.this, ProductDetailActivity.class);
-    //			startActivity(intent);
     			break;
-    		}
     		default:
     			break;
 		}

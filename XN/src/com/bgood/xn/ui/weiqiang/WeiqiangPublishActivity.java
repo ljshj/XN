@@ -24,6 +24,7 @@ import android.widget.GridView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.ImageAdapter;
+import com.bgood.xn.bean.ImageBean;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
@@ -35,7 +36,9 @@ import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.system.Const;
 import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.utils.WindowUtil;
 import com.bgood.xn.view.BToast;
+import com.bgood.xn.view.LoadingProgress;
 import com.bgood.xn.view.dialog.BottomDialog;
 import com.bgood.xn.widget.TitleBar;
 
@@ -50,6 +53,9 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 	private static final int FLAG_CHOOSE_FROM_IMGS = 100;
 	/** 从手机获取照片 **/
 	private static final int FLAG_CHOOSE_FROM_CAMERA = FLAG_CHOOSE_FROM_IMGS + 1;
+	
+	/**最大图片数*/
+	public static final int MAX_SIZE = 9;
 
 	private File tempFile = null; // 文件
 	
@@ -63,6 +69,7 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
     private String m_content = null;
     
     private List<File> files = new ArrayList<File>();	//文件集合
+    private List<ImageBean> listImg = new ArrayList<ImageBean>();
     
     private String[] imgs;
     private String[] smallImgs;
@@ -76,13 +83,14 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_weiqiang_publish);
 		(new TitleBar(mActivity)).initTitleBar("发微墙");
+		files.add(null);
 		initViews();
 	}
 
 	private void initViews()
 	{
 		gridview_images = (GridView) findViewById(R.id.gridview_images);
-		adapter = new ImageAdapter(files,this);
+		adapter = new ImageAdapter(files,this,this);
 		gridview_images.setAdapter(adapter);
 		gridview_images.setOnItemClickListener(this);
 		comment_content = (EditText) findViewById(R.id.comment_content);
@@ -93,9 +101,16 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	{
-		if(position == files.size()){
-			showPicDialog();
+		if(position == files.size()-1){
+			if(files.size() <= MAX_SIZE){
+				showPicDialog();
+			}
 		}
+		
+//		else{
+//			//查看图片
+//			WindowUtil.getInstance().dialogViewPagerShow(mActivity, listImg, position);
+//		}
 	}
 	
 	private void checkInfo()
@@ -202,7 +217,8 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 	private void afterGetFile(String path) {
 		//filePath.add(path);
 		tempFile = new File(path);
-		files.add(tempFile);
+		files.add(files.size()-1,tempFile);
+		listImg.add(new ImageBean());
 		adapter.notifyDataSetChanged();
 	}
 
@@ -212,6 +228,7 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			switch (bNetWork.getMessageType()) {
 			case 860003:
+				LoadingProgress.getInstance().dismiss();
 				if(bNetWork.getReturnCode() ==  ReturnCode.RETURNCODE_OK){
 					BToast.show(mActivity,"微墙发送成功");
 					finish();
@@ -251,8 +268,11 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 					return;
 				}
 				
+				files.remove(files.size()-1);	//移除最后一张空白的图片
+				
 				imgs = new String[files.size()];
 				smallImgs = new String[files.size()];
+				LoadingProgress.getInstance().show(mActivity, "正在发送微墙");
 				FileRequest.getInstance().requestUpLoadFile(this,mActivity, files.get(uploadCount), String.valueOf(BGApp.mLoginBean.userid), "webo", "jpg");
 			}else{
 				checkInfo();
@@ -268,6 +288,11 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 			break;
 		case R.id.btn_cancel:
 			dialog.dismiss();
+			break;
+		case R.id.send_weiqiang_imgv_delete:
+			int position = (Integer) v.getTag();
+			files.remove(position);
+			adapter.notifyDataSetChanged();
 			break;
 
 		default:

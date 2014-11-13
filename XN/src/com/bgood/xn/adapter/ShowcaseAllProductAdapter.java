@@ -46,7 +46,7 @@ public class ShowcaseAllProductAdapter extends KBaseAdapter
 		final ProductBean productDTO = (ProductBean) mList.get(position);
 		
 		
-        mImageLoader.displayImage(productDTO.productSmallIcon,holder.iconImgV, options, new SimpleImageLoadingListener() {
+        mImageLoader.displayImage(productDTO.img_thum,holder.iconImgV, options, new SimpleImageLoadingListener() {
 			@Override
 			public void onLoadingComplete() {
 				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
@@ -56,21 +56,8 @@ public class ShowcaseAllProductAdapter extends KBaseAdapter
 		});
 		
 		
-		holder.nameTv.setText(productDTO.productName);
-		holder.priceTv.setText(productDTO.productPrice);
-		
-//		convertView.setOnClickListener(new OnClickListener()
-//        {
-//            
-//            @Override
-//            public void onClick(View v)
-//            {
-//                Intent intent = new Intent(mActivity, ProductDetailActivity.class);
-//                intent.putExtra("productId", productDTO.productId);
-//                mActivity.startActivity(intent);
-//            }
-//        });
-//		
+		holder.nameTv.setText(productDTO.product_name);
+		holder.priceTv.setText(productDTO.price);
 		return convertView;
 	}
 

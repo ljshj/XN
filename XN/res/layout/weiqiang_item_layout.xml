@@ -70,6 +70,14 @@
                 android:id="@+id/tv_content"
                style="@style/item_content"
                android:text="内容" />
+            
+            <GridView 
+                android:id="@+id/gv_show_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:verticalSpacing="3dp"
+                android:horizontalSpacing="3dp"
+                ></GridView>
 
                     <LinearLayout
                         android:id="@+id/ll_action"

@@ -16,12 +16,14 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
+import com.bgood.xn.adapter.ImageAdapter;
 import com.bgood.xn.adapter.WeiqiangCommentAdapter;
 import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.bean.WeiQiangBean.WeiqiangActionType;
@@ -65,6 +67,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	public TextView tvTime;
 	public TextView tvOldAuthorName;
 	public TextView tvContent;
+	public GridView gridView;
 	public TextView tvZanCount;
 	public TextView tvReplyCount;
 	public TextView tvTranspontCount;
@@ -140,6 +143,8 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		tvTime = (TextView) head_weiqiang_detail.findViewById(R.id.tv_weiqiang_time);
 		tvOldAuthorName = (TextView) head_weiqiang_detail.findViewById(R.id.tv_content_fromuser);
 		tvContent = (TextView) head_weiqiang_detail.findViewById(R.id.tv_content);
+		
+		gridView = (GridView) head_weiqiang_detail.findViewById(R.id.gv_show_img);
 		
 		LinearLayout ll_action = (LinearLayout) head_weiqiang_detail.findViewById(R.id.ll_action);
 		ll_action.setVisibility(View.GONE);
@@ -219,6 +224,11 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		tvTime.setText(ToolUtils.getFormatDate(weiQiangBean.date_time));
     	
 		tvContent.setText(weiQiangBean.content);
+		
+		//ImageAdapter adapter = new ImageAdapter(mList, mActivity, null);
+		
+		
+		
     	
 		tvZanCount.setText(weiQiangBean.like_count);
     	
