@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.inputmethod.InputMethodManager;
 
 import com.bgood.xn.db.PreferenceUtil;
+import com.bgood.xn.system.BGApp;
 
 
 public class BaseActivity extends Activity {
@@ -19,6 +20,7 @@ public class BaseActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		BGApp.addActivity(this);
 		inflater = LayoutInflater.from(this);
 		im = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 		pUitl = new PreferenceUtil(this, PreferenceUtil.PREFERENCE_FILE);

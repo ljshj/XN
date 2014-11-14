@@ -429,10 +429,10 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 		switch (requestCode) {
 		case REQUEST_WEIQIANG_DETAIL:
 			
-			WeiQiangBean wqb = (WeiQiangBean) data.getSerializableExtra(WeiqiangDetailActivity.BEAN_WEIQIANG_KEY);
-			m_allFriendsList.remove(mSelectPosition);
-			m_allFriendsList.add(mSelectPosition, wqb);
-			m_allFriendsAdapter.notifyDataSetChanged();
+//			WeiQiangBean wqb = (WeiQiangBean) data.getSerializableExtra(WeiqiangDetailActivity.BEAN_WEIQIANG_KEY);
+//			m_allFriendsList.remove(mSelectPosition);
+//			m_allFriendsList.add(mSelectPosition, wqb);
+//			m_allFriendsAdapter.notifyDataSetChanged();
 			
 			break;
 
@@ -503,7 +503,7 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 				weiqiang_all_start = 0;
 			} 
 				
-			if (weiqiangs.size() <= PAGE_SIZE_ADD) {
+			if (weiqiangs.size() < PAGE_SIZE_ADD) {
 					m_allFriendsXLv.setPullLoadEnable(false);
 					BToast.show(mActivity, "数据加载完毕");
 				} else {

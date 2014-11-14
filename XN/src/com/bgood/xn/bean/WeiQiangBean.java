@@ -1,6 +1,7 @@
 package com.bgood.xn.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @todo:微墙类
@@ -36,6 +37,8 @@ public class WeiQiangBean implements Serializable {
 	public String forward_count;
 	public String share_count;
 	public String type;
+	public List<ImageBean> imgs;
+	public String Comments;
 	
 	/**操作微墙
 	 * 转发，还是评论

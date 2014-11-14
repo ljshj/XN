@@ -137,12 +137,12 @@ public class WeiqiangRequest extends BaseNetWork {
 	 * @params:@param context
 	 * @params:@param phone
 	 */
-	 public void requestWeiqiangTranspond(TaskListenerWithState mHttpTaskListener,Context context,String weiboid,String content){
+	 public void requestWeiqiangTranspond(TaskListenerWithState mHttpTaskListener,Context context,String weiboid,String comments){
 		 	setMessageType(60005);
 			JSONObject body = new JSONObject();
 			try {
 				body.put("weiboid", weiboid);
-				body.put("content", content);
+				body.put("comments", comments);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}

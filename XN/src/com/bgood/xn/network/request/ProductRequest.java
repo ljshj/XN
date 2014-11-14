@@ -94,20 +94,20 @@ public class ProductRequest extends BaseNetWork {
 		setBody(body);
 		 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 	 }
-	
-	 /**查找商品*/
-	 public void requestProductSearch(TaskListenerWithState mHttpTaskListener,Context context,String userid,String keyword){
-	 	setMessageType(30006);
-		JSONObject body = new JSONObject();
-		try {
-			body.put("userid", userid);
-			body.put("keyword", keyword);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		setBody(body);
-		 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
-	 }
+//	
+//	 /**查找商品*/
+//	 public void requestProductSearch(TaskListenerWithState mHttpTaskListener,Context context,String userid,String keyword){
+//	 	setMessageType(30006);
+//		JSONObject body = new JSONObject();
+//		try {
+//			body.put("userid", userid);
+//			body.put("keyword", keyword);
+//		} catch (JSONException e) {
+//			e.printStackTrace();
+//		}
+//		setBody(body);
+//		 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+//	 }
 	
 	/**查看商品详情*/
 	 public void requestProductDetail(TaskListenerWithState mHttpTaskListener,Context context,String product_id){
@@ -123,12 +123,13 @@ public class ProductRequest extends BaseNetWork {
 	 }
 	
 	/**获取商品列表*/
-	 public void requestProductList(TaskListenerWithState mHttpTaskListener,Context context,String userid,String start,String end){
+	 public void requestProductList(TaskListenerWithState mHttpTaskListener,Context context,String userid,String keyword,String start,String end){
 	 	setMessageType(30008);
 		JSONObject body = new JSONObject();
 		try {
 			body.put("userid", userid);
 			body.put("start", start);
+			body.put("keyword", keyword);
 			body.put("end", end);
 		} catch (JSONException e) {
 			e.printStackTrace();

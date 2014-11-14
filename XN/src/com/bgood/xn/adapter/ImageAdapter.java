@@ -12,10 +12,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bgood.xn.R;
+import com.bgood.xn.bean.ImageBean;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 /***
  * @todo:图片适配器
  * @date:2014-11-10 下午6:00:55
@@ -24,9 +28,12 @@ import com.bgood.xn.R;
 public class ImageAdapter extends KBaseAdapter {
 	
 
-	public ImageAdapter(List<?> mList, Activity mActivity,
-			OnClickListener listener) {
+	public ImageAdapter(List<?> mList, Activity mActivity,OnClickListener listener) {
 		super(mList, mActivity, listener);
+	}
+	
+	public ImageAdapter(List<?> mList, Activity mActivity) {
+		super(mList, mActivity);
 	}
 
 	@Override
@@ -44,11 +51,24 @@ public class ImageAdapter extends KBaseAdapter {
 			holder = (Holder) convertView.getTag();
 		}
 		
+		final Object object = mList.get(position);
 		
-		
-		final File file = (File)mList.get(position);
-		holder.deleteImgV.setOnClickListener(mListener);
-		holder.deleteImgV.setTag(position);
+		if(object instanceof ImageBean){
+			
+			ImageBean bean = (ImageBean) object;
+			imgType(position,bean,holder.imageImgV);
+			
+		}else{
+			File file = (File) object;
+			fileType(position,file, holder.deleteImgV, holder.imageImgV);
+		}
+		return convertView;
+	}
+	
+	/**文件方式展示图片*/
+	private void fileType(int position,File file,ImageView ivDelete,ImageView ivImg){
+		ivDelete.setOnClickListener(mListener);
+		ivDelete.setTag(position);
 		if (file != null && file.exists()) {
 			FileInputStream fis = null;
 			BufferedInputStream bis = null;
@@ -56,7 +76,7 @@ public class ImageAdapter extends KBaseAdapter {
 				fis = new FileInputStream(file);
 				bis = new BufferedInputStream(fis);
 				Bitmap bitmap = BitmapFactory.decodeStream(bis);
-				holder.imageImgV.setImageBitmap(bitmap);
+				ivImg.setImageBitmap(bitmap);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}finally{
@@ -72,21 +92,31 @@ public class ImageAdapter extends KBaseAdapter {
 						e.printStackTrace();
 					}
 				}
-			holder.deleteImgV.setVisibility(View.VISIBLE);
+			ivDelete.setVisibility(View.VISIBLE);
 		} 
 		else
 		{
-			holder.imageImgV.setImageResource(R.drawable.icon_add_photo);
-			holder.deleteImgV.setVisibility(View.GONE);
+			ivImg.setImageResource(R.drawable.icon_add_photo);
+			ivDelete.setVisibility(View.GONE);
 		}
-		
 		if(position >= 9){
-			holder.imageImgV.setVisibility(View.GONE);
+			ivImg.setVisibility(View.GONE);
 		}else{
-			holder.imageImgV.setVisibility(View.VISIBLE);
+			ivImg.setVisibility(View.VISIBLE);
 		}
+	}
+	
+	/**图片的url方式展示图片*/
+	private void imgType(int position,ImageBean bean,final ImageView ivImg){
 		
-		return convertView;
+		mImageLoader.displayImage(bean.img_thum,ivImg, options, new SimpleImageLoadingListener() {
+			@Override
+			public void onLoadingComplete() {
+				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
+				ivImg.setAnimation(anim);
+				anim.start();
+			}
+		});
 	}
 
 	class Holder {

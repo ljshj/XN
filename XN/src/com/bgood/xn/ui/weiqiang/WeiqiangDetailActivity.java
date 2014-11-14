@@ -25,6 +25,7 @@ import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.ImageAdapter;
 import com.bgood.xn.adapter.WeiqiangCommentAdapter;
+import com.bgood.xn.bean.ImageBean;
 import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.bean.WeiQiangBean.WeiqiangActionType;
 import com.bgood.xn.bean.WeiqiangCommentBean;
@@ -59,15 +60,16 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	public static final String BEAN_WEIQIANG_KEY = "bean_weiqiang_key";
 	private XListView listview;
 	
-	
+	public LinearLayout llTransArea;
 	public ImageView ivAuthorImg;
 	public TextView tvAuthorName;
 	public TextView distanceTv;
 	public ImageView ivDelete;
 	public TextView tvTime;
 	public TextView tvOldAuthorName;
+	public TextView tvComments;
 	public TextView tvContent;
-	public GridView gridView;
+	public GridView gridView,oldGridview;
 	public TextView tvZanCount;
 	public TextView tvReplyCount;
 	public TextView tvTranspontCount;
@@ -96,32 +98,32 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		findView();
 		setData(mWeiQiangBean);
 		WeiqiangRequest.getInstance().requestWeiqiangContent(this, this, mWeiQiangBean.weiboid, String.valueOf(comment_start), String.valueOf(comment_start+PAGE_SIZE_ADD));
-		titleBar.backBtn.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				backIndex();
-			}
-		});
+//		titleBar.backBtn.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				backIndex();
+//			}
+//		});
 	}
-	
-	
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if(keyCode == KeyEvent.KEYCODE_BACK){
-			backIndex();
-		}
-		
-		return super.onKeyDown(keyCode, event);
-	}
-	
-	/**返回列表页*/
-	private void backIndex() {
-		Intent intent = new Intent();
-		intent.putExtra(BEAN_WEIQIANG_KEY, mWeiQiangBean);
-		setResult(RESULT_OK, intent);
-		finish();
-	}
+//	
+//	
+//	@Override
+//	public boolean onKeyDown(int keyCode, KeyEvent event) {
+//		if(keyCode == KeyEvent.KEYCODE_BACK){
+//			backIndex();
+//		}
+//		
+//		return super.onKeyDown(keyCode, event);
+//	}
+//	
+//	/**返回列表页*/
+//	private void backIndex() {
+//		Intent intent = new Intent();
+//		intent.putExtra(BEAN_WEIQIANG_KEY, mWeiQiangBean);
+//		setResult(RESULT_OK, intent);
+//		finish();
+//	}
 	
 
 	/**
@@ -134,17 +136,19 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		listview.setPullRefreshEnable(false);
 	   
 	   	View head_weiqiang_detail = inflater.inflate(R.layout.weiqiang_item_layout, listview, false);
-	  
-	   	
 		ivAuthorImg = (ImageView) head_weiqiang_detail.findViewById(R.id.iv_author);
 		tvAuthorName = (TextView) head_weiqiang_detail.findViewById(R.id.tv_weiqiang_author);
 		distanceTv = (TextView) head_weiqiang_detail.findViewById(R.id.tv_weiqiang_distance);
 		ivDelete = (ImageView) head_weiqiang_detail.findViewById(R.id.iv_delete);
 		tvTime = (TextView) head_weiqiang_detail.findViewById(R.id.tv_weiqiang_time);
-		tvOldAuthorName = (TextView) head_weiqiang_detail.findViewById(R.id.tv_content_fromuser);
-		tvContent = (TextView) head_weiqiang_detail.findViewById(R.id.tv_content);
-		
+		tvComments = (TextView) head_weiqiang_detail.findViewById(R.id.tv_comments);
 		gridView = (GridView) head_weiqiang_detail.findViewById(R.id.gv_show_img);
+		
+		
+		tvOldAuthorName = (TextView) head_weiqiang_detail.findViewById(R.id.tv_old_user);
+		tvContent = (TextView) head_weiqiang_detail.findViewById(R.id.tv_content);
+		llTransArea = (LinearLayout) head_weiqiang_detail.findViewById(R.id.ll_old_area);
+		oldGridview = (GridView) head_weiqiang_detail.findViewById(R.id.gv_old_show_img);
 		
 		LinearLayout ll_action = (LinearLayout) head_weiqiang_detail.findViewById(R.id.ll_action);
 		ll_action.setVisibility(View.GONE);
@@ -208,28 +212,22 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		
 		tvTime.setText(ToolUtils.getFormatDate(weiQiangBean.date_time));
 		
-		if (!TextUtils.isEmpty(weiQiangBean.fromname))
-		{
-			tvOldAuthorName.setVisibility(View.VISIBLE);
-			tvOldAuthorName.setText(weiQiangBean.fromname);
-		}
-		else
-		{
-			tvOldAuthorName.setVisibility(View.GONE);
-		}
-		
-		
 		tvAuthorName.setText(weiQiangBean.name);
 		
 		tvTime.setText(ToolUtils.getFormatDate(weiQiangBean.date_time));
     	
-		tvContent.setText(weiQiangBean.content);
-		
-		//ImageAdapter adapter = new ImageAdapter(mList, mActivity, null);
-		
-		
-		
-    	
+		if(!TextUtils.isEmpty(weiQiangBean.fromname)){	//如果转发人存在
+			llTransArea.setVisibility(View.VISIBLE);
+			tvOldAuthorName.setText(weiQiangBean.fromname);
+			tvContent.setText(weiQiangBean.content);
+			tvComments.setText(weiQiangBean.Comments);
+			showImgs(weiQiangBean.imgs,oldGridview);
+			
+		}else{
+			llTransArea.setVisibility(View.GONE);
+			tvComments.setText(weiQiangBean.content);
+			showImgs(weiQiangBean.imgs,gridView);
+		}
 		tvZanCount.setText(weiQiangBean.like_count);
     	
 		tvReplyCount.setText(weiQiangBean.comment_count);
@@ -239,6 +237,18 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		tvShareCount.setText(weiQiangBean.share_count);
 	}
 
+	/**处理九宫格图片**/
+	@SuppressWarnings("null")
+	private void showImgs(List<ImageBean> list,GridView gv){
+		if(null==list && list.size()==0){	//如果没有图片
+			gv.setVisibility(View.GONE);
+		}else{
+			gv.setVisibility(View.VISIBLE);
+			ImageAdapter adapter = new ImageAdapter(list, mActivity);
+			gv.setAdapter(adapter);
+		}
+	}
+	
     @Override
     public void onClick(View v)
     {

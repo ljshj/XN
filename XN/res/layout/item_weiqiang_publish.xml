@@ -19,6 +19,7 @@
         android:layout_height="15dp"
         android:background="@drawable/icon_img_delete"
         android:layout_gravity="top|right"
+        android:visibility="gone"
         />
 
 </FrameLayout>
