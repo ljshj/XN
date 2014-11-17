@@ -87,4 +87,14 @@ public class PreferenceUtil {
 	public String getFeedbackRefreshTime() {
 		return sp.getString("Feedback", "");
 	}
+	
+	/**设置个性化模块**/
+	public void setSelfTemplat(int indexTemplat) {
+		editor.putInt("templat", indexTemplat);
+		editor.commit();
+	}
+
+	public int getSelfTemplat() {
+		return sp.getInt("templat", 0);
+	}
 }

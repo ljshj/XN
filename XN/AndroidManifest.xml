@@ -301,6 +301,13 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         
+        
+        
+        
+        
+        
+        
+        
         <!-- 个人中心，资料 -->
         <activity
             android:name=".ui.user.info.NameActivity"
@@ -412,7 +419,7 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.user.product.AddProductActivity"
+            android:name=".ui.user.product.ProductAddActivity"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
             android:screenOrientation="portrait" />
@@ -430,7 +437,7 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.user.IndividuationActivity"
+            android:name=".ui.user.product.IndividuationActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity

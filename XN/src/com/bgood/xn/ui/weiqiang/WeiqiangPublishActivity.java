@@ -54,10 +54,11 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 	/** 从手机获取照片 **/
 	private static final int FLAG_CHOOSE_FROM_CAMERA = FLAG_CHOOSE_FROM_IMGS + 1;
 	
+	private File tempFile = null; // 文件
+	
 	/**最大图片数*/
 	public static final int MAX_SIZE = 9;
 
-	private File tempFile = null; // 文件
 	
 	private GridView gridview_images;
 	private ImageAdapter adapter;
@@ -244,7 +245,7 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 					imgs[uploadCount] = object.optString("url");
 					uploadCount++;
 					if(uploadCount < files.size()){	//上传图片
-						FileRequest.getInstance().requestUpLoadFile(this,mActivity, files.get(uploadCount), String.valueOf(BGApp.mLoginBean.userid), "webo", "jpg");
+						FileRequest.getInstance().requestUpLoadFile(this,mActivity,false,files.get(uploadCount), String.valueOf(BGApp.mLoginBean.userid), "webo", "jpg");
 					}else{	//图片上传完毕
 						checkInfo();
 					}
@@ -273,7 +274,7 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 				imgs = new String[files.size()];
 				smallImgs = new String[files.size()];
 				LoadingProgress.getInstance().show(mActivity, "正在发送微墙");
-				FileRequest.getInstance().requestUpLoadFile(this,mActivity, files.get(uploadCount), String.valueOf(BGApp.mLoginBean.userid), "webo", "jpg");
+				FileRequest.getInstance().requestUpLoadFile(this,mActivity,false,files.get(uploadCount), String.valueOf(BGApp.mLoginBean.userid), "webo", "jpg");
 			}else{
 				checkInfo();
 			}

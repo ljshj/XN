@@ -323,7 +323,6 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 			listview.setPullLoadEnable(false);
 			BToast.show(mActivity, "数据加载完毕");
 		} else {
-			comment_start += PAGE_SIZE_ADD;
 			listview.setPullLoadEnable(true);
 		}
 

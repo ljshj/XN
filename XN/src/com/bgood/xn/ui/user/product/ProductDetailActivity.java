@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.ProductBean;
 import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.view.BToast;
+import com.bgood.xn.widget.TitleBar;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -28,10 +30,7 @@ import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
  */
 public class ProductDetailActivity extends BaseActivity implements OnClickListener
 {
-	/**产品实体类key**/
-	public static final String PRODUCT_BEAN_KEY = "product_bean_key";
 	
-    private Button m_backBtn = null;   // 返回按钮
     private Button m_editBtn = null;   // 编辑按钮
     private ImageView m_iconImgV = null;  // 商品图片
     private TextView m_priceTv = null;  // 价格值
@@ -46,10 +45,9 @@ public class ProductDetailActivity extends BaseActivity implements OnClickListen
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_product_detail);
-        
-        productBean =  (ProductBean) getIntent().getSerializableExtra(PRODUCT_BEAN_KEY);
+        (new TitleBar(mActivity)).initTitleBar("产品详情");
+        productBean =  (ProductBean) getIntent().getSerializableExtra(ProductBean.BEAN_PRODUCT);
         findView();
-        setListener();
         setData();
     }
 
@@ -64,18 +62,10 @@ public class ProductDetailActivity extends BaseActivity implements OnClickListen
         m_productInfoTv = (TextView) findViewById(R.id.product_detail_tv_product_info);
         m_lookCommentRl = (RelativeLayout) findViewById(R.id.product_detail_rl_look_comment);
         m_contactSellerLl = (LinearLayout) findViewById(R.id.product_detail_ll_contact_seller);
-    }
-    
-    /**
-     * 控件事件监听方法
-     */
-    private void setListener()
-    {
-        m_backBtn.setOnClickListener(this);
-        m_editBtn.setOnClickListener(this);
         m_lookCommentRl.setOnClickListener(this);
         m_contactSellerLl.setOnClickListener(this);
     }
+    
 
     @Override
     public void onClick(View v)
@@ -91,6 +81,7 @@ public class ProductDetailActivity extends BaseActivity implements OnClickListen
             
             // 联系卖家
             case R.id.product_detail_ll_contact_seller:
+            	BToast.show(mActivity, "即将上线，敬请期待");
                 break;
             
             default:

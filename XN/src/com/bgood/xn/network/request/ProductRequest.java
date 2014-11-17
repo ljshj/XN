@@ -51,11 +51,16 @@ public class ProductRequest extends BaseNetWork {
 	
 	
 	/**添加商品*/
-	 public void requestProductAdd(TaskListenerWithState mHttpTaskListener,Context context,String userid){
+	 public void requestProductAdd(TaskListenerWithState mHttpTaskListener,Context context,ProductBean bean){
 		 	setMessageType(30003);
 			JSONObject body = new JSONObject();
 			try {
-				body.put("userid", userid);
+				body.put("pname", bean.product_name);
+				body.put("price", bean.price);
+				body.put("intro", bean.intro);
+				body.put("brecom", bean.isRecommend);
+				body.put("img", bean.img);
+				body.put("img_thum", bean.img_thum);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -72,7 +77,7 @@ public class ProductRequest extends BaseNetWork {
 			body.put("pname", bean.product_name);
 			body.put("price", bean.price);
 			body.put("intro", bean.intro);
-			body.put("brecom", bean.recommed);
+			body.put("brecom", bean.isRecommend);
 			body.put("img", bean.img);
 			body.put("img_thum", bean.img_thum);
 		} catch (JSONException e) {
@@ -128,8 +133,8 @@ public class ProductRequest extends BaseNetWork {
 		JSONObject body = new JSONObject();
 		try {
 			body.put("userid", userid);
-			body.put("start", start);
 			body.put("keyword", keyword);
+			body.put("start", start);
 			body.put("end", end);
 		} catch (JSONException e) {
 			e.printStackTrace();

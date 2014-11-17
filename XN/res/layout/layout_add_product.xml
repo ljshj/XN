@@ -4,28 +4,13 @@
     android:layout_height="match_parent"
     android:background="@color/common_page_bg"
     android:orientation="vertical" >
-
-    <RelativeLayout
-        android:id="@+id/add_product_rl_title"
-        style="@style/common_top_title_style" >
-
-        <Button
-            android:id="@+id/add_product_btn_back"
-            style="@style/common_btn_back_style" />
-
-        <TextView
-            style="@style/common_tv_title_style"
-            android:text="添加产品" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent" >
+    
+	<include layout="@layout/title_bar"/>    
 
         <ScrollView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="65dp" >
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -128,8 +113,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="10dp"
                         android:background="@drawable/group_card_sound_prompt_selector"
-                        android:button="@null"
-                        android:checked="true" />
+                        android:button="@null"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -161,53 +145,28 @@
                         android:text="产品简介："
                         android:textSize="18dp" />
 
-                    <LinearLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="235dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
-                        android:background="@drawable/img_common_edittext_bg"
-                        android:gravity="center"
-                        android:orientation="vertical" >
-
                         <EditText
                             android:id="@+id/add_product_et_info"
                             android:layout_width="280dp"
                             android:layout_height="230dp"
-                            android:background="@android:color/transparent"
-                            android:gravity="top"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="top|left"
+                            android:background="@null"
                             android:hint="请输入商品介绍信息"
-                            android:lines="8"
-                            android:textSize="16sp" >
-                        </EditText>
-                    </LinearLayout>
+                            android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="65dp"
-            android:layout_alignParentBottom="true"
-            android:gravity="center"
-            android:orientation="vertical" >
 
             <Button
                 android:id="@+id/add_product_btn_done"
                 android:layout_width="fill_parent"
                 android:layout_height="45dp"
-                android:layout_marginBottom="25dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="25dp"
+                android:layout_margin="10dp"
                 android:background="@drawable/login_btn_selector"
-                android:gravity="center"
                 android:text="确定添加"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
-        </LinearLayout>
-    </RelativeLayout>
 
 </LinearLayout>

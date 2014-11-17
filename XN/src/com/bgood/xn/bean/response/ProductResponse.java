@@ -11,6 +11,6 @@ import com.bgood.xn.bean.ProductBean;
  */
 public class ProductResponse {
 	
-	public List<ProductBean> items;
+	public List<ProductBean> products;
 	
 }
