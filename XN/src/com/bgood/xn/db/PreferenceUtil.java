@@ -97,4 +97,14 @@ public class PreferenceUtil {
 	public int getSelfTemplat() {
 		return sp.getInt("templat", 0);
 	}
+	
+	/**设置产品评论刷新时间**/
+	public void setProductCommentRefreshTime(String productCommentRefreshTime){
+		editor.putString("productCommentRefreshTime", productCommentRefreshTime);
+		editor.commit();
+	}
+	
+	public String getProductCommentRefreshTime(){
+		return sp.getString("productCommentRefreshTime", "");
+	}
 }

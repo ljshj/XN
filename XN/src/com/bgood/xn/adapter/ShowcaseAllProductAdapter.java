@@ -57,7 +57,7 @@ public class ShowcaseAllProductAdapter extends KBaseAdapter
 		
 		
 		holder.nameTv.setText(productDTO.product_name);
-		holder.priceTv.setText(productDTO.price);
+		holder.priceTv.setText(productDTO.getPrice());
 		return convertView;
 	}
 

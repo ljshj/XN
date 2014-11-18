@@ -38,7 +38,7 @@
                         
           	  <TextView android:id="@+id/tv_list_product"
                        android:drawableLeft="@drawable/img_user_center_shop"
-                       android:text="我的产品"
+                       android:text="产品编辑"
                        style="@style/select_layout_small"
                        />
           	  

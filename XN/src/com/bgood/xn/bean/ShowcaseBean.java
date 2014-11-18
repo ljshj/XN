@@ -16,5 +16,5 @@ public class ShowcaseBean
 	public String good_comments;              // 好评数
 	public String credit;                     // 信用值
 	public String product_count;              // 商品总数
-	public List<ProductBean> productList;     // 商品列表
+	public List<ProductBean> recommend_list;     // 商品列表
 }

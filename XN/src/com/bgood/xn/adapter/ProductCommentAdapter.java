@@ -2,59 +2,39 @@ package com.bgood.xn.adapter;
 
 import java.util.List;
 
-import android.content.Context;
-import android.view.LayoutInflater;
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
+import com.bgood.xn.bean.ProductCommentBean;
+import com.bgood.xn.utils.ToolUtils;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 /**
- * 我的动态适配器
+ * 
+ * @todo:产品评论适配器
+ * @date:2014-11-18 下午5:22:49
+ * @author:hg_liuzl@163.com
  */
-public class ProductCommentAdapter extends BaseAdapter
+public class ProductCommentAdapter extends KBaseAdapter
 {
-    private LayoutInflater m_inflater;
-    private Context m_context;
-    private List<String> m_list;
-    
-    public ProductCommentAdapter(Context context, List<String> list)
-    {
-        super();
-        this.m_context = context;
-        this.m_list = list;
-        this.m_inflater = LayoutInflater.from(m_context);
-    }
+    public ProductCommentAdapter(List<?> mList, Activity mActivity) {
+		super(mList, mActivity);
+	}
 
-    @Override
-    public int getCount()
-    {
-        return m_list.size();
-    }
-
-    @Override
-    public Object getItem(int position)
-    {
-        return m_list.get(position);
-    }
-
-    @Override
-    public long getItemId(int position)
-    {
-        return position;
-    }
-
-    @Override
+	@Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        ViewHolder holder;
+       final ViewHolder holder;
         if (convertView == null)
         {
             holder = new ViewHolder();
-            convertView = m_inflater.inflate(R.layout.layout_product_comment_item, null);
+            convertView = mInflater.inflate(R.layout.layout_product_comment_item, null);
             holder.iconImgV = (ImageView) convertView.findViewById(R.id.product_comment_item_imgv_icon);
             holder.nameTv = (TextView) convertView.findViewById(R.id.product_comment_item_tv_name);
             holder.timeTv = (TextView) convertView.findViewById(R.id.product_comment_item_tv_time);
@@ -67,11 +47,26 @@ public class ProductCommentAdapter extends BaseAdapter
             holder = (ViewHolder) convertView.getTag();
         }
         
+        final ProductCommentBean pcb = (ProductCommentBean) mList.get(position);
+        
+        
+        mImageLoader.displayImage(pcb.photo,holder.iconImgV, options, new SimpleImageLoadingListener() {
+			@Override
+			public void onLoadingComplete() {
+				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
+				holder.iconImgV.setAnimation(anim);
+				anim.start();
+			}
+		});
+        
+        holder.nameTv.setText(pcb.name);
+        holder.timeTv.setText(ToolUtils.getFormatDate(pcb.commenttime));
+        holder.contentTv.setText(pcb.content);
         
         return convertView;
     }
 
-    class ViewHolder
+   final class ViewHolder
     {
         ImageView iconImgV;           // 头像
         TextView nameTv;              // 名字

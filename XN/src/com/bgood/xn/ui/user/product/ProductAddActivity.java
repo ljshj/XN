@@ -64,7 +64,7 @@ public class ProductAddActivity extends BaseActivity implements OnClickListener,
     private EditText  m_infoEt        = null; // 产品信息输入框
     private Button    m_doneBtn       = null; // 确认添加按钮
     
-    private int m_recommend = 1;
+    private int m_recommend = 0; 	//
     private ProductBean m_ProductBean = null;
     private String img,img_thumb;
     

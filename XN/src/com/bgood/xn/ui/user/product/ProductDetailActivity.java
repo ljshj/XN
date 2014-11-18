@@ -76,7 +76,7 @@ public class ProductDetailActivity extends BaseActivity implements OnClickListen
             // 查看评论
             case R.id.product_detail_rl_look_comment:
                  intent = new Intent(ProductDetailActivity.this, ProductCommentActivity.class);
-                startActivity(intent);
+                 startActivity(intent);
                 break;
             
             // 联系卖家
@@ -102,7 +102,7 @@ public class ProductDetailActivity extends BaseActivity implements OnClickListen
 		mImageLoader = ImageLoader.getInstance();
 		mImageLoader.init(ImageLoaderConfiguration.createDefault(mActivity));
 		
-        mImageLoader.displayImage(productBean.img_thum,m_iconImgV, options, new SimpleImageLoadingListener() {
+        mImageLoader.displayImage(productBean.img,m_iconImgV, options, new SimpleImageLoadingListener() {
 			@Override
 			public void onLoadingComplete() {
 				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
@@ -111,7 +111,7 @@ public class ProductDetailActivity extends BaseActivity implements OnClickListen
 			}
 		});
     	m_productNameTv.setText(productBean.product_name);
-    	m_priceTv.setText("￥" + productBean.price);
+    	m_priceTv.setText(productBean.getPrice());
     	m_productInfoTv.setText(productBean.intro);
     }
 }

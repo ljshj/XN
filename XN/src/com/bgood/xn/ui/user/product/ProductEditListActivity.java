@@ -6,12 +6,13 @@ import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
-import com.bgood.xn.adapter.ProductListAdapter;
+import com.bgood.xn.adapter.ProductEditAdapter;
 import com.bgood.xn.bean.ProductBean;
 import com.bgood.xn.bean.response.ProductResponse;
 import com.bgood.xn.network.BaseNetWork;
@@ -23,54 +24,58 @@ import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.ProductRequest;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.view.BToast;
-import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
+import com.bgood.xn.widget.SwipeListView;
 import com.bgood.xn.widget.TitleBar;
 
-
 /**
- * 
- * @todo:商品展示列表
- * @date:2014-11-13 下午4:00:53
+ * @todo:我的产品编辑列表
+ * @date:2014-11-13 下午5:27:14
  * @author:hg_liuzl@163.com
  */
-public class ProductListActivity extends BaseActivity implements OnItemClickListener,TaskListenerWithState,IXListViewListener{
-	private XListView m_listXLv = null;
-    private ProductListAdapter m_adpater = null;
+public class ProductEditListActivity extends BaseActivity implements OnItemClickListener,OnClickListener,TaskListenerWithState,IXListViewListener
+{
+    private SwipeListView m_listLv = null;  // 列表
     private List<ProductBean> m_list = new ArrayList<ProductBean>();
+    private int m_start_size = 0;
+    private ProductEditAdapter adapter = null;
     private String mKeyWord = null;
     private String mUserid = null;
-    private int m_start_size = 0;
-    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_product_list);
-        (new TitleBar(mActivity)).initTitleBar("我的产品");
-        mKeyWord =getIntent().getStringExtra("content");
-        
-        if(mKeyWord == null){
-        	mKeyWord = "";
-        }
-        
+        setContentView(R.layout.layout_product_edit_list);
+        (new TitleBar(mActivity)).initTitleBar("编辑产品");
         mUserid = getIntent().getStringExtra("userid");
-        m_listXLv = (XListView) findViewById(R.id.product_list_xlv_list);
-        m_adpater = new ProductListAdapter(m_list,this);
-        m_listXLv.setAdapter(m_adpater);
-        m_listXLv.setPullRefreshEnable(false);
-        m_listXLv.setOnItemClickListener(this);
-        m_listXLv.setXListViewListener(this);
+        m_listLv = (SwipeListView) findViewById(R.id.product_edit_list_lv_list);
+        m_listLv.setOnItemClickListener(this);
+        adapter = new ProductEditAdapter(m_list,mActivity,this, m_listLv.getRightViewWidth());
+        m_listLv.setAdapter(adapter);
+        m_listLv.setOnItemClickListener(this);
         ProductRequest.getInstance().requestProductList(this, this, mUserid, mKeyWord, String.valueOf(m_start_size), String.valueOf(m_start_size+PAGE_SIZE_ADD));
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapter, View v, int location, long arg3)
     {
-       final ProductBean ProductBean = (ProductBean)adapter.getAdapter().getItem(location);
-        Intent intent = new Intent(ProductListActivity.this, ProductEditActivity.class);
-        intent.putExtra(ProductBean.BEAN_PRODUCT, ProductBean);
+        final ProductBean productDTO = (ProductBean)adapter.getAdapter().getItem(location);
+        Intent intent = new Intent(ProductEditListActivity.this, ProductEditActivity.class);
+        intent.putExtra(ProductBean.BEAN_PRODUCT, productDTO);
         startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+        case R.id.product_edit_list_item_tv_delete:
+            final ProductBean bean = (ProductBean) v.getTag();
+            ProductRequest.getInstance().requestProductDelete(this, mActivity, bean.product_id);
+            break;
+
+        default:
+            break;
+        }
     }
 
 	@Override
@@ -79,8 +84,18 @@ public class ProductListActivity extends BaseActivity implements OnItemClickList
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			String strJson = bNetWork.getStrJson();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
-				final ProductResponse response = JSON.parseObject(strJson, ProductResponse.class);
-				setProductData(response.products);
+				switch (bNetWork.getMessageType()) {
+				case 830003:
+					final ProductResponse response = JSON.parseObject(strJson, ProductResponse.class);
+					setProductData(response.products);
+					break;
+				case 830005:
+					BToast.show(mActivity, "删除成功");
+					break;
+
+				default:
+					break;
+				}
 			}
 		}
 	}
@@ -98,15 +113,7 @@ public class ProductListActivity extends BaseActivity implements OnItemClickList
 		if (null == products) {
 			return;
 		}
-		m_listXLv.stopLoadMore();
-		if (products.size() <= PAGE_SIZE_ADD) {
-			m_listXLv.setPullLoadEnable(false);
-			BToast.show(mActivity, "数据加载完毕");
-		} else {
-			m_listXLv.setPullLoadEnable(true);
-		}
-
 		this.m_list.addAll(products);
-		m_adpater.notifyDataSetChanged();
+		adapter.notifyDataSetChanged();
 	}
 }

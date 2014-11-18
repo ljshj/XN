@@ -18,23 +18,14 @@
             android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal" >
-
-            <ImageView
-                android:id="@+id/showcase_recommend_item_tv_time_hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="15dp"
-                android:src="@drawable/img_showcase_time_hint" />
-
+           
             <TextView
                 android:id="@+id/showcase_recommend_item_tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/showcase_recommend_item_tv_time_hint"
+                android:drawableLeft="@drawable/img_showcase_time_hint"
                 android:text="2014-07-10" />
 
             <TextView

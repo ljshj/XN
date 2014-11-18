@@ -7,15 +7,15 @@
     
 <LinearLayout  
         android:id="@+id/LinearLayout"  
-        android:layout_width="120dp"  
-        android:layout_height="120dp"  
+        android:layout_width="80dp"  
+        android:layout_height="80dp"  
         android:background="@drawable/bg_corner_loading"  
         android:gravity="center"  
         android:orientation="vertical" >  
   
         <ProgressBar  
             android:id="@+id/progress"  
-            style="?android:attr/progressBarStyleSmall"  
+            style="?android:attr/progressBarStyleSmallTitle"  
             android:layout_width="wrap_content"  
             android:layout_height="wrap_content"  
             android:layout_gravity="center"  
@@ -28,6 +28,7 @@
             android:layout_gravity="center"  
             android:paddingTop="10dp"  
             android:textColor="#fff"  
+            android:visibility="gone"
              />  
     </LinearLayout>  
 </LinearLayout>

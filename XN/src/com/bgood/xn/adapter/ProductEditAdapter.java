@@ -22,10 +22,10 @@ import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
  * @date:2014-11-13 下午5:45:53
  * @author:hg_liuzl@163.com
  */
-public class ProductAdapter extends KBaseAdapter 
+public class ProductEditAdapter extends KBaseAdapter 
 {
 	private int mRightWidth = 0;
-	public ProductAdapter(List<?> mList, Activity mActivity,OnClickListener listener,int width) {
+	public ProductEditAdapter(List<?> mList, Activity mActivity,OnClickListener listener,int width) {
 		super(mList, mActivity, listener);
 		this.mRightWidth = width;
 	}
@@ -69,7 +69,7 @@ public class ProductAdapter extends KBaseAdapter
 			}
 		});
 		holder.nameTv.setText(productDTO.product_name);
-		holder.priceTv.setText(productDTO.price);
+		holder.priceTv.setText(productDTO.getPrice());
 		holder.deleteTv.setOnClickListener(mListener);
 		holder.deleteTv.setTag(productDTO);
 		return convertView;

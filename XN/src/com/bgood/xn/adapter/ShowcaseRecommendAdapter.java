@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.ProductBean;
+import com.bgood.xn.utils.ToolUtils;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 /**
@@ -47,9 +48,9 @@ public class ShowcaseRecommendAdapter extends KBaseAdapter
         }
 		
 		final ProductBean productDTO = (ProductBean) mList.get(position);
-		holder.timeTv.setText(productDTO.date_time);
+		holder.timeTv.setText(ToolUtils.getFormatDate(productDTO.date_time));
 		
-        mImageLoader.displayImage(productDTO.img,holder.iconImgV, options, new SimpleImageLoadingListener() {
+        mImageLoader.displayImage(productDTO.img_thum,holder.iconImgV, options, new SimpleImageLoadingListener() {
 			@Override
 			public void onLoadingComplete() {
 				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
@@ -59,7 +60,7 @@ public class ShowcaseRecommendAdapter extends KBaseAdapter
 		});
 		
 		holder.nameTv.setText(productDTO.product_name);
-		holder.priceTv.setText(productDTO.price);
+		holder.priceTv.setText(productDTO.getPrice());
 		return convertView;
 	}
 

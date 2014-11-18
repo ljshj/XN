@@ -56,7 +56,6 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 {
 	/**传入的用户编号**/
 	public static final String KEY_USER_ID = "key_user_id";
-	private LinearLayout m_showLl = null;  // 数据显示区域
 	private Button m_backBtn = null; // 返回按钮
 	private Button m_moreBtn = null; // 更多按钮
 	private FrameLayout m_backgroundFl = null; // 背景
@@ -78,15 +77,11 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 	private TextView m_allProductTv = null; // 全部产品值
 	private XListView m_recommendXLv = null;  // 推荐产品
 	private XListView m_allProductXLv = null;  // 所有产品
-
-	private ShowcaseRightFragment m_rightFragment; // 右侧菜单Fragment
-
 	private boolean m_menuShowing; // 右菜单是否显示
 	
 	private ShowcaseRecommendAdapter m_recommendAdapter = null;    // 推荐商品适配器
 	private ShowcaseAllProductAdapter m_allProductAdapter = null;  // 所有商品适配器
 	
-	private int m_loadAllProduct = 1;
 	
 	private String mUserId = null;
 	
@@ -109,7 +104,6 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 	 */
 	private void findView()
 	{
-		m_showLl = (LinearLayout) findViewById(R.id.showcase_ll_show);
 		m_backBtn = (Button) findViewById(R.id.showcase_btn_back);
 		m_moreBtn = (Button) findViewById(R.id.showcase_btn_more);
 		m_backgroundFl = (FrameLayout) findViewById(R.id.showcase_fl_background);
@@ -129,9 +123,12 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 		m_allProductLl = (LinearLayout) findViewById(R.id.showcase_ll_all_product);
 		m_allProductHintTv = (TextView) findViewById(R.id.showcase_tv_all_product_hint);
 		m_allProductTv = (TextView) findViewById(R.id.showcase_tv_all_product);
+		
 		m_recommendXLv = (XListView) findViewById(R.id.showcase_xlv_recommend);
+		m_recommendXLv.setOnItemClickListener(this);
 		m_recommendXLv.setPullRefreshEnable(false);
 		m_recommendXLv.setPullLoadEnable(false);
+		
 		m_allProductXLv = (XListView) findViewById(R.id.showcase_xlv_all_product);
 		m_allProductXLv.setPullRefreshEnable(false);
 		m_allProductXLv.setOnItemClickListener(this);
@@ -261,7 +258,9 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
     			break;
     		// 全部产品
     		case R.id.showcase_ll_all_product:
-    			ProductRequest.getInstance().requestProductList(this, this, mUserId, "", String.valueOf(m_start_page), String.valueOf(m_start_page+m_add_pagesize));
+    			if(null == m_allProductAdapter){	//如果m_allProductAdapter 为null,说明还没有做初始化工作
+    				ProductRequest.getInstance().requestProductList(this, this, mUserId, "", String.valueOf(m_start_page), String.valueOf(m_start_page+m_add_pagesize));
+    			}
     			setProduct(1);
     			break;
     		default:
@@ -440,13 +439,13 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 				}
 			});
 			
-			m_recommendTv.setText(showcaseDTO.productList == null?"0":String.valueOf(showcaseDTO.productList.size()));
-			m_allProductTv.setText(showcaseDTO.product_count);
+			m_recommendTv.setText("("+(showcaseDTO.recommend_list == null?"0":String.valueOf(showcaseDTO.recommend_list.size()))+")");
 			
+			m_allProductTv.setText("("+showcaseDTO.product_count+")");
 			m_commentsTv.setText(showcaseDTO.good_comments);
-			m_showcaseNameTv.setText(showcaseDTO.shop_name);
 			
-			setRecommendAdapter(showcaseDTO.productList);
+			m_showcaseNameTv.setText(showcaseDTO.shop_name);
+			setRecommendAdapter(showcaseDTO.recommend_list);
 			
 	}
     @Override

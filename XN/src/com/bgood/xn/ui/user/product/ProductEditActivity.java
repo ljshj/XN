@@ -87,6 +87,8 @@ public class ProductEditActivity extends BaseActivity implements OnClickListener
     private void findView()
     {
         m_photoImgV = (ImageView) findViewById(R.id.product_edit_imgv_photo);
+        m_photoImgV.setOnClickListener(this);
+        
         m_productNameEt = (EditText) findViewById(R.id.product_edit_et_name);
         m_productPriceEt = (EditText) findViewById(R.id.product_edit_et_price);
         m_recommendCb = (CheckBox) findViewById(R.id.product_edit_cb_recommend);
@@ -119,7 +121,7 @@ public class ProductEditActivity extends BaseActivity implements OnClickListener
 		mImageLoader = ImageLoader.getInstance();
 		mImageLoader.init(ImageLoaderConfiguration.createDefault(mActivity));
 		
-        mImageLoader.displayImage(m_ProductBean.img_thum,m_photoImgV, options, new SimpleImageLoadingListener() {
+        mImageLoader.displayImage(m_ProductBean.img,m_photoImgV, options, new SimpleImageLoadingListener() {
 			@Override
 			public void onLoadingComplete() {
 				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
@@ -308,7 +310,7 @@ public class ProductEditActivity extends BaseActivity implements OnClickListener
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-			case R.id.add_product_imgv_photo:
+			case R.id.product_edit_imgv_photo:
 				showPicDialog();
 				break;
 			case R.id.btn_take_photo:
@@ -322,7 +324,7 @@ public class ProductEditActivity extends BaseActivity implements OnClickListener
 			case R.id.btn_cancel:
 				dialog.dismiss();
 				break;
-			case R.id.add_product_btn_done:
+			case R.id.product_edit_btn_done:
 				chenkInfo();
 				break;
 			default:
