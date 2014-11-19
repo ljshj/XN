@@ -24,6 +24,7 @@ import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
+import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.TitleBar;
 
 /**
@@ -32,8 +33,10 @@ import com.bgood.xn.widget.TitleBar;
  * @date:2014-10-24 下午3:50:55
  * @author:hg_liuzl@163.com
  */
-public class ProductCommentShowActivity extends BaseActivity implements TaskListenerWithState,OnClickListener
+public class ProductCommentShowActivity extends BaseActivity implements TaskListenerWithState,OnClickListener,IXListViewListener
 {
+	/**产品编号**/
+	public static final String KEY_PRODUCT_ID = "key_product_id";
 	private XListView m_ProductComment;
 	private List<ProductCommentBean> mProductCommentList = new ArrayList<ProductCommentBean>();
 	private ProductCommentAdapter ProductCommentAdapter;
@@ -41,11 +44,13 @@ public class ProductCommentShowActivity extends BaseActivity implements TaskList
 	private TitleBar titleBar = null;
 	private int comment_start = 0;
 	private String product_id;
+	private boolean isRefresh = true;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_product_comment);
+		product_id = getIntent().getStringExtra(KEY_PRODUCT_ID);
 	    titleBar = new TitleBar(mActivity);
 	    titleBar.initAllBar("所有评论","新评论");
 		initViews();
@@ -56,7 +61,7 @@ public class ProductCommentShowActivity extends BaseActivity implements TaskList
 		super.onResume();
 		mRefreshTime = pUitl.getProductCommentRefreshTime();
 		m_ProductComment.setRefreshTime(mRefreshTime);
-		comment_start = 0;
+		isRefresh = true;
 		ProductRequest.getInstance().requestProductCommentList(this, mActivity, product_id, String.valueOf(comment_start), String.valueOf(comment_start+PAGE_SIZE_ADD));
 	}
 	
@@ -69,7 +74,7 @@ public class ProductCommentShowActivity extends BaseActivity implements TaskList
 	private void initViews()
 	{
 		m_ProductComment = (XListView) findViewById(R.id.lv_product_comment);
-		m_ProductComment.setPullRefreshEnable(false);
+		m_ProductComment.setXListViewListener(this);
 		ProductCommentAdapter = new ProductCommentAdapter(mProductCommentList,mActivity);
 		m_ProductComment.setAdapter(ProductCommentAdapter);
 		 // 确定按钮
@@ -80,6 +85,7 @@ public class ProductCommentShowActivity extends BaseActivity implements TaskList
             public void onClick(View v)
             {
             	Intent intent = new Intent(mActivity, ProductCommentActivity.class);
+            	intent.putExtra(KEY_PRODUCT_ID, product_id);
             	startActivity(intent);
             }
         });
@@ -95,19 +101,49 @@ public class ProductCommentShowActivity extends BaseActivity implements TaskList
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			String strJson = bNetWork.getStrJson();
+			m_ProductComment.stopLoadMore();
+			m_ProductComment.stopRefresh();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				ProductCommentResponse response  = JSON.parseObject(strJson, ProductCommentResponse.class);
 				setProductCommentData(response.comments);
 				}else{
 					BToast.show(mActivity, "获取数据失败");
 				}
+				
 			}
 		}
 	
-	private void setProductCommentData(List<ProductCommentBean> ProductComments) {
-			mRefreshTime = ToolUtils.getNowTime();
-			m_ProductComment.setRefreshTime(mRefreshTime);
-			this.mProductCommentList.addAll(ProductComments);
+	private void setProductCommentData(List<ProductCommentBean> productComments) {
+			
+			if(productComments.size() < PAGE_SIZE_ADD){
+				m_ProductComment.setPullLoadEnable(false);
+				BToast.show(mActivity, "数据加载完毕");
+			}else{
+				comment_start += PAGE_SIZE_ADD;
+				m_ProductComment.setPullLoadEnable(true);
+			}
+			
+			if(isRefresh)	//如果相等，说明是第一次刷新
+			{
+				mProductCommentList.clear();
+				mRefreshTime = ToolUtils.getNowTime();
+				m_ProductComment.setRefreshTime(mRefreshTime);
+			}
+			isRefresh = false;
+			this.mProductCommentList.addAll(productComments);
 			ProductCommentAdapter.notifyDataSetChanged();
+	}
+
+	@Override
+	public void onRefresh() {
+		comment_start = 0;
+		isRefresh = true;
+		ProductRequest.getInstance().requestProductCommentList(this, mActivity, product_id, String.valueOf(comment_start), String.valueOf(comment_start+PAGE_SIZE_ADD));
+	}
+
+	@Override
+	public void onLoadMore() {
+		isRefresh = false;
+		ProductRequest.getInstance().requestProductCommentList(this, mActivity, product_id, String.valueOf(comment_start), String.valueOf(comment_start+PAGE_SIZE_ADD));
 	}
 }

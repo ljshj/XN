@@ -20,6 +20,7 @@ import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.utils.ToolUtils;
+import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.TitleBar;
@@ -95,9 +96,10 @@ public class AttentionActivity extends BaseActivity implements IXListViewListene
 				AttentionResponse response = JSON.parseObject(strJson, AttentionResponse.class);
 				if (response.items.size() < PAGE_SIZE_ADD) {
 					m_listLv.setPullLoadEnable(false);
-					Toast.makeText(mActivity, "加载完毕！",Toast.LENGTH_LONG).show();
+					BToast.show(mActivity, "数据加载完毕");
 				} else {
 					m_start = m_start + PAGE_SIZE_ADD;
+					m_listLv.setPullLoadEnable(true);
 				}
 				m_list.addAll(response.items);
 				setAdapter();

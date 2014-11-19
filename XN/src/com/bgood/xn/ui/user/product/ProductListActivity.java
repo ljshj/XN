@@ -99,10 +99,11 @@ public class ProductListActivity extends BaseActivity implements OnItemClickList
 			return;
 		}
 		m_listXLv.stopLoadMore();
-		if (products.size() <= PAGE_SIZE_ADD) {
+		if (products.size() < PAGE_SIZE_ADD) {
 			m_listXLv.setPullLoadEnable(false);
 			BToast.show(mActivity, "数据加载完毕");
 		} else {
+			m_start_size += PAGE_SIZE_ADD;
 			m_listXLv.setPullLoadEnable(true);
 		}
 

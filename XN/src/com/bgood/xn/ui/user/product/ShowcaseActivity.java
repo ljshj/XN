@@ -3,13 +3,14 @@ package com.bgood.xn.ui.user.product;
 import java.util.List;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
@@ -60,7 +62,6 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 	private Button m_moreBtn = null; // 更多按钮
 	private FrameLayout m_backgroundFl = null; // 背景
 	private EditText m_searchEt = null; // 搜索输入框
-	private Button m_searchBtn = null;  // 搜索按钮
 	private ImageView m_showcaseIconImgV = null; // 橱窗图片
 	private TextView m_showcaseNameTv = null; // 橱窗名
 	private TextView m_commentsTv = null; // 评论值
@@ -108,7 +109,6 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 		m_moreBtn = (Button) findViewById(R.id.showcase_btn_more);
 		m_backgroundFl = (FrameLayout) findViewById(R.id.showcase_fl_background);
 		m_searchEt = (EditText) findViewById(R.id.showcase_et_search);
-		m_searchBtn = (Button) findViewById(R.id.showcase_btn_search);
 		m_showcaseIconImgV = (ImageView) findViewById(R.id.showcase_imgv_showcase_icon);
 		m_showcaseNameTv = (TextView) findViewById(R.id.showcase_tv_shop_name);
 		m_commentsTv = (TextView) findViewById(R.id.showcase_tv_comments);
@@ -146,7 +146,6 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 	private void setListener()
 	{
 		m_backBtn.setOnClickListener(this);
-		m_searchBtn.setOnClickListener(this);
 		m_recommendLl.setOnClickListener(this);
 		m_allProductLl.setOnClickListener(this);
 
@@ -163,6 +162,21 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 				{
 					m_slidingMenu.showSecondaryMenu();
 				}
+			}
+		});
+		
+		m_searchEt.setOnEditorActionListener(new OnEditorActionListener() {
+			
+			@Override
+			public boolean onEditorAction(TextView tv, int actionId, KeyEvent arg2) {
+				if(actionId == EditorInfo.IME_ACTION_SEARCH){
+					String searchContent = m_searchEt.getText().toString().trim();
+                    Intent intent = new Intent(ShowcaseActivity.this, ProductListActivity.class);
+                    intent.putExtra("content", searchContent);
+                    intent.putExtra("userid", String.valueOf(BGApp.mLoginBean.userid));
+                    startActivity(intent);
+				}
+				return false;
 			}
 		});
 	}
@@ -236,22 +250,6 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
     		case R.id.showcase_btn_back:
     			ShowcaseActivity.this.finish();
     			break;
-    		// 返回
-            case R.id.showcase_btn_search:
-                String searchContent = m_searchEt.getText().toString().trim();
-                if (TextUtils.isEmpty(searchContent))
-                {
-                    BToast.show(ShowcaseActivity.this,  "请输入搜索内容！");
-                    return;
-                }
-                else
-                {
-                    Intent intent = new Intent(ShowcaseActivity.this, ProductListActivity.class);
-                    intent.putExtra("content", searchContent);
-                    intent.putExtra("userid", String.valueOf(BGApp.mLoginBean.userid));
-                    startActivity(intent);
-                }
-                break;
     		// 推荐产品
     		case R.id.showcase_ll_recommend:
     			setProduct(0);
@@ -397,6 +395,9 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 		if(list.size() < m_add_pagesize){
 			BToast.show(this, "数据加载完毕");
 			m_allProductXLv.setPullLoadEnable(false);
+		}else{
+			m_start_page += m_add_pagesize;
+			m_allProductXLv.setPullLoadEnable(true);
 		}
 		
 		if (m_allProductAdapter == null)

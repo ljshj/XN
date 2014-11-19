@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.alibaba.fastjson.JSON;
@@ -39,8 +40,9 @@ public class ProductEditListActivity extends BaseActivity implements OnItemClick
     private List<ProductBean> m_list = new ArrayList<ProductBean>();
     private int m_start_size = 0;
     private ProductEditAdapter adapter = null;
-    private String mKeyWord = null;
+    private String mKeyWord = "";
     private String mUserid = null;
+    private ProductBean mProductBean = null;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -49,11 +51,15 @@ public class ProductEditListActivity extends BaseActivity implements OnItemClick
         (new TitleBar(mActivity)).initTitleBar("编辑产品");
         mUserid = getIntent().getStringExtra("userid");
         m_listLv = (SwipeListView) findViewById(R.id.product_edit_list_lv_list);
-        m_listLv.setOnItemClickListener(this);
         adapter = new ProductEditAdapter(m_list,mActivity,this, m_listLv.getRightViewWidth());
         m_listLv.setAdapter(adapter);
         m_listLv.setOnItemClickListener(this);
-        ProductRequest.getInstance().requestProductList(this, this, mUserid, mKeyWord, String.valueOf(m_start_size), String.valueOf(m_start_size+PAGE_SIZE_ADD));
+    }
+    
+    @Override
+    protected void onResume() {
+    	super.onResume();
+    	ProductRequest.getInstance().requestProductList(this, this, mUserid, mKeyWord, String.valueOf(m_start_size), String.valueOf(m_start_size+PAGE_SIZE_ADD));
     }
 
     @Override
@@ -69,8 +75,8 @@ public class ProductEditListActivity extends BaseActivity implements OnItemClick
     public void onClick(View v) {
         switch (v.getId()) {
         case R.id.product_edit_list_item_tv_delete:
-            final ProductBean bean = (ProductBean) v.getTag();
-            ProductRequest.getInstance().requestProductDelete(this, mActivity, bean.product_id);
+        	mProductBean = (ProductBean) v.getTag();
+            ProductRequest.getInstance().requestProductDelete(this, mActivity, mProductBean.product_id);
             break;
 
         default:
@@ -85,11 +91,13 @@ public class ProductEditListActivity extends BaseActivity implements OnItemClick
 			String strJson = bNetWork.getStrJson();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				switch (bNetWork.getMessageType()) {
-				case 830003:
+				case 830008:
 					final ProductResponse response = JSON.parseObject(strJson, ProductResponse.class);
 					setProductData(response.products);
 					break;
 				case 830005:
+					m_list.remove(mProductBean);
+					adapter.notifyDataSetChanged();
 					BToast.show(mActivity, "删除成功");
 					break;
 
@@ -113,6 +121,13 @@ public class ProductEditListActivity extends BaseActivity implements OnItemClick
 		if (null == products) {
 			return;
 		}
+		
+		if (products.size() < PAGE_SIZE_ADD) {
+			Toast.makeText(mActivity, "加载完毕！",Toast.LENGTH_LONG).show();
+		} else {
+			m_start_size += PAGE_SIZE_ADD;
+		}
+		
 		this.m_list.addAll(products);
 		adapter.notifyDataSetChanged();
 	}

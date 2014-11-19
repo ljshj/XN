@@ -273,10 +273,6 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 			intent = new Intent(mActivity, WeiqiangMentionActivity.class);
 			mActivity.startActivity(intent);
 			break;
-		case R.id.iv_delete:	//删除
-//			wqb = (WeiQiangBean) v.getTag();
-//			BToast.show(mActivity, "删除"+wqb.weiboid);
-			break;
 		case R.id.tv_zan_count:	//赞
 			wqb = (WeiQiangBean) v.getTag();
 			mActionWeiqiang = wqb;

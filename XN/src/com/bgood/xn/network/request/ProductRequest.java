@@ -175,7 +175,7 @@ public class ProductRequest extends BaseNetWork {
 	
 	/**商品评论列表*/
 	 public void requestProductCommentList(TaskListenerWithState mHttpTaskListener,Context context,String product_id,String comment_start,String comment_end){
-	 	setMessageType(300011);
+	 	setMessageType(30011);
 		JSONObject body = new JSONObject();
 		try {
 			body.put("product_id", product_id);

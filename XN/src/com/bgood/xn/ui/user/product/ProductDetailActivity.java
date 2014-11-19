@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -31,7 +30,6 @@ import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 public class ProductDetailActivity extends BaseActivity implements OnClickListener
 {
 	
-    private Button m_editBtn = null;   // 编辑按钮
     private ImageView m_iconImgV = null;  // 商品图片
     private TextView m_priceTv = null;  // 价格值
     private TextView m_productNameTv = null;  // 商品名
@@ -75,7 +73,8 @@ public class ProductDetailActivity extends BaseActivity implements OnClickListen
         {
             // 查看评论
             case R.id.product_detail_rl_look_comment:
-                 intent = new Intent(ProductDetailActivity.this, ProductCommentActivity.class);
+                 intent = new Intent(ProductDetailActivity.this, ProductCommentShowActivity.class);
+                 intent.putExtra(ProductCommentShowActivity.KEY_PRODUCT_ID, productBean.product_id);
                  startActivity(intent);
                 break;
             

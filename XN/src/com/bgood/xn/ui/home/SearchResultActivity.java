@@ -263,13 +263,13 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 	private void getData(int flag){
 		switch (flag) {
 		case CHOOSE_MEMBER:
-			HomeRequest.getInstance().reqeuestMemberList(this, this, search_type, m_msg, m_start, m_start + PAGE_SIZE_ADD);
+			HomeRequest.getInstance().reqeuestMemberList(this, this, search_type, m_msg, m_memberStart, m_memberStart + PAGE_SIZE_ADD);
 			break;
 		case CHOOSE_WEI_QIANG:
-			HomeRequest.getInstance().requestWeiqianList(this, this, search_type, m_msg, m_start, m_start + PAGE_SIZE_ADD);
+			HomeRequest.getInstance().requestWeiqianList(this, this, search_type, m_msg, m_weiqiangStart, m_weiqiangStart + PAGE_SIZE_ADD);
 			break;
 		case CHOOSE_CHU_CHUANG:
-			HomeRequest.getInstance().requestProductList(this, this, search_type, m_msg, m_start, m_start + PAGE_SIZE_ADD);
+			HomeRequest.getInstance().requestProductList(this, this, search_type, m_msg, m_cabinetStart, m_cabinetStart + PAGE_SIZE_ADD);
 			break;
 		default:
 			break;

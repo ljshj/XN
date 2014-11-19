@@ -35,9 +35,9 @@ public class WeiqiangCommentAdapter extends KBaseAdapter
         {
             holder = new Holder();
             convertView = mInflater.inflate(R.layout.weiqiang_comment_item, parent, false);
-            holder.ivComment = (ImageView) convertView.findViewById(R.id.iv_comment_author);
-            holder.tvCommentAuthor = (TextView) convertView.findViewById(R.id.tv_comment_author);
-            holder.tvCommentTime = (TextView) convertView.findViewById(R.id.tv_comment_time);
+            holder.ivComment = (ImageView) convertView.findViewById(R.id.iv_img);
+            holder.tvCommentAuthor = (TextView) convertView.findViewById(R.id.tv_nick);
+            holder.tvCommentTime = (TextView) convertView.findViewById(R.id.tv_time);
             holder.tvCommentContent = (TextView) convertView.findViewById(R.id.tv_comment_content);
             convertView.setTag(holder);
         } else

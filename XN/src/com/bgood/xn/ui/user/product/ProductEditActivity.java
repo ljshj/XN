@@ -110,6 +110,11 @@ public class ProductEditActivity extends BaseActivity implements OnClickListener
      */
     private void setData()
     {
+    	img = m_ProductBean.img;
+    	img_thumb = m_ProductBean.img_thum;
+    	m_recommend = m_ProductBean.isRecommend;
+    	
+    	
         ImageLoader mImageLoader;
 		DisplayImageOptions options;
 		options = new DisplayImageOptions.Builder()
@@ -133,7 +138,7 @@ public class ProductEditActivity extends BaseActivity implements OnClickListener
         
         
         
-        
+        m_recommendCb.setChecked(m_recommend==1?true:false);
         m_productNameEt.setText(m_ProductBean.product_name);
         m_productPriceEt.setText(m_ProductBean.price);
         m_infoEt.setText(m_ProductBean.intro);
@@ -175,7 +180,7 @@ public class ProductEditActivity extends BaseActivity implements OnClickListener
         	m_ProductBean.price = productPrice;
         	m_ProductBean.intro = productInfo;
         	m_ProductBean.isRecommend = m_recommend;
-        	ProductRequest.getInstance().requestProductAdd(this, this, m_ProductBean);
+        	ProductRequest.getInstance().requestProductModify(this, this, m_ProductBean);
         }
     }
 
@@ -283,12 +288,12 @@ public class ProductEditActivity extends BaseActivity implements OnClickListener
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			switch (bNetWork.getMessageType()) {
-			case 830003:
+			case 830004:
 				if(bNetWork.getReturnCode() ==  ReturnCode.RETURNCODE_OK){
-					BToast.show(mActivity,"产品添加成功");
+					BToast.show(mActivity,"产品修改成功");
 					finish();
 				}else{
-					BToast.show(mActivity,"产品添加成功");
+					BToast.show(mActivity,"产品修改失败");
 				}
 				break;					
 			default:	//因为上传图片 没有设置messageType

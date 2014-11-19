@@ -53,11 +53,9 @@ public class WeiqiangAdapter extends KBaseAdapter
 		{
 			holder = new Holder();
 			convertView = mInflater.inflate(R.layout.weiqiang_item_layout, parent, false);
-			holder.ivAuthorImg = (ImageView) convertView.findViewById(R.id.iv_author);
-			holder.tvAuthorName = (TextView) convertView.findViewById(R.id.tv_weiqiang_author);
-			holder.distanceTv = (TextView) convertView.findViewById(R.id.tv_weiqiang_distance);
-			holder.ivDelete = (ImageView) convertView.findViewById(R.id.iv_delete);
-			holder.tvTime = (TextView) convertView.findViewById(R.id.tv_weiqiang_time);
+			holder.ivAuthorImg = (ImageView) convertView.findViewById(R.id.iv_img);
+			holder.tvAuthorName = (TextView) convertView.findViewById(R.id.tv_nick);
+			holder.tvTime = (TextView) convertView.findViewById(R.id.tv_time);
 			holder.tvComments = (TextView) convertView.findViewById(R.id.tv_comments);
 			holder.gridView = (GridView) convertView.findViewById(R.id.gv_show_img);
 			
@@ -91,15 +89,8 @@ public class WeiqiangAdapter extends KBaseAdapter
 		
 		holder.tvAuthorName.setText(weiqiangBean.name);
 		
-		holder.distanceTv.setText(weiqiangBean.distance);
-		holder.distanceTv.setVisibility(View.GONE);
 		
 		holder.tvTime.setText(ToolUtils.getFormatDate(weiqiangBean.date_time));
-		
-		holder.ivDelete.setOnClickListener(mListener);
-		holder.ivDelete.setTag(weiqiangBean);
-		holder.ivDelete.setVisibility(View.GONE);
-		
 		
 		if(!TextUtils.isEmpty(weiqiangBean.fromname)){	//如果转发人存在
 			holder.llTransArea.setVisibility(View.VISIBLE);
@@ -142,8 +133,6 @@ public class WeiqiangAdapter extends KBaseAdapter
 	{
 		public ImageView ivAuthorImg;
 		public TextView tvAuthorName;
-		public TextView distanceTv;
-		public ImageView ivDelete;
 		public TextView tvTime;
 		public TextView tvComments;
 		

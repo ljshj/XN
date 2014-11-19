@@ -99,6 +99,7 @@ public class ProductAddActivity extends BaseActivity implements OnClickListener,
             {
             	if(TextUtils.isEmpty(img)){
             		BToast.show(mActivity, "添加产品图片后,才能推荐产品");
+            		m_recommendCb.setChecked(false);
             	}else{
             		m_recommend = isChecked?1:0;
             	}

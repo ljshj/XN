@@ -556,7 +556,7 @@ public class ToolUtils {
 				}else{
 					sb.append(fromDate.getMonth()+1).append("月").append(fromDate.getDate()).append("日");
 				}
-				sb.append(" ").append(fromDate.getHours()>12?fromDate.getHours()-12:fromDate.getHours()).append(":").append(fromDate.getMinutes());
+				sb.append(" ").append(fromDate.getHours()>12?fromDate.getHours()-12:fromDate.getHours()).append(":").append(formateTenNum(fromDate.getMinutes()));
 				sb.append(fromDate.getHours()>12 ? "PM":"AM");
 				return sb.toString();
 				

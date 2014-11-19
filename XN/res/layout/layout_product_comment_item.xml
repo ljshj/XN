@@ -1,84 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/common_page_bg"
-    android:orientation="vertical" >
-    
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:background="@drawable/img_search_bg"
-        android:orientation="vertical" >
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="60dp" >
-
-            <ImageView
-                android:id="@+id/product_comment_item_imgv_icon"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/icon_bg" />
-
-            <ImageView
-                android:id="@+id/product_comment_item_imgv_delete"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/img_common_delete" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_toLeftOf="@id/product_comment_item_imgv_delete"
-                android:layout_toRightOf="@id/product_comment_item_imgv_icon"
-                android:gravity="center_vertical"
-                android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/product_comment_item_tv_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="3"
-                    android:gravity="center_vertical"
-                    android:text="笑笑"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
-
-                <TextView
-                    android:id="@+id/product_comment_item_tv_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="2"
-                    android:gravity="center_vertical"
-                    android:text="昨天：14:15PM"
-                    android:textColor="#626262" />
-            </LinearLayout>
-        </RelativeLayout>
-        
-        <TextView 
-            android:id="@+id/product_comment_item_tv_content"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="8dp"
-            android:textSize="16dp"
-            android:gravity="center_vertical"
-            android:text="跋扈热爱和热爱和热爱好热哈人忽然忽然好热啊好热啊好热啊"/>
-
-        </LinearLayout>
-    
-
+    android:layout_height="wrap_content"
+    android:background="@drawable/img_user_center_bg"
+    >
+ 	<include layout="@layout/top_img_name_layout"/>
+                
+    <TextView 
+        android:id="@+id/product_comment_item_tv_content"
+        style="@style/item_content"
+        android:text="我是一个兵啊"
+        />
 </LinearLayout>

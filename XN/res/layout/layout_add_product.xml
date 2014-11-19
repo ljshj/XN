@@ -19,10 +19,10 @@
 
                 <ImageView
                     android:id="@+id/add_product_imgv_photo"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="180dp"
                     android:layout_margin="15dp"
-                    android:src="@drawable/icon_default" />
+                    android:src="@drawable/icon_big_default" />
 
                 <View
                     android:layout_width="fill_parent"

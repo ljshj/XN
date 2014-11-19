@@ -63,8 +63,6 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	public LinearLayout llTransArea;
 	public ImageView ivAuthorImg;
 	public TextView tvAuthorName;
-	public TextView distanceTv;
-	public ImageView ivDelete;
 	public TextView tvTime;
 	public TextView tvOldAuthorName;
 	public TextView tvComments;
@@ -136,11 +134,9 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		listview.setPullRefreshEnable(false);
 	   
 	   	View head_weiqiang_detail = inflater.inflate(R.layout.weiqiang_item_layout, listview, false);
-		ivAuthorImg = (ImageView) head_weiqiang_detail.findViewById(R.id.iv_author);
-		tvAuthorName = (TextView) head_weiqiang_detail.findViewById(R.id.tv_weiqiang_author);
-		distanceTv = (TextView) head_weiqiang_detail.findViewById(R.id.tv_weiqiang_distance);
-		ivDelete = (ImageView) head_weiqiang_detail.findViewById(R.id.iv_delete);
-		tvTime = (TextView) head_weiqiang_detail.findViewById(R.id.tv_weiqiang_time);
+		ivAuthorImg = (ImageView) head_weiqiang_detail.findViewById(R.id.iv_img);
+		tvAuthorName = (TextView) head_weiqiang_detail.findViewById(R.id.tv_nick);
+		tvTime = (TextView) head_weiqiang_detail.findViewById(R.id.tv_time);
 		tvComments = (TextView) head_weiqiang_detail.findViewById(R.id.tv_comments);
 		gridView = (GridView) head_weiqiang_detail.findViewById(R.id.gv_show_img);
 		
@@ -205,10 +201,6 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 				anim.start();
 			}
 		});
-		
-		
-		distanceTv.setText(weiQiangBean.distance);
-		distanceTv.setVisibility(View.GONE);
 		
 		tvTime.setText(ToolUtils.getFormatDate(weiQiangBean.date_time));
 		
@@ -313,16 +305,11 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		if (null == comments) {
 			return;
 		}
-
-		if (0 == comments.size()) {
-			listview.setPullLoadEnable(false);
-			BToast.show(mActivity, "数据加载完毕");
-		}
-
-		if (comments.size() <= PAGE_SIZE_ADD) {
+		if (comments.size() < PAGE_SIZE_ADD) {
 			listview.setPullLoadEnable(false);
 			BToast.show(mActivity, "数据加载完毕");
 		} else {
+			comment_start+=PAGE_SIZE_ADD;
 			listview.setPullLoadEnable(true);
 		}
 

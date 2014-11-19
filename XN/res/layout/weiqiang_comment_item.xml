@@ -3,41 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
-	<LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+	
+    <include layout="@layout/top_img_name_layout"/>
 
-                <ImageView
-                    android:id="@+id/iv_comment_author"
-                   style="@style/item_img"/>
-
-                <LinearLayout
-                    android:id="@+id/layout_comment"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical" >
-
-
-                        <TextView
-                            android:id="@+id/tv_comment_author"
-                            android:text="追求永恒"
-                            style="@style/item_nick" />
-
-	                    <TextView
-	                        android:id="@+id/tv_comment_time"
-	                        android:text="昨天 4:45PM"
-	                        style="@style/item_time"/>
-                </LinearLayout>
-                   
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/tv_comment_content"
-                android:text="内容"
-                style="@style/item_content"/>
+    <TextView
+        android:id="@+id/tv_comment_content"
+        android:text="内容"
+        style="@style/item_content"/>
 
 
 </LinearLayout>

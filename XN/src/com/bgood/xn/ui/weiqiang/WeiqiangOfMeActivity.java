@@ -78,10 +78,6 @@ public class WeiqiangOfMeActivity extends BaseActivity implements OnItemClickLis
 	public void onClick(View v) {
 		WeiQiangBean wqb = null;
 		switch (v.getId()) {
-		case R.id.iv_delete:	//删除
-			wqb = (WeiQiangBean) v.getTag();
-			BToast.show(mActivity, "删除"+wqb.weiboid);
-			break;
 		case R.id.tv_zan_count:	//赞
 			wqb = (WeiQiangBean) v.getTag();
 			mActionWeiqiang = wqb;
@@ -185,7 +181,7 @@ public class WeiqiangOfMeActivity extends BaseActivity implements OnItemClickLis
 			start_size = 0;
 		} 
 			
-		if (weiqiangs.size() <= PAGE_SIZE_ADD) {
+		if (weiqiangs.size() < PAGE_SIZE_ADD) {
 			m_weiqiang_listview.setPullLoadEnable(false);
 				BToast.show(mActivity, "数据加载完毕");
 			} else {

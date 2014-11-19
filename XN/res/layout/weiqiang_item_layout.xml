@@ -6,59 +6,7 @@
     android:background="@drawable/img_user_center_bg"
     android:orientation="vertical" >
     
-               <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
-                <ImageView
-                    android:id="@+id/iv_author"
-                    style="@style/item_img"/>
-
-                <LinearLayout
-                    android:id="@+id/layout_comment"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical" >
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:id="@+id/tv_weiqiang_author"
-                            android:text="追求永恒"
-                           style="@style/item_nick"/>
-
-
-                            <TextView
-                                android:id="@+id/tv_weiqiang_distance"
-                                android:drawableLeft="@drawable/img_weiqiang_distance_indicator"
-                                style="@style/item_time"
-                                android:text="500m"
-                                />
-                        
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tv_weiqiang_time"
-                        style="@style/item_time"
-                        android:text="昨天 4:45PM"
-                        />
-                </LinearLayout>
-                   <ImageView 
-                            android:id="@+id/iv_delete"
-                            android:layout_width="50dp"
-                            android:layout_gravity="top|right"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/img_common_delete"
-                            android:visibility="gone"
-                            />
-            </LinearLayout>
+                <include layout="@layout/top_img_name_layout"/>
             
                <TextView
 		                android:id="@+id/tv_comments"

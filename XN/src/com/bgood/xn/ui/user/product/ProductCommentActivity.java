@@ -16,6 +16,7 @@ import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
+import com.bgood.xn.network.request.ProductRequest;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.view.BToast;
@@ -30,10 +31,10 @@ import com.bgood.xn.widget.TitleBar;
 public class ProductCommentActivity extends BaseActivity implements TaskListenerWithState
 {
     private EditText m_contentEt = null;  // 内容
-    private EditText m_commact;//联系方式
     private TextView m_wordcountTv = null;  // 字数显示
     private String mContent;
     private String mCommact;
+    private String product_id;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -41,6 +42,7 @@ public class ProductCommentActivity extends BaseActivity implements TaskListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_layout_product_comment);
         (new TitleBar(mActivity)).initTitleBar("新评论");
+        product_id = getIntent().getStringExtra(ProductCommentShowActivity.KEY_PRODUCT_ID);
         findView();
     }
 	/**
@@ -48,9 +50,8 @@ public class ProductCommentActivity extends BaseActivity implements TaskListener
 	 */
     private void findView()
     {
-    	m_contentEt = (EditText) findViewById(R.id.feedback_edit_content);
-    	m_commact = (EditText) findViewById(R.id.feedback_edit_commact);
-        m_wordcountTv = (TextView) findViewById(R.id.feedback_tv_wordcount);
+    	m_contentEt = (EditText) findViewById(R.id.comment_edit_content);
+        m_wordcountTv = (TextView) findViewById(R.id.comment_tv_wordcount);
         
         m_contentEt.addTextChangedListener(new TextWatcher()
         {
@@ -69,7 +70,7 @@ public class ProductCommentActivity extends BaseActivity implements TaskListener
         });
         
         // 确定按钮
-        findViewById(R.id.feedback_btn_done).setOnClickListener(new OnClickListener()
+        findViewById(R.id.comment_btn_done).setOnClickListener(new OnClickListener()
         {
             
             @Override
@@ -84,15 +85,11 @@ public class ProductCommentActivity extends BaseActivity implements TaskListener
     
     private void checkContent() {
     	mContent = m_contentEt.getText().toString().trim();
-    	mCommact = m_commact.getText().toString().trim();
-    	if(TextUtils.isEmpty(mCommact)){
-    		 BToast.show(mActivity, "请输入您的反馈意见!");
+    	if(TextUtils.isEmpty(mContent)){
+    		 BToast.show(mActivity, "请输入您的评论!");
              return;
-    	}else if(TextUtils.isEmpty(mContent)){
-    		BToast.show(mActivity, "请输入您的联系方式!");
-    		return;
     	}
-    	UserCenterRequest.getInstance().requestFeedbackInsert(this, this, mContent, mCommact);
+    	ProductRequest.getInstance().requestProductComment(this, this, product_id, mContent);
 	}
    
 	@Override

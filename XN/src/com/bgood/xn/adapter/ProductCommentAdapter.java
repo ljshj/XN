@@ -35,10 +35,9 @@ public class ProductCommentAdapter extends KBaseAdapter
         {
             holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.layout_product_comment_item, null);
-            holder.iconImgV = (ImageView) convertView.findViewById(R.id.product_comment_item_imgv_icon);
-            holder.nameTv = (TextView) convertView.findViewById(R.id.product_comment_item_tv_name);
-            holder.timeTv = (TextView) convertView.findViewById(R.id.product_comment_item_tv_time);
-            holder.deleteImgV = (ImageView) convertView.findViewById(R.id.product_comment_item_imgv_delete);
+            holder.iconImgV = (ImageView) convertView.findViewById(R.id.iv_img);
+            holder.nameTv = (TextView) convertView.findViewById(R.id.tv_nick);
+            holder.timeTv = (TextView) convertView.findViewById(R.id.tv_time);
             holder.contentTv = (TextView) convertView.findViewById(R.id.product_comment_item_tv_content);
             convertView.setTag(holder);
         }
@@ -48,7 +47,6 @@ public class ProductCommentAdapter extends KBaseAdapter
         }
         
         final ProductCommentBean pcb = (ProductCommentBean) mList.get(position);
-        
         
         mImageLoader.displayImage(pcb.photo,holder.iconImgV, options, new SimpleImageLoadingListener() {
 			@Override
@@ -62,7 +60,6 @@ public class ProductCommentAdapter extends KBaseAdapter
         holder.nameTv.setText(pcb.name);
         holder.timeTv.setText(ToolUtils.getFormatDate(pcb.commenttime));
         holder.contentTv.setText(pcb.content);
-        
         return convertView;
     }
 
@@ -71,7 +68,6 @@ public class ProductCommentAdapter extends KBaseAdapter
         ImageView iconImgV;           // 头像
         TextView nameTv;              // 名字
         TextView timeTv;              // 发表时间
-        ImageView deleteImgV;         // 删除
         TextView contentTv;           // 评论数
     }
 }
