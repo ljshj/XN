@@ -107,4 +107,50 @@ public class PreferenceUtil {
 	public String getProductCommentRefreshTime(){
 		return sp.getString("productCommentRefreshTime", "");
 	}
+	
+	/**清除搜索历史记录**/
+	public void clearSearchHistory(int type) {
+		editor.putString(type == 1?"search_i_can":"search_i_think", null);
+		editor.commit();
+	}
+	
+	/**保存查询记录*/
+	public void saveSearchHistory(int type,String searchText) {
+		String localHistory = getSearchHistory(type);
+		StringBuilder sb = new StringBuilder();
+		
+		if(null!=localHistory){
+			// 只保留最近的10条的记录
+			String[] hisArrays = localHistory.split(",");
+			String[] newArrays = null;
+			if (hisArrays.length > 10)
+			{
+				newArrays = new String[10];
+				System.arraycopy(hisArrays, 0, newArrays, 0, 10);
+			} else
+			{
+				newArrays = hisArrays;
+			}
+			for(String s:newArrays){
+				sb.append(s).append(",");
+			}
+			
+			if(!localHistory.contains(searchText+",")){
+				sb.insert(0, searchText + ",");
+				editor.putString(type == 1?"search_i_can":"search_i_think", sb.toString());
+				editor.commit();
+			}
+		}else{
+			sb.insert(0, searchText + ",");
+			editor.putString(type == 1?"search_i_can":"search_i_think", sb.toString());
+			editor.commit();
+		}
+	}
+	
+	/**获取我想与我能**/
+	public String getSearchHistory(int type) {
+		return sp.getString(type == 1?"search_i_can":"search_i_think", "");
+	}
+	
+	
 }

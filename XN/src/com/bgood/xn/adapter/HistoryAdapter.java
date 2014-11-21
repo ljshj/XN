@@ -1,38 +1,31 @@
 package com.bgood.xn.adapter;
 
-import android.content.Context;
-import android.view.LayoutInflater;
+import java.util.List;
+
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
 
 /**
- * @author ChenGuoqing 2014-7-18下午4:46:59
+ * 
+ * @todo:搜索历史适配类
+ * @date:2014-11-21 下午2:15:28
+ * @author:hg_liuzl@163.com
  */
-public class HistoryAdapter extends BaseAdapter
+public class HistoryAdapter extends KBaseAdapter
 {
 
-	private Context context;
-	private String[] strings;
-	private LayoutInflater inflater;
 
-	/**
-	 * @param context
-	 * @param list
-	 */
-	public HistoryAdapter(Context context, String[] strings)
-	{
-		this.context = context;
-		this.strings = strings;
-		inflater = LayoutInflater.from(context);
+	public HistoryAdapter(List<?> mList, Activity mActivity) {
+		super(mList, mActivity);
 	}
 
 	public void clear()
 	{
-		this.strings = null;
+		this.mList.clear();
 	};
 
 	@Override
@@ -42,39 +35,21 @@ public class HistoryAdapter extends BaseAdapter
 		if (convertView == null)
 		{
 			holder = new Holder();
-			convertView = inflater.inflate(R.layout.item_history, parent, false);
+			convertView = mInflater.inflate(R.layout.item_history, parent, false);
 			holder.text = (TextView) convertView.findViewById(R.id.text);
 			convertView.setTag(holder);
 		} else
 		{
 			holder = (Holder) convertView.getTag();
 		}
-		holder.text.setText(strings[position]);
+		
+		final String searchText = (String) mList.get(position);
+		holder.text.setText(searchText);
 		return convertView;
 	}
 
 	class Holder
 	{
 		public TextView text;
-	}
-
-	@Override
-	public int getCount()
-	{
-		if (strings == null)
-			return 0;
-		return strings.length;
-	}
-
-	@Override
-	public String getItem(int position)
-	{
-		return strings[position];
-	}
-
-	@Override
-	public long getItemId(int position)
-	{
-		return position;
 	}
 }

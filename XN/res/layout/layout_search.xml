@@ -2,100 +2,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/common_page_bg"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <LinearLayout 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:orientation="horizontal" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_toLeftOf="@+id/search_btn_search"
-                android:background="@drawable/img_search_bg" >
-
-                <LinearLayout
-                    android:id="@+id/ll_home_search_check_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:id="@+id/home_tv_check_search_indecator"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="我想"
-                        android:textColor="@color/text_color_normal"
-                        android:textSize="15sp" />
-
-                    <View
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/img_home_seach_check_type_hint" />
-
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/img_search_y_line" />
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/search_tv_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/transparent"
-                    android:gravity="center_vertical"
-                    android:hint="动词+名词;例如: &apos;&apos;打篮球&apos;&apos;"
-                    android:paddingLeft="5dp"
-                    android:textSize="15dp" />
-            </LinearLayout>
-
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+           <EditText
+              android:id="@+id/search_tv_content"
+              android:layout_width="0dp"
+              android:layout_weight="1"
+              android:layout_height="match_parent"
+              android:background="@drawable/img_search_bg"
+              android:hint="动词+名词;例如: &apos;&apos;打篮球&apos;&apos;"
+              android:paddingLeft="5dp"
+			  android:imeOptions="actionSearch"     
+              android:singleLine="true"
+              android:textSize="15sp" />
+           
             <Button
-                android:id="@+id/search_btn_search"
+                android:id="@+id/btn_cancel"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
+                android:layout_height="match_parent"
                 android:background="@null"
-                android:text="搜索"
-                android:textColor="#000000"
-                android:textSize="18dp" />
-        </RelativeLayout>
+                android:layout_marginLeft="8dp"
+                android:text="取消"
+                android:textSize="18sp" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@drawable/img_search_x_line" />
-
-    <RelativeLayout
-        android:id="@+id/search_rl_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
 
         <ListView
             android:id="@+id/search_lv_list"
             style="@style/common_listview"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@drawable/img_common_h_divider"
             android:dividerHeight="1px" />
-    </RelativeLayout>
 
 </LinearLayout>

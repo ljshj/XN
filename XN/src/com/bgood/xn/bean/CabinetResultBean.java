@@ -10,24 +10,4 @@ public class CabinetResultBean {
 	public String img;   // 橱窗图片
 	public String img_thum;   // 橱窗图片
 	public String price;     // 橱窗价格
-	
-	
-	
-	public CabinetResultBean() {
-		super();
-	}
-
-
-
-	public CabinetResultBean(String productid, String title, String img,
-			String img_thum, String price) {
-		super();
-		this.productid = productid;
-		this.title = title;
-		this.img = img;
-		this.img_thum = img_thum;
-		this.price = price;
-	}
-	
-	
 }

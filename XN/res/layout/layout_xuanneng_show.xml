@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    
+    <RadioGroup
+            android:id="@+id/main_tab_group"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/img_menu_bottom_title_bar"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/main_tab_rank"
+                android:drawableTop="@drawable/bg_checkbox_icon_menu_home"
+                android:text="首页"
+                android:checked="true"
+                style="@style/home_tab_button"/>
+
+            <RadioButton
+                android:id="@+id/main_tab_communication"
+                style="@style/home_tab_button"
+                android:drawableTop="@drawable/bg_checkbox_icon_menu_communication"
+                android:text="联系"/>
+
+            <RadioButton
+                android:id="@+id/main_tab_weiqiang"
+                style="@style/home_tab_button"
+                android:drawableTop="@drawable/bg_checkbox_icon_menu_weiqiang"
+                android:text="微墙"/>
+
+            <RadioButton
+                android:id="@+id/main_tab_xuanneng"
+                style="@style/home_tab_button"
+                android:drawableTop="@drawable/bg_checkbox_icon_menu_xuanneng"
+                android:text="炫能"/>
+
+            <RadioButton
+                android:id="@+id/main_tab_me"
+                style="@style/home_tab_button"
+                android:drawableTop="@drawable/bg_checkbox_icon_menu_me"
+                android:text="我"/>
+        </RadioGroup>
+    
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <FrameLayout
+        android:id="@+id/realtabcontent"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="gone" >
+    </FrameLayout>
+
+    <android.support.v4.app.FragmentTabHost
+        android:id="@android:id/tabhost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" >
+
+        <FrameLayout
+            android:id="@android:id/tabcontent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0" />
+    </android.support.v4.app.FragmentTabHost>
+
+</LinearLayout>

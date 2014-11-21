@@ -1,6 +1,4 @@
-package com.bgood.xn.ui.weiqiang;
-
-
+package com.bgood.xn.ui.xuanneng;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,22 +30,21 @@ import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.FileRequest;
-import com.bgood.xn.network.request.WeiqiangRequest;
+import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.system.Const;
 import com.bgood.xn.ui.BaseActivity;
-import com.bgood.xn.utils.WindowUtil;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.LoadingProgress;
 import com.bgood.xn.view.dialog.BottomDialog;
 import com.bgood.xn.widget.TitleBar;
 
 /**
- * @todo:发布微墙
+ * @todo:有奖投稿
  * @date:2014-11-10 下午4:08:55
  * @author:hg_liuzl@163.com
  */
-public class WeiqiangPublishActivity extends BaseActivity implements OnItemClickListener,TaskListenerWithState,OnClickListener
+public class XuannengPublishActivity extends BaseActivity implements OnItemClickListener,TaskListenerWithState,OnClickListener
 {
 	/** 从相册选择照片 **/
 	private static final int FLAG_CHOOSE_FROM_IMGS = 100;
@@ -83,7 +80,7 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_weiqiang_publish);
-		(new TitleBar(mActivity)).initTitleBar("发微墙");
+		(new TitleBar(mActivity)).initTitleBar("有奖投稿");
 		files.add(null);
 		initViews();
 	}
@@ -119,10 +116,10 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 		m_content = comment_content.getText().toString().trim();
 		if (TextUtils.isEmpty(m_content))
 		{
-			BToast.show(mActivity, "请输入微墙内容!");
+			BToast.show(mActivity, "请输入投稿内容!");
 			return;
 		}else{
-			WeiqiangRequest.getInstance().requestWeiqiangSend(this, mActivity, m_content, imgs, smallImgs, "", String.valueOf(m_longitude), String.valueOf(m_latitude));
+			XuannengRequest.getInstance().requestXuanPublish(this, mActivity, m_content, imgs, smallImgs);
 		}
 	}
 	
@@ -228,13 +225,13 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			switch (bNetWork.getMessageType()) {
-			case 860003:
+			case 870003:
 				LoadingProgress.getInstance().dismiss();
 				if(bNetWork.getReturnCode() ==  ReturnCode.RETURNCODE_OK){
-					BToast.show(mActivity,"微墙发送成功");
+					BToast.show(mActivity,"投稿成功");
 					finish();
 				}else{
-					BToast.show(mActivity,"微墙发送失败");
+					BToast.show(mActivity,"投稿失败");
 				}
 				break;					
 			default:	//因为上传图片 没有设置messageType
@@ -266,12 +263,12 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 				m_content = comment_content.getText().toString().trim();
 				if (TextUtils.isEmpty(m_content))
 				{
-					BToast.show(mActivity, "请输入微墙内容!");
+					BToast.show(mActivity, "请输入投稿内容!");
 					return;
 				}
 				imgs = new String[files.size()];
 				smallImgs = new String[files.size()];
-				LoadingProgress.getInstance().show(mActivity, "正在发送微墙");
+				LoadingProgress.getInstance().show(mActivity, "正在投稿");
 				FileRequest.getInstance().requestUpLoadFile(this,mActivity,false,files.get(uploadCount), String.valueOf(BGApp.mLoginBean.userid), "webo", "jpg");
 			}else{
 				checkInfo();

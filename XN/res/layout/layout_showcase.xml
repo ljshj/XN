@@ -81,8 +81,8 @@
                                 android:layout_marginLeft="5dp"
                                 android:background="@null"
                            			android:imeOptions="actionSearch"     
-                                android:hint="请输入您要搜索的产品"
                                 android:singleLine="true"
+                                android:hint="请输入您要搜索的产品"
                                 android:textSize="14sp" >
 
                                 <requestFocus />
