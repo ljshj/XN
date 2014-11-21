@@ -43,11 +43,14 @@ import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.ui.BaseFragment;
+import com.bgood.xn.utils.ShareUtils;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.dialog.BGDialog;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
+import com.umeng.socialize.sso.SinaSsoHandler;
+import com.umeng.socialize.sso.UMSsoHandler;
 
 /**
  * 我的微墙主页
@@ -100,9 +103,11 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
     private WeiqiangActionType type;
     
 	private int mSelectPosition = -1;	//选中的微墙
+	private ShareUtils share = null;
     
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+		share = new ShareUtils(mActivity);
 		layout = inflater.inflate(R.layout.weiqiang_layout_main, container, false);
 		initViews();
 		setListeners();
@@ -303,6 +308,7 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 			break;
 		case R.id.tv_share_count:	//分享
 			wqb = (WeiQiangBean) v.getTag();
+			share.doShare();
 			break;
 		}
 	}
@@ -620,5 +626,4 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 				m_followFriendsXLv.stopLoadMore();
 			}
 		}
-	
 }

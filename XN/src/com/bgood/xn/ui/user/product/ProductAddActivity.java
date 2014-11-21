@@ -141,7 +141,7 @@ public class ProductAddActivity extends BaseActivity implements OnClickListener,
         	m_ProductBean.product_name = productName;
         	m_ProductBean.price = productPrice;
         	m_ProductBean.intro = productInfo;
-        	m_ProductBean.isRecommend = m_recommend;
+        	m_ProductBean.brecom = m_recommend;
         	ProductRequest.getInstance().requestProductAdd(this, this, m_ProductBean);
         }
     }

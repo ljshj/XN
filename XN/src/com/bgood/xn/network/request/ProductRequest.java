@@ -58,7 +58,7 @@ public class ProductRequest extends BaseNetWork {
 				body.put("pname", bean.product_name);
 				body.put("price", bean.price);
 				body.put("intro", bean.intro);
-				body.put("brecom", bean.isRecommend);
+				body.put("brecom", bean.brecom);
 				body.put("img", bean.img);
 				body.put("img_thum", bean.img_thum);
 			} catch (JSONException e) {
@@ -77,7 +77,7 @@ public class ProductRequest extends BaseNetWork {
 			body.put("pname", bean.product_name);
 			body.put("price", bean.price);
 			body.put("intro", bean.intro);
-			body.put("brecom", bean.isRecommend);
+			body.put("brecom", bean.brecom);
 			body.put("img", bean.img);
 			body.put("img_thum", bean.img_thum);
 		} catch (JSONException e) {

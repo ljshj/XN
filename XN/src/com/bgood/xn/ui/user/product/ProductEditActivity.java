@@ -112,7 +112,7 @@ public class ProductEditActivity extends BaseActivity implements OnClickListener
     {
     	img = m_ProductBean.img;
     	img_thumb = m_ProductBean.img_thum;
-    	m_recommend = m_ProductBean.isRecommend;
+    	m_recommend = m_ProductBean.brecom;
     	
     	
         ImageLoader mImageLoader;
@@ -173,13 +173,12 @@ public class ProductEditActivity extends BaseActivity implements OnClickListener
             BToast.show(mActivity, "请输入产品名称");
             return;
         }else{
-        	m_ProductBean = new ProductBean();
         	m_ProductBean.img = img;
         	m_ProductBean.img_thum = img_thumb;
         	m_ProductBean.product_name = productName;
         	m_ProductBean.price = productPrice;
         	m_ProductBean.intro = productInfo;
-        	m_ProductBean.isRecommend = m_recommend;
+        	m_ProductBean.brecom = m_recommend;
         	ProductRequest.getInstance().requestProductModify(this, this, m_ProductBean);
         }
     }
