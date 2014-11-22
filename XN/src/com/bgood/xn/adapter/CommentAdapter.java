@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
-import com.bgood.xn.bean.WeiqiangCommentBean;
+import com.bgood.xn.bean.CommentBean;
 import com.bgood.xn.utils.ToolUtils;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
@@ -21,9 +21,9 @@ import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
  * @author:hg_liuzl@163.com
  */
 
-public class WeiqiangCommentAdapter extends KBaseAdapter
+public class CommentAdapter extends KBaseAdapter
 {
-	public WeiqiangCommentAdapter(List<?> mList, Activity mActivity) {
+	public CommentAdapter(List<?> mList, Activity mActivity) {
 		super(mList, mActivity);
 	}
 
@@ -45,7 +45,7 @@ public class WeiqiangCommentAdapter extends KBaseAdapter
             holder = (Holder) convertView.getTag();
         }
         
-       final WeiqiangCommentBean wComment = (WeiqiangCommentBean) mList.get(position);
+       final CommentBean wComment = (CommentBean) mList.get(position);
         
         mImageLoader.displayImage(wComment.photo,holder.ivComment, options, new SimpleImageLoadingListener() {
 			@Override

@@ -33,7 +33,7 @@ public class XuannengRequest extends BaseNetWork {
 		 * @params:@param context
 		 * @params:@param phone
 		 */
-		 public void requestJokeList(TaskListenerWithState mHttpTaskListener,Context context,String itemid,String type,String start,String end){
+		 public void requestJokeList(TaskListenerWithState mHttpTaskListener,Context context,int itemid,int type,int start,int end){
 		 	setMessageType(70001);
 			JSONObject body = new JSONObject();
 			try {
@@ -57,7 +57,7 @@ public class XuannengRequest extends BaseNetWork {
 		 * @params:@param context
 		 * @params:@param phone
 		 */
-		 public void requestXuanRank(TaskListenerWithState mHttpTaskListener,Context context,String itemid,String rank_type,String start,String end){
+		 public void requestXuanRank(TaskListenerWithState mHttpTaskListener,Context context,int itemid,int rank_type,int start,int end){
 		 	setMessageType(70002);
 			JSONObject body = new JSONObject();
 			try {
@@ -113,11 +113,12 @@ public class XuannengRequest extends BaseNetWork {
 		 * @params:@param context
 		 * @params:@param phone
 		 */
-		 public void requestXuanTransport(TaskListenerWithState mHttpTaskListener,Context context,String itemid){
+		 public void requestXuanTransport(TaskListenerWithState mHttpTaskListener,Context context,String itemid,String comment){
 		 	setMessageType(70004);
 			JSONObject body = new JSONObject();
 			try {
 				body.put("xnid", itemid);
+				body.put("comment", comment);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}

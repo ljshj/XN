@@ -1,5 +1,6 @@
 package com.bgood.xn.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,19 @@ import java.util.List;
  * @date:2014-11-21 下午6:28:55
  * @author:hg_liuzl@163.com
  */
-public class JokeBean {
+public class JokeBean implements Serializable {
+	
+	/****0:随机;1:顺序*/
+	public static final int JOKE_RADOM = 0;
+	public static final int JOKE_ORDER = 1;
+	
+	/**
+	 * @todo:TODO
+	 * @date:2014-11-22 下午2:58:10
+	 * @author:hg_liuzl@163.com
+	 */
+	private static final long serialVersionUID = 1L;
+	public String rank_index;
 	public String jokeid;
 	public String userid;
 	public String username;
@@ -25,27 +38,10 @@ public class JokeBean {
 	public List<ImageBean> imgs;
 	public String Comments;
 	
-	/**操作微墙
+	/**操作
 	 * 转发，还是评论
 	 * */
-	public enum WeiqiangActionType{		
+	public enum JokeActionType{		
 		RESPONSE,TRANSPOND
 	}
-	
-	
-//	 <jokeid/>
-//     <userid/>
-// <username/>
-// <photo/>
-// <distance/>
-// <date_time/>
-// <content/>
-// <imgs>
-//    <img>product_img.jpg</img>//大图<img_thum>product_img_thum.jpg</img_thum>//缩略图
-// </imgs>
-//<like_count/>
-//<comment_count/>
-//<forward_count/>
-//<share_count/>
-	
 }

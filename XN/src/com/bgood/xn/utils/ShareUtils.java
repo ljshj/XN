@@ -36,8 +36,8 @@ public class ShareUtils {
 	public static final String SINAWB_APP_KEY = "2584417705";
 	public static final String SIANWB_APP_SECRET = "0ee4dc674882d8d3a53596dddba7a15b";
 	
-	public static final String WX_APP_ID = "wx15a1087ed6bf4bb3";
-	public static final String WX_APP_SECRET = "a8827fd035dcc0e20cd37f3e36cacc80";
+	public static final String WX_APP_ID = "wx8fd7339391e0d06a";
+	public static final String WX_APP_SECRET = "a6cfc6406d9c31305c882f77b8aead65";
 	
 	public static final String QQ_APP_ID = "1103507475";
 	public static final String QQ_APP_KEY = "uQrjhyh93ifnPE0W";

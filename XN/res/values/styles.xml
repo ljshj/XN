@@ -111,7 +111,20 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:button">@null</item>
+        <item name="android:textColor">@color/color_home_radiobutton_text</item>
         <item name="android:layout_weight">1.0</item>
+    </style>
+    
+    
+    <style name="xuanneng_tab_text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/bg_home_radiobutton_bg</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:button">@null</item>
+        <item name="android:textColor">@color/color_home_radiobutton_text</item>
     </style>
 
     <style name="common_listview">

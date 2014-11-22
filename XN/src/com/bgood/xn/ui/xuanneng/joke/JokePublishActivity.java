@@ -1,4 +1,4 @@
-package com.bgood.xn.ui.xuanneng;
+package com.bgood.xn.ui.xuanneng.joke;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,7 @@ import com.bgood.xn.widget.TitleBar;
  * @date:2014-11-10 下午4:08:55
  * @author:hg_liuzl@163.com
  */
-public class XuannengPublishActivity extends BaseActivity implements OnItemClickListener,TaskListenerWithState,OnClickListener
+public class JokePublishActivity extends BaseActivity implements OnItemClickListener,TaskListenerWithState,OnClickListener
 {
 	/** 从相册选择照片 **/
 	private static final int FLAG_CHOOSE_FROM_IMGS = 100;

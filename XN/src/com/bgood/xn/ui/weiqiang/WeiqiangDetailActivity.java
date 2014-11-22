@@ -6,10 +6,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -23,13 +21,13 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
+import com.bgood.xn.adapter.CommentAdapter;
 import com.bgood.xn.adapter.ImageAdapter;
-import com.bgood.xn.adapter.WeiqiangCommentAdapter;
+import com.bgood.xn.bean.CommentBean;
 import com.bgood.xn.bean.ImageBean;
 import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.bean.WeiQiangBean.WeiqiangActionType;
-import com.bgood.xn.bean.WeiqiangCommentBean;
-import com.bgood.xn.bean.response.WeiqiangDetailResponse;
+import com.bgood.xn.bean.response.CommentResponse;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
@@ -73,8 +71,8 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	public TextView tvTranspontCount;
 	public TextView tvShareCount;
 	
-	private WeiqiangCommentAdapter weiQiangCommentAdapter;
-	private List<WeiqiangCommentBean> weiqiangComments = new ArrayList<WeiqiangCommentBean>();
+	private CommentAdapter weiQiangCommentAdapter;
+	private List<CommentBean> weiqiangComments = new ArrayList<CommentBean>();
 	private WeiQiangBean mWeiQiangBean;
 	private String mRefreshDetailWeiqiangTime;
 	
@@ -161,7 +159,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		tvShareCount.setOnClickListener(this);
 		
 		listview.addHeaderView(head_weiqiang_detail);
-		weiQiangCommentAdapter = new WeiqiangCommentAdapter(weiqiangComments,this);
+		weiQiangCommentAdapter = new CommentAdapter(weiqiangComments,this);
 		listview.setAdapter(weiQiangCommentAdapter);
 	}
 	
@@ -288,8 +286,8 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				switch (bNetWork.getMessageType()) {
 				case 860002:
-					WeiqiangDetailResponse response = JSON.parseObject(strJson, WeiqiangDetailResponse.class);
-					List<WeiqiangCommentBean> comments = response.comments;
+					CommentResponse response = JSON.parseObject(strJson, CommentResponse.class);
+					List<CommentBean> comments = response.comments;
 					setWeiqiangCommentData(comments);
 					break;
 
@@ -301,7 +299,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		}
 	}
 	
-	private void setWeiqiangCommentData(List<WeiqiangCommentBean> comments) {
+	private void setWeiqiangCommentData(List<CommentBean> comments) {
 		if (null == comments) {
 			return;
 		}
@@ -353,7 +351,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 							WeiqiangRequest.getInstance().requestWeiqiangTranspond(WeiqiangDetailActivity.this, mActivity, mWeiQiangBean.weiboid,mContent);
 					}else{
 						
-						WeiqiangCommentBean wcb = new WeiqiangCommentBean();
+						CommentBean wcb = new CommentBean();
 						wcb.userid = String.valueOf(BGApp.mLoginBean.userid);
 						wcb.name = BGApp.mUserBean.nickn;
 						wcb.photo = BGApp.mUserBean.photo;

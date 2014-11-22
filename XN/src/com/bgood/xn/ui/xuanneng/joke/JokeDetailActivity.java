@@ -1,4 +1,4 @@
-package com.bgood.xn.ui.xuanneng;
+package com.bgood.xn.ui.xuanneng.joke;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,10 +6,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -23,20 +21,20 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
+import com.bgood.xn.adapter.CommentAdapter;
 import com.bgood.xn.adapter.ImageAdapter;
-import com.bgood.xn.adapter.WeiqiangCommentAdapter;
+import com.bgood.xn.bean.CommentBean;
 import com.bgood.xn.bean.ImageBean;
-import com.bgood.xn.bean.WeiQiangBean;
-import com.bgood.xn.bean.WeiQiangBean.WeiqiangActionType;
-import com.bgood.xn.bean.WeiqiangCommentBean;
-import com.bgood.xn.bean.response.WeiqiangDetailResponse;
+import com.bgood.xn.bean.JokeBean;
+import com.bgood.xn.bean.JokeBean.JokeActionType;
+import com.bgood.xn.bean.response.CommentResponse;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
-import com.bgood.xn.network.request.WeiqiangRequest;
+import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.utils.ToolUtils;
@@ -55,10 +53,10 @@ import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
  * @date:2014-11-21 下午5:30:37
  * @author:hg_liuzl@163.com
  */
-public class XuannengDetailActivity extends BaseActivity implements OnClickListener,TaskListenerWithState
+public class JokeDetailActivity extends BaseActivity implements OnClickListener,TaskListenerWithState
 {
 	/**炫能详情类的key*/
-	public static final String BEAN_WEIQIANG_KEY = "bean_weiqiang_key";
+	public static final String BEAN_JOKE_KEY = "bean_joke_key";
 	private XListView listview;
 	
 	public LinearLayout llTransArea;
@@ -74,14 +72,14 @@ public class XuannengDetailActivity extends BaseActivity implements OnClickListe
 	public TextView tvTranspontCount;
 	public TextView tvShareCount;
 	
-	private WeiqiangCommentAdapter weiQiangCommentAdapter;
-	private List<WeiqiangCommentBean> weiqiangComments = new ArrayList<WeiqiangCommentBean>();
-	private WeiQiangBean mWeiQiangBean;
-	private String mRefreshDetailWeiqiangTime;
+	private CommentAdapter commentAdapter;
+	private List<CommentBean> comments = new ArrayList<CommentBean>();
+	private JokeBean mJokeBean;
+	private String mRefreshJokeTime;
 	
 	private int comment_start = 0;
 	private String mContent;
-	private WeiqiangActionType type;
+	private JokeActionType type;
 	private TitleBar titleBar;
 
 
@@ -91,12 +89,14 @@ public class XuannengDetailActivity extends BaseActivity implements OnClickListe
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_weiqiang_detail);
-		mWeiQiangBean = (WeiQiangBean) getIntent().getSerializableExtra(BEAN_WEIQIANG_KEY);
+		mJokeBean = (JokeBean) getIntent().getSerializableExtra(BEAN_JOKE_KEY);
 		titleBar = new TitleBar(mActivity);
 		titleBar.initTitleBar("炫能详情");
 		findView();
-		setData(mWeiQiangBean);
-		WeiqiangRequest.getInstance().requestWeiqiangContent(this, this, mWeiQiangBean.weiboid, String.valueOf(comment_start), String.valueOf(comment_start+PAGE_SIZE_ADD));
+		setData(mJokeBean);
+		
+		
+		XuannengRequest.getInstance().requestJokeContent(this, this, mJokeBean.jokeid, String.valueOf(comment_start), String.valueOf(comment_start+PAGE_SIZE_ADD));
 //		titleBar.backBtn.setOnClickListener(new OnClickListener() {
 //			
 //			@Override
@@ -119,7 +119,7 @@ public class XuannengDetailActivity extends BaseActivity implements OnClickListe
 //	/**返回列表页*/
 //	private void backIndex() {
 //		Intent intent = new Intent();
-//		intent.putExtra(BEAN_WEIQIANG_KEY, mWeiQiangBean);
+//		intent.putExtra(BEAN_WEIQIANG_KEY, mJokeBean);
 //		setResult(RESULT_OK, intent);
 //		finish();
 //	}
@@ -162,26 +162,26 @@ public class XuannengDetailActivity extends BaseActivity implements OnClickListe
 		tvShareCount.setOnClickListener(this);
 		
 		listview.addHeaderView(head_weiqiang_detail);
-		weiQiangCommentAdapter = new WeiqiangCommentAdapter(weiqiangComments,this);
-		listview.setAdapter(weiQiangCommentAdapter);
+		commentAdapter = new CommentAdapter(comments,this);
+		listview.setAdapter(commentAdapter);
 	}
 	
 	
 	@Override
 	public void onResume() {
 		super.onResume();
-		mRefreshDetailWeiqiangTime = pUitl.getWeiqiangDetailRefreshTime();
-		listview.setRefreshTime(mRefreshDetailWeiqiangTime);
+		mRefreshJokeTime = pUitl.getJokeDetailRefreshTime();
+		listview.setRefreshTime(mRefreshJokeTime);
 		
 	}
 	
 	@Override
 	public void onPause() {
 		super.onPause();
-		pUitl.setWeiqiangDetailRefreshTime(mRefreshDetailWeiqiangTime);
+		pUitl.setJokeDetailRefreshTime(mRefreshJokeTime);
 	}
 	
-	private void setData(WeiQiangBean weiQiangBean)
+	private void setData(JokeBean jBean)
 	{
 		ImageLoader mImageLoader;
 		DisplayImageOptions options;
@@ -194,7 +194,7 @@ public class XuannengDetailActivity extends BaseActivity implements OnClickListe
 		mImageLoader = ImageLoader.getInstance();
 		mImageLoader.init(ImageLoaderConfiguration.createDefault(mActivity));
 		
-        mImageLoader.displayImage(weiQiangBean.photo,ivAuthorImg, options, new SimpleImageLoadingListener() {
+        mImageLoader.displayImage(jBean.photo,ivAuthorImg, options, new SimpleImageLoadingListener() {
 			@Override
 			public void onLoadingComplete() {
 				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
@@ -203,31 +203,31 @@ public class XuannengDetailActivity extends BaseActivity implements OnClickListe
 			}
 		});
 		
-		tvTime.setText(ToolUtils.getFormatDate(weiQiangBean.date_time));
+		tvTime.setText(ToolUtils.getFormatDate(jBean.date_time));
 		
-		tvAuthorName.setText(weiQiangBean.name);
+		tvAuthorName.setText(jBean.username);
 		
-		tvTime.setText(ToolUtils.getFormatDate(weiQiangBean.date_time));
+		tvTime.setText(ToolUtils.getFormatDate(jBean.date_time));
     	
-		if(!TextUtils.isEmpty(weiQiangBean.fromname)){	//如果转发人存在
+		if(!TextUtils.isEmpty(jBean.fromname)){	//如果转发人存在
 			llTransArea.setVisibility(View.VISIBLE);
-			tvOldAuthorName.setText(weiQiangBean.fromname);
-			tvContent.setText(weiQiangBean.content);
-			tvComments.setText(weiQiangBean.Comments);
-			showImgs(weiQiangBean.imgs,oldGridview);
+			tvOldAuthorName.setText(jBean.fromname);
+			tvContent.setText(jBean.content);
+			tvComments.setText(jBean.Comments);
+			showImgs(jBean.imgs,oldGridview);
 			
 		}else{
 			llTransArea.setVisibility(View.GONE);
-			tvComments.setText(weiQiangBean.content);
-			showImgs(weiQiangBean.imgs,gridView);
+			tvComments.setText(jBean.content);
+			showImgs(jBean.imgs,gridView);
 		}
-		tvZanCount.setText(weiQiangBean.like_count);
+		tvZanCount.setText(jBean.like_count);
     	
-		tvReplyCount.setText(weiQiangBean.comment_count);
+		tvReplyCount.setText(jBean.comment_count);
     	
-		tvTranspontCount.setText(weiQiangBean.forward_count);
+		tvTranspontCount.setText(jBean.forward_count);
     	
-		tvShareCount.setText(weiQiangBean.share_count);
+		tvShareCount.setText(jBean.share_count);
 	}
 
 	/**处理九宫格图片**/
@@ -249,18 +249,18 @@ public class XuannengDetailActivity extends BaseActivity implements OnClickListe
         {
             // 赞
             case R.id.tv_zan_count:
-            	mWeiQiangBean.like_count = String.valueOf(Integer.valueOf(mWeiQiangBean.like_count)+1);
-            	tvZanCount.setText(mWeiQiangBean.like_count);
+            	mJokeBean.like_count = String.valueOf(Integer.valueOf(mJokeBean.like_count)+1);
+            	tvZanCount.setText(mJokeBean.like_count);
                 zanWeiqiang();
                 break;
             // 评论
             case R.id.tv_comment_count:
-            	type = WeiqiangActionType.RESPONSE;
+            	type = JokeActionType.RESPONSE;
                 createSendDialog();
                 break;
             // 转发
             case R.id.tv_transpont_count:
-            	type = WeiqiangActionType.TRANSPOND;
+            	type = JokeActionType.TRANSPOND;
             	createSendDialog();
                 break;
             // 分享
@@ -276,7 +276,7 @@ public class XuannengDetailActivity extends BaseActivity implements OnClickListe
      */
     private void zanWeiqiang()
     {
-       WeiqiangRequest.getInstance().requestWeiqiangZan(this, mActivity, mWeiQiangBean.weiboid);
+       XuannengRequest.getInstance().requestXuanZan(this, mActivity, mJokeBean.jokeid);
     }
 
 	@Override
@@ -289,8 +289,8 @@ public class XuannengDetailActivity extends BaseActivity implements OnClickListe
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				switch (bNetWork.getMessageType()) {
 				case 860002:
-					WeiqiangDetailResponse response = JSON.parseObject(strJson, WeiqiangDetailResponse.class);
-					List<WeiqiangCommentBean> comments = response.comments;
+					CommentResponse response = JSON.parseObject(strJson, CommentResponse.class);
+					List<CommentBean> comments = response.comments;
 					setWeiqiangCommentData(comments);
 					break;
 
@@ -302,7 +302,7 @@ public class XuannengDetailActivity extends BaseActivity implements OnClickListe
 		}
 	}
 	
-	private void setWeiqiangCommentData(List<WeiqiangCommentBean> comments) {
+	private void setWeiqiangCommentData(List<CommentBean> comments) {
 		if (null == comments) {
 			return;
 		}
@@ -314,8 +314,8 @@ public class XuannengDetailActivity extends BaseActivity implements OnClickListe
 			listview.setPullLoadEnable(true);
 		}
 
-		this.weiqiangComments.addAll(comments);
-		weiQiangCommentAdapter.notifyDataSetChanged();
+		this.comments.addAll(comments);
+		commentAdapter.notifyDataSetChanged();
 	}
 	
 	
@@ -348,24 +348,24 @@ public class XuannengDetailActivity extends BaseActivity implements OnClickListe
 					return;
 				}else{
 					etcontent.setText("");
-					if(type == WeiqiangActionType.TRANSPOND){
-							mWeiQiangBean.forward_count = String.valueOf(Integer.valueOf(mWeiQiangBean.forward_count)+1);
-							tvTranspontCount.setText(mWeiQiangBean.forward_count);
-							WeiqiangRequest.getInstance().requestWeiqiangTranspond(XuannengDetailActivity.this, mActivity, mWeiQiangBean.weiboid,mContent);
+					if(type == JokeActionType.TRANSPOND){
+							mJokeBean.forward_count = String.valueOf(Integer.valueOf(mJokeBean.forward_count)+1);
+							tvTranspontCount.setText(mJokeBean.forward_count);
+							XuannengRequest.getInstance().requestXuanTransport(JokeDetailActivity.this, mActivity, mJokeBean.jokeid,mContent);
 					}else{
 						
-						WeiqiangCommentBean wcb = new WeiqiangCommentBean();
+						CommentBean wcb = new CommentBean();
 						wcb.userid = String.valueOf(BGApp.mLoginBean.userid);
 						wcb.name = BGApp.mUserBean.nickn;
 						wcb.photo = BGApp.mUserBean.photo;
 						wcb.content = content;
 						wcb.commenttime = ToolUtils.getStandardTime();
-						weiqiangComments.add(0, wcb);
-						weiQiangCommentAdapter.notifyDataSetChanged();
+						comments.add(0, wcb);
+						commentAdapter.notifyDataSetChanged();
 						
-						mWeiQiangBean.comment_count = String.valueOf(Integer.valueOf(mWeiQiangBean.comment_count)+1);
-						tvReplyCount.setText(mWeiQiangBean.comment_count);
-						WeiqiangRequest.getInstance().requestWeiqiangReply(XuannengDetailActivity.this, mActivity, mWeiQiangBean.weiboid,content);
+						mJokeBean.comment_count = String.valueOf(Integer.valueOf(mJokeBean.comment_count)+1);
+						tvReplyCount.setText(mJokeBean.comment_count);
+						XuannengRequest.getInstance().requestXuanComment(JokeDetailActivity.this, mActivity, mJokeBean.jokeid,content);
 					}
 				}
 			}

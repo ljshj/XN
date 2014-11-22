@@ -458,70 +458,43 @@
             android:screenOrientation="portrait" />
 
 
-       <!-- 炫能 -->
+       <!-- 炫能,幽默秀 -->
         <activity
-            android:name=".ui.xuanneng.XuannengMainActivity"
+            android:name="com.bgood.xn.ui.xuanneng.joke.JokeMainActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
-        <activity
-            android:name=".ui.xuanneng.XuannengHumorRankingActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".ui.xuanneng.XuannengRankingActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".ui.xuanneng.XuannengDayActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".ui.xuanneng.XuannengWeekActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".ui.xuanneng.XuannengMonthActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".ui.xuanneng.XuannengYearActivity"
+        
+       <activity
+            android:name="com.bgood.xn.ui.xuanneng.joke.JokeDetailActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         
         <activity
-            android:name=".ui.xuanneng.XuannengHumorRandomActivity"
+            android:name="com.bgood.xn.ui.xuanneng.joke.JokeOrderActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
-        <activity
-            android:name=".ui.xuanneng.XuannengHumorOrderActivity"
+        
+       <activity
+            android:name="com.bgood.xn.ui.xuanneng.joke.JokePublishActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
         
         <activity
-            android:name=".ui.xuanneng.XuanNengDetailActivity"
+            android:name="com.bgood.xn.ui.xuanneng.joke.JokeRandomActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
+        
         <activity
-            android:name=".ui.xuanneng.XuannengHumorMainActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.Holo.Light.NoActionBar.Tab" >
-        </activity>
-        <activity
-            android:name=".ui.xuanneng.XuannengResponseActivity"
+            android:name="com.bgood.xn.ui.xuanneng.joke.JokeRankActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
+
 
         
         <!-- 裁剪相片 -->

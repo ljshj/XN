@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.bgood.xn.db.PreferenceUtil;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.ui.user.LoginActivity;
 
 
 public class BaseActivity extends Activity {
@@ -59,4 +60,20 @@ public class BaseActivity extends Activity {
 		im.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.SHOW_FORCED);
 	}
 
+	
+	/**
+	 * 
+	 * @todo:判断用户是否登录了
+	 * @date:2014-10-29 上午9:36:15
+	 * @author:hg_liuzl@163.com
+	 * @params:
+	 */
+	public void judgeLogin(){
+		if(!BGApp.isUserLogin){
+			Intent intent = new Intent(mActivity, LoginActivity.class);
+			mActivity.startActivity(intent);
+			return;
+		}
+	}
+	
 }

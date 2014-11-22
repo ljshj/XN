@@ -8,11 +8,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
-import com.bgood.xn.adapter.ProductCommentAdapter;
-import com.bgood.xn.bean.ProductCommentBean;
-import com.bgood.xn.bean.response.ProductCommentResponse;
+import com.bgood.xn.adapter.CommentAdapter;
+import com.bgood.xn.bean.CommentBean;
+import com.bgood.xn.bean.response.CommentResponse;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
@@ -38,8 +39,8 @@ public class ProductCommentShowActivity extends BaseActivity implements TaskList
 	/**产品编号**/
 	public static final String KEY_PRODUCT_ID = "key_product_id";
 	private XListView m_ProductComment;
-	private List<ProductCommentBean> mProductCommentList = new ArrayList<ProductCommentBean>();
-	private ProductCommentAdapter ProductCommentAdapter;
+	private List<CommentBean> mProductCommentList = new ArrayList<CommentBean>();
+	private CommentAdapter commentAdapter;
 	private String mRefreshTime;
 	private TitleBar titleBar = null;
 	private int comment_start = 0;
@@ -75,8 +76,8 @@ public class ProductCommentShowActivity extends BaseActivity implements TaskList
 	{
 		m_ProductComment = (XListView) findViewById(R.id.lv_product_comment);
 		m_ProductComment.setXListViewListener(this);
-		ProductCommentAdapter = new ProductCommentAdapter(mProductCommentList,mActivity);
-		m_ProductComment.setAdapter(ProductCommentAdapter);
+		commentAdapter = new CommentAdapter(mProductCommentList,mActivity);
+		m_ProductComment.setAdapter(commentAdapter);
 		 // 确定按钮
         titleBar.rightBtn.setOnClickListener(new OnClickListener()
         {
@@ -104,7 +105,7 @@ public class ProductCommentShowActivity extends BaseActivity implements TaskList
 			m_ProductComment.stopLoadMore();
 			m_ProductComment.stopRefresh();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
-				ProductCommentResponse response  = JSON.parseObject(strJson, ProductCommentResponse.class);
+				CommentResponse response  = JSON.parseObject(strJson, CommentResponse.class);
 				setProductCommentData(response.comments);
 				}else{
 					BToast.show(mActivity, "获取数据失败");
@@ -113,7 +114,7 @@ public class ProductCommentShowActivity extends BaseActivity implements TaskList
 			}
 		}
 	
-	private void setProductCommentData(List<ProductCommentBean> productComments) {
+	private void setProductCommentData(List<CommentBean> productComments) {
 			
 			if(productComments.size() < PAGE_SIZE_ADD){
 				m_ProductComment.setPullLoadEnable(false);
@@ -131,7 +132,7 @@ public class ProductCommentShowActivity extends BaseActivity implements TaskList
 			}
 			isRefresh = false;
 			this.mProductCommentList.addAll(productComments);
-			ProductCommentAdapter.notifyDataSetChanged();
+			commentAdapter.notifyDataSetChanged();
 	}
 
 	@Override

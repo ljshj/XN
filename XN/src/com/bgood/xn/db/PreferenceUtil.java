@@ -153,4 +153,26 @@ public class PreferenceUtil {
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	/*************************************幽默秀***********************************************/
+	
+	
+	/**设置幽默秀刷新时间**/
+	public void setJokeDetailRefreshTime(String refreshTime) {
+		editor.putString("joke_detail", refreshTime);
+		editor.commit();
+	}
+
+	public String getJokeDetailRefreshTime() {
+		return sp.getString("weiqiang_detail", "");
+	}
+	
+	
+	
 }

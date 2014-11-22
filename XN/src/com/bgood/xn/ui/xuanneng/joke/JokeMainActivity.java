@@ -1,4 +1,4 @@
-package com.bgood.xn.ui.xuanneng;
+package com.bgood.xn.ui.xuanneng.joke;
 
 import android.app.TabActivity;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import com.bgood.xn.R;
  * @date:2014-11-21 下午6:05:43
  * @author:hg_liuzl@163.com
  */
-public class XuannengMainActivity extends TabActivity implements OnCheckedChangeListener, OnClickListener
+public class JokeMainActivity extends TabActivity implements OnCheckedChangeListener, OnClickListener
 {
 	private TabHost tabHost;
 	private RadioGroup radioGroup;
@@ -39,14 +39,14 @@ public class XuannengMainActivity extends TabActivity implements OnCheckedChange
 		tabHost = getTabHost();
 		TabHost.TabSpec spec;
 		Intent intent;
-		intent = new Intent().setClass(this, XuannengRankingActivity.class);
+		intent = new Intent().setClass(this, JokeRankActivity.class);
 		spec = tabHost.newTabSpec("排行榜").setIndicator("排行帮").setContent(intent);
 		tabHost.addTab(spec);
-		intent = new Intent().setClass(this, XuannengOrderActivity.class);
+		intent = new Intent().setClass(this, JokeOrderActivity.class);
 		spec = tabHost.newTabSpec("顺序").setIndicator("顺序").setContent(intent);
 		tabHost.addTab(spec);
 
-		intent = new Intent().setClass(this, XuannengRandomActivity.class);
+		intent = new Intent().setClass(this, JokeRandomActivity.class);
 		spec = tabHost.newTabSpec("随机").setIndicator("随机").setContent(intent);
 		tabHost.addTab(spec);
 
@@ -78,7 +78,7 @@ public class XuannengMainActivity extends TabActivity implements OnCheckedChange
 		switch (v.getId())
 		{
 		case R.id.xuanneng_b_response:
-			Intent intent = new Intent(this, XuannengPublishActivity.class);
+			Intent intent = new Intent(this, JokePublishActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.return_btn:
