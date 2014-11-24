@@ -154,12 +154,6 @@ public class PreferenceUtil {
 	
 	
 	
-	
-	
-	
-	
-	
-	
 	/*************************************幽默秀***********************************************/
 	
 	
@@ -173,6 +167,25 @@ public class PreferenceUtil {
 		return sp.getString("weiqiang_detail", "");
 	}
 	
+	/**设置幽默秀排序刷新时间**/
+	public void setJokeOrderRefreshTime(String refreshTime) {
+		editor.putString("joke_order", refreshTime);
+		editor.commit();
+	}
+
+	public String getJokeOrderRefreshTime() {
+		return sp.getString("joke_order", "");
+	}
+	
+	/**设置幽默秀排序刷新时间**/
+	public void setJokeRandomRefreshTime(String refreshTime) {
+		editor.putString("joke_random", refreshTime);
+		editor.commit();
+	}
+
+	public String getJokeRandomRefreshTime() {
+		return sp.getString("joke_random", "");
+	}
 	
 	
 }

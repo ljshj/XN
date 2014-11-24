@@ -35,6 +35,7 @@ import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.ui.xuanneng.XuannengFragment;
 import com.bgood.xn.utils.ShareUtils;
+import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.dialog.BGDialog;
 import com.bgood.xn.view.xlistview.XListView;
@@ -62,6 +63,9 @@ public class JokeRandomActivity extends BaseActivity implements OnItemClickListe
     
     /**是否刷新*/
     private boolean isRefresh = true;
+
+    /**刷新时间*/
+    private String mRefreshTime = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -79,6 +83,22 @@ public class JokeRandomActivity extends BaseActivity implements OnItemClickListe
 		XuannengRequest.getInstance().requestJokeList(this, this, XuannengFragment.XUANNENG_JOKE, JokeBean.JOKE_RADOM, m_start_size, m_start_size+PAGE_SIZE_ADD);
 	}
 
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		
+		mRefreshTime = pUitl.getJokeRandomRefreshTime();
+		m_listXlv.setRefreshTime(mRefreshTime);
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		pUitl.setJokeRandomRefreshTime(mRefreshTime);
+	}
+	
+	
 	@Override
 	public void onClick(View v)
 	{
@@ -90,7 +110,9 @@ public class JokeRandomActivity extends BaseActivity implements OnItemClickListe
 		case R.id.tv_zan_count:	//赞
 			jBean = (JokeBean) v.getTag();
 			mActionJoke = jBean;
-			WeiqiangRequest.getInstance().requestWeiqiangZan(this, mActivity, jBean.jokeid);
+			mActionJoke.like_count = String.valueOf(Integer.valueOf(mActionJoke.like_count)+1);
+			adapter.notifyDataSetChanged();
+			XuannengRequest.getInstance().requestXuanZan(this, mActivity, jBean.jokeid);
 			break;
 		case R.id.tv_comment_count:	//评论
 			jBean = (JokeBean) v.getTag();
@@ -106,6 +128,10 @@ public class JokeRandomActivity extends BaseActivity implements OnItemClickListe
 			break;
 		case R.id.tv_share_count:	//分享
 			jBean = (JokeBean) v.getTag();
+			mActionJoke = jBean;
+			mActionJoke.share_count = String.valueOf(Integer.valueOf(mActionJoke.share_count)+1);
+			adapter.notifyDataSetChanged();
+			XuannengRequest.getInstance().requestXuanZan(this, mActivity, jBean.jokeid);
 			share.doShare();
 			break;
 		}
@@ -141,26 +167,15 @@ public class JokeRandomActivity extends BaseActivity implements OnItemClickListe
 					return;
 				}else{
 					etcontent.setText("");
-//					if(type == JokeActionType.TRANSPOND){
-//						if(m_type == WEIQIANG_ALL){
-//							mActionWeiqiang.forward_count = String.valueOf(Integer.valueOf(mActionWeiqiang.forward_count)+1);
-//							m_allFriendsAdapter.notifyDataSetChanged();
-//						}else{
-//							mActionWeiqiang.forward_count = String.valueOf(Integer.valueOf(mActionWeiqiang.forward_count)+1);
-//							m_followFriendsAdapter.notifyDataSetChanged();
-//						}
-//						WeiqiangRequest.getInstance().requestWeiqiangTranspond(WeiqiangFragment.this, mActivity, mActionWeiqiang.weiboid,content);
-//					}else{
-//						if(m_type == WEIQIANG_ALL){
-//							mActionWeiqiang.comment_count = String.valueOf(Integer.valueOf(mActionWeiqiang.comment_count)+1);
-//							m_allFriendsAdapter.notifyDataSetChanged();
-//						}else{
-//							mActionWeiqiang.comment_count = String.valueOf(Integer.valueOf(mActionWeiqiang.comment_count)+1);
-//							m_followFriendsAdapter.notifyDataSetChanged();
-//						}
-//						WeiqiangRequest.getInstance().requestWeiqiangReply(WeiqiangFragment.this, mActivity, mActionWeiqiang.weiboid,content);
-//					}
-					
+					if(type == JokeActionType.TRANSPOND){
+							mActionJoke.forward_count = String.valueOf(Integer.valueOf(mActionJoke.forward_count)+1);
+							adapter.notifyDataSetChanged();
+							WeiqiangRequest.getInstance().requestWeiqiangTranspond(JokeRandomActivity.this, mActivity, mActionJoke.jokeid,content);
+					}else{
+							mActionJoke.comment_count = String.valueOf(Integer.valueOf(mActionJoke.comment_count)+1);
+							adapter.notifyDataSetChanged();
+							WeiqiangRequest.getInstance().requestWeiqiangReply(JokeRandomActivity.this, mActivity, mActionJoke.jokeid,content);
+					}					
 				}
 			}
 		});
@@ -193,8 +208,12 @@ public class JokeRandomActivity extends BaseActivity implements OnItemClickListe
      * @param list
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
-	private void setDataAdapter(XListView xListView,KBaseAdapter adapter,List<?> showList,List resultlist,int start_page)
+	private void setDataAdapter(XListView xListView,KBaseAdapter adapter,List<?> showList,List resultlist)
     {
+    	
+    	mRefreshTime = ToolUtils.getNowTime();
+    	xListView.setRefreshTime(mRefreshTime);
+    	
     	if(null == resultlist || resultlist.size() ==0)
     	{
     		xListView.setPullLoadEnable(false);
@@ -209,7 +228,7 @@ public class JokeRandomActivity extends BaseActivity implements OnItemClickListe
          }else
          {
         	 xListView.setPullLoadEnable(true);
-        	 start_page +=PAGE_SIZE_ADD;
+        	 m_start_size += PAGE_SIZE_ADD;
          }
     	 if(isRefresh){
     		 showList.clear();
@@ -223,10 +242,17 @@ public class JokeRandomActivity extends BaseActivity implements OnItemClickListe
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			String strJson = bNetWork.getStrJson();
-			stopLoad(m_listXlv);
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
-				JokeResponse response = JSON.parseObject(strJson, JokeResponse.class);
-				setDataAdapter(m_listXlv, adapter, listJoke, response.jokes, m_start_size);
+				switch (bNetWork.getMessageType()) {
+				case 870001:
+					stopLoad(m_listXlv);
+					JokeResponse response = JSON.parseObject(strJson, JokeResponse.class);
+					setDataAdapter(m_listXlv, adapter, listJoke, response.jokes);
+					break;
+
+				default:
+					break;
+				}
 			}
 		}
 	}

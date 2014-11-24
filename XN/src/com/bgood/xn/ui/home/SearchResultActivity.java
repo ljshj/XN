@@ -71,7 +71,6 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
     private int search_type = 0;
 
     private RadioGroup radio_group;
-	private RadioButton radio_01,radio_02,radio_03;
 	
 	private ImageView img_01,img_02,img_03,no_data_img;
 	
@@ -129,13 +128,6 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		
 		radio_group = (RadioGroup) findViewById(R.id.radio_group);
 		radio_group.setOnCheckedChangeListener(mOnCheckedChangeListener);
-		radio_01 = (RadioButton) findViewById(R.id.radio_01);
-		radio_02 = (RadioButton) findViewById(R.id.radio_02);
-		radio_03 = (RadioButton) findViewById(R.id.radio_03);
-		
-		radio_01.setOnClickListener(radio_click);
-		radio_02.setOnClickListener(radio_click);
-		radio_03.setOnClickListener(radio_click);
 		
 		img_01 = (ImageView) findViewById(R.id.img_01);
 		img_02 = (ImageView) findViewById(R.id.img_02);
@@ -206,29 +198,29 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		mTabPager.setAdapter(adapter);
 	}
 
-	OnClickListener radio_click = new OnClickListener() {
-
-		@Override
-		public void onClick(View view) {
-			// TODO Auto-generated method stub
-				switch (view.getId()) {
-				case R.id.radio_01:
-					setChooseView(CHOOSE_MEMBER);
-					break;
-				case R.id.radio_02:
-					setChooseView(CHOOSE_WEI_QIANG);
-					break;
-				case R.id.radio_03:
-					setChooseView(CHOOSE_CHU_CHUANG);
-					break;
-
-				default:
-					break;
-				
-			}
-		}
-		
-	};
+//	OnClickListener radio_click = new OnClickListener() {
+//
+//		@Override
+//		public void onClick(View view) {
+//			// TODO Auto-generated method stub
+//				switch (view.getId()) {
+//				case R.id.radio_01:
+//					setChooseView(CHOOSE_MEMBER);
+//					break;
+//				case R.id.radio_02:
+//					setChooseView(CHOOSE_WEI_QIANG);
+//					break;
+//				case R.id.radio_03:
+//					setChooseView(CHOOSE_CHU_CHUANG);
+//					break;
+//
+//				default:
+//					break;
+//				
+//			}
+//		}
+//		
+//	};
 	
 	
 	/**

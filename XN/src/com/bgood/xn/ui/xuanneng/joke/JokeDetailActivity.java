@@ -37,6 +37,7 @@ import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.utils.ShareUtils;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.dialog.BGDialog;
@@ -78,9 +79,9 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 	private String mRefreshJokeTime;
 	
 	private int comment_start = 0;
-	private String mContent;
 	private JokeActionType type;
 	private TitleBar titleBar;
+	private ShareUtils share;
 
 
 	
@@ -88,10 +89,11 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		share = new ShareUtils(mActivity);
 		setContentView(R.layout.layout_weiqiang_detail);
 		mJokeBean = (JokeBean) getIntent().getSerializableExtra(BEAN_JOKE_KEY);
 		titleBar = new TitleBar(mActivity);
-		titleBar.initTitleBar("炫能详情");
+		titleBar.initTitleBar("详情");
 		findView();
 		setData(mJokeBean);
 		
@@ -251,7 +253,7 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
             case R.id.tv_zan_count:
             	mJokeBean.like_count = String.valueOf(Integer.valueOf(mJokeBean.like_count)+1);
             	tvZanCount.setText(mJokeBean.like_count);
-                zanWeiqiang();
+            	XuannengRequest.getInstance().requestXuanZan(this, mActivity, mJokeBean.jokeid);
                 break;
             // 评论
             case R.id.tv_comment_count:
@@ -265,6 +267,9 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
                 break;
             // 分享
             case R.id.tv_share_count:
+            	mJokeBean.share_count = String.valueOf(Integer.valueOf(mJokeBean.share_count)+1);
+    			XuannengRequest.getInstance().requestXuanZan(this, mActivity, mJokeBean.jokeid);
+    			share.doShare();
                 break;
             default:
                 break;
@@ -276,7 +281,6 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
      */
     private void zanWeiqiang()
     {
-       XuannengRequest.getInstance().requestXuanZan(this, mActivity, mJokeBean.jokeid);
     }
 
 	@Override
@@ -288,10 +292,10 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 			String strJson = bNetWork.getStrJson();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				switch (bNetWork.getMessageType()) {
-				case 860002:
+				case 870009:
 					CommentResponse response = JSON.parseObject(strJson, CommentResponse.class);
 					List<CommentBean> comments = response.comments;
-					setWeiqiangCommentData(comments);
+					setCommentData(comments);
 					break;
 
 				default:
@@ -302,8 +306,10 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 		}
 	}
 	
-	private void setWeiqiangCommentData(List<CommentBean> comments) {
+	private void setCommentData(List<CommentBean> comments) {
 		if (null == comments) {
+			listview.setPullLoadEnable(false);
+			BToast.show(mActivity, "数据加载完毕");
 			return;
 		}
 		if (comments.size() < PAGE_SIZE_ADD) {
@@ -351,7 +357,7 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 					if(type == JokeActionType.TRANSPOND){
 							mJokeBean.forward_count = String.valueOf(Integer.valueOf(mJokeBean.forward_count)+1);
 							tvTranspontCount.setText(mJokeBean.forward_count);
-							XuannengRequest.getInstance().requestXuanTransport(JokeDetailActivity.this, mActivity, mJokeBean.jokeid,mContent);
+							XuannengRequest.getInstance().requestXuanTransport(JokeDetailActivity.this, mActivity, mJokeBean.jokeid,content);
 					}else{
 						
 						CommentBean wcb = new CommentBean();

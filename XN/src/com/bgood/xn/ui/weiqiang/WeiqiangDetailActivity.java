@@ -288,7 +288,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 				case 860002:
 					CommentResponse response = JSON.parseObject(strJson, CommentResponse.class);
 					List<CommentBean> comments = response.comments;
-					setWeiqiangCommentData(comments);
+					setCommentData(comments);
 					break;
 
 				default:
@@ -299,8 +299,10 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		}
 	}
 	
-	private void setWeiqiangCommentData(List<CommentBean> comments) {
+	private void setCommentData(List<CommentBean> comments) {
 		if (null == comments) {
+			listview.setPullLoadEnable(false);
+			BToast.show(mActivity, "数据加载完毕");
 			return;
 		}
 		if (comments.size() < PAGE_SIZE_ADD) {

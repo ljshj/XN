@@ -19,7 +19,7 @@ import com.bgood.xn.ui.user.LoginActivity;
  */
 public class BaseFragment extends Fragment {
 	
-	public static final int PAGE_SIZE_ADD = 10;
+	public static final int PAGE_SIZE_ADD = BaseActivity.PAGE_SIZE_ADD;
 	
 	public Activity mActivity = null;
 	public LayoutInflater inflater = null;

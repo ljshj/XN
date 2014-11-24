@@ -44,6 +44,7 @@ import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.ui.weiqiang.WeiqiangDetailActivity;
 import com.bgood.xn.ui.xuanneng.XuannengFragment;
 import com.bgood.xn.utils.ShareUtils;
+import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.dialog.BGDialog;
 import com.bgood.xn.view.xlistview.XListView;
@@ -68,17 +69,16 @@ public class JokeRankActivity extends BaseActivity implements OnClickListener, O
 	private int REQUEST_FLAG = CHOOSE_DAY;
 
     private RadioGroup radio_group;
-	private RadioButton radio_01,radio_02,radio_03,radio_04;
 	
 	private JokeAdapter adapterDay,adapterWeek,adapterMonth,adapterYear;
 	
 	
 	private XListView mXLDay,mXLWeek,mXLMonth,mXLYear;   // 会员
 	
-	ArrayList<JokeBean> listDay = new ArrayList<JokeBean>();
-	ArrayList<JokeBean> listWeek = new ArrayList<JokeBean>();
-	ArrayList<JokeBean> listMonth = new ArrayList<JokeBean>();
-	ArrayList<JokeBean> listYear = new ArrayList<JokeBean>();
+	private ArrayList<JokeBean> listDay = new ArrayList<JokeBean>();
+	private ArrayList<JokeBean> listWeek = new ArrayList<JokeBean>();
+	private ArrayList<JokeBean> listMonth = new ArrayList<JokeBean>();
+	private ArrayList<JokeBean> listYear = new ArrayList<JokeBean>();
 
 	
 	private int m_start_day = 0;
@@ -90,6 +90,9 @@ public class JokeRankActivity extends BaseActivity implements OnClickListener, O
 	
     private JokeBean mActionJoke = null;
     private JokeActionType type;
+    private String mRefreshTime;
+    
+    private boolean isRefreshAction = true;	//是否是刷新操作
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -98,6 +101,7 @@ public class JokeRankActivity extends BaseActivity implements OnClickListener, O
 		share = new ShareUtils(mActivity);
 		setContentView(R.layout.layout_xuanneng_rank);
 		findView();
+		getData(CHOOSE_DAY, true);
 	}
 	/**
 	 * 控件初始化方法
@@ -112,16 +116,7 @@ public class JokeRankActivity extends BaseActivity implements OnClickListener, O
 		
 		radio_group = (RadioGroup) findViewById(R.id.radio_group);
 		radio_group.setOnCheckedChangeListener(mOnCheckedChangeListener);
-		radio_01 = (RadioButton) findViewById(R.id.radio_01);
-		radio_02 = (RadioButton) findViewById(R.id.radio_02);
-		radio_03 = (RadioButton) findViewById(R.id.radio_03);
-		radio_04 = (RadioButton) findViewById(R.id.radio_04);
-		
-		radio_01.setOnClickListener(radio_click);
-		radio_02.setOnClickListener(radio_click);
-		radio_03.setOnClickListener(radio_click);
-		radio_04.setOnClickListener(radio_click);
-		
+
 		View view1 = inflater.inflate(R.layout.home_layout_result_listview, null);
 		mXLDay = (XListView) view1.findViewById(R.id.xListView);
 		mXLDay.setPullLoadEnable(true);
@@ -191,37 +186,18 @@ public class JokeRankActivity extends BaseActivity implements OnClickListener, O
 		};
 		mTabPager.setAdapter(adapter);
 	}
-
-	OnClickListener radio_click = new OnClickListener() {
-
-		@Override
-		public void onClick(View view) {
-				switch (view.getId()) {
-				case R.id.radio_01:
-					getData(CHOOSE_DAY);
-					break;
-				case R.id.radio_02:
-					getData(CHOOSE_WEEK);
-					break;
-				case R.id.radio_03:
-					getData(CHOOSE_MONTH);
-					break;
-				case R.id.radio_04:
-					getData(CHOOSE_YEAR);
-					break;
-				default:
-					break;
-				
-			}
-		}
-		
-	};
-	
 	/**
-	 * 设置选中
-	 * @param flag
+	 * 
+	 * @todo:TODO
+	 * @date:2014-11-24 上午10:32:09
+	 * @author:hg_liuzl@163.com
+	 * @params:@param flag
+	 * @params:@param loadData  是否需要加载数据
 	 */
-	private void getData(int flag){
+	private void getData(int flag,boolean isNeedLoadData){
+		if(!isNeedLoadData){
+			return;
+		}
 		switch (flag) {
 		case CHOOSE_DAY:
 			XuannengRequest.getInstance().requestXuanRank(this, mActivity, XuannengFragment.XUANNENG_JOKE, CHOOSE_DAY, m_start_day, m_start_day+PAGE_SIZE_ADD);
@@ -243,33 +219,38 @@ public class JokeRankActivity extends BaseActivity implements OnClickListener, O
 	/**
 	 * 
 	 */
-	OnCheckedChangeListener mOnCheckedChangeListener = new OnCheckedChangeListener() {
+	private OnCheckedChangeListener mOnCheckedChangeListener = new OnCheckedChangeListener() {
 		
 		@Override
 		public void onCheckedChanged(RadioGroup group, int checkedId) {
 			int radioButtonId = group.getCheckedRadioButtonId();
+			boolean isNeedLoadData = true;	//如果没有数据，就需要加载数据，如果有数据就不需要加载数据
 			switch (radioButtonId) {
 			case R.id.radio_01:
 				REQUEST_FLAG = CHOOSE_DAY;
 				mTabPager.setCurrentItem(0);
+				isNeedLoadData = listDay.size()>0? false : true;
 				break;
 			case R.id.radio_02:
 				REQUEST_FLAG = CHOOSE_WEEK;
 				mTabPager.setCurrentItem(1);
+				isNeedLoadData = listWeek.size()>0? false : true;
 				break;
 			case R.id.radio_03:
 				REQUEST_FLAG = CHOOSE_MONTH;
 				mTabPager.setCurrentItem(2);
+				isNeedLoadData = listMonth.size()>0? false : true;
 				break;
 			case R.id.radio_04:
-				REQUEST_FLAG = CHOOSE_MONTH;
+				REQUEST_FLAG = CHOOSE_YEAR;
 				mTabPager.setCurrentItem(3);
+				isNeedLoadData = listYear.size()>0? false : true;
 				break;
 		
 			default:
 				break;
 			}
-			getData(REQUEST_FLAG);
+			getData(REQUEST_FLAG,isNeedLoadData);
 		}
 	};
 	
@@ -300,8 +281,12 @@ public class JokeRankActivity extends BaseActivity implements OnClickListener, O
      * @param list
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
-	private void setDataAdapter(XListView xListView,KBaseAdapter adapter,List<?> showList,List resultlist,int start_page)
+	private void setDataAdapter(XListView xListView,KBaseAdapter adapter,List<?> showList,List resultlist)
     {
+    	mRefreshTime = ToolUtils.getNowTime();
+    	xListView.setRefreshTime(mRefreshTime);
+    	stopLoad(xListView);
+    	
     	if(null == resultlist || resultlist.size() ==0)
     	{
     		xListView.setPullLoadEnable(false);
@@ -316,8 +301,13 @@ public class JokeRankActivity extends BaseActivity implements OnClickListener, O
          }else
          {
         	 xListView.setPullLoadEnable(true);
-        	 start_page +=PAGE_SIZE_ADD;
          }
+    	 
+    	 if(isRefreshAction){
+    		 showList.clear();
+    		 isRefreshAction = false;
+    	 }
+    	 
     	 showList.addAll(resultlist);
          adapter.notifyDataSetChanged();
     }
@@ -345,24 +335,24 @@ public class JokeRankActivity extends BaseActivity implements OnClickListener, O
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			String strJson = bNetWork.getStrJson();
-			stopLoad(mXLDay);
-			stopLoad(mXLWeek);
-			stopLoad(mXLMonth);
-			stopLoad(mXLYear);
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				JokeResponse response = JSON.parseObject(strJson, JokeResponse.class);
 				switch (REQUEST_FLAG) {
 				case CHOOSE_DAY:
-					setDataAdapter(mXLDay, adapterDay, listDay, response.jokes, m_start_day);
+					m_start_day+=PAGE_SIZE_ADD;
+					setDataAdapter(mXLDay, adapterDay, listDay, response.jokes);
 					break;
 				case CHOOSE_WEEK:
-					setDataAdapter(mXLWeek, adapterWeek, listWeek, response.jokes, m_start_week);
+					m_start_week+=PAGE_SIZE_ADD;
+					setDataAdapter(mXLWeek, adapterWeek, listWeek, response.jokes);
 					break;
 				case CHOOSE_MONTH:
-					setDataAdapter(mXLMonth, adapterMonth, listMonth, response.jokes, m_start_month);
+					m_start_month+=PAGE_SIZE_ADD;
+					setDataAdapter(mXLMonth, adapterMonth, listMonth, response.jokes);
 					break;
 				case CHOOSE_YEAR:
-					setDataAdapter(mXLYear, adapterYear, listYear, response.jokes, m_start_year);
+					m_start_year+=PAGE_SIZE_ADD;
+					setDataAdapter(mXLYear, adapterYear, listYear, response.jokes);
 					break;
 				default:
 					break;
@@ -375,12 +365,40 @@ public class JokeRankActivity extends BaseActivity implements OnClickListener, O
 
 	@Override
 	public void onRefresh() {
-		
+		isRefreshAction = true;
+		doRefreshAction(REQUEST_FLAG);
 	}
+	
+	private void doRefreshAction(int checkType) {
+		
+		switch (checkType) {
+		case CHOOSE_DAY:
+			m_start_day = 0;
+			break;
+			
+		case CHOOSE_WEEK:
+			m_start_week = 0;
+			break;
+			
+		case CHOOSE_MONTH:
+			m_start_month = 0;
+			break;
+			
+		case CHOOSE_YEAR:
+			m_start_year = 0;
+			break;
+
+		default:
+			break;
+		}
+		
+		getData(checkType,true);
+	}
+	
 
 	@Override
 	public void onLoadMore() {
-		getData(REQUEST_FLAG);
+		getData(REQUEST_FLAG,true);
 	}
 	@Override
 	public void onClick(View v)
