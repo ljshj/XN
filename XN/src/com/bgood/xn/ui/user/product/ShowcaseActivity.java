@@ -454,7 +454,7 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
     {
         ProductBean productDTO = (ProductBean)adapter.getAdapter().getItem(location);
         Intent intent = new Intent(ShowcaseActivity.this, ProductDetailActivity.class);
-        intent.putExtra(ProductBean.BEAN_PRODUCT,productDTO);
+        intent.putExtra(ProductBean.KEY_PRODUCT_ID,productDTO.product_id);
         startActivity(intent);
     }
 	@Override

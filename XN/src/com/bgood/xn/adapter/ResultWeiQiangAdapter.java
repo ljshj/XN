@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
-import com.bgood.xn.bean.WeiQiangResultBean;
+import com.bgood.xn.bean.WeiQiangBean;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 
@@ -44,9 +44,9 @@ public class ResultWeiQiangAdapter extends KBaseAdapter
             holder = (ViewHolder) convertView.getTag();
         }
         
-       final WeiQiangResultBean weiqiangDTO = (WeiQiangResultBean) mList.get(position);
+       final WeiQiangBean weiqiangDTO = (WeiQiangBean) mList.get(position);
         
-        mImageLoader.displayImage(weiqiangDTO.img_thum,holder.iconImgV, options, new SimpleImageLoadingListener() {
+        mImageLoader.displayImage(weiqiangDTO.photo,holder.iconImgV, options, new SimpleImageLoadingListener() {
 			@Override
 			public void onLoadingComplete() {
 				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);

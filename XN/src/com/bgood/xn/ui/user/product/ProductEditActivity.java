@@ -76,7 +76,7 @@ public class ProductEditActivity extends BaseActivity implements OnClickListener
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_product_edit);
-        m_ProductBean = (ProductBean) getIntent().getSerializableExtra(ProductBean.BEAN_PRODUCT);
+        m_ProductBean = (ProductBean) getIntent().getSerializableExtra(ProductBean.KEY_PRODUCT_BEAN);
         (new TitleBar(mActivity)).initTitleBar("编辑产品");
         findView();
         setData();

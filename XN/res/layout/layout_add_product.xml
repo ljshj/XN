@@ -115,15 +115,6 @@
                         android:background="@drawable/group_card_sound_prompt_selector"
                         android:button="@null"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="5dp"
-                        android:layout_toLeftOf="@id/add_product_cb_recommend"
-                        android:layout_toRightOf="@id/add_product_tv_hint1"
-                        android:gravity="center_vertical"
-                        android:text="(必须添加产品图片)"
-                        android:textSize="16dp" />
                 </RelativeLayout>
 
                 <View

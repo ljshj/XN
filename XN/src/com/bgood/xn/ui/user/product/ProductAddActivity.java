@@ -92,19 +92,6 @@ public class ProductAddActivity extends BaseActivity implements OnClickListener,
         m_infoEt = (EditText) findViewById(R.id.add_product_et_info);
         m_doneBtn = (Button) findViewById(R.id.add_product_btn_done);
         m_doneBtn.setOnClickListener(this);
-        m_recommendCb.setOnCheckedChangeListener(new OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
-            	if(TextUtils.isEmpty(img)){
-            		BToast.show(mActivity, "添加产品图片后,才能推荐产品");
-            		m_recommendCb.setChecked(false);
-            	}else{
-            		m_recommend = isChecked?1:0;
-            	}
-            }
-        });
     }
     
     /**
@@ -136,6 +123,7 @@ public class ProductAddActivity extends BaseActivity implements OnClickListener,
             BToast.show(mActivity, "请输入产品名称");
             return;
         }else{
+        	m_recommend = m_recommendCb.isChecked()?1:0;
         	m_ProductBean.img = img;
         	m_ProductBean.img_thum = img_thumb;
         	m_ProductBean.product_name = productName;

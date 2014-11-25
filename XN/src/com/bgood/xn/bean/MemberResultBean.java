@@ -19,3 +19,6 @@ public class MemberResultBean {
       public int guanzhutype;
      
 }
+
+
+

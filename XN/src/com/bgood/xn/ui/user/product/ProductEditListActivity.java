@@ -68,7 +68,7 @@ public class ProductEditListActivity extends BaseActivity implements OnItemClick
     {
         final ProductBean productDTO = (ProductBean)adapter.getAdapter().getItem(location);
         Intent intent = new Intent(ProductEditListActivity.this, ProductEditActivity.class);
-        intent.putExtra(ProductBean.BEAN_PRODUCT, productDTO);
+        intent.putExtra(ProductBean.KEY_PRODUCT_BEAN, productDTO);
         startActivity(intent);
     }
 

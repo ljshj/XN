@@ -19,15 +19,15 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical" >
-
-                    <LinearLayout
+                    
+                    <LinearLayout 
                         android:layout_width="match_parent"
-                        android:layout_height="250dp"
+                        android:layout_height="150dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/img_user_center_bg"
-                        android:orientation="vertical" >
-
-                         <RelativeLayout
+                        android:orientation="vertical"
+                        >
+                        <RelativeLayout
                             android:id="@+id/user_center_rl_user_info"
                             android:layout_width="match_parent"
                             android:layout_weight="2" 
@@ -77,15 +77,42 @@
                                         android:layout_marginTop="10dp"
                                         android:text="能能"
                                         />
-
-                                   
-
                         </RelativeLayout>
+                         <View style="@style/cut_line" />
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/selector_layout_select"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal" >
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1px"
-                            android:background="@drawable/img_user_center_x_line" />
+                                <TextView
+                                    android:layout_marginLeft="20dp"
+                                    style="@style/text_common"
+                                    android:text="个性签名"
+                                    android:textColor="@color/gray"
+                                     />
+
+                                <TextView
+                                    android:id="@+id/tv_sign_name"
+                                    android:text="我能打篮球办法百分比法 办法的办法打扮 办法的办法打扮分把书包顺丰的爆发"
+                                    android:ellipsize="end"
+                                    android:layout_marginLeft="10dp"
+                                    style="@style/text_common"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    />
+                            </LinearLayout>
+                        
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/img_user_center_bg"
+                        android:orientation="vertical" >
 
                         <LinearLayout
                             android:layout_width="fill_parent"
@@ -152,38 +179,6 @@
                                     android:textColor="#626262"
                                     android:textSize="14dp" />
                             </LinearLayout>
-
-                            <View
-                                android:layout_width="1px"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/img_user_center_y_line" />
-
-                            <LinearLayout
-                                android:id="@+id/user_center_ll_dynamic"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:orientation="vertical" >
-
-                                <TextView
-                                    android:id="@+id/user_center_tv_dynamic"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:text="2222"
-                                    android:textColor="#000000"
-                                    android:textSize="14dp" />
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:text="我的微墙"
-                                    android:textColor="#626262"
-                                    android:textSize="14dp" />
-                            </LinearLayout>
                         </LinearLayout>
 
 	                        <View
@@ -203,7 +198,7 @@
 
                                 <TextView
                                     android:layout_marginLeft="20dp"
-                                    android:text="我想"
+                                    android:drawableLeft="@drawable/icon_i_can"
                                     style="@style/text_common"
                                      />
 
@@ -233,8 +228,8 @@
 
                                 <TextView
                                     android:layout_marginLeft="20dp"
-                                    android:text="我能"
                                     style="@style/text_common"
+                                     android:drawableLeft="@drawable/icon_i_want"
                                      />
 
                                 <TextView
@@ -253,55 +248,37 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="220dp"
+                        android:layout_height="120dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/img_user_center_bg"
                         android:orientation="vertical" >
                         
-                          <TextView
-                                    android:id="@+id/tv_shop"
-                                    android:drawableLeft="@drawable/img_user_center_shop"
-                                    android:text="我的店铺"
-                                    style="@style/select_layout"
-                                    />
-
-
-                        <View
-                            style="@style/cut_line" />
-                        
-                         <TextView
-                                    android:id="@+id/tv_system_notification"
-                                    android:drawableLeft="@drawable/img_user_center_syetem_notification"
-                                    android:text="系统通知"
-                                    style="@style/select_layout"
-                                    />
-
-                       <View
-                            style="@style/cut_line" />
-                       
-                        <TextView
-                                    android:id="@+id/tv_application_management"
-                                    android:drawableLeft="@drawable/img_user_center_application_management"
-                                    android:text="本地应用管理"
-                                    style="@style/select_layout"
-                                    />
-
-                      <View
-                            style="@style/cut_line" />
-
-                       <TextView
-                                    android:id="@+id/tv_xuanneng"
+                          <TextView android:id="@+id/tv_xuanneng"
                                     android:drawableLeft="@drawable/img_user_center_xuanneng"
                                     android:text="我的炫能"
                                     style="@style/select_layout"
                                     />
+                          
+                         <View style="@style/cut_line" />
 
-                   
+                         <TextView  android:id="@+id/tv_weiqiang"
+                                    android:drawableLeft="@drawable/img_user_center_xuanneng"
+                                    android:text="我的微墙"
+                                    style="@style/select_layout"
+                                    />
+                          
+                        <View style="@style/cut_line" />
+                        
+                          <TextView android:id="@+id/tv_shop"
+                                    android:drawableLeft="@drawable/img_user_center_shop"
+                                    android:text="我的橱窗"
+                                    style="@style/select_layout"
+                                    />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="110dp"
+                        android:layout_height="80dp"
                         android:layout_marginBottom="20dp"
                         android:layout_marginTop="15dp"
                         android:background="@drawable/img_user_center_bg"

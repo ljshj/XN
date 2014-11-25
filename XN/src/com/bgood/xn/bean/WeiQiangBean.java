@@ -9,20 +9,19 @@ import java.util.List;
  * @author:hg_liuzl@163.com
  */
 public class WeiQiangBean implements Serializable {
-//	 <userid/>用户id
-//	    <weiboid/>//帖子id
-//	    <name/>
-//	<photo/>//用户头像
-//	<distance/>
-//	<date_time/>
-//	<fromuserid/>//来源用户ID，如果是转才有此字段
-//	<fromusername/>来源用户名
-//	<content/>
-//	<like_count/>
-//	<comment_count/>
-//	<forward_count/>
-//	<share_count/>
 
+	public static final int WEIQIANG_ATTENTION = 1;
+	public static final int WEIQIANG_ALL = 2;
+	
+	/**
+	 * @todo:TODO
+	 * @date:2014-11-25 上午11:37:37
+	 * @author:hg_liuzl@163.com
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public static final String KEY_WEIQIANG_BEAN = "key_weiqiang_bean";
+	
 	public String userid;
 	public String weiboid;
 	public String name;

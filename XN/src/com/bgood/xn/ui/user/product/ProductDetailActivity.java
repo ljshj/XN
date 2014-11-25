@@ -11,8 +11,18 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.ProductBean;
+import com.bgood.xn.bean.UserInfoBean;
+import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
+import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
+import com.bgood.xn.network.BaseNetWork;
+import com.bgood.xn.network.HttpRequestInfo;
+import com.bgood.xn.network.HttpResponseInfo;
+import com.bgood.xn.network.request.ProductRequest;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
@@ -27,7 +37,7 @@ import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
  * @date:2014-11-13 下午4:59:00
  * @author:hg_liuzl@163.com
  */
-public class ProductDetailActivity extends BaseActivity implements OnClickListener
+public class ProductDetailActivity extends BaseActivity implements OnClickListener,TaskListenerWithState
 {
 	
     private ImageView m_iconImgV = null;  // 商品图片
@@ -36,7 +46,7 @@ public class ProductDetailActivity extends BaseActivity implements OnClickListen
     private TextView m_productInfoTv = null;  // 商品信息介绍
     private RelativeLayout m_lookCommentRl = null; // 查看评论信息
     private LinearLayout m_contactSellerLl = null; // 联系卖家
-    private ProductBean productBean;	//商品实体类
+    private String productId;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -44,9 +54,13 @@ public class ProductDetailActivity extends BaseActivity implements OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_product_detail);
         (new TitleBar(mActivity)).initTitleBar("产品详情");
-        productBean =  (ProductBean) getIntent().getSerializableExtra(ProductBean.BEAN_PRODUCT);
         findView();
-        setData();
+        productId =  getIntent().getStringExtra(ProductBean.KEY_PRODUCT_ID);
+        if(null!=productId){
+        	ProductRequest.getInstance().requestProductDetail(this, mActivity, productId);
+        }else{
+        	finish();
+        }
     }
 
     /**
@@ -74,10 +88,9 @@ public class ProductDetailActivity extends BaseActivity implements OnClickListen
             // 查看评论
             case R.id.product_detail_rl_look_comment:
                  intent = new Intent(ProductDetailActivity.this, ProductCommentShowActivity.class);
-                 intent.putExtra(ProductCommentShowActivity.KEY_PRODUCT_ID, productBean.product_id);
+                 intent.putExtra(ProductCommentShowActivity.KEY_PRODUCT_ID, productId);
                  startActivity(intent);
                 break;
-            
             // 联系卖家
             case R.id.product_detail_ll_contact_seller:
             	BToast.show(mActivity, "即将上线，敬请期待");
@@ -88,7 +101,7 @@ public class ProductDetailActivity extends BaseActivity implements OnClickListen
         }
     }
     
-    private void setData()
+    private void setData(final ProductBean productBean)
     {
     	ImageLoader mImageLoader;
 		DisplayImageOptions options;
@@ -113,4 +126,16 @@ public class ProductDetailActivity extends BaseActivity implements OnClickListen
     	m_priceTv.setText(productBean.getPrice());
     	m_productInfoTv.setText(productBean.intro);
     }
+
+	@Override
+	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
+		if(info.getState() == HttpTaskState.STATE_OK){
+			BaseNetWork bNetWork = info.getmBaseNetWork();
+			String strJson = bNetWork.getStrJson();
+			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+				ProductBean proBean = JSON.parseObject(strJson, ProductBean.class);
+				setData(proBean);
+			}
+		}
+	}
 }

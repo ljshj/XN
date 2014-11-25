@@ -11,6 +11,8 @@ import java.io.Serializable;
 public class UserInfoBean implements Serializable {
 	/**用户间传bean的key*/
 	public static final String KEY_USER_BEAN = "user_info_bean";
+	/**用户的编号*/
+	public static final String KEY_USER_ID = "user_id";
 //	public String roleID; // 用户权限ID
 //	/* fds搬运 */
 //	public String m_job;

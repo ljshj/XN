@@ -13,6 +13,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.WeiqiangAdapter;
+import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.bean.response.WeiqiangResponse;
 import com.bgood.xn.network.BaseNetWork;
@@ -35,10 +36,9 @@ import com.bgood.xn.widget.TitleBar;
  * @date:2014-10-24 下午3:50:55
  * @author:hg_liuzl@163.com
  */
-public class WeiqiangOfMeActivity extends BaseActivity implements OnItemClickListener,TaskListenerWithState,OnClickListener,IXListViewListener
+public class WeiqiangPersonActivity extends BaseActivity implements OnItemClickListener,TaskListenerWithState,OnClickListener,IXListViewListener
 {
 	/**我自己的微墙**/
-	public static final int WEI_QIANG_ME = 0;
 	private XListView m_weiqiang_listview;
 	private List<WeiQiangBean> mWeiqiangList = new ArrayList<WeiQiangBean>();
 	private WeiqiangAdapter weiqiangAdapter;
@@ -46,15 +46,17 @@ public class WeiqiangOfMeActivity extends BaseActivity implements OnItemClickLis
 	private boolean isRefresh = true;
 	private String mRefreshTime;
 	private WeiQiangBean mActionWeiqiang = null;
+	private String userid;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		userid = getIntent().getStringExtra(UserInfoBean.KEY_USER_ID);
 		setContentView(R.layout.layout_weiqiang_person);
 		(new TitleBar(mActivity)).initTitleBar("我的微墙");
 		initViews();
-		WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(WEI_QIANG_ME), String.valueOf(start_size), String.valueOf(start_size+PAGE_SIZE_ADD));
+		WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(WeiQiangBean.WEIQIANG_ALL),userid,String.valueOf(start_size), String.valueOf(start_size+PAGE_SIZE_ADD));
 	}
 	
 	private void initViews()
@@ -70,7 +72,7 @@ public class WeiqiangOfMeActivity extends BaseActivity implements OnItemClickLis
 	{
 		final WeiQiangBean weiqiang = (WeiQiangBean) adapter.getAdapter().getItem(location);
 		Intent intent = new Intent(mActivity, WeiqiangDetailActivity.class);
-		intent.putExtra(WeiqiangDetailActivity.BEAN_WEIQIANG_KEY,weiqiang);
+		intent.putExtra(WeiQiangBean.KEY_WEIQIANG_BEAN,weiqiang);
 		startActivity(intent);
 	}
 
@@ -81,8 +83,8 @@ public class WeiqiangOfMeActivity extends BaseActivity implements OnItemClickLis
 		case R.id.tv_zan_count:	//赞
 			wqb = (WeiQiangBean) v.getTag();
 			mActionWeiqiang = wqb;
-				mActionWeiqiang.like_count = String.valueOf(Integer.valueOf(mActionWeiqiang.like_count)+1);
-				weiqiangAdapter.notifyDataSetChanged();
+			mActionWeiqiang.like_count = String.valueOf(Integer.valueOf(mActionWeiqiang.like_count)+1);
+			weiqiangAdapter.notifyDataSetChanged();
 			WeiqiangRequest.getInstance().requestWeiqiangZan(this, mActivity, wqb.weiboid);
 			break;
 		case R.id.tv_comment_count:	//评论
@@ -197,11 +199,11 @@ public class WeiqiangOfMeActivity extends BaseActivity implements OnItemClickLis
 	public void onRefresh() {
 		isRefresh = true;
 			start_size = 0;
-			WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(WEI_QIANG_ME), String.valueOf(start_size), String.valueOf(start_size+PAGE_SIZE_ADD));
+			WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(WeiQiangBean.WEIQIANG_ALL),userid,String.valueOf(start_size), String.valueOf(start_size+PAGE_SIZE_ADD));
 	}
 	@Override
 	public void onLoadMore() {
 		isRefresh = false;
-			WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(WEI_QIANG_ME), String.valueOf(start_size), String.valueOf(start_size+PAGE_SIZE_ADD));
+			WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(WeiQiangBean.WEIQIANG_ALL),userid,String.valueOf(start_size), String.valueOf(start_size+PAGE_SIZE_ADD));
 	}
 }

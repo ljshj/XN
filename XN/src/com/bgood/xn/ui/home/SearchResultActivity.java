@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -32,8 +33,10 @@ import com.bgood.xn.adapter.ResultShowcaseAdapter;
 import com.bgood.xn.adapter.ResultWeiQiangAdapter;
 import com.bgood.xn.bean.CabinetResultBean;
 import com.bgood.xn.bean.MemberResultBean;
+import com.bgood.xn.bean.ProductBean;
 import com.bgood.xn.bean.SearchResultBean;
-import com.bgood.xn.bean.WeiQiangResultBean;
+import com.bgood.xn.bean.UserInfoBean;
+import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
@@ -42,6 +45,9 @@ import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.HomeRequest;
 import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.ui.user.info.NameCardActivity;
+import com.bgood.xn.ui.user.product.ProductDetailActivity;
+import com.bgood.xn.ui.weiqiang.WeiqiangDetailActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
@@ -83,7 +89,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 	private XListView m_showcaseXLv = null;    // 橱窗
 	
 	ArrayList<MemberResultBean> m_memberList = new ArrayList<MemberResultBean>();
-	ArrayList<WeiQiangResultBean> m_weiQiangList = new ArrayList<WeiQiangResultBean>();
+	ArrayList<WeiQiangBean> m_weiQiangList = new ArrayList<WeiQiangBean>();
 	ArrayList<CabinetResultBean> m_showcaseList = new ArrayList<CabinetResultBean>();
 
 	private String m_msg = "";
@@ -425,33 +431,30 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
     @Override
     public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3)
     {
-        switch (adapter.getId())
+    	 Intent intent = null;
+        switch (REQUEST_FLAG)
         {
-//            case R.id.search_result_member_xlv_list:
-//                UserBean userDTO = (UserBean) adapter.getAdapter().getItem(position);
-//                Intent intent = new Intent(SearchResultActivity.this, UserCardActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("user", userDTO);
-//                intent.putExtras(bundle);
-//                startActivity(intent);
-//                break;
-//            
-//            case R.id.search_result_weiqiang_xlv_list:
-//                WeiQiangBean weiQiangDTO = (WeiQiangBean)  adapter.getAdapter().getItem(position);
-//                Intent intent = new Intent(SearchResultActivity.this, CommentDetailActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("comment", weiQiangDTO);
-//                intent.putExtras(bundle);
-//                startActivity(intent);
-//                break;
-//            case R.id.search_result_showcase_xlv_list:
-//                CabinetBean cabinetDTO = (CabinetBean) adapter.getAdapter().getItem(position);
-//                Intent intent = new Intent(SearchResultActivity.this, ProductDetailActivity.class);
-//                intent.putExtra("productId", cabinetDTO.cabintId);
-//                startActivity(intent);
-//                break;
-//            default:
-//                break;
+            case CHOOSE_MEMBER:
+            	final MemberResultBean userDTO = (MemberResultBean) adapter.getAdapter().getItem(position);
+                intent = new Intent(SearchResultActivity.this, NameCardActivity.class);
+                intent.putExtra(UserInfoBean.KEY_USER_ID, userDTO.userid);
+                startActivity(intent);
+                break;
+            
+            case CHOOSE_WEI_QIANG:
+            	final WeiQiangBean weiQiangDTO = (WeiQiangBean)  adapter.getAdapter().getItem(position);
+                intent = new Intent(SearchResultActivity.this, WeiqiangDetailActivity.class);
+                intent.putExtra(WeiQiangBean.KEY_WEIQIANG_BEAN, weiQiangDTO);
+                startActivity(intent);
+                break;
+            case CHOOSE_CHU_CHUANG:
+            	final CabinetResultBean cabinetDTO = (CabinetResultBean) adapter.getAdapter().getItem(position);
+                intent = new Intent(SearchResultActivity.this, ProductDetailActivity.class);
+                intent.putExtra(ProductBean.KEY_PRODUCT_ID, cabinetDTO.productid);
+                startActivity(intent);
+                break;
+            default:
+                break;
         }
     }
     @Override
@@ -487,7 +490,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 				setDataAdapter(m_memberXLv, m_memberAdapter, m_memberList, listMember, m_memberStart);
 				break;
 			case 840003:	//微墙请求
-				ArrayList<WeiQiangResultBean> listWeiqiang = (ArrayList<WeiQiangResultBean>) JSON.parseArray(strJson, WeiQiangResultBean.class);
+				ArrayList<WeiQiangBean> listWeiqiang = (ArrayList<WeiQiangBean>) JSON.parseArray(strJson, WeiQiangBean.class);
 				setDataAdapter(m_weiQiangXLv, m_weiqiangAdapter, m_weiQiangList, listWeiqiang, m_weiqiangStart);
 				break;
 			case 840004:	//橱窗请求

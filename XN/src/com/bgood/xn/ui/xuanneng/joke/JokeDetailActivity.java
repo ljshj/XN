@@ -42,6 +42,7 @@ import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.dialog.BGDialog;
 import com.bgood.xn.view.xlistview.XListView;
+import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.TitleBar;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -54,7 +55,7 @@ import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
  * @date:2014-11-21 下午5:30:37
  * @author:hg_liuzl@163.com
  */
-public class JokeDetailActivity extends BaseActivity implements OnClickListener,TaskListenerWithState
+public class JokeDetailActivity extends BaseActivity implements OnClickListener,TaskListenerWithState,IXListViewListener
 {
 	/**炫能详情类的key*/
 	public static final String BEAN_JOKE_KEY = "bean_joke_key";
@@ -135,6 +136,7 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 		listview = (XListView) findViewById(R.id.weiqiang_detail_xlv);
 		listview.setPullLoadEnable(true);
 		listview.setPullRefreshEnable(false);
+		listview.setXListViewListener(this);
 	   
 	   	View head_weiqiang_detail = inflater.inflate(R.layout.weiqiang_item_layout, listview, false);
 		ivAuthorImg = (ImageView) head_weiqiang_detail.findViewById(R.id.iv_img);
@@ -275,13 +277,6 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
                 break;
         }
     }
-    
-    /**
-     * 点赞
-     */
-    private void zanWeiqiang()
-    {
-    }
 
 	@Override
 	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
@@ -316,8 +311,8 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 			listview.setPullLoadEnable(false);
 			BToast.show(mActivity, "数据加载完毕");
 		} else {
-			comment_start+=PAGE_SIZE_ADD;
 			listview.setPullLoadEnable(true);
+			comment_start+=PAGE_SIZE_ADD;
 		}
 
 		this.comments.addAll(comments);
@@ -388,6 +383,14 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 		
 		dialog.setCancelable(true);
 		dialog.showDialog(vSend);
+	}
+	@Override
+	public void onRefresh() {
+		
+	}
+	@Override
+	public void onLoadMore() {
+		XuannengRequest.getInstance().requestJokeContent(this, this, mJokeBean.jokeid, String.valueOf(comment_start), String.valueOf(comment_start+PAGE_SIZE_ADD));
 	}
 	
 }

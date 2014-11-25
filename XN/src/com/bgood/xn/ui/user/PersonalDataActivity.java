@@ -41,8 +41,8 @@ import com.bgood.xn.ui.user.info.BirthdayActivity;
 import com.bgood.xn.ui.user.info.BloodGroupActivity;
 import com.bgood.xn.ui.user.info.ConstellationActivity;
 import com.bgood.xn.ui.user.info.EmailActivity;
-import com.bgood.xn.ui.user.info.MyCardActivity;
 import com.bgood.xn.ui.user.info.NameActivity;
+import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.ui.user.info.PrivinceActivity;
 import com.bgood.xn.ui.user.info.SexActivity;
 import com.bgood.xn.ui.user.info.SignatureActivity;
@@ -79,8 +79,6 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
     private TextView       m_phoneTv         = null; // 手机号
     private RelativeLayout m_nameRl          = null; // 称昵布局
     private TextView       m_nameTv          = null; // 称昵
-    private RelativeLayout m_signatureRl     = null; // 个性签名布局
-    private TextView       m_signatureTv     = null; // 个性签名
     private RelativeLayout m_sexRl           = null; // 性别布局
     private TextView       m_sexTv           = null; // 性别
     private RelativeLayout m_ageRl           = null; // 年龄布局
@@ -130,8 +128,6 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
         m_phoneTv = (TextView) findViewById(R.id.presonal_data_tv_phone);
         m_nameRl = (RelativeLayout) findViewById(R.id.presonal_data_rl_name);
         m_nameTv = (TextView) findViewById(R.id.presonal_data_tv_name);
-        m_signatureRl = (RelativeLayout) findViewById(R.id.presonal_data_rl_signature);
-        m_signatureTv = (TextView) findViewById(R.id.presonal_data_tv_signature);
         m_sexRl = (RelativeLayout) findViewById(R.id.presonal_data_rl_sex);
         m_sexTv = (TextView) findViewById(R.id.presonal_data_tv_sex);
         m_ageRl = (RelativeLayout) findViewById(R.id.presonal_data_rl_age);
@@ -158,7 +154,6 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
     {
         m_iconRl.setOnClickListener(this);
         m_nameRl.setOnClickListener(this);
-        m_signatureRl.setOnClickListener(this);
         m_sexRl.setOnClickListener(this);
         m_ageRl.setOnClickListener(this);
         m_birthdayRl.setOnClickListener(this);
@@ -201,7 +196,6 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
         m_idTv.setText(userDTO.username);
         m_phoneTv.setText(userDTO.phonenumber);
         m_nameTv.setText(userDTO.nickn);
-        m_signatureTv.setText(userDTO.signature);
         
         int sex = userDTO.sex;
         String userSex = "";
@@ -242,12 +236,6 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
             // 称昵
             case R.id.presonal_data_rl_name:
                 intent = new Intent(PersonalDataActivity.this, NameActivity.class);
-                intent.putExtra(UserInfoBean.KEY_USER_BEAN, mUserBean);
-                startActivity(intent);
-                break;
-            // 个性签名
-            case R.id.presonal_data_rl_signature:
-                intent = new Intent(PersonalDataActivity.this, SignatureActivity.class);
                 intent.putExtra(UserInfoBean.KEY_USER_BEAN, mUserBean);
                 startActivity(intent);
                 break;
@@ -310,8 +298,8 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
                 break;
             // 名片预览按钮
             case R.id.presonal_data_btn_done:
-                intent = new Intent(PersonalDataActivity.this, MyCardActivity.class);
-                intent.putExtra(UserInfoBean.KEY_USER_BEAN, mUserBean);
+                intent = new Intent(PersonalDataActivity.this, NameCardActivity.class);
+                intent.putExtra(UserInfoBean.KEY_USER_ID, String.valueOf(BGApp.mLoginBean.userid));
                 startActivity(intent);
                 break;
             case R.id.btn_take_photo:

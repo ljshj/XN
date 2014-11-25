@@ -148,7 +148,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".ui.weiqiang.WeiqiangOfMeActivity"
+            android:name=".ui.weiqiang.WeiqiangPersonActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
@@ -297,7 +297,7 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.user.info.MyCardActivity"
+            android:name=".ui.user.info.NameCardActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity

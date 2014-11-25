@@ -84,14 +84,11 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 	private WeiqiangAdapter m_allFriendsAdapter;
 
 	
-	public static final int WEIQIANG_MY = 0;
-	public static final int WEIQIANG_ATTENTION = 1;
-	public static final int WEIQIANG_ALL = 2;
 	
 	public String mAttionWeiqiangRefreshTime = null;
 	public String mAllWeiqiangRefreshTime = null;
 	
-	private int m_type = WEIQIANG_ALL;
+	private int m_type = WeiQiangBean.WEIQIANG_ALL;
     
     
     private int weiqiang_all_start = 0;	//关注
@@ -265,7 +262,7 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 			break;
 		case R.id.tv_weiqiang_me:
 			dissmissPopupMore();
-			intent = new Intent(mActivity, WeiqiangOfMeActivity.class);
+			intent = new Intent(mActivity, WeiqiangPersonActivity.class);
 			mActivity.startActivity(intent);
 			break;
 		case R.id.tv_weiqiang_publish:
@@ -281,7 +278,7 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 		case R.id.tv_zan_count:	//赞
 			wqb = (WeiQiangBean) v.getTag();
 			mActionWeiqiang = wqb;
-			if(m_type == WEIQIANG_ALL){
+			if(m_type == WeiQiangBean.WEIQIANG_ALL){
 				mActionWeiqiang.like_count = String.valueOf(Integer.valueOf(mActionWeiqiang.like_count)+1);
 				m_allFriendsAdapter.notifyDataSetChanged();
 			}else{
@@ -343,7 +340,7 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 				}else{
 					etcontent.setText("");
 					if(type == WeiqiangActionType.TRANSPOND){
-						if(m_type == WEIQIANG_ALL){
+						if(m_type == WeiQiangBean.WEIQIANG_ALL){
 							mActionWeiqiang.forward_count = String.valueOf(Integer.valueOf(mActionWeiqiang.forward_count)+1);
 							m_allFriendsAdapter.notifyDataSetChanged();
 						}else{
@@ -352,7 +349,7 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 						}
 						WeiqiangRequest.getInstance().requestWeiqiangTranspond(WeiqiangFragment.this, mActivity, mActionWeiqiang.weiboid,content);
 					}else{
-						if(m_type == WEIQIANG_ALL){
+						if(m_type == WeiQiangBean.WEIQIANG_ALL){
 							mActionWeiqiang.comment_count = String.valueOf(Integer.valueOf(mActionWeiqiang.comment_count)+1);
 							m_allFriendsAdapter.notifyDataSetChanged();
 						}else{
@@ -420,36 +417,14 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 		mSelectPosition = location;
 	 	final WeiQiangBean weiqiang = (WeiQiangBean) adapter.getAdapter().getItem(location);
         Intent intent = new Intent(mActivity, WeiqiangDetailActivity.class);
-        intent.putExtra(WeiqiangDetailActivity.BEAN_WEIQIANG_KEY, weiqiang);
-        startActivityForResult(intent, REQUEST_WEIQIANG_DETAIL);
+        intent.putExtra(WeiQiangBean.KEY_WEIQIANG_BEAN, weiqiang);
+        startActivity(intent);
 	}
-	
-	
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		switch (requestCode) {
-		case REQUEST_WEIQIANG_DETAIL:
-			
-//			WeiQiangBean wqb = (WeiQiangBean) data.getSerializableExtra(WeiqiangDetailActivity.BEAN_WEIQIANG_KEY);
-//			m_allFriendsList.remove(mSelectPosition);
-//			m_allFriendsList.add(mSelectPosition, wqb);
-//			m_allFriendsAdapter.notifyDataSetChanged();
-			
-			break;
-
-		default:
-			break;
-		}
-	}
-	
-	
-	
 	
 	@Override
 	public void onRefresh() {
 		isRefresh = true;
-		if(m_type == WEIQIANG_ALL){
+		if(m_type == WeiQiangBean.WEIQIANG_ALL){
 			weiqiang_all_start = 0;
 			WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(m_type), String.valueOf(weiqiang_all_start), String.valueOf(weiqiang_all_start+PAGE_SIZE_ADD));
 		}else{
@@ -460,7 +435,7 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 	@Override
 	public void onLoadMore() {
 		isRefresh = false;
-		if(m_type == WEIQIANG_ALL){
+		if(m_type == WeiQiangBean.WEIQIANG_ALL){
 			WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(m_type), String.valueOf(weiqiang_all_start), String.valueOf(weiqiang_all_start+PAGE_SIZE_ADD));
 		}else{
 			WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(m_type), String.valueOf(weiqiang_attion_start), String.valueOf(weiqiang_attion_start+PAGE_SIZE_ADD));
@@ -470,7 +445,7 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 	private void setWeiqiangData(List<WeiQiangBean> weiqiangs) {
 		
 		if(isRefresh){
-			if(m_type == WEIQIANG_ALL){
+			if(m_type == WeiQiangBean.WEIQIANG_ALL){
 				mAllWeiqiangRefreshTime = ToolUtils.getNowTime();
 				m_allFriendsXLv.setRefreshTime(mAllWeiqiangRefreshTime);
 			}else{
@@ -488,7 +463,7 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 		}
 		
 		if(0 == weiqiangs.size()){
-			if(m_type == WEIQIANG_ALL){	//全部微墙
+			if(m_type == WeiQiangBean.WEIQIANG_ALL){	//全部微墙
 				  m_allFriendsXLv.setPullLoadEnable(false);
 	                 BToast.show(mActivity, "数据加载完毕");
 			}else{
@@ -498,7 +473,7 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 		}
 		
 		
-		if(m_type == WEIQIANG_ALL){	//全部微墙
+		if(m_type == WeiQiangBean.WEIQIANG_ALL){	//全部微墙
 			
 			if (isRefresh) {
 				m_allFriendsList.clear();
@@ -516,7 +491,7 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 			this.m_allFriendsList.addAll(weiqiangs);
 			m_allFriendsAdapter.notifyDataSetChanged();
 
-		}else if(m_type == WEIQIANG_ATTENTION){//关注的微墙
+		}else if(m_type == WeiQiangBean.WEIQIANG_ATTENTION){//关注的微墙
 			
 			if(isRefresh){
 				m_followFriendsList.clear();
@@ -553,7 +528,7 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 			tv_weiqiang_type_right_select.setTextColor(getResources().getColor(R.color.text_color_normal));
 			v_weiqiang_type_select_left_underline.setVisibility(View.VISIBLE);
 			v_weiqiang_type_select_right_underline.setVisibility(View.INVISIBLE);
-			m_type = WEIQIANG_ALL;
+			m_type = WeiQiangBean.WEIQIANG_ALL;
 			WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(m_type), String.valueOf(weiqiang_all_start), String.valueOf(weiqiang_all_start+PAGE_SIZE_ADD));
 
 			break;
@@ -562,7 +537,7 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 			tv_weiqiang_type_right_select.setTextColor(getResources().getColor(R.color.home_type_text_select));
 			v_weiqiang_type_select_left_underline.setVisibility(View.INVISIBLE);
 			v_weiqiang_type_select_right_underline.setVisibility(View.VISIBLE);
-			m_type = WEIQIANG_ATTENTION;
+			m_type = WeiQiangBean.WEIQIANG_ATTENTION;
 			WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(m_type), String.valueOf(weiqiang_attion_start), String.valueOf(weiqiang_attion_start+PAGE_SIZE_ADD));
 		}
 	}

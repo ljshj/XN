@@ -3,12 +3,17 @@ package com.bgood.xn.bean;
 import java.io.Serializable;
 
 /**
- * 商品实体类
+ * 
+ * @todo:商品实体类
+ * @date:2014-11-25 上午11:33:27
+ * @author:hg_liuzl@163.com
  */
 public class ProductBean implements Serializable
 {
 	
-	public static final String BEAN_PRODUCT = "bean_product";
+	public static final String KEY_PRODUCT_ID = "product_id";
+	
+	public static final String KEY_PRODUCT_BEAN = "product_bean";
 	
     private static final long serialVersionUID = 1L;
     
@@ -25,3 +30,4 @@ public class ProductBean implements Serializable
 		return "¥"+price;
 	}
 }
+
