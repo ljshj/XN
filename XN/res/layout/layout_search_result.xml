@@ -102,17 +102,18 @@
 
 	        <RadioButton
 	            android:id="@+id/radio_01"
-	            android:textColor="@color/black"
+	            android:textColor="@color/color_sex_radiobutton"
 	            android:layout_width="0dp"
 	            android:layout_weight="1"
 	            android:layout_height="wrap_content"
 	            android:button="@null"
 	            android:gravity="center"
+	            android:checked="true"
 	            android:text="会员" />
 
 	        <RadioButton
 	            android:id="@+id/radio_02"
-	            android:textColor="@color/black"
+	             android:textColor="@color/color_sex_radiobutton"
 	            android:layout_width="0dp"
 	            android:layout_weight="1"
 	            android:layout_height="wrap_content"
@@ -122,6 +123,7 @@
 
 	        <RadioButton
 	            android:id="@+id/radio_03"
+	             android:textColor="@color/color_sex_radiobutton"
 	            android:layout_width="0dp"
 	            android:layout_weight="1"
 	            android:layout_height="wrap_content"
@@ -141,31 +143,25 @@
 		        android:layout_weight="1"
 		        android:layout_height="wrap_content"
 		        android:scaleType="fitXY"
-		        android:paddingLeft="15dp"
-		        android:paddingRight="15dp"
-		        android:src="@drawable/check_logo"
+		        android:background="@drawable/img_home_type_select"
 		        />
 		    <ImageView 
 		        android:id="@+id/img_02"
 		        android:layout_width="0dp"
 		        android:layout_weight="1"
 		        android:scaleType="fitXY"
-		        android:paddingLeft="15dp"
-		        android:paddingRight="15dp"
 		        android:layout_height="wrap_content"
 		         android:visibility="invisible"
-		        android:src="@drawable/check_logo"
+		        android:background="@drawable/img_home_type_select"
 		        />
 		    <ImageView 
 		        android:id="@+id/img_03"
 		        android:layout_width="0dp"
 		        android:layout_weight="1"
 		        android:scaleType="fitXY"
-		        android:paddingLeft="15dp"
-		        android:paddingRight="15dp"
 		        android:layout_height="wrap_content"
 		        android:visibility="invisible"
-		        android:src="@drawable/check_logo"
+		        android:background="@drawable/img_home_type_select"
 		        />
 	   
 	    </LinearLayout>

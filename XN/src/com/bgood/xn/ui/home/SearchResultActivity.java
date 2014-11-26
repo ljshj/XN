@@ -203,31 +203,6 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		};
 		mTabPager.setAdapter(adapter);
 	}
-
-//	OnClickListener radio_click = new OnClickListener() {
-//
-//		@Override
-//		public void onClick(View view) {
-//			// TODO Auto-generated method stub
-//				switch (view.getId()) {
-//				case R.id.radio_01:
-//					setChooseView(CHOOSE_MEMBER);
-//					break;
-//				case R.id.radio_02:
-//					setChooseView(CHOOSE_WEI_QIANG);
-//					break;
-//				case R.id.radio_03:
-//					setChooseView(CHOOSE_CHU_CHUANG);
-//					break;
-//
-//				default:
-//					break;
-//				
-//			}
-//		}
-//		
-//	};
-	
 	
 	/**
 	 * 设置选中

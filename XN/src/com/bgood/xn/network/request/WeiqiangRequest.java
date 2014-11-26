@@ -9,6 +9,7 @@ import android.content.Context;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.HttpRequestAsyncTask;
 import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.system.SystemConfig.ServerType;
 
 /**
@@ -24,31 +25,6 @@ public class WeiqiangRequest extends BaseNetWork {
 		
 		return instance;
 	}
-	
-	/**
-	 * 
-	 * @todo: 获取炫墙列表
-	 * @date:2014-10-20 下午6:21:41
-	 * @author:hg_liuzl@163.com
-	 * @params:@param mHttpTaskListener
-	 * @params:@param context
-	 * @params:@param phone
-	 */
-	 public void requestWeiqiangList(TaskListenerWithState mHttpTaskListener,Context context,String type,String start,String end){
-	 	setMessageType(60001);
-		JSONObject body = new JSONObject();
-		try {
-			body.put("type", type);
-			body.put("userid", "");
-			body.put("start", start);
-			body.put("end", end);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		setBody(body);
-		 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
-	 }
-	
 	/**
 	 * 
 	 * @todo: 获取炫墙列表

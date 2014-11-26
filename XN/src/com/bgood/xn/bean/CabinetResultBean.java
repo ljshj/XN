@@ -8,6 +8,9 @@ public class CabinetResultBean {
 	public String productid;      // 橱窗Id
 	public String title;    // 橱窗名
 	public String img;   // 橱窗图片
-	public String img_thum;   // 橱窗图片
 	public String price;     // 橱窗价格
+	
+	public String getPrice(){
+		return "¥"+price;
+	}
 }

@@ -50,7 +50,7 @@ public class ResultShowcaseAdapter extends KBaseAdapter
         
         final CabinetResultBean cabinetDTO = (CabinetResultBean) mList.get(position);
         
-        mImageLoader.displayImage(cabinetDTO.img_thum,holder.iconImgV, options, new SimpleImageLoadingListener() {
+        mImageLoader.displayImage(cabinetDTO.img,holder.iconImgV, options, new SimpleImageLoadingListener() {
 			@Override
 			public void onLoadingComplete() {
 				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
@@ -60,7 +60,7 @@ public class ResultShowcaseAdapter extends KBaseAdapter
 		});
         
         holder.nameTv.setText(cabinetDTO.title);
-        holder.priceTv.setText(cabinetDTO.price);
+        holder.priceTv.setText(cabinetDTO.getPrice());
         
         return convertView;
     }

@@ -20,6 +20,9 @@ public class BGApp extends Application {
 	/**存放用户资料*/
 	public static UserInfoBean mUserBean;
 	
+	/**存放用户编号*/
+	public static String mUserId = "";
+	
 
 	@Override
 	public void onCreate()

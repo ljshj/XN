@@ -1,34 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ll_home_ican_navigate"
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="110dp"
-    android:layout_marginTop="70dp"
-    android:orientation="vertical" >
-    
-    <TextView 
-        android:id="@+id/home_ican_tv_one"
+    android:layout_centerInParent="true" >
+     
+     <AbsoluteLayout
+        android:id="@+id/al_home_can_navigate"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18dp"/>
-    
-    <TextView 
-        android:id="@+id/home_ican_tv_two"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18dp"/>
-    
-    <TextView 
-        android:id="@+id/home_ican_tv_three"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18dp"/>
-    
-    <TextView 
-        android:id="@+id/home_ican_tv_four"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18dp"/>
+        android:layout_height="wrap_content" >
 
-</LinearLayout>
+     <TextView
+         android:id="@+id/home_ican_tv_four"
+         android:layout_width="60dp"
+         android:layout_height="45dp"
+         android:layout_x="255dp"
+         android:layout_y="109dp"
+         android:background="@drawable/img_home_ican3"
+         android:gravity="center"
+         android:textSize="@dimen/home_ithink" />
+
+     <TextView
+         android:id="@+id/home_ican_tv_three"
+         android:layout_width="69dp"
+         android:layout_height="49dp"
+         android:layout_marginTop="15dp"
+         android:layout_x="183dp"
+         android:layout_y="69dp"
+         android:background="@drawable/img_home_ican4"
+         android:gravity="center"
+         android:textSize="@dimen/home_ithink" />
+
+     <TextView
+         android:id="@+id/home_ican_tv_two"
+         android:layout_width="65dp"
+         android:layout_height="50dp"
+         android:layout_x="88dp"
+         android:layout_y="105dp"
+         android:background="@drawable/img_home_ican2"
+         android:gravity="center"
+         android:paddingBottom="10dp"
+         android:textSize="@dimen/home_ithink" />
+
+     <TextView
+         android:id="@+id/home_ican_tv_one"
+         android:layout_width="70dp"
+         android:layout_height="49dp"
+         android:layout_x="24dp"
+         android:layout_y="227dp"
+         android:background="@drawable/img_home_ican1"
+         android:gravity="center"
+         android:textSize="@dimen/home_ithink" />
+
+    </AbsoluteLayout>
+
+     <View
+         android:layout_width="160dp"
+         android:layout_height="221dp"
+         android:layout_x="94dp"
+         android:layout_y="158dp"
+         android:background="@drawable/img_home_ican" />
+
+</AbsoluteLayout>
