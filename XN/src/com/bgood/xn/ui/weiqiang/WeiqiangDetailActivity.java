@@ -6,6 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.bgood.xn.adapter.CommentAdapter;
 import com.bgood.xn.adapter.ImageAdapter;
 import com.bgood.xn.bean.CommentBean;
 import com.bgood.xn.bean.ImageBean;
+import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.bean.WeiQiangBean.WeiqiangActionType;
 import com.bgood.xn.bean.response.CommentResponse;
@@ -38,6 +40,7 @@ import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.dialog.BGDialog;
@@ -129,6 +132,9 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		tvTranspontCount = (TextView) findViewById(R.id.tv_transpont_count);
 		tvShareCount = (TextView) findViewById(R.id.tv_share_count);
 		
+		ivAuthorImg.setOnClickListener(this);
+		tvAuthorName.setOnClickListener(this);
+		tvOldAuthorName.setOnClickListener(this);
 		tvZanCount.setOnClickListener(this);
 		tvReplyCount.setOnClickListener(this);
 		tvTranspontCount.setOnClickListener(this);
@@ -218,6 +224,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
     @Override
     public void onClick(View v)
     {
+    	 Intent intent = null;
         switch (v.getId())
         {
             // 赞
@@ -239,6 +246,17 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
             // 分享
             case R.id.tv_share_count:
                 break;
+            case R.id.iv_img:
+    		case R.id.tv_nick:
+                intent = new Intent(mActivity, NameCardActivity.class);
+                intent.putExtra(UserInfoBean.KEY_USER_ID, String.valueOf(weiqiangBean.userid));
+                startActivity(intent);
+    			break;
+    		case R.id.tv_old_user:
+    			intent = new Intent(mActivity, NameCardActivity.class);
+    			intent.putExtra(UserInfoBean.KEY_USER_ID, String.valueOf(weiqiangBean.fromuserid));
+    			startActivity(intent);
+    			break;
             default:
                 break;
         }

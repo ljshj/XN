@@ -10,9 +10,9 @@ import java.util.List;
  */
 public class JokeBean implements Serializable {
 	
-	/****0:随机;1:顺序*/
-	public static final int JOKE_RADOM = 0;
-	public static final int JOKE_ORDER = 1;
+	/****6:随机;5:顺序*/
+	public static final int JOKE_RADOM = 6;
+	public static final int JOKE_ORDER = 5;
 	
 	/**
 	 * @todo:TODO

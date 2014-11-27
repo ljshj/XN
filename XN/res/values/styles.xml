@@ -132,7 +132,7 @@
         <item name="android:background">@color/white</item>
         <item name="android:listSelector">@android:color/transparent</item>
         <item name="android:overScrollMode">never</item>
-        <item name="android:scrollbars">@null</item>
+        <item name="android:scrollbars">vertical</item>
     </style>
 
     <style name="tv_singline_ellipsize_end" parent="android:Widget.TextView">
@@ -248,8 +248,7 @@
     <!-- 选择项背景 -->
     <style name = "select_layout">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">0dp</item>
-        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">@dimen/comment_select_layout</item>
         <item name="android:textColor">@color/text_select_color</item>
         <item name="android:textSize">@dimen/weiqiang_comment</item>
         <item name="android:drawablePadding">10dp</item>
@@ -325,7 +324,14 @@
     
     <!-- 消息 -->
     <!-- 微墙 -->
-    <style name = "item_img">
+    
+    <style name = "item_parent">
+         <item name ="android:layout_width">wrap_content</item>
+        <item name ="android:layout_height">wrap_content</item>
+        <item name="android:focusable">false</item>
+    </style>
+    
+    <style name = "item_img" parent="item_parent">
         <item name ="android:layout_width">45dp</item>
         <item name ="android:layout_height">45dp</item>
         <item name ="android:layout_margin">5dp</item>
@@ -333,23 +339,19 @@
         <item name ="android:background">@drawable/icon_default</item>
     </style>
     
-    <style name = "item_nick">
-        <item name ="android:layout_width">wrap_content</item>
-        <item name ="android:layout_height">wrap_content</item>
+    <style name = "item_nick" parent="item_parent">
         <item name ="android:layout_marginRight">5dp</item>
         <item name ="android:textColor">@color/blue</item>
         <item name ="android:textSize">14sp</item>
     </style>
     
-    <style name = "item_time">
-        <item name ="android:layout_width">wrap_content</item>
-        <item name ="android:layout_height">wrap_content</item>
+    <style name = "item_time" parent="item_parent">
         <item name ="android:layout_marginRight">5dp</item>
         <item name ="android:textColor">@color/gray</item>
         <item name ="android:textSize">12sp</item>
     </style>
     
-    <style name = "item_content">
+    <style name = "item_content" parent="item_parent">
         <item name ="android:layout_width">match_parent</item>
         <item name ="android:layout_height">wrap_content</item>
         <item name ="android:layout_margin">10dp</item>

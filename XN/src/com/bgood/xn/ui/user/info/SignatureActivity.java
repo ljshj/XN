@@ -1,7 +1,9 @@
 package com.bgood.xn.ui.user.info;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -48,6 +50,32 @@ public class SignatureActivity extends BaseActivity implements TaskListenerWithS
     {
         m_contentEt = (EditText) findViewById(R.id.signature_edit_content);
         m_wordcountTv = (TextView) findViewById(R.id.signature_tv_wordcount);
+        
+        if (!TextUtils.isEmpty(m_userDTO.signature))
+        {
+        	m_contentEt.setText(m_userDTO.signature);
+        	m_contentEt.setSelection(m_userDTO.signature.length());
+        	m_wordcountTv.setText(m_userDTO.signature.length()+"/30");
+        }
+        
+        
+        m_contentEt.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int arg1, int arg2, int arg3) {
+				m_wordcountTv.setText(s.length()+"/30");
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,int arg3) {
+			}
+			
+			@Override
+			public void afterTextChanged(Editable e) {
+				
+			}
+		});
+        
         m_contentEt.setText(m_userDTO.signature); 
         m_contentEt.setSelection(m_userDTO.signature.length()); 
        findViewById(R.id.signature_btn_done).setOnClickListener(new OnClickListener() {

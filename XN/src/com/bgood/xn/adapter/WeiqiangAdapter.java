@@ -86,8 +86,12 @@ public class WeiqiangAdapter extends KBaseAdapter
 			}
 		});
 		
+		holder.ivAuthorImg.setOnClickListener(mListener);
+		holder.ivAuthorImg.setTag(weiqiangBean);
 		
 		holder.tvAuthorName.setText(weiqiangBean.name);
+		holder.tvAuthorName.setOnClickListener(mListener);
+		holder.tvAuthorName.setTag(weiqiangBean);
 		
 		
 		holder.tvTime.setText(ToolUtils.getFormatDate(weiqiangBean.date_time));
@@ -95,6 +99,8 @@ public class WeiqiangAdapter extends KBaseAdapter
 		if(!TextUtils.isEmpty(weiqiangBean.fromname)){	//如果转发人存在
 			holder.llTransArea.setVisibility(View.VISIBLE);
 			holder.tvOldAuthorName.setText(weiqiangBean.fromname);
+			holder.tvOldAuthorName.setOnClickListener(mListener);
+			holder.tvOldAuthorName.setTag(weiqiangBean);
 			holder.tvContent.setText(weiqiangBean.content);
 			holder.tvComments.setText(weiqiangBean.Comments);
 			showImgs(weiqiangBean.imgs,holder.oldgridView);

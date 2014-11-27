@@ -23,6 +23,7 @@ import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.WeiqiangRequest;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
@@ -47,14 +48,15 @@ public class WeiqiangPersonActivity extends BaseActivity implements OnItemClickL
 	private String mRefreshTime;
 	private WeiQiangBean mActionWeiqiang = null;
 	private String userid;
-	
+	private boolean isSelf = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		userid = getIntent().getStringExtra(UserInfoBean.KEY_USER_ID);
 		setContentView(R.layout.layout_weiqiang_person);
-		(new TitleBar(mActivity)).initTitleBar("我的微墙");
+		isSelf = userid.equals(BGApp.mUserId);
+		(new TitleBar(mActivity)).initTitleBar((isRefresh?"我":"TA")+"的微墙");
 		initViews();
 		WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(WeiQiangBean.WEIQIANG_ALL),userid,String.valueOf(start_size), String.valueOf(start_size+PAGE_SIZE_ADD));
 	}
@@ -63,6 +65,7 @@ public class WeiqiangPersonActivity extends BaseActivity implements OnItemClickL
 	{
 		m_weiqiang_listview = (XListView) findViewById(R.id.weiqiang_person_listview);
 		weiqiangAdapter = new WeiqiangAdapter(mWeiqiangList,mActivity,this);
+		m_weiqiang_listview.setXListViewListener(this);
 		m_weiqiang_listview.setAdapter(weiqiangAdapter);
 		m_weiqiang_listview.setOnItemClickListener(this);
 	}

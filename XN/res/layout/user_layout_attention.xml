@@ -9,9 +9,7 @@
           android:id="@+id/follow_xlv_list"
           style="@style/common_listview"
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:divider="@color/gray"
-          android:dividerHeight="1px">
+          android:layout_height="match_parent">
       </com.bgood.xn.view.xlistview.XListView>
     
 </LinearLayout>

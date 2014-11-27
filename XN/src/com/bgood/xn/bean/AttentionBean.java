@@ -5,6 +5,13 @@ package com.bgood.xn.bean;
  * @author:hg_liuzl@163.com
  */
 public class AttentionBean {
+	
+	/**我的粉丝**/
+	public static final int ATTENTION = 0;
+
+	/**我的关注**/
+	public static final int FANS = 1;
+	
 	public int distance;
 	public int sex;
 	public int searchtype;

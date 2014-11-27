@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
+import com.bgood.xn.R.color;
 import com.bgood.xn.bean.AttentionBean;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
@@ -20,10 +22,9 @@ import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
  */
 public class AttentionAdapter extends KBaseAdapter 
 {
-	private int mType = 0;
-    public AttentionAdapter(List<?> mList, Activity mActivity,int type) {
-		super(mList, mActivity);
-		this.mType = type;
+	public AttentionAdapter(List<?> mList, Activity mActivity,
+			OnClickListener listener) {
+		super(mList, mActivity, listener);
 	}
 
 	@Override
@@ -39,6 +40,7 @@ public class AttentionAdapter extends KBaseAdapter
             holder.userSexIV = (ImageView) convertView.findViewById(R.id.iv_sex);
             holder.userIdentitytV = (TextView) convertView.findViewById(R.id.tv_identity);
             holder.userSignName = (TextView) convertView.findViewById(R.id.tv_user_signname);
+            holder.btnAttentionType = (Button) convertView.findViewById(R.id.btn_attention_type);
             convertView.setTag(holder);
         }
         else
@@ -47,8 +49,6 @@ public class AttentionAdapter extends KBaseAdapter
         }
         
         final AttentionBean mAttentionBean = (AttentionBean) mList.get(position);
-        
-        
         
         mImageLoader.displayImage(mAttentionBean.img,holder.userIconImgV, options, new SimpleImageLoadingListener() {
 			@Override
@@ -59,9 +59,6 @@ public class AttentionAdapter extends KBaseAdapter
 			}
 		});
         
-        
-        
-        
         holder.userNameTv.setText(mAttentionBean.name);
         
         holder.userSignName.setText(mAttentionBean.signatrue);
@@ -71,6 +68,19 @@ public class AttentionAdapter extends KBaseAdapter
         holder.userIdentitytV.setText(mActivity.getResources().getString(R.string.account_vip,mAttentionBean.level));
 
         holder.userIdentitytV.setVisibility(mAttentionBean.level<1 ? View.GONE:View.VISIBLE);
+        
+        if(mAttentionBean.searchtype == AttentionBean.ATTENTION){
+//        	holder.btnAttentionType.setText(mAttentionBean.guanzhutype == 0 ?"关注":"已关注");
+        	holder.btnAttentionType.setText("取消关注");
+        	holder.btnAttentionType.setBackgroundColor(mActivity.getResources().getColor(color.gray));
+        }else{
+        	holder.btnAttentionType.setText(mAttentionBean.guanzhutype == 1 ?"关注":"相互关注");
+        	holder.btnAttentionType.setBackgroundColor(mActivity.getResources().getColor(mAttentionBean.guanzhutype == 1 ?color.green:color.gray));
+        }
+        
+        holder.btnAttentionType.setOnClickListener(mListener);
+        
+        holder.btnAttentionType.setTag(mAttentionBean);
         
         return convertView;
     }

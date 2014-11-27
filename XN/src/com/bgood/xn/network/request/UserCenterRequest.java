@@ -217,10 +217,12 @@ public class UserCenterRequest extends BaseNetWork {
 	  * @params:@param value
 	  */
 	 
-	 public void requestAttention(TaskListenerWithState mHttpTaskListener,Context context,String type){
+	 public void requestAttention(TaskListenerWithState mHttpTaskListener,Context context,String userid,String byUserid,String type){
 		 	setMessageType(20004);
 			JSONObject body = new JSONObject();
 			try {
+				body.put("userid", userid);
+				body.put("byuserid", byUserid);
 				body.put("type", type);
 			} catch (JSONException e) {
 				e.printStackTrace();

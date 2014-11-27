@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- common font size -->
+     <dimen name="common_size_title">18sp</dimen>
+     <dimen name="common_size_label">11sp</dimen>
+     <dimen name="common_size_context">12sp</dimen>
+    
+    <!-- 首页 -->
+     <dimen name="pop_size_context">12sp</dimen>
+     <dimen name="drop_size_context">15sp</dimen>
+     <dimen name="select_size_context">11sp</dimen>
+     <dimen name="edit_size_context">11sp</dimen>
+    <!-- 消息 -->
+    <!-- 微墙 -->
+    <!-- 炫能 -->
+    <!-- 个人中心 -->
+    <dimen name="weiqiang_comment">17sp</dimen>
+    <dimen name="pull_refresh_listview_text_size">12sp</dimen>
+    
+
+</resources>

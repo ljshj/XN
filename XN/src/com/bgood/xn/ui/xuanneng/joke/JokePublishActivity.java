@@ -213,7 +213,6 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 	 * @params:@param path
 	 */
 	private void afterGetFile(String path) {
-		//filePath.add(path);
 		tempFile = new File(path);
 		files.add(files.size()-1,tempFile);
 		listImg.add(new ImageBean());

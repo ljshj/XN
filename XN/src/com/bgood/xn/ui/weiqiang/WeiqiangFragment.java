@@ -32,6 +32,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.WeiqiangAdapter;
+import com.bgood.xn.bean.MemberResultBean;
 import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.bean.WeiQiangBean.WeiqiangActionType;
@@ -45,6 +46,8 @@ import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.BaseFragment;
+import com.bgood.xn.ui.home.SearchResultActivity;
+import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.utils.ShareUtils;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
@@ -322,6 +325,19 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 			wqb = (WeiQiangBean) v.getTag();
 			share.doShare();
 			break;
+		case R.id.iv_img:
+		case R.id.tv_nick:
+			wqb = (WeiQiangBean) v.getTag();
+            intent = new Intent(mActivity, NameCardActivity.class);
+            intent.putExtra(UserInfoBean.KEY_USER_ID, String.valueOf(wqb.userid));
+            startActivity(intent);
+			break;
+		case R.id.tv_old_user:
+			wqb = (WeiQiangBean) v.getTag();
+            intent = new Intent(mActivity, NameCardActivity.class);
+            intent.putExtra(UserInfoBean.KEY_USER_ID, String.valueOf(wqb.fromuserid));
+            startActivity(intent);
+			break;
 		}
 	}
 	
@@ -563,7 +579,6 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
-			JSONObject body = bNetWork.getBody();
 			String strJson = bNetWork.getStrJson();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				switch(bNetWork.getMessageType()){

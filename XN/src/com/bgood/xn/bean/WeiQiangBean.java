@@ -22,7 +22,7 @@ public class WeiQiangBean implements Serializable {
 
 	public static final String KEY_WEIQIANG_BEAN = "key_weiqiang_bean";
 	
-	public String userid;
+	public int userid;
 	public String weiboid;
 	public String name;
 	public String photo;

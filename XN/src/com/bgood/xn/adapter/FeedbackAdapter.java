@@ -3,6 +3,7 @@ package com.bgood.xn.adapter;
 import java.util.List;
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -45,7 +46,7 @@ public class FeedbackAdapter extends KBaseAdapter {
 			viewHolder.tvResponseTime.setText(ToolUtils.getFormatDate(fb.backtime));
 			viewHolder.tvResponseContent.setText("回复:"+fb.messageback);
 			
-			if(null == fb.messageback){
+			if(TextUtils.isEmpty(fb.messageback)){
 				viewHolder.tvResponser.setVisibility(View.GONE);
 				viewHolder.tvResponseTime.setVisibility(View.GONE);
 				viewHolder.tvResponseContent.setVisibility(View.GONE);
