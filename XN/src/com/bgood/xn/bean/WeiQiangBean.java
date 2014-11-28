@@ -10,6 +10,7 @@ import java.util.List;
  */
 public class WeiQiangBean implements Serializable {
 
+	public static final int WEIQIANG_FIND = 0;
 	public static final int WEIQIANG_ATTENTION = 1;
 	public static final int WEIQIANG_ALL = 2;
 	

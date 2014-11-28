@@ -56,9 +56,9 @@ public class WeiqiangPersonActivity extends BaseActivity implements OnItemClickL
 		userid = getIntent().getStringExtra(UserInfoBean.KEY_USER_ID);
 		setContentView(R.layout.layout_weiqiang_person);
 		isSelf = userid.equals(BGApp.mUserId);
-		(new TitleBar(mActivity)).initTitleBar((isRefresh?"我":"TA")+"的微墙");
+		(new TitleBar(mActivity)).initTitleBar((isSelf?"我":"TA")+"的微墙");
 		initViews();
-		WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(WeiQiangBean.WEIQIANG_ALL),userid,String.valueOf(start_size), String.valueOf(start_size+PAGE_SIZE_ADD));
+		WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(WeiQiangBean.WEIQIANG_FIND),userid,String.valueOf(start_size), String.valueOf(start_size+PAGE_SIZE_ADD));
 	}
 	
 	private void initViews()

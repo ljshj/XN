@@ -59,7 +59,13 @@ public class AttentionAdapter extends KBaseAdapter
 			}
 		});
         
-        holder.userNameTv.setText(mAttentionBean.name);
+        
+        holder.userIconImgV.setOnClickListener(mListener);
+		holder.userIconImgV.setTag(mAttentionBean);
+		
+		holder.userNameTv.setText(mAttentionBean.name);
+		holder.userNameTv.setOnClickListener(mListener);
+		holder.userNameTv.setTag(mAttentionBean);
         
         holder.userSignName.setText(mAttentionBean.signatrue);
         
@@ -74,8 +80,8 @@ public class AttentionAdapter extends KBaseAdapter
         	holder.btnAttentionType.setText("取消关注");
         	holder.btnAttentionType.setBackgroundColor(mActivity.getResources().getColor(color.gray));
         }else{
-        	holder.btnAttentionType.setText(mAttentionBean.guanzhutype == 1 ?"关注":"相互关注");
-        	holder.btnAttentionType.setBackgroundColor(mActivity.getResources().getColor(mAttentionBean.guanzhutype == 1 ?color.green:color.gray));
+        	holder.btnAttentionType.setText(mAttentionBean.guanzhutype == 0 ?"关注":"相互关注");
+        	holder.btnAttentionType.setBackgroundColor(mActivity.getResources().getColor(mAttentionBean.guanzhutype == 0 ?color.green:color.gray));
         }
         
         holder.btnAttentionType.setOnClickListener(mListener);

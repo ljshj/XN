@@ -3,6 +3,7 @@ package com.bgood.xn.ui.user;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,6 +13,8 @@ import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.AttentionAdapter;
 import com.bgood.xn.bean.AttentionBean;
+import com.bgood.xn.bean.UserInfoBean;
+import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.bean.response.AttentionResponse;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
@@ -22,6 +25,7 @@ import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
@@ -130,9 +134,9 @@ public class AttentionActivity extends BaseActivity implements IXListViewListene
 
 	@Override
 	public void onClick(View v) {
+		AttentionBean bean = (AttentionBean) v.getTag();
 		switch (v.getId()) {
 		case R.id.btn_attention_type:
-			AttentionBean bean = (AttentionBean) v.getTag();
 			
 			if(bean.searchtype == 0){
 				UserCenterRequest.getInstance().requestAttention(AttentionActivity.this, mActivity,String.valueOf(bean.userid),BGApp.mUserId,String.valueOf(1));
@@ -142,6 +146,12 @@ public class AttentionActivity extends BaseActivity implements IXListViewListene
 				bean.guanzhutype = bean.guanzhutype ==1?0:1;
 			}
 			attentionAdapter.notifyDataSetChanged();
+			break;
+		case R.id.iv_user:
+		case R.id.tv_username:
+            Intent intent = new Intent(mActivity, NameCardActivity.class);
+            intent.putExtra(UserInfoBean.KEY_USER_ID, String.valueOf(bean.userid));
+            startActivity(intent);
 			break;
 
 		default:

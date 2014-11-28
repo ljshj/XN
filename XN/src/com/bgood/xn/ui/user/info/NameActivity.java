@@ -88,7 +88,7 @@ public class NameActivity extends BaseActivity implements TaskListenerWithState
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				BToast.show(mActivity, "修改成功");
 				final UserInfoBean ufb = BGApp.mUserBean;
-				ufb.username = m_name;
+				ufb.nickn = m_name;
 				BGApp.mUserBean = ufb;
 				finish();
 			}else{

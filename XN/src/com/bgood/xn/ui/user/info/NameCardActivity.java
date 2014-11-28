@@ -22,8 +22,10 @@ import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.ui.user.AttentionActivity;
 import com.bgood.xn.ui.user.product.ShowcaseActivity;
 import com.bgood.xn.ui.weiqiang.WeiqiangPersonActivity;
+import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -53,6 +55,7 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
     private TextView tvWeiqiang;
     private TextView tvXuanneg;
     private TextView tvChuchuang;
+    
 	
 	
 	@Override
@@ -90,10 +93,10 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 		findViewById(R.id.tv_add_friend).setOnClickListener(this);
 		findViewById(R.id.tv_call_message).setOnClickListener(this);
 		
-		tvWeiqiang = (TextView) findViewById(R.id.tv_xuanneng);
+		tvWeiqiang = (TextView) findViewById(R.id.tv_weiqiang);
 		tvWeiqiang.setOnClickListener(this);
 		
-		tvXuanneg = (TextView) findViewById(R.id.tv_weiqiang);
+		tvXuanneg = (TextView) findViewById(R.id.tv_xuanneng);
 		tvXuanneg.setOnClickListener(this);
 		
 		tvChuchuang = (TextView) findViewById(R.id.tv_shop);
@@ -110,16 +113,23 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
         case R.id.tv_add_attention:
         	if(isSelf){
         		Toast.makeText(NameCardActivity.this, "不能关注自己", Toast.LENGTH_SHORT).show();
+        	}else{
+        		UserCenterRequest.getInstance().requestAttention(NameCardActivity.this, mActivity,userId,BGApp.mUserId,String.valueOf(0));
         	}
             break;
 		case R.id.tv_add_friend:
 			if(isSelf){
 		    Toast.makeText(NameCardActivity.this, "不能加自己为好友", Toast.LENGTH_SHORT).show();
+			}else{
+				
+				Toast.makeText(NameCardActivity.this, "敬请期待", Toast.LENGTH_SHORT).show();
 			}
 			break;
 		case R.id.tv_call_message:
 			if(isSelf){
 			Toast.makeText(NameCardActivity.this, "不能与自己发起临时会话", Toast.LENGTH_SHORT).show();
+			}else{
+				Toast.makeText(NameCardActivity.this, "敬请期待", Toast.LENGTH_SHORT).show();
 			}
 			break;
 		case R.id.tv_xuanneng:
@@ -202,10 +212,20 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			String strJson = bNetWork.getStrJson();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
-				user = JSON.parseObject(strJson, UserInfoBean.class);
-				setData(user);
-				if(!isSelf){
-					(new TitleBar(mActivity)).initTitleBar(user.nickn+"的名片");
+				switch (bNetWork.getMessageType()) {
+				case 820001:
+					user = JSON.parseObject(strJson, UserInfoBean.class);
+					setData(user);
+					if(!isSelf){
+						(new TitleBar(mActivity)).initTitleBar(user.nickn+"的名片");
+					}
+				break;
+				case 820004:
+					BToast.show(mActivity, "关注成功");
+				break;
+
+				default:
+					break;
 				}
 			}
 		}
