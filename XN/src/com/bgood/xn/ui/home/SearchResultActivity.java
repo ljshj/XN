@@ -10,10 +10,12 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -24,6 +26,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
@@ -119,12 +122,25 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 	private void findView()
 	{
 		m_contentEt = (EditText) findViewById(R.id.search_result_et_content);
+		m_contentEt.setText(m_msg);
+		
+		m_contentEt.setOnEditorActionListener(new OnEditorActionListener() {
+			
+			@Override
+			public boolean onEditorAction(TextView v, int actionID, KeyEvent arg2) {
+				if(actionID == EditorInfo.IME_ACTION_SEARCH){
+					doSearch();
+				}
+				return false;
+			}
+		});
+		
+		
 		
 		m_serachBtn = (Button) findViewById(R.id.search_result_btn_search);
 		
         ll_home_search_check_type = (ViewGroup) findViewById(R.id.ll_home_search_check_type);
         ll_home_search_check_type.setOnClickListener(this);
-		m_contentEt.setText(m_msg);
 		
 		home_tv_check_search_indecator = (TextView) findViewById(R.id.home_tv_check_search_indecator);
 		
@@ -143,10 +159,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		
 		//加载布局
 		LayoutInflater inflater = LayoutInflater.from(this);
-		
-		
-		
-		
+
 		View view1 = inflater.inflate(R.layout.home_layout_result_listview, null);
 		m_memberXLv = (XListView) view1.findViewById(R.id.xListView);
 		m_memberXLv.setPullLoadEnable(true);
@@ -506,30 +519,30 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 	            popupWindowCheckSearchType.dismiss();
 	            break;
 		case R.id.search_result_btn_search:
-			 final String msg = m_contentEt.getText().toString().trim();
-  		    if (!TextUtils.isEmpty(msg))
-  		    {
-  		        m_msg = msg;
-  		        m_start = 0;
-  		        m_memberStart = 0;
-  		        m_weiqiangStart = 0;
-  		        m_cabinetStart = 0;
-  		        m_memberList.clear();
-  		        m_weiQiangList.clear();
-  		        m_showcaseList.clear();
-  				HomeRequest.getInstance().requestSearch(this, this, search_type, m_msg, 114.1917953491211f, 22.636533737182617f, m_start, m_start + PAGE_SIZE_ADD);
-  		    }
-  		    else
-  		    {
-  		    	BToast.show(mActivity, "请输入搜索内容");
-  		        return;
-  		    }
+			doSearch();
 			break;
 
 		default:
 			break;
 		}
-		
+	}
+	
+	private void doSearch(){
+		final String msg = m_contentEt.getText().toString().trim();
+		    if (!TextUtils.isEmpty(msg)){
+		        m_msg = msg;
+		        m_start = 0;
+		        m_memberStart = 0;
+		        m_weiqiangStart = 0;
+		        m_cabinetStart = 0;
+		        m_memberList.clear();
+		        m_weiQiangList.clear();
+		        m_showcaseList.clear();
+				HomeRequest.getInstance().requestSearch(this, this, search_type, m_msg, 114.1917953491211f, 22.636533737182617f, m_start, m_start + PAGE_SIZE_ADD);
+		    }else{
+		    		BToast.show(mActivity, "请输入搜索内容");
+		        return;
+		    }
 	}
 
 	@Override
