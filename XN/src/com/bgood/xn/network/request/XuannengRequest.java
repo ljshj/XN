@@ -197,10 +197,11 @@ public class XuannengRequest extends BaseNetWork {
 		 * @params:@param context
 		 * @params:@param phone
 		 */
-		 public void requestXuanPublishList(TaskListenerWithState mHttpTaskListener,Context context,String type,String start,String end){
+		 public void requestXuanPublishList(TaskListenerWithState mHttpTaskListener,Context context,String userid,int type,int start,int end){
 		 	setMessageType(70008);
 			JSONObject body = new JSONObject();
 			try {
+				body.put("userid", userid);
 				body.put("type", type);
 				body.put("start", start);
 				body.put("end", end);

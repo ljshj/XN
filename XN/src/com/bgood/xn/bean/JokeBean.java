@@ -10,6 +10,11 @@ import java.util.List;
  */
 public class JokeBean implements Serializable {
 	
+	/**未审核**/
+	public static final int JOKE_UN_VERIFY = 0;
+	/**已经审核**/
+	public static final int JOKE_VERIFY = 1;
+	
 	/****6:随机;5:顺序*/
 	public static final int JOKE_RADOM = 6;
 	public static final int JOKE_ORDER = 5;

@@ -3,10 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
     <include layout="@layout/title_bar"/>
-
-
     <com.bgood.xn.view.xlistview.XListView
         android:id="@+id/weiqiang_person_listview"
         style="@style/common_listview"

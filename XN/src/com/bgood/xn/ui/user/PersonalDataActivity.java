@@ -165,13 +165,9 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
         m_doneBtn.setOnClickListener(this);
     }
     
-    /**
-     * 设置用户数据显示
-     * @param userDTO
-     */
-    private void setData(UserInfoBean userDTO)
-    {
-		ImageLoader mImageLoader;
+    
+    private void setPhoto(UserInfoBean userDTO){
+    	ImageLoader mImageLoader;
 		DisplayImageOptions options;
 		options = new DisplayImageOptions.Builder()
 		.showStubImage(R.drawable.icon_default)
@@ -190,9 +186,15 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
 				anim.start();
 			}
 		});
-        
-        
-        
+    }
+    
+    /**
+     * 设置用户数据显示
+     * @param userDTO
+     */
+    private void setData(UserInfoBean userDTO)
+    {
+    	setPhoto(userDTO);
         m_idTv.setText(userDTO.username);
         m_phoneTv.setText(userDTO.phonenumber);
         m_nameTv.setText(userDTO.nickn);
@@ -416,6 +418,10 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
 	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
+			if(null == bNetWork){
+				BToast.show(mActivity, "图片上传失败");
+				return;
+			}
 			switch (bNetWork.getMessageType()) {
 			case 820002:
 				BToast.show(mActivity, bNetWork.getReturnCode() ==  ReturnCode.RETURNCODE_OK?"头像修改成功":"头像修改失败");
@@ -427,7 +433,8 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
 					mUserBean.photo = object.optString("smallurl");
 					BGApp.mUserBean = mUserBean;
 					UserCenterRequest.getInstance().requestUpdatePerson(this, mActivity, "photo", mUserBean.photo);
-					//BToast.show(mActivity, "图片上传成功");
+					setPhoto(mUserBean);
+					BToast.show(mActivity, "图片上传成功");
 				}else{
 					BToast.show(mActivity, "图片上传失败");
 				}

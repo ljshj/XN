@@ -1,12 +1,7 @@
 package com.bgood.xn.ui.user.more;
 
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,15 +11,16 @@ import android.view.View.OnClickListener;
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.ApkBean;
+import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
-import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
-import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
+import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.utils.ConfigUtil;
+import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.utils.update.UpdateService;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
@@ -90,7 +86,7 @@ public class MoreActivity extends BaseActivity implements OnClickListener,TaskLi
 	}
 	
 
-	private void doUpdate(final ApkBean apkBean) {
+	private void doNeedUpdate(final ApkBean apkBean) {
 		new AlertDialog.Builder(mActivity).setTitle("发现新版本")
 				.setMessage(apkBean.explain)
 				.setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
@@ -99,8 +95,19 @@ public class MoreActivity extends BaseActivity implements OnClickListener,TaskLi
 						dialog.dismiss();
 						yesBtnWork(apkBean);
 					}
-				}).setNegativeButton("取消", null).create().show();
+				}).create().show();
 	}
+	
+	private void doNoNeedUpdate(){
+		new AlertDialog.Builder(mActivity).setTitle("已经是最新版本")
+		.setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(android.content.DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		}).create().show();
+	}
+	
 
 	/**
 	 * @time 2014-5-22 下午2:19:22
@@ -118,11 +125,14 @@ public class MoreActivity extends BaseActivity implements OnClickListener,TaskLi
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			String strJson = bNetWork.getStrJson();
-			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_MAX){
+			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				final ApkBean apk = JSON.parseObject(strJson, ApkBean.class);
-				doUpdate(apk);
-			}else{
-				BToast.show(mActivity, "已经是最新版本");
+				boolean isNeedUpdate = ToolUtils.isNeedUpdate(apk.versioncode, mActivity);
+				if(isNeedUpdate){
+					doNeedUpdate(apk);
+				}else{
+					doNoNeedUpdate();
+				}
 			}
 		}
 	}

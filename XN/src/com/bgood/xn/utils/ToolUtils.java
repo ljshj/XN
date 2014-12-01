@@ -14,6 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -629,4 +630,31 @@ public class ToolUtils {
 		String str = dateFormat.format( date ); 
 		return str;
 	}
+	
+	
+	/**
+	 * 
+	 * @todo:比较一下是否有新版本
+	 * @date:2014-12-1 下午3:43:29
+	 * @author:hg_liuzl@163.com
+	 * @params:@param version
+	 * @params:@return
+	 * 说明，远程服务器升级包版本格式必须与本地应用版本格式一致 如 1.1.1.1和1.1.1.2
+	 */
+	public static boolean isNeedUpdate(String version,Activity mActivity) {
+		/**远程app,版本*/
+		String[] netVersion = version.split("\\.");
+		/**当前应用的app,版本*/
+		String[] curVersion = ConfigUtil.getVersionName(mActivity).split("\\.");
+
+		for(int i = 0;i<netVersion.length;i++){
+			int netV = Integer.valueOf(netVersion[i]);
+			int curV = Integer.valueOf(curVersion[i]);
+			if(netV > curV){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 }

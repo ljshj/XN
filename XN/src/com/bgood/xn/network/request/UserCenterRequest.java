@@ -311,12 +311,11 @@ public class UserCenterRequest extends BaseNetWork {
 			    setMessageType(80001);
 				JSONObject body = new JSONObject();
 				try {
-					body.put("version", version);
 					body.put("os", "android");
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
 				setBody(body);
-			new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			new HttpRequestAsyncTask(ServerType.LoginServer,this, mHttpTaskListener, context).execute();
 		}
 }
