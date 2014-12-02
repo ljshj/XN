@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.ImageBean;
-import com.bgood.xn.ui.user.LoginActivity;
+import com.bgood.xn.ui.user.account.LoginActivity;
 import com.bgood.xn.view.photoview.PhotoView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;

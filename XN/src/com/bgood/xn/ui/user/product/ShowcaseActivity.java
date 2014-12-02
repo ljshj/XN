@@ -60,6 +60,7 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 	public static final String KEY_USER_ID = "key_user_id";
 	private Button m_backBtn = null; // 返回按钮
 	private Button m_moreBtn = null; // 更多按钮
+	private TextView tvTitle = null;	//橱窗标题
 	private FrameLayout m_backgroundFl = null; // 背景
 	private EditText m_searchEt = null; // 搜索输入框
 	private ImageView m_showcaseIconImgV = null; // 橱窗图片
@@ -89,12 +90,16 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 	private int m_start_page = 0;
 	private int m_add_pagesize = BaseActivity.PAGE_SIZE_ADD;
 	
+	/**是不是自己*/
+	private boolean isSelf = true;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_showcase);
 		mUserId = getIntent().getStringExtra(KEY_USER_ID);
+		isSelf = mUserId.equals(BGApp.mUserId)?true:false;
 		findView();
 		setListener();
 		setRightMenu();
@@ -106,7 +111,11 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 	private void findView()
 	{
 		m_backBtn = (Button) findViewById(R.id.showcase_btn_back);
+		tvTitle = (TextView) findViewById(R.id.tv_title);
+		tvTitle.setText(isSelf?"我的橱窗":"TA的橱窗");
 		m_moreBtn = (Button) findViewById(R.id.showcase_btn_more);
+		m_moreBtn.setVisibility(isSelf?View.VISIBLE:View.GONE);
+		
 		m_backgroundFl = (FrameLayout) findViewById(R.id.showcase_fl_background);
 		m_searchEt = (EditText) findViewById(R.id.showcase_et_search);
 		m_showcaseIconImgV = (ImageView) findViewById(R.id.showcase_imgv_showcase_icon);

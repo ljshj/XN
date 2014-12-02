@@ -25,6 +25,9 @@ import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.ui.user.AttentionActivity;
 import com.bgood.xn.ui.user.product.ShowcaseActivity;
 import com.bgood.xn.ui.weiqiang.WeiqiangPersonActivity;
+import com.bgood.xn.ui.xuanneng.XuanNengMainActivity;
+import com.bgood.xn.ui.xuanneng.joke.JokeMeActivity;
+import com.bgood.xn.ui.xuanneng.joke.JokePersonActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -133,6 +136,10 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 			}
 			break;
 		case R.id.tv_xuanneng:
+			
+			intent = new Intent(mActivity, XuanNengMainActivity.class);
+			intent.putExtra(UserInfoBean.KEY_USER_ID, userId);
+			startActivity(intent);
 			
 			break;
 		case R.id.tv_weiqiang:

@@ -13,6 +13,8 @@ import com.bgood.xn.R;
 import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.ui.user.account.LoginActivity;
+import com.bgood.xn.ui.user.account.ModifyPasswordActivity;
 import com.bgood.xn.view.dialog.BottomDialog;
 import com.bgood.xn.widget.TitleBar;
 

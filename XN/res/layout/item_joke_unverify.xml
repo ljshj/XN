@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"   
+    android:descendantFocusability="blocksDescendants"
+    >
+        
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        
+	     <ImageView
+	         android:id="@+id/iv_img"
+	         style="@style/item_img"
+	         android:layout_margin="10dp"
+	         />
+        
+           <TextView
+              android:id="@+id/tv_nick"
+              style="@style/item_nick"
+              android:layout_alignTop="@id/iv_img"
+              android:layout_toRightOf="@id/iv_img"
+              android:text="张三丰"
+              />
+
+          <TextView
+              android:id="@+id/tv_time"
+              style="@style/item_time"
+              android:layout_alignLeft="@id/tv_nick"
+              android:layout_alignBottom="@id/iv_img"
+              android:layout_alignParentRight="true"
+              android:text="2014-03-12"
+              />
+          
+            <TextView
+              android:id="@+id/tv_joke_status"
+              style="@style/item_time"
+              android:layout_alignTop="@id/iv_img"
+              android:layout_alignParentRight="true"
+              android:textColor="@color/white"
+              android:text="失败"
+              />
+    </RelativeLayout>
+            
+       <TextView
+	       android:id="@+id/tv_comments"
+	       style="@style/item_content"
+	       android:text="内容" />
+    
+       <GridView 
+	       android:id="@+id/gv_show_img"
+	       android:layout_width="match_parent"
+	       android:layout_height="wrap_content"
+	       android:verticalSpacing="3dp"
+	       android:horizontalSpacing="3dp"
+	       android:numColumns="4"
+	       />
+
+</LinearLayout>

@@ -8,7 +8,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.bgood.xn.db.PreferenceUtil;
 import com.bgood.xn.system.BGApp;
-import com.bgood.xn.ui.user.LoginActivity;
+import com.bgood.xn.ui.user.account.LoginActivity;
 
 
 public class BaseActivity extends Activity {

@@ -4,57 +4,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:id="@+id/account_center_rl_title"
-        style="@style/common_top_title_style" >
+	<include layout="@layout/title_bar"/>
+   <TextView
+       android:layout_width="match_parent"
+       android:layout_height="60dp"
+       android:background="#ECECEC"
+       android:gravity="center"
+       android:text="请选择您喜欢的号码" />
 
-        <Button
-            android:id="@+id/register_select_number_btn_back"
-            style="@style/common_btn_back_style" />
-
-        <TextView
-            style="@style/common_tv_title_style"
-            android:text="注册" />
-
-        <Button
-            android:id="@+id/register_select_number_btn_exchange"
-            style="@style/common_btn_title_right_style"
-            android:visibility="invisible"
-            android:text="换一批" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <ProgressBar
-            android:id="@+id/layout_progress"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerInParent="true"
-            android:visibility="visible" />
-
-        <LinearLayout
-            android:id="@+id/layout_main"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="gone" >
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="60dp"
-                android:background="#ECECEC"
-                android:gravity="center"
-                android:text="请选择您喜欢的号码" />
-
-            <ListView
-                android:id="@+id/register_select_number_lv_list"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:divider="@null" >
-            </ListView>
-        </LinearLayout>
-    </RelativeLayout>
+   <ListView
+       android:id="@+id/register_select_number_lv_list"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:divider="@null" />
 
 </LinearLayout>

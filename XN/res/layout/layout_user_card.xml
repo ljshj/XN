@@ -173,7 +173,7 @@
                              		  style="@style/select_layout"
                                      android:background="@null"
                              		  />
- 						<View style="@style/cut_line" />
+ 						<View style="@style/cut_line_horizontal" />
  						
  						<TextView 
  						       android:id="@+id/tv_iwant"
@@ -183,21 +183,21 @@
                                      android:background="@null"
                                      />
 
- 						   	<View style="@style/cut_line" />
+ 						   	<View style="@style/cut_line_horizontal" />
                         
                            <TextView android:id="@+id/tv_xuanneng"
                                      android:drawableLeft="@drawable/img_user_card_xuanneng"
                                      android:text="我的炫能"
                                      style="@style/select_layout"/>
                            
- 						<View style="@style/cut_line" />
+ 						<View style="@style/cut_line_horizontal" />
                        
                           <TextView android:id="@+id/tv_weiqiang"
                                     android:drawableLeft="@drawable/img_user_card_weiqiang"
                                     android:text="我的微墙"
                                     style="@style/select_layout" />
                           
-						 <View style="@style/cut_line" />
+						 <View style="@style/cut_line_horizontal" />
                      	  
                      	  <TextView android:id="@+id/tv_shop"
                                     android:drawableLeft="@drawable/img_user_center_shop"

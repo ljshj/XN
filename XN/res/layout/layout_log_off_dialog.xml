@@ -11,7 +11,7 @@
 			style="@style/text_dialog"
           />
         <View 
-            style="@style/cut_line"
+            style="@style/cut_line_horizontal"
             />
 
         <TextView
@@ -20,7 +20,7 @@
 			style="@style/text_dialog"
              />
          <View 
-            style="@style/cut_line"
+            style="@style/cut_line_horizontal"
             />
         <TextView
             android:id="@+id/log_off_btn_cancel"

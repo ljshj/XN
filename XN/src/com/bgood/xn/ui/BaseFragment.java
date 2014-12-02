@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.bgood.xn.db.PreferenceUtil;
 import com.bgood.xn.system.BGApp;
-import com.bgood.xn.ui.user.LoginActivity;
+import com.bgood.xn.ui.user.account.LoginActivity;
 
 /**
  * @todo:所有Fragment基类

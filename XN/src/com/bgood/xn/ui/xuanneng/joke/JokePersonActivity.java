@@ -111,45 +111,43 @@ public class JokePersonActivity extends BaseActivity implements OnItemClickListe
 			String strJson = bNetWork.getStrJson();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				switch(bNetWork.getMessageType()){
-				case 860001:	//获取微墙列表
+				case 870002:	//获取微墙详细内容
+					break;
+				case 870003:
+					break;
+				case 870004:
+					break;
+				case 870005:	//转发微墙
+					break;
+				case 870006:
+					break;
+				case 870007:
+					break;
+				case 870008:	//获取微墙列表
 					JokeResponse response  = JSON.parseObject(strJson, JokeResponse.class);
 					setJokeData(response.jokes);
-					break;
-				case 860002:	//获取微墙详细内容
-					break;
-				case 860003:
-					break;
-				case 860004:
-					break;
-				case 860005:	//转发微墙
-					break;
-				case 860006:
-					break;
-				case 860007:
-					break;
-				case 860008:	//赞微墙
 					break;
 				}
 				
 				}else{
 					switch(bNetWork.getMessageType()){
-					case 860001:
+					case 870001:
 						m_joke_listview.stopRefresh();
 						m_joke_listview.stopLoadMore();
 						break;
-					case 860002:
+					case 870002:
 						break;
-					case 860003:
+					case 870003:
 						break;
-					case 860004:
+					case 870004:
 						break;
-					case 860005:
+					case 870005:
 						break;
-					case 860006:
+					case 870006:
 						break;
-					case 860007:
+					case 870007:
 						break;
-					case 860008:
+					case 870008:
 						break;
 					}
 				}

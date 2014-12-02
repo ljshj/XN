@@ -1,4 +1,4 @@
-package com.bgood.xn.ui.user;
+package com.bgood.xn.ui.user.account;
 
 import android.content.Intent;
 import android.os.Bundle;

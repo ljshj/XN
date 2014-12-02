@@ -314,7 +314,7 @@
           
             
             <View android:layout_marginTop="5dp"
-                   style="@style/cut_line" />
+                   style="@style/cut_line_horizontal" />
             
             <TextView
                     android:id="@+id/tv_modify_pwd"
@@ -324,7 +324,7 @@
                     style="@style/select_layout"
                     />
              
-            <View style="@style/cut_line" />
+            <View style="@style/cut_line_horizontal" />
       
            
             <TextView
@@ -337,7 +337,7 @@
             
 
            
-            <View style="@style/cut_line" />
+            <View style="@style/cut_line_horizontal" />
 
              <TextView
                  android:id="@+id/tv_quit_login"

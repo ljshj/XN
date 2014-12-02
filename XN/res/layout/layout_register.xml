@@ -55,6 +55,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/register_cb_selector"
                     android:button="@null"
+                    android:text="已阅读并同意心想能成"
                     android:checked="true" />
 
                 <TextView
@@ -86,13 +87,10 @@
                     android:gravity="center"
                     android:text="心想能成欢迎您"
                     android:textColor="@color/white"
+                    android:drawableRight="@drawable/img_right"
+                    android:drawablePadding="5dp"
                     android:textSize="18sp" />
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="3dp"
-                    android:src="@drawable/img_right" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

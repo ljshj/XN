@@ -23,6 +23,7 @@ import android.widget.GridView;
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.ImageAdapter;
 import com.bgood.xn.bean.ImageBean;
+import com.bgood.xn.bean.JokeBean;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
@@ -74,15 +75,19 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
     
     private int uploadCount = 0;
     
+    private JokeBean mJokeBean = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_weiqiang_publish);
-		(new TitleBar(mActivity)).initTitleBar("有奖投稿");
+		
+		mJokeBean = (JokeBean) getIntent().getSerializableExtra(JokeBean.JOKE_BEAN);
+		(new TitleBar(mActivity)).initTitleBar(null!=mJokeBean ? "有奖投稿":"修改投搞");
 		files.add(null);
 		initViews();
+		setData();
 	}
 
 	private void initViews()
@@ -93,6 +98,16 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 		gridview_images.setOnItemClickListener(this);
 		comment_content = (EditText) findViewById(R.id.comment_content);
 		findViewById(R.id.weiqiang_publish_submit).setOnClickListener(this);
+	}
+	
+	private void setData() {
+		if(null == mJokeBean){
+			return;
+		}
+		
+		comment_content.setText(mJokeBean.content);
+		gridview_images.setVisibility(View.GONE);
+		
 	}
 
 

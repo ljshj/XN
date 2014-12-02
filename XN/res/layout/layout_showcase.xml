@@ -14,6 +14,7 @@
             style="@style/common_btn_back_style" />
 
         <TextView
+            android:id="@+id/tv_showcase_title"
             style="@style/common_tv_title_style"
             android:text="我的橱窗" />
 

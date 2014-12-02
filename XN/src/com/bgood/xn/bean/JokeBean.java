@@ -19,6 +19,8 @@ public class JokeBean implements Serializable {
 	public static final int JOKE_RADOM = 6;
 	public static final int JOKE_ORDER = 5;
 	
+	public static final String JOKE_BEAN = "joke_bean";
+	
 	/**
 	 * @todo:TODO
 	 * @date:2014-11-22 下午2:58:10
@@ -42,6 +44,8 @@ public class JokeBean implements Serializable {
 	public String type;
 	public List<ImageBean> imgs;
 	public String Comments;
+	
+	public int status;		/**1，审核中 2.未通过审核***/
 	
 	/**操作
 	 * 转发，还是评论

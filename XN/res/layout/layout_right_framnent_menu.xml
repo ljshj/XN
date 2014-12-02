@@ -26,7 +26,7 @@
                 android:textSize="14sp" />
             
             
-               <View style="@style/cut_line" />
+               <View style="@style/cut_line_horizontal" />
                         
           	  <TextView android:id="@+id/tv_add_product"
                        android:drawableLeft="@drawable/img_user_center_shop"
@@ -34,7 +34,7 @@
                        style="@style/select_layout_small"
                        />
           	  
-          	   <View style="@style/cut_line" />
+          	   <View style="@style/cut_line_horizontal" />
                         
           	  <TextView android:id="@+id/tv_list_product"
                        android:drawableLeft="@drawable/img_user_center_shop"
@@ -42,14 +42,14 @@
                        style="@style/select_layout_small"
                        />
           	  
-          	   <View style="@style/cut_line" />
+          	   <View style="@style/cut_line_horizontal" />
                         
           	  <TextView android:id="@+id/tv_individuation"
                        android:drawableLeft="@drawable/img_user_center_shop"
                        android:text="个性化模块"
                        style="@style/select_layout_small"
                        />
-            <View style="@style/cut_line" />
+            <View style="@style/cut_line_horizontal" />
             
         </LinearLayout>
 

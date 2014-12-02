@@ -8,6 +8,7 @@ import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.HttpRequestAsyncTask;
 import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.system.SystemConfig.ServerType;
+import com.bgood.xn.utils.MD5;
 
 /**
  * @author lzlong@zwmob.com
@@ -73,7 +74,7 @@ public class UserCenterRequest extends BaseNetWork {
 			try {
 				body.put("pnum", phone);
 				body.put("userid", userid);
-				body.put("pwd", pwd);
+				body.put("pwd",MD5.getMD5(pwd));
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -87,7 +88,7 @@ public class UserCenterRequest extends BaseNetWork {
 			JSONObject body = new JSONObject();
 			try {
 				body.put("userid", userid);
-				body.put("pwd", pwd);
+				body.put("pwd", MD5.getMD5(pwd));
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -107,13 +108,14 @@ public class UserCenterRequest extends BaseNetWork {
 			setBody(body);
 			 new HttpRequestAsyncTask(ServerType.LoginServer,this, mHttpTaskListener, context).execute();
 		}
+	 
 	 /**忘记密码时重置密码*/
 	 public void requestReSetPwd(TaskListenerWithState mHttpTaskListener,Context context,String userid,String pwd){
 		 	setMessageType(10007);
 			JSONObject body = new JSONObject();
 			try {
 				body.put("userid", userid);
-				body.put("pwd", pwd);
+				body.put("pwd",  MD5.getMD5(pwd));
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}

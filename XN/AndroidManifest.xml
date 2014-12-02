@@ -185,7 +185,7 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.user.LoginActivity"
+            android:name="com.bgood.xn.ui.user.account.LoginActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
@@ -197,7 +197,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".ui.user.ForgetPasswordCodeActivity"
+            android:name="com.bgood.xn.ui.user.account.ForgetPasswordCodeActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
@@ -209,31 +209,13 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".ui.user.RegisterActivity"
-            android:alwaysRetainTaskState="true"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity
-            android:name=".ui.user.RegisterCodeActivity"
-            android:alwaysRetainTaskState="true"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity
-            android:name=".ui.user.RegisterSelectNumberActivity"
-            android:alwaysRetainTaskState="true"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity
             android:name=".ui.user.RegisterDoneActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".ui.user.ModifyPasswordActivity"
+            android:name="com.bgood.xn.ui.user.account.ModifyPasswordActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
@@ -395,15 +377,6 @@
             android:name=".ui.user.ApplicationManagementActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.user.MyXuanNengActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.user.MyXuanNengMainActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" />
-
 
        <!-- 炫能,幽默秀 -->
         <activity
@@ -442,7 +415,24 @@
             android:screenOrientation="portrait" >
         </activity>
 
-
+         <activity
+            android:name="com.bgood.xn.ui.xuanneng.joke.JokePersonActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+         <activity
+            android:name="com.bgood.xn.ui.xuanneng.joke.JokeMeActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+         
+                  <activity
+            android:name="com.bgood.xn.ui.xuanneng.XuanNengMainActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
         
         <!-- 裁剪相片 -->
 		<activity android:name=".utils.pic.CropImageActivity"
