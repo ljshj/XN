@@ -51,7 +51,7 @@ public class UserCenterRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(ServerType.LoginServer,this, mHttpTaskListener, context).execute();
 		}
 	 
 	 /**更换邦固号列表*/
@@ -64,7 +64,7 @@ public class UserCenterRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(ServerType.LoginServer,this, mHttpTaskListener, context).execute();
 		}
 	 
 	 /**发送注册请求*/
@@ -270,8 +270,8 @@ public class UserCenterRequest extends BaseNetWork {
 		 	setMessageType(20006);
 			JSONObject body = new JSONObject();
 			try {
-				body.put("oldpassword", oldPwd);
-				body.put("newpassword", newPwd);
+				body.put("oldpassword", MD5.getMD5(oldPwd));
+				body.put("newpassword", MD5.getMD5(newPwd));
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -309,7 +309,7 @@ public class UserCenterRequest extends BaseNetWork {
 		 * 
 		 * @todo:检查版本升级
 		 */
-		 public void requestCheckVesion(TaskListenerWithState mHttpTaskListener,Context context,String version){
+		 public void requestCheckVesion(TaskListenerWithState mHttpTaskListener,Context context){
 			    setMessageType(80001);
 				JSONObject body = new JSONObject();
 				try {

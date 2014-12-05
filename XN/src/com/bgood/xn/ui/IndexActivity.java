@@ -14,6 +14,7 @@ import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.system.SystemConfig;
+import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.welcome.NavigateActivity;
 
 /**

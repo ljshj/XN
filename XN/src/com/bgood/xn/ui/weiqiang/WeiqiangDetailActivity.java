@@ -14,6 +14,8 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -39,7 +41,7 @@ import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.system.BGApp;
-import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
@@ -57,7 +59,7 @@ import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
  * @todo:微墙详情界面
  * @date:2014-10-24 下午2:22:14
  */
-public class WeiqiangDetailActivity extends BaseActivity implements OnClickListener,TaskListenerWithState,IXListViewListener
+public class WeiqiangDetailActivity extends BaseActivity implements OnClickListener,TaskListenerWithState,IXListViewListener,OnItemClickListener
 {
 	/**微墙详情类的key*/
 	private XListView listview;
@@ -92,6 +94,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_weiqiang_detail);
 		weiqiangBean = (WeiQiangBean) getIntent().getSerializableExtra(WeiQiangBean.KEY_WEIQIANG_BEAN);
+		weiqiangId = weiqiangBean.weiboid;
 		titleBar = new TitleBar(mActivity);
 		titleBar.initTitleBar("微墙详情");
 		findView();
@@ -109,6 +112,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		listview.setPullLoadEnable(true);
 		listview.setPullRefreshEnable(false);
 		listview.setXListViewListener(this);
+		listview.setOnItemClickListener(this);
 	   
 	   	View head_weiqiang_detail = inflater.inflate(R.layout.weiqiang_item_layout, listview, false);
 		ivAuthorImg = (ImageView) head_weiqiang_detail.findViewById(R.id.iv_img);
@@ -236,12 +240,12 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
             // 评论
             case R.id.tv_comment_count:
             	type = WeiqiangActionType.RESPONSE;
-                createSendDialog();
+                createSendDialog("");
                 break;
             // 转发
             case R.id.tv_transpont_count:
             	type = WeiqiangActionType.TRANSPOND;
-            	createSendDialog();
+            	createSendDialog("");
                 break;
             // 分享
             case R.id.tv_share_count:
@@ -317,7 +321,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	 * @author lzlong@zwmob.com
 	 * @time 2014-3-26 下午2:09:30
 	 */
-	private void createSendDialog() {
+	private void createSendDialog(String tag) {
 
 		int screenWidth = (int) (mActivity.getWindowManager().getDefaultDisplay().getWidth()); // 屏幕宽
 		int screenHeight = (int) (mActivity.getWindowManager().getDefaultDisplay().getHeight()*0.3); // 屏幕高
@@ -329,6 +333,8 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		vSend.requestFocus();
 
 		final EditText etcontent = (EditText) vSend.findViewById(R.id.et_content);
+		etcontent.setText(tag);
+		etcontent.setSelection(tag.length());
 		vSend.findViewById(R.id.btn_send).setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -381,6 +387,13 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	@Override
 	public void onLoadMore() {
 		XuannengRequest.getInstance().requestJokeContent(this, this, weiqiangId, String.valueOf(comment_start), String.valueOf(comment_start+PAGE_SIZE_ADD));
+	}
+
+
+	@Override
+	public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3) {
+		final CommentBean bean = (CommentBean) adapter.getAdapter().getItem(position);
+		createSendDialog("@"+bean.name+"  ");
 	}
 	
 }

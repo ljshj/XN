@@ -47,7 +47,7 @@ import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.HomeRequest;
-import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.ui.user.product.ProductDetailActivity;
 import com.bgood.xn.ui.weiqiang.WeiqiangDetailActivity;

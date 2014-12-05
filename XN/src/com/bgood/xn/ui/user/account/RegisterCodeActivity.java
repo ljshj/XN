@@ -22,7 +22,7 @@ import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
-import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
 
@@ -108,12 +108,9 @@ public class RegisterCodeActivity extends BaseActivity implements TaskListenerWi
 					}
 					
 					Intent intent = new Intent(RegisterCodeActivity.this, RegisterSelectNumberActivity.class);
-					Bundle bundle = new Bundle();
-					bundle.putStringArray("ids", ids);
-					intent.putExtras(bundle);
+					intent.putExtra("ids", ids);
 					intent.putExtra("phone", m_phone);
 					startActivity(intent);
-					
 					
 				} catch (JSONException e) {
 					e.printStackTrace();

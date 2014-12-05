@@ -18,9 +18,6 @@
 	            style="@style/xuanneng_tab_text"
 	            android:checked="true"
 	            android:text="我的投搞" />
-	        <View 
-	            style="@style/cut_line_vertical"
-	            />
 
 	        <RadioButton
 	            android:id="@+id/radio_02"

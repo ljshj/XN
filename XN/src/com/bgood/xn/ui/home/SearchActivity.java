@@ -20,7 +20,7 @@ import android.widget.TextView.OnEditorActionListener;
 
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.HistoryAdapter;
-import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.view.BToast;
 
 /***

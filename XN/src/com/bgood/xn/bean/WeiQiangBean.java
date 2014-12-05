@@ -47,6 +47,28 @@ public class WeiQiangBean implements Serializable {
 		RESPONSE,TRANSPOND
 	}
 	
+	public static WeiQiangBean copy(WeiqiangCorattionBean bean){
+		WeiQiangBean wbean = new WeiQiangBean();
+		
+		wbean.userid = bean.userid;
+		wbean.weiboid = bean.weiboid;
+		wbean.name = bean.name;
+		wbean.photo = bean.photo;
+		wbean.distance = bean.distance;
+		wbean.date_time = bean.date_time;
+		wbean.fromuserid = bean.fromuserid;
+		wbean.fromname = bean.fromname;
+		wbean.content =bean.content;
+		wbean.like_count = bean.like_count;
+		wbean.comment_count = bean.comment_count;
+		wbean.forward_count = bean.forward_count;
+		wbean.share_count =bean.share_count;
+		wbean.type = bean.type;
+		wbean.imgs = bean.imgs;
+		//wbean.Comments;
+		return wbean;
+	}
+	
 }
 
 

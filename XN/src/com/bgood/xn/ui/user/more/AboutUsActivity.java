@@ -3,7 +3,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
-import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.utils.ConfigUtil;
 import com.bgood.xn.widget.TitleBar;
 

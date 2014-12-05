@@ -1,16 +1,27 @@
 package com.bgood.xn.ui.user.account;
 
+import org.json.JSONObject;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
+import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
+import com.bgood.xn.bean.MemberLoginBean;
+import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
+import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
+import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.request.UserCenterRequest;
-import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.system.BGApp;
+import com.bgood.xn.system.SystemConfig;
+import com.bgood.xn.ui.MainActivity;
+import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
 
@@ -89,7 +100,25 @@ public class ForgetPasswordNewPassWordActivity extends BaseActivity implements T
 
 	@Override
 	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
-		/**密码重置后，是否需要重新登录*/
-		
+		if(info.getState() == HttpTaskState.STATE_OK){
+			BaseNetWork bNetWork = info.getmBaseNetWork();
+			JSONObject body = bNetWork.getBody();
+			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+				boolean isSuccess = body.opt("success").equals("True");
+				if(isSuccess){
+					BToast.show(mActivity, "密码重置成功");
+					Intent intent = new Intent(this, LoginActivity.class);
+					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK); 
+					startActivity(intent);
+					finish();
+				}else{
+					BToast.show(mActivity, "密码重置失败");
+				}
+			}else{
+				BToast.show(mActivity, "密码重置失败");
+			}
+		}else{
+			BToast.show(mActivity, "密码重置失败");
+		}
 	}
 }

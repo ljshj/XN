@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.bgood.xn.R;
-import com.bgood.xn.ui.BaseActivity;
 import com.bgood.xn.ui.MainActivity;
+import com.bgood.xn.ui.base.BaseActivity;
 
 /**
  * 

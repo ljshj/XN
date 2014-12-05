@@ -2,7 +2,6 @@ package com.bgood.xn.ui.xuanneng.joke;
 
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -27,9 +26,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.JokeAdapter;
-import com.bgood.xn.adapter.KBaseAdapter;
 import com.bgood.xn.bean.JokeBean;
-import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.bean.JokeBean.JokeActionType;
 import com.bgood.xn.bean.response.JokeResponse;
 import com.bgood.xn.network.BaseNetWork;
@@ -40,12 +37,9 @@ import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.network.request.XuannengRequest;
-import com.bgood.xn.ui.BaseActivity;
-import com.bgood.xn.ui.weiqiang.WeiqiangDetailActivity;
+import com.bgood.xn.ui.base.BaseShowDataActivity;
 import com.bgood.xn.ui.xuanneng.XuannengFragment;
 import com.bgood.xn.utils.ShareUtils;
-import com.bgood.xn.utils.ToolUtils;
-import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.dialog.BGDialog;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
@@ -57,7 +51,7 @@ import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
  * @date:2014-11-22 下午2:38:22
  * @author:hg_liuzl@163.com
  */
-public class JokeRankActivity extends BaseActivity implements OnClickListener, OnItemClickListener,TaskListenerWithState,IXListViewListener
+public class JokeRankActivity extends BaseShowDataActivity implements OnClickListener, OnItemClickListener,TaskListenerWithState,IXListViewListener
 {
 	
 	private ViewPager mTabPager;//页卡内容
@@ -276,50 +270,9 @@ public class JokeRankActivity extends BaseActivity implements OnClickListener, O
 		}
 	}
 
-    /**
-     * 设置会员数据
-     * @param list
-     */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-	private void setDataAdapter(XListView xListView,KBaseAdapter adapter,List<?> showList,List resultlist)
-    {
-    	mRefreshTime = ToolUtils.getNowTime();
-    	xListView.setRefreshTime(mRefreshTime);
-    	stopLoad(xListView);
-    	
-    	if(null == resultlist || resultlist.size() ==0)
-    	{
-    		xListView.setPullLoadEnable(false);
-            BToast.show(mActivity, "数据加载完毕");
-    		return;
-    	}
-    	
-    	 if (resultlist.size() < PAGE_SIZE_ADD)
-         {
-    		 xListView.setPullLoadEnable(false);
-             BToast.show(mActivity, "数据加载完毕");
-         }else
-         {
-        	 xListView.setPullLoadEnable(true);
-         }
-    	 
-    	 if(isRefreshAction){
-    		 showList.clear();
-    		 isRefreshAction = false;
-    	 }
-    	 
-    	 showList.addAll(resultlist);
-         adapter.notifyDataSetChanged();
-    }
+
     
-    /**
-     * 加载完成之后进行时间保存等方法
-     */
-    @SuppressLint("SimpleDateFormat")
-	private void stopLoad(XListView xListView) {
-        xListView.stopRefresh();
-        xListView.stopLoadMore();
-    }
+
 
     @Override
     public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3)

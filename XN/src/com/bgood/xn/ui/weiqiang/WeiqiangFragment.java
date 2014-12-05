@@ -43,10 +43,12 @@ import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
+import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.BaseFragment;
 import com.bgood.xn.ui.home.SearchResultActivity;
+import com.bgood.xn.ui.user.account.LoginActivity;
 import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.utils.ShareUtils;
 import com.bgood.xn.utils.ToolUtils;
@@ -87,8 +89,6 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 	
 	private WeiqiangAdapter m_followFriendsAdapter;
 	private WeiqiangAdapter m_allFriendsAdapter;
-
-	
 	
 	public String mAttionWeiqiangRefreshTime = null;
 	public String mAllWeiqiangRefreshTime = null;
@@ -114,8 +114,6 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 		initViews();
 		setListeners();
 		setAdapter();
-		
-		
 		if(m_type == WeiQiangBean.WEIQIANG_ALL){
 			if(m_allFriendsList.size() == 0){
 				WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(m_type),BGApp.mUserId, String.valueOf(weiqiang_all_start), String.valueOf(weiqiang_all_start+PAGE_SIZE_ADD));
@@ -125,12 +123,10 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 			WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(m_type),BGApp.mUserId, String.valueOf(weiqiang_attion_start), String.valueOf(weiqiang_attion_start+PAGE_SIZE_ADD));
 			}
 		}
-		
-		
 		return layout;
 	}
-	
-	@Override
+	 
+	 @Override
 	public void onResume() {
 		super.onResume();
 		
@@ -144,10 +140,10 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 	@Override
 	public void onPause() {
 		super.onPause();
-		pUitl.setWeiqiangAllRefreshTime(mAllWeiqiangRefreshTime);
+		 //相当于Fragment的onPause
+    	pUitl.setWeiqiangAllRefreshTime(mAllWeiqiangRefreshTime);
 		pUitl.setWeiqiangAttionRefreshTime(mAttionWeiqiangRefreshTime);
 	}
-	
 	
 	@SuppressLint("InflateParams")
 	private void initViews()

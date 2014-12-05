@@ -5,6 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,10 +22,12 @@ import android.widget.SimpleAdapter;
 import com.bgood.xn.R;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
+import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
+import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.request.UserCenterRequest;
-import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.utils.WindowUtil;
 import com.bgood.xn.widget.TitleBar;
 
@@ -33,11 +40,9 @@ import com.bgood.xn.widget.TitleBar;
 public class RegisterSelectNumberActivity extends BaseActivity implements OnItemClickListener,TaskListenerWithState
 {
 
-	private Button m_backBtn = null; // 返回按钮
-	private Button m_exchangBtn = null; // 换一批按钮
 	private ListView m_listLv = null; // 列表
 	private String phone;
-	private String code;
+	private String[] ids;
 	private SimpleAdapter adapter;
     private TitleBar titleBar = null;
 
@@ -47,7 +52,7 @@ public class RegisterSelectNumberActivity extends BaseActivity implements OnItem
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_register_select_number);
 		titleBar = new TitleBar(mActivity);
-	    titleBar.initAllBar("选择邦固号", "换一换");
+	    titleBar.initAllBar("选择邦固号", "换一批");
 		findView();
 	}
 
@@ -56,14 +61,11 @@ public class RegisterSelectNumberActivity extends BaseActivity implements OnItem
 	 */
 	private void findView()
 	{
-		Bundle bundle = getIntent().getExtras();
-		if (bundle != null)
-		{
-			phone = bundle.getString("phone");
-			code = bundle.getString("code");
-		}
+		phone = getIntent().getStringExtra("phone");
+		ids = getIntent().getStringArrayExtra("ids");
 		m_listLv = (ListView) findViewById(R.id.register_select_number_lv_list);
-		 // 下一步按钮
+		m_listLv.setOnItemClickListener(this);
+		setAdapter();
         titleBar.rightBtn.setOnClickListener(new OnClickListener()
         {
             @Override
@@ -75,7 +77,7 @@ public class RegisterSelectNumberActivity extends BaseActivity implements OnItem
 	}
 
 
-	private void setAdapter(String[] ids)
+	private void setAdapter()
 	{
 		List<Map<String, Object>> contents = new ArrayList<Map<String, Object>>();
 		for (int i = 0; i < ids.length; i++)
@@ -87,7 +89,6 @@ public class RegisterSelectNumberActivity extends BaseActivity implements OnItem
 		adapter = new SimpleAdapter(this, (List<Map<String, Object>>) contents, R.layout.layout_register_select_number_item, new String[]
 		{ "id" }, new int[]
 		{ R.id.register_select_number_item_tv_name });
-
 		m_listLv.setAdapter(adapter);
 	}
 
@@ -104,6 +105,28 @@ public class RegisterSelectNumberActivity extends BaseActivity implements OnItem
 
 	@Override
 	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
+		if(info.getState() == HttpTaskState.STATE_OK){
+			BaseNetWork bNetWork = info.getmBaseNetWork();
 
+			JSONObject body = bNetWork.getBody();
+			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+				try {
+					JSONArray jsonArray = body.getJSONArray("ids");
+					if (jsonArray != null)
+					{
+						ids = new String[jsonArray.length()];
+						for (int i = 0; i < jsonArray.length(); i++)
+						{
+							JSONObject jsonObject = jsonArray.getJSONObject(i);
+							ids[i] = jsonObject.getString("id");
+						}
+					}
+					setAdapter();
+					
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }

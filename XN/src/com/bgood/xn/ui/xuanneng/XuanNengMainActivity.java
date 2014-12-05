@@ -8,7 +8,7 @@ import android.view.View.OnClickListener;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.system.BGApp;
-import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.xuanneng.joke.JokeMeActivity;
 import com.bgood.xn.ui.xuanneng.joke.JokePersonActivity;
 import com.bgood.xn.widget.TitleBar;

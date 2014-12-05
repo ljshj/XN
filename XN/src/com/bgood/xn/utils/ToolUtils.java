@@ -641,11 +641,11 @@ public class ToolUtils {
 	 * @params:@return
 	 * 说明，远程服务器升级包版本格式必须与本地应用版本格式一致 如 1.1.1.1和1.1.1.2
 	 */
-	public static boolean isNeedUpdate(String version,Activity mActivity) {
+	public static boolean isNeedUpdate(String version,Context mContext) {
 		/**远程app,版本*/
 		String[] netVersion = version.split("\\.");
 		/**当前应用的app,版本*/
-		String[] curVersion = ConfigUtil.getVersionName(mActivity).split("\\.");
+		String[] curVersion = ConfigUtil.getVersionName(mContext).split("\\.");
 
 		for(int i = 0;i<netVersion.length;i++){
 			int netV = Integer.valueOf(netVersion[i]);

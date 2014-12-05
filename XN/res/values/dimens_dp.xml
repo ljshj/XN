@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    
+    <dimen name="correlation_divierHeight">10dp</dimen>
+    <dimen name="divierHeight">10dp</dimen>
     <dimen name="comment_select_layout">50dp</dimen>
     
     <dimen name="home_drawabletop">16dp</dimen>

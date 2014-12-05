@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.bgood.xn.db.PreferenceUtil;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.user.account.LoginActivity;
 
 /**

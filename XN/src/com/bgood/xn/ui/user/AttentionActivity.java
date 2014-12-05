@@ -24,7 +24,7 @@ import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.system.BGApp;
-import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
@@ -32,9 +32,11 @@ import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.TitleBar;
 
-
 /**
- * 我的关注页面,与关注我的
+ * 
+ * @todo:我关注的，与关注我的
+ * @date:2014-12-4 上午11:32:31
+ * @author:hg_liuzl@163.com
  */
 public class AttentionActivity extends BaseActivity implements IXListViewListener,TaskListenerWithState,OnClickListener
 {
@@ -136,13 +138,12 @@ public class AttentionActivity extends BaseActivity implements IXListViewListene
 	public void onClick(View v) {
 		AttentionBean bean = (AttentionBean) v.getTag();
 		switch (v.getId()) {
-		case R.id.btn_attention_type:
-			
+		case R.id.tv_attention_type:
 			if(bean.searchtype == 0){
 				UserCenterRequest.getInstance().requestAttention(AttentionActivity.this, mActivity,String.valueOf(bean.userid),BGApp.mUserId,String.valueOf(1));
 				m_list.remove(bean);
 			}else{
-				UserCenterRequest.getInstance().requestAttention(AttentionActivity.this, mActivity,String.valueOf(bean.userid),BGApp.mUserId,String.valueOf(bean.guanzhutype==1?0:1));
+				UserCenterRequest.getInstance().requestAttention(AttentionActivity.this, mActivity,String.valueOf(bean.userid),BGApp.mUserId,String.valueOf(bean.guanzhutype==1?1:0));
 				bean.guanzhutype = bean.guanzhutype ==1?0:1;
 			}
 			attentionAdapter.notifyDataSetChanged();

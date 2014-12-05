@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"   
+    android:background="@drawable/img_user_center_bg"
     android:descendantFocusability="blocksDescendants"
     >
         
@@ -45,7 +46,7 @@
     </RelativeLayout>
             
        <TextView
-	       android:id="@+id/tv_comments"
+	       android:id="@+id/tv_content"
 	       style="@style/item_content"
 	       android:text="内容" />
     

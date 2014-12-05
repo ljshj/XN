@@ -31,7 +31,7 @@ import android.widget.TextView;
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.PrivinceAdapter;
 import com.bgood.xn.bean.AddressBean;
-import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.utils.PingYinUtil;
 import com.bgood.xn.widget.TitleBar;
 import com.bgood.xn.widget.ZZPrivinceQuickAlphabeticBar;

@@ -7,5 +7,5 @@
     android:layout_height="match_parent"
     android:background="@color/common_page_bg"
     android:divider="@android:color/transparent"
-    android:dividerHeight="3dp" >
+    android:dividerHeight="@dimen/divierHeight" >
 </com.bgood.xn.view.xlistview.XListView>

@@ -24,7 +24,7 @@ import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.system.BGApp;
-import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
@@ -81,27 +81,23 @@ public class WeiqiangPersonActivity extends BaseActivity implements OnItemClickL
 
 	@Override
 	public void onClick(View v) {
-		WeiQiangBean wqb = null;
+		WeiQiangBean wqb = (WeiQiangBean) v.getTag();
+		mActionWeiqiang = wqb;
 		switch (v.getId()) {
 		case R.id.tv_zan_count:	//赞
-			wqb = (WeiQiangBean) v.getTag();
-			mActionWeiqiang = wqb;
 			mActionWeiqiang.like_count = String.valueOf(Integer.valueOf(mActionWeiqiang.like_count)+1);
 			weiqiangAdapter.notifyDataSetChanged();
 			WeiqiangRequest.getInstance().requestWeiqiangZan(this, mActivity, wqb.weiboid);
 			break;
 		case R.id.tv_comment_count:	//评论
-			wqb = (WeiQiangBean) v.getTag();
 			BToast.show(mActivity, "评论"+wqb.weiboid);
 			break;
 		case R.id.tv_transpont_count:	//转发
-			wqb = (WeiQiangBean) v.getTag();
-				mActionWeiqiang.forward_count = String.valueOf(Integer.valueOf(mActionWeiqiang.forward_count)+1);
-				weiqiangAdapter.notifyDataSetChanged();
+			mActionWeiqiang.forward_count = String.valueOf(Integer.valueOf(mActionWeiqiang.forward_count)+1);
+			weiqiangAdapter.notifyDataSetChanged();
 			WeiqiangRequest.getInstance().requestWeiqiangTranspond(this, mActivity, wqb.weiboid,"");
 			break;
 		case R.id.tv_share_count:	//分享
-			wqb = (WeiQiangBean) v.getTag();
 			break;
 		default:
 			break;

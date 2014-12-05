@@ -63,11 +63,11 @@ public class CommentAdapter extends KBaseAdapter
 		return convertView;
 	}
 
-	class Holder
+	final class Holder
     {
-        public ImageView ivComment;
-        public TextView tvCommentAuthor;
-        public TextView tvCommentTime;
-        public TextView tvCommentContent;
+        ImageView ivComment;
+        TextView tvCommentAuthor;
+        TextView tvCommentTime;
+        TextView tvCommentContent;
     }
 }

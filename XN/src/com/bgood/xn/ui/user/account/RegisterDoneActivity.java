@@ -1,18 +1,31 @@
 package com.bgood.xn.ui.user.account;
 
-import android.content.SharedPreferences;
+import org.json.JSONObject;
+
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
+import com.bgood.xn.bean.MemberLoginBean;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
-import com.bgood.xn.ui.BaseActivity;
-import com.bgood.xn.utils.WindowUtil;
+import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
+import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
+import com.bgood.xn.network.BaseNetWork;
+import com.bgood.xn.network.HttpRequestInfo;
+import com.bgood.xn.network.HttpResponseInfo;
+import com.bgood.xn.network.request.UserCenterRequest;
+import com.bgood.xn.system.BGApp;
+import com.bgood.xn.system.SystemConfig;
+import com.bgood.xn.ui.MainActivity;
+import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.ui.user.UserCenterFragment;
+import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
 
 /**
@@ -21,14 +34,11 @@ import com.bgood.xn.widget.TitleBar;
  * @date:2014-12-2 下午5:42:11
  * @author:hg_liuzl@163.com
  */
-public class RegisterDoneActivity extends BaseActivity
+public class RegisterDoneActivity extends BaseActivity implements TaskListenerWithState
 {
 	private EditText m_passwordEt = null; // 密码
 	private EditText m_confirmPasswordEt = null; // 确认密码
-	private Button m_loginBtn = null; // 立即登录按钮
-
-	private String m_password = "";
-	private String m_confirmPassword = "";
+	private String newPassword = "";
 	private String m_phone;
 	private String userID;
 
@@ -37,7 +47,7 @@ public class RegisterDoneActivity extends BaseActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_register_done);
-		(new TitleBar(mActivity)).initTitleBar("请输入登录密码");
+		(new TitleBar(mActivity)).initTitleBar("请输入密码");
 		findView();
 	}
 
@@ -66,41 +76,58 @@ public class RegisterDoneActivity extends BaseActivity
 		});
 	}
 
-	/**
-	 * 检查用户填写信息是否规范与合理
-	 */
-	private void checkUserInfo()
-	{
-		// 新密码查询
-		String password = m_passwordEt.getText().toString().trim();
-		if (password == null || password.equals(""))
-		{
-			Toast.makeText(RegisterDoneActivity.this, "新密码不能为空！", 0).show();
-			return;
-		} else if (password.length() < 6)
-		{
-			Toast.makeText(RegisterDoneActivity.this, "密码不能少于六位数！", 0).show();
-			return;
-		} else
-		{
-			m_password = password;
-		}
+	  /**
+     * 检查用户信息方法
+     */
+    private void checkUserInfo()
+    {
+        // 用户手机号码查询
+         newPassword = m_passwordEt.getText().toString().trim();
+         String confirmPassword = m_confirmPasswordEt.getText().toString().trim();
+        if (TextUtils.isEmpty(newPassword))
+        {
+            BToast.show(mActivity, "请输入密码");
+            return;
+        }
+        else if (newPassword.length() < 6 || newPassword.length() > 10)
+        {
+            BToast.show(mActivity, "请输入6-10位字符密码");
+            return;
+        }else if (!newPassword.equals(confirmPassword))
+        {
+        	BToast.show(mActivity, "两次输入密码不一致");
+            return;
+        }
+        else
+        {
+          UserCenterRequest.getInstance().requestRegister(this, mActivity, m_phone,userID,newPassword);
+        }
+      
+    }
 
-		// 确认密码查询
-		String confirmPassword = m_confirmPasswordEt.getText().toString().trim();
-		if (confirmPassword == null || confirmPassword.equals(""))
-		{
-			Toast.makeText(RegisterDoneActivity.this, "确认密码不能为空！", 0).show();
-			return;
-		} else if (!confirmPassword.equals(m_password))
-		{
-			Toast.makeText(RegisterDoneActivity.this, "请输入正确的密码进行确认！", 0).show();
-			return;
-		} else
-		{
-			m_confirmPassword = confirmPassword;
-		}
 
+	@Override
+	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
+		if(info.getState() == HttpTaskState.STATE_OK){
+			BaseNetWork bNetWork = info.getmBaseNetWork();
+			JSONObject body = bNetWork.getBody();
+			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+				boolean isSuccess = body.opt("success").equals("True");
+				if(isSuccess){
+					BToast.show(mActivity, "注册成功");
+					Intent intent = new Intent(this, LoginActivity.class);
+					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK); 
+					startActivity(intent);
+					finish();
+				}else{
+					BToast.show(mActivity, "注册失败");
+				}
+			}else{
+				BToast.show(mActivity, "注册失败");
+			}
+		}else{
+			BToast.show(mActivity, "注册失败");
+		}
 	}
 
 }

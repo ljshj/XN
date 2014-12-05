@@ -1,14 +1,21 @@
-package com.bgood.xn.ui;
+package com.bgood.xn.ui.base;
 
+import java.util.List;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.inputmethod.InputMethodManager;
 
+import com.bgood.xn.adapter.KBaseAdapter;
 import com.bgood.xn.db.PreferenceUtil;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.user.account.LoginActivity;
+import com.bgood.xn.utils.ToolUtils;
+import com.bgood.xn.view.BToast;
+import com.bgood.xn.view.xlistview.XListView;
 
 
 public class BaseActivity extends Activity {
@@ -59,8 +66,6 @@ public class BaseActivity extends Activity {
 		
 		im.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.SHOW_FORCED);
 	}
-
-	
 	/**
 	 * 
 	 * @todo:判断用户是否登录了
@@ -75,5 +80,4 @@ public class BaseActivity extends Activity {
 			return;
 		}
 	}
-	
 }

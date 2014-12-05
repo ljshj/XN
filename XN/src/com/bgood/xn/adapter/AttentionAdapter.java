@@ -40,7 +40,7 @@ public class AttentionAdapter extends KBaseAdapter
             holder.userSexIV = (ImageView) convertView.findViewById(R.id.iv_sex);
             holder.userIdentitytV = (TextView) convertView.findViewById(R.id.tv_identity);
             holder.userSignName = (TextView) convertView.findViewById(R.id.tv_user_signname);
-            holder.btnAttentionType = (Button) convertView.findViewById(R.id.btn_attention_type);
+            holder.tvAttentionType = (TextView) convertView.findViewById(R.id.tv_attention_type);
             convertView.setTag(holder);
         }
         else
@@ -76,17 +76,19 @@ public class AttentionAdapter extends KBaseAdapter
         holder.userIdentitytV.setVisibility(mAttentionBean.level<1 ? View.GONE:View.VISIBLE);
         
         if(mAttentionBean.searchtype == AttentionBean.ATTENTION){
-//        	holder.btnAttentionType.setText(mAttentionBean.guanzhutype == 0 ?"关注":"已关注");
-        	holder.btnAttentionType.setText("取消关注");
-        	holder.btnAttentionType.setBackgroundColor(mActivity.getResources().getColor(color.gray));
+        	holder.tvAttentionType.setText("取消关注");
+        	holder.tvAttentionType.setBackgroundResource(R.drawable.bg_attention_yes);
+        	holder.tvAttentionType.setCompoundDrawablesWithIntrinsicBounds( mActivity.getResources().getDrawable(R.drawable.icon_attention_ok),null, null, null);
+
         }else{
-        	holder.btnAttentionType.setText(mAttentionBean.guanzhutype == 0 ?"关注":"相互关注");
-        	holder.btnAttentionType.setBackgroundColor(mActivity.getResources().getColor(mAttentionBean.guanzhutype == 0 ?color.green:color.gray));
+        	holder.tvAttentionType.setText(mAttentionBean.guanzhutype == 0 ?"关注":"相互关注");
+        	holder.tvAttentionType.setBackgroundResource(mAttentionBean.guanzhutype == 0 ?R.drawable.bg_attention_no:R.drawable.bg_attention_yes);
+        	holder.tvAttentionType.setCompoundDrawablesWithIntrinsicBounds( mActivity.getResources().getDrawable(mAttentionBean.guanzhutype == 0 ?R.drawable.icon_attention_add:R.drawable.icon_attention_each), null, null,null);
         }
         
-        holder.btnAttentionType.setOnClickListener(mListener);
+        holder.tvAttentionType.setOnClickListener(mListener);
         
-        holder.btnAttentionType.setTag(mAttentionBean);
+        holder.tvAttentionType.setTag(mAttentionBean);
         
         return convertView;
     }
@@ -98,6 +100,6 @@ public class AttentionAdapter extends KBaseAdapter
         ImageView userSexIV;        // 用户头像
         TextView userIdentitytV;    // 用户特征
         TextView userSignName;         // 用户签名
-        Button btnAttentionType;       // 关注
+        TextView tvAttentionType;       // 关注
     }
 }

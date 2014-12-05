@@ -55,7 +55,6 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/register_cb_selector"
                     android:button="@null"
-                    android:text="已阅读并同意心想能成"
                     android:checked="true" />
 
                 <TextView

@@ -212,4 +212,26 @@ public class WeiqiangRequest extends BaseNetWork {
 			setBody(body);
 			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		 }
+	 
+	 /**、
+	  * 
+	  * @todo:微墙与我相关
+	  * @date:2014-10-20 下午6:25:50
+	  * @author:hg_liuzl@163.com
+	  * @params:@param mHttpTaskListener
+	  * @params:@param context
+	  * @params:@param phone
+	  */
+	 public void requestWeiqiangWithMe(TaskListenerWithState mHttpTaskListener,Context context,int start,int end){
+		 	setMessageType(60009);
+			JSONObject body = new JSONObject();
+			try {
+				body.put("start", start);
+				body.put("end", end);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			setBody(body);
+			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+		 }
 }

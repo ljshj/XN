@@ -26,7 +26,7 @@
         
                    <!-- 版本升级的服务 -->
            <service
-            android:name="com.bgood.xn.utils.update.updateService"
+            android:name=".utils.update.updateService"
             android:label="@string/app_name">
             </service>
         
@@ -53,8 +53,55 @@
             android:name=".ui.MainActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
+         
+         
+         <!-- 关于账号模块 -->
+         
+          <activity
+            android:name=".ui.user.account.RegisterActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+          <activity
+            android:name=".ui.user.account.ForgetPasswordActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+          
+          <activity
+            android:name=".ui.user.account.ForgetPasswordCodeActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+                    
+          <activity
+            android:name=".ui.user.account.ForgetPasswordNewPassWordActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+                              
+          <activity
+            android:name=".ui.user.account.LoginActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+                                        
+          <activity
+            android:name=".ui.user.account.ModifyPasswordActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+                                                  
+          <activity
+            android:name=".ui.user.account.RegisterCodeActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+                                                            
+          <activity
+            android:name=".ui.user.account.RegisterDoneActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+                                                                      
+         <activity
+            android:name=".ui.user.account.RegisterSelectNumberActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
         
-<!-- 首页模块 -->
+	<!-- 首页模块 -->
         <activity
             android:name=".ui.home.SearchActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -184,55 +231,6 @@
             android:name=".ui.user.SettingsActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.bgood.xn.ui.user.account.LoginActivity"
-            android:alwaysRetainTaskState="true"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity
-            android:name=".ui.user.ForgetPasswordPhoneActivity"
-            android:alwaysRetainTaskState="true"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity
-            android:name="com.bgood.xn.ui.user.account.ForgetPasswordCodeActivity"
-            android:alwaysRetainTaskState="true"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity
-            android:name=".ui.user.ForgetPasswordNewPassWordActivity"
-            android:alwaysRetainTaskState="true"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity
-            android:name=".ui.user.RegisterDoneActivity"
-            android:alwaysRetainTaskState="true"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity
-            android:name="com.bgood.xn.ui.user.account.ModifyPasswordActivity"
-            android:alwaysRetainTaskState="true"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity
-            android:name=".ui.user.ModifyPasswordCodeActivity"
-            android:alwaysRetainTaskState="true"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        
-        
-        
-        
-        
-        
-        
         
         <!-- 个人中心，资料 -->
         <activity
@@ -328,6 +326,7 @@
            <!-- 版本升级的服务 -->
            <service
             android:name="com.bgood.xn.utils.update.updateService"
+            android:enabled="true"
             android:label="@string/app_name">
             </service>
         

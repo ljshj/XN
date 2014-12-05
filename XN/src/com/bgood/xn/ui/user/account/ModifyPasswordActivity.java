@@ -14,7 +14,7 @@ import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
-import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
 
@@ -85,12 +85,13 @@ public class ModifyPasswordActivity extends BaseActivity implements TaskListener
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
-				BToast.show(mActivity, "密码成功失败");
+				BToast.show(mActivity, "密码修改成功");
 				pUitl.setAccountNumber(null);
 				pUitl.setAccountPassword(null);
 				Intent intent = new Intent(mActivity, LoginActivity.class);
-				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 				mActivity.startActivity(intent);
+				finish();
 			}else{
 				BToast.show(mActivity, "密码修改失败");
 			}

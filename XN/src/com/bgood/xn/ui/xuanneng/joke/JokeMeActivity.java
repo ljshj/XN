@@ -32,7 +32,7 @@ import com.bgood.xn.network.HttpRequestInfo;
 import com.bgood.xn.network.HttpResponseInfo;
 import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.XuannengRequest;
-import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
@@ -91,7 +91,7 @@ public class JokeMeActivity extends BaseActivity implements OnClickListener, OnI
 		View view1 = inflater.inflate(R.layout.home_layout_result_listview, null);
 		m_VerifyXLv = (XListView) view1.findViewById(R.id.xListView);
 		m_VerifyXLv.setPullLoadEnable(true);
-		m_VerifyXLv.setPullRefreshEnable(false);
+		m_VerifyXLv.setPullRefreshEnable(true);
 		m_VerifyXLv.setXListViewListener(this);
 		m_VerifyAdapter = new JokeAdapter(m_VerifyList, mActivity,this);
 		m_VerifyXLv.setAdapter(m_VerifyAdapter);
@@ -99,8 +99,9 @@ public class JokeMeActivity extends BaseActivity implements OnClickListener, OnI
 		View view2 = inflater.inflate(R.layout.home_layout_result_listview, null);
 		m_UnVerifyXLv = (XListView) view2.findViewById(R.id.xListView);
 		m_UnVerifyXLv.setPullLoadEnable(true);
-		m_UnVerifyXLv.setPullRefreshEnable(false);
+		m_UnVerifyXLv.setPullRefreshEnable(true);
 		m_UnVerifyXLv.setXListViewListener(this);
+		m_UnVerifyXLv.setDividerHeight(1);
 		m_unVerifyAdapter = new JokeUnVerifyAdapter(m_UnVerifyList, mActivity);
 		m_UnVerifyXLv.setAdapter(m_unVerifyAdapter);
 		
@@ -156,6 +157,7 @@ public class JokeMeActivity extends BaseActivity implements OnClickListener, OnI
 			default:
 				break;
 			}
+			doRequest();
 		}
 	};
 	
@@ -186,6 +188,7 @@ public class JokeMeActivity extends BaseActivity implements OnClickListener, OnI
 		}else{
 			m_UnVerifyStart = 0;
 		}
+		doRequest();
 	}
 
 	@Override
@@ -213,7 +216,7 @@ public class JokeMeActivity extends BaseActivity implements OnClickListener, OnI
 			}
 		}else{
 			if(m_UnVerifyList.size() == 0){
-			XuannengRequest.getInstance().requestXuanPublishList(this, mActivity, userid, JokeBean.JOKE_VERIFY, m_UnVerifyStart, m_UnVerifyStart+PAGE_SIZE_ADD);
+			XuannengRequest.getInstance().requestXuanPublishList(this, mActivity, userid, JokeBean.JOKE_UN_VERIFY, m_UnVerifyStart, m_UnVerifyStart+PAGE_SIZE_ADD);
 			}
 		}
 	}
@@ -260,7 +263,6 @@ public class JokeMeActivity extends BaseActivity implements OnClickListener, OnI
     {
     	mRefreshTime = ToolUtils.getNowTime();
     	xListView.setRefreshTime(mRefreshTime);
-    	
     	if(null == resultlist || resultlist.size() ==0)
     	{
     		xListView.setPullLoadEnable(false);

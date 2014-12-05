@@ -37,7 +37,7 @@ import com.bgood.xn.network.request.FileRequest;
 import com.bgood.xn.network.request.ProductRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.system.Const;
-import com.bgood.xn.ui.BaseActivity;
+import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.dialog.BottomDialog;
 import com.bgood.xn.widget.TitleBar;
