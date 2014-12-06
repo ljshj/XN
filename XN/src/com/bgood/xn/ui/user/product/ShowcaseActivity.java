@@ -111,7 +111,7 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 	private void findView()
 	{
 		m_backBtn = (Button) findViewById(R.id.showcase_btn_back);
-		tvTitle = (TextView) findViewById(R.id.tv_title);
+		tvTitle = (TextView) findViewById(R.id.tv_showcase_title);
 		tvTitle.setText(isSelf?"我的橱窗":"TA的橱窗");
 		m_moreBtn = (Button) findViewById(R.id.showcase_btn_more);
 		m_moreBtn.setVisibility(isSelf?View.VISIBLE:View.GONE);

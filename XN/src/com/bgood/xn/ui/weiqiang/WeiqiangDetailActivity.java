@@ -392,8 +392,10 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3) {
-		final CommentBean bean = (CommentBean) adapter.getAdapter().getItem(position);
-		createSendDialog("@"+bean.name+"  ");
+		final CommentBean bean = (CommentBean) adapter.getAdapter().getItem(position-1);
+		if(null != bean){
+			createSendDialog("@"+bean.name+"  ");
+		}
 	}
 	
 }
