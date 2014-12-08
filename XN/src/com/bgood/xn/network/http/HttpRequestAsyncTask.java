@@ -1,4 +1,4 @@
-package com.bgood.xn.network;
+package com.bgood.xn.network.http;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
@@ -10,7 +10,8 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.bean.response.WeiqiangResponse;
-import com.bgood.xn.network.HttpResponseInfo.HttpTaskState;
+import com.bgood.xn.network.BaseNetWork;
+import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.system.SystemConfig;
 import com.bgood.xn.system.SystemConfig.ServerType;
 import com.bgood.xn.utils.ConfigUtil;
@@ -79,6 +80,8 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 			
 				if(type == ServerType.FileServer){	//如果是上传文件，请注意一下。
 					return new HttpResponseInfo(HttpManager.getHttpRequest(mRequest,bNetWork),	HttpTaskState.STATE_OK);		
+				}else if(type == ServerType.IMServer){
+					//return new HttpResponseInfo(HttpManager.getHttpRequest(mRequest,bNetWork),	HttpTaskState.STATE_OK);		
 				}else{
 					return new HttpResponseInfo(HttpManager.postHttpRequest(mRequest,bNetWork),	HttpTaskState.STATE_OK);		
 				}
@@ -161,8 +164,6 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 				Toast.makeText(context, "未知错误", Toast.LENGTH_SHORT).show();
 				break;
 			}
-			
-			
 			break;
 		default:
 			Toast.makeText(context, "未知错误", Toast.LENGTH_SHORT).show();

@@ -1,4 +1,4 @@
-package com.bgood.xn.network;
+package com.bgood.xn.network.http;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -37,6 +37,7 @@ import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.utils.FormatTransfer;
 import com.bgood.xn.utils.LogUtils;
 
@@ -46,8 +47,7 @@ public class HttpManager {
 	//超时时间
 	public static final int CONN_TIMEOUT = 30 * 1000;	
 	@SuppressWarnings("static-access")
-	public static BaseNetWork postHttpRequest(HttpRequestInfo info,BaseNetWork bNetWork)
-			throws IOException {
+	public static BaseNetWork postHttpRequest(HttpRequestInfo info,BaseNetWork bNetWork)throws IOException {
 		BaseNetWork mBaseNetWork = null;
 		URL url = new URL(info.getRequestUrl());
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -178,16 +178,11 @@ public class HttpManager {
 		}
 		return mBNetWork;
 	}
-
-
 	/**
 	 * 把输入流转换成字节数数组
-	 * 
-	 * @param inputStream
-	 *            输入流
 	 * @return 字节数组
 	 */
-	public static byte[] readStream(InputStream inputStream) throws Exception
+	private static byte[] readStream(InputStream inputStream) throws Exception
 	{
 		ByteArrayOutputStream bout = new ByteArrayOutputStream();
 		if (null != inputStream)

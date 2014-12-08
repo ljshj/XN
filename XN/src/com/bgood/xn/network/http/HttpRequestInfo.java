@@ -1,4 +1,4 @@
-package com.bgood.xn.network;
+package com.bgood.xn.network.http;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;

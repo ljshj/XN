@@ -7,8 +7,8 @@ import org.json.JSONObject;
 import android.content.Context;
 
 import com.bgood.xn.network.BaseNetWork;
-import com.bgood.xn.network.HttpRequestAsyncTask;
-import com.bgood.xn.network.HttpRequestAsyncTask.TaskListenerWithState;
+import com.bgood.xn.network.http.HttpRequestAsyncTask;
+import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.system.SystemConfig.ServerType;
 

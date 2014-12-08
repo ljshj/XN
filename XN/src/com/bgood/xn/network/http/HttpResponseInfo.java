@@ -1,4 +1,6 @@
-package com.bgood.xn.network;
+package com.bgood.xn.network.http;
+
+import com.bgood.xn.network.BaseNetWork;
 
 
 public class HttpResponseInfo {
