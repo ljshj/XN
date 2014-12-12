@@ -16,76 +16,33 @@ import com.bgood.xn.system.SystemConfig.ServerType;
  * @todo:IM请求
  * @date:2014-12-8 上午10:45:17
  * @author:hg_liuzl@163.com
- * 
- *  需要保持长链接的加上Link标记
  */
 public class IMRequest extends BaseNetWork {
-	private static HomeRequest instance = null;
-	public  synchronized static HomeRequest getInstance(){
+	
+	private static IMRequest instance = null;
+	public  synchronized static IMRequest getInstance(){
 		if(null == instance)
-			instance = new HomeRequest();
+			instance = new IMRequest();
 		
 		return instance;
 	}
+	
 	/**
 	 * 
-	 * @todo:请求聊天服务器地址
-	 * @date:2014-12-8 下午4:53:11
+	 * @todo:获取联系人列表
+	 * @date:2014-12-10 下午4:52:37
 	 * @author:hg_liuzl@163.com
 	 * @params:@param mHttpTaskListener
 	 * @params:@param context
+	 * @params:@param sendername
+	 * @params:@param sender
+	 * @params:@param userid
+	 * @params:@param vertify
 	 */
-	public void requestChatServerAddress(TaskListenerWithState mHttpTaskListener,Context context) {
-		setMessageType(50000);
-		new HttpRequestAsyncTask(ServerType.LoginServer,this, mHttpTaskListener, context).execute();
-
+	public void requestContactsList(TaskListenerWithState mHttpTaskListener,Context context) {
+		setMessageType(50006);
+		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 	}
-	
-	/**发送文字*/
-	public void requestLinkSendWords(TaskListenerWithState mHttpTaskListener,Context context,MessageBean bean) {
-		setMessageType(50001);
-		JSONObject message = new JSONObject();
-		try
-		{
-			message.put("sendername", bean.sendername);
-			message.put("sender", bean.sender);
-			message.put("recver", bean.recver);
-			message.put("type", bean.type);
-			message.put("datetime", bean.datetime);
-			message.put("info", bean.info);
-		} catch (JSONException e)
-		{
-			e.printStackTrace();
-		}
-		setBody(message);
-		new HttpRequestAsyncTask(ServerType.IMServer,this, mHttpTaskListener, context).execute();
-	}
-	
-	/**登录聊天服务器*/
-	public void requestLinkLoginChatServer(TaskListenerWithState mHttpTaskListener,Context context) {
-		  setMessageType(50002);
-			JSONObject body = new JSONObject();
-			try {
-				body.put("sessionid", SystemConfig.SessionID);
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-			setBody(body);
-		new HttpRequestAsyncTask(ServerType.IMServer,this, mHttpTaskListener, context).execute();
-	}
-	
-
-	/**发送文件*/
-	private void requestLinkSendFile() {
-	
-	}
-	
-	/**发送图片*/
-	private void requestLinkSendPic() {
-	
-
-	}
-	
 	/**
 	 * 
 	 * @todo:TODO 请求添加好友 
@@ -98,7 +55,7 @@ public class IMRequest extends BaseNetWork {
 	 * @params:@param userid 好友ID
 	 * @params:@param vertify 验证信息
 	 */
-	public void requestLinkAddFriend(TaskListenerWithState mHttpTaskListener,Context context,String sendername,String sender,String userid,String vertify) {
+	public void requestFriendADD(TaskListenerWithState mHttpTaskListener,Context context,String sendername,String sender,String userid,String vertify) {
 		setMessageType(50007);
 		JSONObject body = new JSONObject();
 		try {
@@ -110,32 +67,315 @@ public class IMRequest extends BaseNetWork {
 			e.printStackTrace();
 		}
 		setBody(body);
-		new HttpRequestAsyncTask(ServerType.IMServer,this, mHttpTaskListener, context).execute();
+		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 	}
 	
-//	删除好友
-//	搜索要添加的好友
-//	创建分组
-//	添加好友到分组
-//
-//
-//
-//	获取群信息
-//	获取群成员列表
-//	创建固定群
-//	查找群
-//	解散群
-//	转让群
-//	退出群
-//	发布群公告
-//	修改群公告
-//	修改群资料
-//	任命管理员
-//	请求加入群或邀请加入群
-//	移除群成员
-//	是否同意申请加入群
-//	获取离线消息数目
-//	是否同意添加为好友
-//	获取聊天窗口广告
+		/**
+		 * 
+		 * @todo:TODO 删除好友
+		 * @date:2014-12-10 下午4:55:46
+		 * @author:hg_liuzl@163.com
+		 * @params:@param mHttpTaskListener
+		 * @params:@param context
+		 * @params:@param userid
+		 */
+	public void requestFriendDelete(TaskListenerWithState mHttpTaskListener,Context context,String userid) {
+		setMessageType(50008);
+		JSONObject body = new JSONObject();
+		try {
+			body.put("userid", userid);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		setBody(body);
+		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+	}
+	
+		/**
+		 * 
+		 * @todo:搜索要添加的好友
+		 * @date:2014-12-10 下午4:56:49
+		 * @author:hg_liuzl@163.com
+		 * @params:@param mHttpTaskListener
+		 * @params:@param context
+		 * @params:@param keyword
+		 * @params:@param start
+		 * @params:@param end
+		 */
+	public void requestFriendSearch(TaskListenerWithState mHttpTaskListener,Context context,String keyword,int start,int end) {
+		setMessageType(50009);
+		JSONObject body = new JSONObject();
+		try {
+			body.put("keyword", keyword);
+			body.put("start", start);
+			body.put("end", end);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		setBody(body);
+		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+	}
+	
+	/**
+	 * 
+	 * @todo:获取群信息
+	 * @date:2014-12-10 下午4:59:25
+	 * @author:hg_liuzl@163.com
+	 * @params:@param mHttpTaskListener
+	 * @params:@param context
+	 * @params:@param id
+	 */
+	public void requestGroupInfo(TaskListenerWithState mHttpTaskListener,Context context,String id) {
+		setMessageType(50012);
+		JSONObject body = new JSONObject();
+		try {
+			body.put("id", id);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		setBody(body);
+		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+	}
+	
+
+	/**
+	 * 
+	 * @todo:获取群成员列表
+	 * @date:2014-12-10 下午5:00:16
+	 * @author:hg_liuzl@163.com
+	 * @params:@param mHttpTaskListener
+	 * @params:@param context
+	 * @params:@param sendername
+	 * @params:@param id
+	 */
+	public void requestGroupMembers(TaskListenerWithState mHttpTaskListener,Context context,String sendername,String id) {
+		setMessageType(50013);
+		JSONObject body = new JSONObject();
+		try {
+			body.put("id", id);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		setBody(body);
+		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+	}
+	
+
+	/**
+	 * 
+	 * @todo:创建固定群
+	 * @date:2014-12-10 下午5:22:18
+	 * @author:hg_liuzl@163.com
+	 * @params:@param mHttpTaskListener
+	 * @params:@param context
+	 * @params:@param name
+	 * @params:@param type
+	 * @params:@param info
+	 */
+	public void requestGroupCreate(TaskListenerWithState mHttpTaskListener,Context context,String name,String type,String info) {
+		setMessageType(50014);
+		JSONObject body = new JSONObject();
+		try {
+			body.put("name", name);
+			body.put("type", type);
+			body.put("intro", info);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		setBody(body);
+		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+	}
+
+	/**
+	 * 
+	 * @todo:查找群
+	 * @date:2014-12-10 下午5:23:18
+	 * @author:hg_liuzl@163.com
+	 * @params:@param mHttpTaskListener
+	 * @params:@param context
+	 * @params:@param keyword
+	 * @params:@param start
+	 * @params:@param end
+	 */
+	public void requestGroupSearch(TaskListenerWithState mHttpTaskListener,Context context,String keyword,int start,int end) {
+		setMessageType(50015);
+		JSONObject body = new JSONObject();
+		try {
+			body.put("keyword", keyword);
+			body.put("start", start);
+			body.put("end", end);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		setBody(body);
+		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+	}
+	
+	/**
+	 * 
+	 * @todo:解散群
+	 * @date:2014-12-10 下午5:24:17
+	 * @author:hg_liuzl@163.com
+	 * @params:@param mHttpTaskListener
+	 * @params:@param context
+	 * @params:@param groupid
+	 */
+	public void requestGroupFire(TaskListenerWithState mHttpTaskListener,Context context,String groupid) {
+		setMessageType(50016);
+		JSONObject body = new JSONObject();
+		try {
+			body.put("groupid", groupid);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		setBody(body);
+		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+	}
+
+	/**
+	 * 
+	 * @todo:TODO 转让群
+	 * @date:2014-12-10 下午5:25:14
+	 * @author:hg_liuzl@163.com
+	 * @params:@param mHttpTaskListener
+	 */
+	public void requestGroupTransfer(TaskListenerWithState mHttpTaskListener,Context context,String groupid,String userid) {
+		setMessageType(50017);
+		JSONObject body = new JSONObject();
+		try {
+			body.put("groupid", groupid);
+			body.put("userid", userid);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		setBody(body);
+		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+	}
+
+	/**
+	 * @todo:TODO 退出群
+	 * @date:2014-12-10 下午5:26:15
+	 * @author:hg_liuzl@163.com
+	 * @params:@param mHttpTaskListener
+	 */
+	public void requestGroupQuit(TaskListenerWithState mHttpTaskListener,Context context,String userid,String groupid) {
+		setMessageType(50018);
+		JSONObject body = new JSONObject();
+		try {
+			body.put("groupid", groupid);
+			body.put("userid", userid);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		setBody(body);
+		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+	}
+//	
+//	
+////	发布群公告
+//	public void requestGroupNoticePublish(TaskListenerWithState mHttpTaskListener,Context context,String sendername,String sender,String userid,String vertify) {
+//		setMessageType(50007);
+//		JSONObject body = new JSONObject();
+//		try {
+//			body.put("sendername", sendername);
+//			body.put("sender", sender);
+//			body.put("userid", userid);
+//			body.put("vertify", vertify);
+//		} catch (JSONException e) {
+//			e.printStackTrace();
+//		}
+//		setBody(body);
+//		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+//	}
+////	修改群公告
+//	public void requestGroupNoticeModify(TaskListenerWithState mHttpTaskListener,Context context,String sendername,String sender,String userid,String vertify) {
+//		setMessageType(50007);
+//		JSONObject body = new JSONObject();
+//		try {
+//			body.put("sendername", sendername);
+//			body.put("sender", sender);
+//			body.put("userid", userid);
+//			body.put("vertify", vertify);
+//		} catch (JSONException e) {
+//			e.printStackTrace();
+//		}
+//		setBody(body);
+//		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+//	}
+////	修改群资料
+//	public void requestGroupInfoModify(TaskListenerWithState mHttpTaskListener,Context context,String sendername,String sender,String userid,String vertify) {
+//		setMessageType(50007);
+//		JSONObject body = new JSONObject();
+//		try {
+//			body.put("sendername", sendername);
+//			body.put("sender", sender);
+//			body.put("userid", userid);
+//			body.put("vertify", vertify);
+//		} catch (JSONException e) {
+//			e.printStackTrace();
+//		}
+//		setBody(body);
+//		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+//	}
+////	任命管理员
+//	public void requestGroupSetAdmin(TaskListenerWithState mHttpTaskListener,Context context,String sendername,String sender,String userid,String vertify) {
+//		setMessageType(50007);
+//		JSONObject body = new JSONObject();
+//		try {
+//			body.put("sendername", sendername);
+//			body.put("sender", sender);
+//			body.put("userid", userid);
+//			body.put("vertify", vertify);
+//		} catch (JSONException e) {
+//			e.printStackTrace();
+//		}
+//		setBody(body);
+//		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+//	}
+////	请求加入群或邀请加入群
+//	public void requestGroupMemberJoinOrInvite(TaskListenerWithState mHttpTaskListener,Context context,String sendername,String sender,String userid,String vertify) {
+//		setMessageType(50007);
+//		JSONObject body = new JSONObject();
+//		try {
+//			body.put("sendername", sendername);
+//			body.put("sender", sender);
+//			body.put("userid", userid);
+//			body.put("vertify", vertify);
+//		} catch (JSONException e) {
+//			e.printStackTrace();
+//		}
+//		setBody(body);
+//		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+//	}
+////	移除群成员
+//	public void requestGroupMemberRemove(TaskListenerWithState mHttpTaskListener,Context context,String sendername,String sender,String userid,String vertify) {
+//		setMessageType(50007);
+//		JSONObject body = new JSONObject();
+//		try {
+//			body.put("sendername", sendername);
+//			body.put("sender", sender);
+//			body.put("userid", userid);
+//			body.put("vertify", vertify);
+//		} catch (JSONException e) {
+//			e.printStackTrace();
+//		}
+//		setBody(body);
+//		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+//	}
+////	获取聊天窗口广告
+//	public void requestGroupAD(TaskListenerWithState mHttpTaskListener,Context context,String sendername,String sender,String userid,String vertify) {
+//		setMessageType(50007);
+//		JSONObject body = new JSONObject();
+//		try {
+//			body.put("sendername", sendername);
+//			body.put("sender", sender);
+//			body.put("userid", userid);
+//			body.put("vertify", vertify);
+//		} catch (JSONException e) {
+//			e.printStackTrace();
+//		}
+//		setBody(body);
+//		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+//	}
 	
 }

@@ -2,7 +2,6 @@ package com.bgood.xn.ui.user.account;
 
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,21 +9,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 
-import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
-import com.bgood.xn.bean.MemberLoginBean;
-import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.BaseNetWork;
+import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpRequestInfo;
 import com.bgood.xn.network.http.HttpResponseInfo;
-import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
-import com.bgood.xn.system.BGApp;
-import com.bgood.xn.system.SystemConfig;
-import com.bgood.xn.ui.MainActivity;
 import com.bgood.xn.ui.base.BaseActivity;
-import com.bgood.xn.ui.user.UserCenterFragment;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
 

@@ -9,6 +9,9 @@ import android.os.Environment;
  */
 public class Const {
 
+	/**登录到环信聊天服务器的密码**/
+	public static final String IM_PWD = "banggood123";
+	
 	public static final String BASE_BEGIN = Environment.getExternalStorageDirectory().getAbsolutePath() + "/xuanneng/";
 	public static final String BASE_END = ".jpg";
 	public static final String CID_IMG_STRING_PATH = BASE_BEGIN + System.currentTimeMillis() + BASE_END;

@@ -6,7 +6,7 @@
         <attr name="numColumns" format="integer" />
         <attr name="itemMargin" format="dimension" />
     </declare-styleable>
-    <declare-styleable name="ViewPagerIndicator">
+     <declare-styleable name="ViewPagerIndicator">
         <attr name="vpiCirclePageIndicatorStyle" format="reference" />
         <attr name="vpiIconPageIndicatorStyle" format="reference" />
         <attr name="vpiLinePageIndicatorStyle" format="reference" />

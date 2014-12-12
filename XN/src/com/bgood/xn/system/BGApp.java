@@ -1,13 +1,17 @@
 package com.bgood.xn.system;
 
+import java.util.Map;
 import java.util.Stack;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 
 import com.bgood.xn.bean.MemberLoginBean;
 import com.bgood.xn.bean.UserInfoBean;
+import com.bgood.xn.db.DBHelper.User;
+import com.easemob.EMCallBack;
 import com.iflytek.cloud.SpeechUtility;
 
 public class BGApp extends Application {
@@ -22,7 +26,6 @@ public class BGApp extends Application {
 	
 	/**存放用户编号*/
 	public static String mUserId = "";
-	
 
 	@Override
 	public void onCreate()
@@ -68,4 +71,10 @@ public class BGApp extends Application {
         }
         m_activityStack.clear();
     }
+    
+    
+    
+    
+    
+    /********************************环信配置*************************************/
 }
