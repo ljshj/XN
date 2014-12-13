@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build.VERSION_CODES;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -31,8 +30,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.easemob.chat.BuildConfig;
-import com.easemob.chat.R;
+import com.bgood.xn.BuildConfig;
+import com.bgood.xn.R;
 import com.easemob.chat.domain.VideoEntity;
 import com.easemob.chat.video.util.ImageCache;
 import com.easemob.chat.video.util.ImageResizer;

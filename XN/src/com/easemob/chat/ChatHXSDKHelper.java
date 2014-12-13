@@ -18,21 +18,15 @@ import java.util.Map;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import com.bgood.xn.ui.MainActivity;
 import com.easemob.EMCallBack;
 import com.easemob.applib.controller.HXSDKHelper;
 import com.easemob.applib.model.HXSDKModel;
-
-import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMMessage;
 import com.easemob.chat.EMMessage.ChatType;
 import com.easemob.chat.EMMessage.Type;
 import com.easemob.chat.activity.ChatActivity;
-import com.easemob.chat.activity.MainActivity;
 import com.easemob.chat.domain.User;
-import com.easemob.chat.receiver.VoiceCallReceiver;
 import com.easemob.chat.utils.CommonUtils;
-import com.easemob.chat.OnMessageNotifyListener;
-import com.easemob.chat.OnNotificationClickListener;
 
 /**
  * Demo UI HX SDK helper class which subclass HXSDKHelper
@@ -119,8 +113,8 @@ public class ChatHXSDKHelper extends HXSDKHelper{
     @Override
     protected void initListener(){
         super.initListener();
-        IntentFilter callFilter = new IntentFilter(EMChatManager.getInstance().getIncomingVoiceCallBroadcastAction());
-        appContext.registerReceiver(new VoiceCallReceiver(), callFilter);    
+//        IntentFilter callFilter = new IntentFilter(EMChatManager.getInstance().getIncomingVoiceCallBroadcastAction());
+//        appContext.registerReceiver(new VoiceCallReceiver(), callFilter);    
     }
 
     @Override

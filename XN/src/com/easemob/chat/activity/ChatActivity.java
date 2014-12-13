@@ -1,16 +1,3 @@
-/**
- * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *     http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.easemob.chat.activity;
 
 import java.io.File;
@@ -20,6 +7,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -63,6 +51,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bgood.xn.R;
 import com.easemob.EMError;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContactManager;
@@ -71,6 +60,13 @@ import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.EMMessage.ChatType;
+import com.easemob.chat.GroupReomveListener;
+import com.easemob.chat.ImageMessageBody;
+import com.easemob.chat.LocationMessageBody;
+import com.easemob.chat.NormalFileMessageBody;
+import com.easemob.chat.TextMessageBody;
+import com.easemob.chat.VideoMessageBody;
+import com.easemob.chat.VoiceMessageBody;
 import com.easemob.chat.adapter.ExpressionAdapter;
 import com.easemob.chat.adapter.ExpressionPagerAdapter;
 import com.easemob.chat.adapter.MessageAdapter;
@@ -80,15 +76,6 @@ import com.easemob.chat.utils.ImageUtils;
 import com.easemob.chat.utils.SmileUtils;
 import com.easemob.chat.widget.ExpandGridView;
 import com.easemob.chat.widget.PasteEditText;
-import com.easemob.chat.ChatApplication;
-import com.easemob.chat.GroupReomveListener;
-import com.easemob.chat.ImageMessageBody;
-import com.easemob.chat.LocationMessageBody;
-import com.easemob.chat.NormalFileMessageBody;
-import com.easemob.chat.R;
-import com.easemob.chat.TextMessageBody;
-import com.easemob.chat.VideoMessageBody;
-import com.easemob.chat.VoiceMessageBody;
 import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.EMLog;
 import com.easemob.util.PathUtil;
@@ -572,7 +559,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 			return;
 		}
 
-		cameraFile = new File(PathUtil.getInstance().getImagePath(), ChatApplication.getInstance().getUserName()
+		cameraFile = new File(PathUtil.getInstance().getImagePath(), DemoApplication.getInstance().getUserName()
 				+ System.currentTimeMillis() + ".jpg");
 		cameraFile.getParentFile().mkdirs();
 		startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraFile)),

@@ -30,8 +30,8 @@ import com.bgood.xn.R;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.EMMessage.ChatType;
-import com.easemob.chat.activity.ChatActivity;
 import com.easemob.chat.VoiceMessageBody;
+import com.easemob.chat.activity.ChatActivity;
 
 public class VoicePlayClickListener implements View.OnClickListener {
 

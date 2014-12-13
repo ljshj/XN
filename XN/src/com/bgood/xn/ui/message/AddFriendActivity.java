@@ -18,7 +18,6 @@ import com.bgood.xn.R;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.easemob.chat.ChatApplication;
 import com.easemob.chat.EMContactManager;
-import com.easemob.chat.activity.AlertDialog;
 
 
 /**
@@ -62,7 +61,7 @@ public class AddFriendActivity extends BaseActivity{
 		if (getString(R.string.button_search).equals(saveText)) {
 			toAddUsername = name;
 			if(TextUtils.isEmpty(name)) {
-				startActivity(new Intent(this, AlertDialog.class).putExtra("msg", "请输入用户名"));
+//				startActivity(new Intent(this, AlertDialog.class).putExtra("msg", "请输入用户名"));
 				return;
 			}
 			
@@ -81,12 +80,10 @@ public class AddFriendActivity extends BaseActivity{
 	 */
 	public void addContact(View view){
 		if(ChatApplication.getInstance().getUserName().equals(nameText.getText().toString())){
-			startActivity(new Intent(this, AlertDialog.class).putExtra("msg", "不能添加自己"));
 			return;
 		}
 		
 		if(ChatApplication.getInstance().getContactList().containsKey(nameText.getText().toString())){
-			startActivity(new Intent(this, AlertDialog.class).putExtra("msg", "此用户已是你的好友"));
 			return;
 		}
 		

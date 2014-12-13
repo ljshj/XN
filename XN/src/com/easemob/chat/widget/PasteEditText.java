@@ -15,18 +15,16 @@ package com.easemob.chat.widget;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.widget.EditText;
-import android.widget.TextView.BufferType;
 
-import com.easemob.chat.activity.AlertDialog;
 import com.easemob.chat.activity.ChatActivity;
-import com.easemob.chat.utils.SmileUtils;
+
 
 /**
  * 自定义的textview，用来处理复制粘贴的消息
