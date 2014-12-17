@@ -52,6 +52,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bgood.xn.R;
+import com.bgood.xn.system.BGApp;
 import com.easemob.EMError;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContactManager;
@@ -392,13 +393,13 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 				listView.setSelection(data.getIntExtra("position", adapter.getCount()) - 1);
 				break;
 
-			case RESULT_CODE_FORWARD: // 转发消息
-				EMMessage forwardMsg = (EMMessage) adapter.getItem(data.getIntExtra("position", 0));
-				Intent intent = new Intent(this, ForwardMessageActivity.class);
-				intent.putExtra("forward_msg_id", forwardMsg.getMsgId());
-				startActivity(intent);
-
-				break;
+//			case RESULT_CODE_FORWARD: // 转发消息
+//				EMMessage forwardMsg = (EMMessage) adapter.getItem(data.getIntExtra("position", 0));
+//				Intent intent = new Intent(this, ForwardMessageActivity.class);
+//				intent.putExtra("forward_msg_id", forwardMsg.getMsgId());
+//				startActivity(intent);
+//
+//				break;
 
 			default:
 				break;
@@ -541,13 +542,14 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 			startActivityForResult(intent, REQUEST_CODE_SELECT_VIDEO);
 		} else if (id == R.id.btn_file) { // 点击文件图标
 			selectFileFromLocal();
-		} else if (id == R.id.btn_voice_call) { // 点击语音电话图标
-			if (!EMChatManager.getInstance().isConnected())
-				Toast.makeText(this, "尚未连接至服务器，请稍后重试", 0).show();
-			else
-				startActivity(new Intent(ChatActivity.this, VoiceCallActivity.class).putExtra("username", toChatUsername).putExtra(
-						"isComingCall", false));
-		}
+		} 
+//		else if (id == R.id.btn_voice_call) { // 点击语音电话图标
+//			if (!EMChatManager.getInstance().isConnected())
+//				Toast.makeText(this, "尚未连接至服务器，请稍后重试", 0).show();
+//			else
+//				startActivity(new Intent(ChatActivity.this, VoiceCallActivity.class).putExtra("username", toChatUsername).putExtra(
+//						"isComingCall", false));
+//		}
 	}
 
 	/**
@@ -559,7 +561,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 			return;
 		}
 
-		cameraFile = new File(PathUtil.getInstance().getImagePath(), DemoApplication.getInstance().getUserName()
+		cameraFile = new File(PathUtil.getInstance().getImagePath(), BGApp.getInstance().getUserName()
 				+ System.currentTimeMillis() + ".jpg");
 		cameraFile.getParentFile().mkdirs();
 		startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraFile)),

@@ -5,7 +5,7 @@
     android:background="@color/common_bg"
     android:orientation="vertical" >
 
-    <RelativeLayout
+<!--     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         android:background="@color/top_bar_normal_bg"
@@ -29,7 +29,7 @@
             android:clickable="true"
             android:scaleType="centerInside"
             android:src="@drawable/add" />
-    </RelativeLayout>
+    </RelativeLayout> -->
 
     <FrameLayout
         android:layout_width="match_parent"

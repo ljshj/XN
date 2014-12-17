@@ -19,17 +19,13 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.text.Spannable;
 import android.view.View;
-import android.widget.TextView.BufferType;
 
 import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
-import com.easemob.chat.NotificationCompat;
 import com.easemob.chat.EMMessage.Type;
+import com.easemob.chat.NotificationCompat;
 import com.easemob.chat.utils.CommonUtils;
-import com.easemob.chat.utils.SmileUtils;
 import com.easemob.util.EasyUtils;
 import com.umeng.analytics.MobclickAgent;
 

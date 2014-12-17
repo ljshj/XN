@@ -35,7 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bgood.xn.R;
-import com.easemob.chat.ChatApplication;
+import com.bgood.xn.system.BGApp;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContact;
 import com.easemob.chat.EMConversation;
@@ -94,7 +94,7 @@ public class ChatHistoryFragment extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				EMConversation conversation = adapter.getItem(position);
 				String username = conversation.getUserName();
-				if (username.equals(ChatApplication.getInstance().getUserName()))
+				if (username.equals(BGApp.getInstance().getUserName()))
 					Toast.makeText(getActivity(), "不能和自己聊天", 0).show();
 				else {
 					// 进入聊天页面

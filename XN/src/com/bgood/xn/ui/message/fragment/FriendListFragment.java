@@ -23,7 +23,6 @@ import java.util.Map.Entry;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
@@ -32,7 +31,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -40,15 +38,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.bgood.xn.R;
-import com.easemob.chat.ChatApplication;
+import com.bgood.xn.system.BGApp;
 import com.easemob.chat.Constant;
 import com.easemob.chat.EMContactManager;
-import com.easemob.chat.activity.ChatActivity;
 import com.easemob.chat.adapter.ContactAdapter;
 import com.easemob.chat.db.InviteMessgeDao;
 import com.easemob.chat.db.UserDao;
@@ -201,7 +197,7 @@ public class FriendListFragment extends Fragment {
 					// 删除db和内存中此用户的数据
 					UserDao dao = new UserDao(getActivity());
 					dao.deleteContact(tobeDeleteUser.getUsername());
-					ChatApplication.getInstance().getContactList().remove(tobeDeleteUser.getUsername());
+					BGApp.getInstance().getContactList().remove(tobeDeleteUser.getUsername());
 					getActivity().runOnUiThread(new Runnable() {
 						public void run() {
 							pd.dismiss();
@@ -281,7 +277,7 @@ public class FriendListFragment extends Fragment {
 	private void getContactList() {
 		contactList.clear();
 		//获取本地好友列表
-		Map<String, User> users = ChatApplication.getInstance().getContactList();
+		Map<String, User> users = BGApp.getInstance().getContactList();
 		Iterator<Entry<String, User>> iterator = users.entrySet().iterator();
 		while (iterator.hasNext()) {
 			Entry<String, User> entry = iterator.next();

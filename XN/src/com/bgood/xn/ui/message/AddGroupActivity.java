@@ -1,6 +1,7 @@
 package com.bgood.xn.ui.message;
 import java.util.ArrayList;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -31,11 +32,11 @@ import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.TitleBar;
 
 /**
- * @todo:搜索并添加好友
+ * @todo:搜索并添加群
  * @date:2014-12-12 下午2:58:20
  * @author:hg_liuzl@163.com
  */
-public class AddFriendActivity extends BaseShowDataActivity implements IXListViewListener,TaskListenerWithState{
+public class AddGroupActivity extends BaseShowDataActivity implements IXListViewListener,TaskListenerWithState{
 
 	private EditText etContent;
 	private ImageButton ibClear;
@@ -46,6 +47,7 @@ public class AddFriendActivity extends BaseShowDataActivity implements IXListVie
 	
 	private int m_start = 0;
 	private String mKeyWord = "";
+	private TitleBar mTitleBar = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,16 @@ public class AddFriendActivity extends BaseShowDataActivity implements IXListVie
 	}
 	
 	private void initView() {
-		(new TitleBar(mActivity)).initTitleBar("添加好友");
+		mTitleBar = new TitleBar(mActivity);
+		mTitleBar.initAllBar("添加群", "创建群");
+		mTitleBar.rightBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				BToast.show(mActivity, "创建群");
+				Intent intent = new Intent(AddGroupActivity.this,CreateGroupActivity.class);
+				AddGroupActivity.this.startActivity(intent);
+			}
+		});
 		etContent = (EditText) findViewById(R.id.query);
 		etContent.setOnEditorActionListener(new OnEditorActionListener() {
 			
@@ -96,7 +107,7 @@ public class AddFriendActivity extends BaseShowDataActivity implements IXListVie
 	}
 	
 	private void doRequest(){
-		IMRequest.getInstance().requestFriendSearch(this, mActivity, mKeyWord, m_start, m_start+PAGE_SIZE_ADD);
+		IMRequest.getInstance().requestGroupSearch(this, mActivity, mKeyWord, m_start, m_start+PAGE_SIZE_ADD);
 	}
 
 	@Override
