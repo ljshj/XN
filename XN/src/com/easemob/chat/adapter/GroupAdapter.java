@@ -108,5 +108,4 @@ public class GroupAdapter extends ArrayAdapter<EMGroup> {
 	public int getCount() {
 		return super.getCount() + 2;
 	}
-
 }

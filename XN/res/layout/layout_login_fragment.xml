@@ -110,30 +110,16 @@
 
             <Button
                 android:id="@+id/login_btn_login"
-                android:layout_width="fill_parent"
-                android:layout_height="45dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/login_btn_selector"
-                android:gravity="center"
                 android:text="登录"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
+                style="@style/common_commit_btn"/>
 
             <Button
                 android:id="@+id/login_btn_register"
-                android:layout_width="fill_parent"
-                android:layout_height="45dp"
-                android:layout_marginBottom="25dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/register_btn_selector"
-                android:gravity="center"
                 android:text="注册"
+                style="@style/common_commit_btn"
+                android:background="@drawable/register_btn_selector"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                 />
             
         </LinearLayout>
     </ScrollView>

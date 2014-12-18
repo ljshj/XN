@@ -23,6 +23,7 @@ import java.util.Map.Entry;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
@@ -43,8 +44,10 @@ import android.widget.Toast;
 
 import com.bgood.xn.R;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.ui.MainActivity;
 import com.easemob.chat.Constant;
 import com.easemob.chat.EMContactManager;
+import com.easemob.chat.activity.ChatActivity;
 import com.easemob.chat.adapter.ContactAdapter;
 import com.easemob.chat.db.InviteMessgeDao;
 import com.easemob.chat.db.UserDao;
@@ -95,18 +98,20 @@ public class FriendListFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				String username = adapter.getItem(position).getUsername();
-//				if (Constant.NEW_FRIENDS_USERNAME.equals(username)) {
+				if (Constant.NEW_FRIENDS_USERNAME.equals(username)) {
 //					// 进入申请与通知页面
-//					User user = ChatApplication.getInstance().getContactList().get(Constant.NEW_FRIENDS_USERNAME);
+//					User user = BGApp.getInstance().getContactList().get(Constant.NEW_FRIENDS_USERNAME);
 //					user.setUnreadMsgCount(0);
 //					startActivity(new Intent(getActivity(), NewFriendsMsgActivity.class));
-//				} else if (Constant.GROUP_USERNAME.equals(username)) {
+				} 
+				else if (Constant.GROUP_USERNAME.equals(username)) {
 //					// 进入群聊列表页面
 //					startActivity(new Intent(getActivity(), GroupsActivity.class));
-//				} else {
-//					// demo中直接进入聊天页面，实际一般是进入用户详情页
-//					startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", adapter.getItem(position).getUsername()));
-//				}
+				} 
+				else {
+					// demo中直接进入聊天页面，实际一般是进入用户详情页
+					startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", adapter.getItem(position).getUsername()));
+				}
 			}
 		});
 		listView.setOnTouchListener(new OnTouchListener() {
@@ -122,16 +127,6 @@ public class FriendListFragment extends Fragment {
 				return false;
 			}
 		});
-
-//		ImageView addContactView = (ImageView) getView().findViewById(R.id.iv_new_contact);
-//		// 进入添加好友页
-//		addContactView.setOnClickListener(new OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//				startActivity(new Intent(getActivity(), AddContactActivity.class));
-//			}
-//		});
 		registerForContextMenu(listView);
 
 	}
@@ -298,13 +293,5 @@ public class FriendListFragment extends Fragment {
 		contactList.add(0, users.get(Constant.GROUP_USERNAME));
 		// 把"申请与通知"添加到首位
 		contactList.add(0, users.get(Constant.NEW_FRIENDS_USERNAME));
-	}
-	
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-//	    if(((MainActivity)getActivity()).isConflict)
-//	        outState.putBoolean("isConflict", true);
-	    super.onSaveInstanceState(outState);
-	    
 	}
 }

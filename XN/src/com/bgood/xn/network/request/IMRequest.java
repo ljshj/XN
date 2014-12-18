@@ -169,16 +169,17 @@ public class IMRequest extends BaseNetWork {
 	 * @params:@param mHttpTaskListener
 	 * @params:@param context
 	 * @params:@param name
-	 * @params:@param type
+	 * @params:@param type	//0 固定群，1 临时群
 	 * @params:@param info
 	 */
-	public void requestGroupCreate(TaskListenerWithState mHttpTaskListener,Context context,String name,String type,String info) {
+	public void requestGroupCreate(TaskListenerWithState mHttpTaskListener,Context context,String name,int type,String info,String notice) {
 		setMessageType(50014);
 		JSONObject body = new JSONObject();
 		try {
 			body.put("name", name);
 			body.put("type", type);
 			body.put("intro", info);
+			body.put("notice", notice);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
