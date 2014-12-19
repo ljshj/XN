@@ -69,6 +69,24 @@
                 android:listSelector="@android:color/transparent"
                 android:numColumns="4"
                 android:verticalSpacing="10dp" />
+            
+	     	 <TextView
+		  		style="@style/group_text_tag"
+		        android:text="请输入群简介"/>
+		    
+		    <EditText 
+		        android:id="@+id/et_group_intro"
+		        style="@style/group_edit_tag"
+		        android:layout_height="100dp"/>
+		    
+		     <TextView
+		  		style="@style/group_text_tag"
+		        android:text="请输入群公告"/>
+		    
+		    <EditText 
+		        android:id="@+id/et_group_notice"
+		        style="@style/group_edit_tag"
+		        android:layout_height="100dp"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -193,7 +211,7 @@
                     android:background="@drawable/close_icon"
                     android:visibility="visible" />
             </RelativeLayout>
-
+            
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dip"

@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.easemob.chat.activity;
+package com.bgood.xn.ui.message;
 
 import java.util.List;
 
@@ -41,11 +41,20 @@ import com.bgood.xn.R;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
+import com.easemob.chat.activity.BaseActivity;
+import com.easemob.chat.activity.ChatActivity;
+import com.easemob.chat.activity.ExitGroupDialog;
 import com.easemob.chat.widget.ExpandGridView;
 import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.EMLog;
 import com.easemob.util.NetUtils;
 
+/**
+ * 
+ * @todo:群详情
+ * @date:2014-12-19 上午11:34:40
+ * @author:hg_liuzl@163.com
+ */
 public class GroupDetailsActivity extends BaseActivity implements OnClickListener {
 	private static final String TAG = "GroupDetailsActivity";
 	private static final int REQUEST_CODE_ADD_USER = 0;

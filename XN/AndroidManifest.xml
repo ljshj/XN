@@ -533,7 +533,7 @@
         </activity>
         <!-- 群组详情 -->
         <activity
-            android:name="com.easemob.chat.activity.GroupDetailsActivity"
+            android:name="com.bgood.xn.ui.message.GroupDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" >
         </activity>

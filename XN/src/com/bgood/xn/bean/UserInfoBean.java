@@ -98,3 +98,4 @@ public class UserInfoBean implements Serializable {
 	public String fansnumber;
 	public String weiqiang;
 }
+

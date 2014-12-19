@@ -293,19 +293,19 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 				switch (REQUEST_FLAG) {
 				case CHOOSE_DAY:
 					m_start_day+=PAGE_SIZE_ADD;
-					setDataAdapter(mXLDay, adapterDay, listDay, response.jokes);
+					setDataAdapter(mXLDay, adapterDay, listDay, response.jokes,isRefreshAction);
 					break;
 				case CHOOSE_WEEK:
 					m_start_week+=PAGE_SIZE_ADD;
-					setDataAdapter(mXLWeek, adapterWeek, listWeek, response.jokes);
+					setDataAdapter(mXLWeek, adapterWeek, listWeek, response.jokes,isRefreshAction);
 					break;
 				case CHOOSE_MONTH:
 					m_start_month+=PAGE_SIZE_ADD;
-					setDataAdapter(mXLMonth, adapterMonth, listMonth, response.jokes);
+					setDataAdapter(mXLMonth, adapterMonth, listMonth, response.jokes,isRefreshAction);
 					break;
 				case CHOOSE_YEAR:
 					m_start_year+=PAGE_SIZE_ADD;
-					setDataAdapter(mXLYear, adapterYear, listYear, response.jokes);
+					setDataAdapter(mXLYear, adapterYear, listYear, response.jokes,isRefreshAction);
 					break;
 				default:
 					break;
@@ -351,6 +351,7 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 
 	@Override
 	public void onLoadMore() {
+		isRefreshAction = false;
 		getData(REQUEST_FLAG,true);
 	}
 	@Override

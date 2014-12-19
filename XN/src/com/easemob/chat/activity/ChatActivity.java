@@ -53,6 +53,7 @@ import android.widget.Toast;
 
 import com.bgood.xn.R;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.ui.message.GroupDetailsActivity;
 import com.easemob.EMError;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContactManager;

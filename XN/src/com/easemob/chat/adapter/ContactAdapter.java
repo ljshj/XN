@@ -77,6 +77,7 @@ public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexe
 			if(convertView == null){
 				convertView = layoutInflater.inflate(R.layout.search_bar_with_padding, null);
 				query = (EditText) convertView.findViewById(R.id.query);
+				query.setHint("搜索好友");
 				clearSearch = (ImageButton) convertView.findViewById(R.id.search_clear);
 				query.addTextChangedListener(new TextWatcher() {
 					public void onTextChanged(CharSequence s, int start, int before, int count) {

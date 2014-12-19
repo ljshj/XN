@@ -67,7 +67,7 @@ public class WeiqiangMentionActivity extends BaseShowDataActivity implements Tas
 			String strJson = bNetWork.getStrJson();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				WeiqiangCorattionResponse response = JSON.parseObject(strJson, WeiqiangCorattionResponse.class);
-				setDataAdapter(m_mentionXLv, adapter, corationBeans, response.merelated);
+				setDataAdapter(m_mentionXLv, adapter, corationBeans, response.merelated,isRefreshAction);
 			}
 		}
 	}
@@ -91,6 +91,7 @@ public class WeiqiangMentionActivity extends BaseShowDataActivity implements Tas
 
 	@Override
 	public void onLoadMore() {
+		isRefreshAction = false;
 		doRequest();
 	}
 	

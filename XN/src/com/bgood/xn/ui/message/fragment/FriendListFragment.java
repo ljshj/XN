@@ -25,7 +25,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -44,7 +43,7 @@ import android.widget.Toast;
 
 import com.bgood.xn.R;
 import com.bgood.xn.system.BGApp;
-import com.bgood.xn.ui.MainActivity;
+import com.bgood.xn.ui.base.BaseFragment;
 import com.easemob.chat.Constant;
 import com.easemob.chat.EMContactManager;
 import com.easemob.chat.activity.ChatActivity;
@@ -61,11 +60,10 @@ import com.easemob.exceptions.EaseMobException;
  * @date:2014-12-12 下午2:45:46
  * @author:hg_liuzl@163.com
  */
-public class FriendListFragment extends Fragment {
+public class FriendListFragment extends BaseFragment {
 	private ContactAdapter adapter;
 	private List<User> contactList;
 	private ListView listView;
-	private boolean hidden;
 	private Sidebar sidebar;
 	private InputMethodManager inputMethodManager;
 	private List<String> blackList;
@@ -81,6 +79,7 @@ public class FriendListFragment extends Fragment {
 		//防止被T后，没点确定按钮然后按了home键，长期在后台又进app导致的crash
 		if(savedInstanceState != null && savedInstanceState.getBoolean("isConflict", false))
 		    return;
+		
 		inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 		listView = (ListView) getView().findViewById(R.id.list);
 		sidebar = (Sidebar) getView().findViewById(R.id.sidebar);
@@ -135,7 +134,7 @@ public class FriendListFragment extends Fragment {
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		// 长按前两个不弹menu
-		if (((AdapterContextMenuInfo) menuInfo).position > 2) {
+		if (((AdapterContextMenuInfo) menuInfo).position > 1) {
 			getActivity().getMenuInflater().inflate(R.menu.context_contact_list, menu);
 		}
 	}
@@ -288,9 +287,9 @@ public class FriendListFragment extends Fragment {
 				return lhs.getUsername().compareTo(rhs.getUsername());
 			}
 		});
-
-		// 加入"申请与通知"和"群聊"
-		contactList.add(0, users.get(Constant.GROUP_USERNAME));
+//
+//		// 加入"申请与通知"和"群聊"
+//		contactList.add(0, users.get(Constant.GROUP_USERNAME));
 		// 把"申请与通知"添加到首位
 		contactList.add(0, users.get(Constant.NEW_FRIENDS_USERNAME));
 	}

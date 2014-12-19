@@ -1,5 +1,6 @@
 package com.bgood.xn.ui.user.info;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,21 +16,20 @@ import com.bgood.xn.R;
 import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpRequestInfo;
 import com.bgood.xn.network.http.HttpResponseInfo;
-import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
-import com.bgood.xn.ui.user.AttentionActivity;
 import com.bgood.xn.ui.user.product.ShowcaseActivity;
 import com.bgood.xn.ui.weiqiang.WeiqiangPersonActivity;
 import com.bgood.xn.ui.xuanneng.XuanNengMainActivity;
-import com.bgood.xn.ui.xuanneng.joke.JokeMeActivity;
-import com.bgood.xn.ui.xuanneng.joke.JokePersonActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
+import com.easemob.chat.EMContactManager;
+import com.easemob.chat.activity.ChatActivity;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -58,7 +58,7 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
     private TextView tvWeiqiang;
     private TextView tvXuanneg;
     private TextView tvChuchuang;
-    
+	private ProgressDialog progressDialog;
 	
 	
 	@Override
@@ -115,28 +115,18 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 		 // 关注
         case R.id.tv_add_attention:
         	if(isSelf){
-        		Toast.makeText(NameCardActivity.this, "不能关注自己", Toast.LENGTH_SHORT).show();
+        		BToast.show(mActivity, "不能关注自己");
         	}else{
         		UserCenterRequest.getInstance().requestAttention(NameCardActivity.this, mActivity,userId,BGApp.mUserId,String.valueOf(0));
         	}
             break;
 		case R.id.tv_add_friend:
-			if(isSelf){
-		    Toast.makeText(NameCardActivity.this, "不能加自己为好友", Toast.LENGTH_SHORT).show();
-			}else{
-				
-				Toast.makeText(NameCardActivity.this, "敬请期待", Toast.LENGTH_SHORT).show();
-			}
+			addContact();
 			break;
 		case R.id.tv_call_message:
-			if(isSelf){
-			Toast.makeText(NameCardActivity.this, "不能与自己发起临时会话", Toast.LENGTH_SHORT).show();
-			}else{
-				Toast.makeText(NameCardActivity.this, "敬请期待", Toast.LENGTH_SHORT).show();
-			}
+			doChat();
 			break;
 		case R.id.tv_xuanneng:
-			
 			intent = new Intent(mActivity, XuanNengMainActivity.class);
 			intent.putExtra(UserInfoBean.KEY_USER_ID, userId);
 			startActivity(intent);
@@ -156,6 +146,76 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 			break;
 		}
 	}
+	
+	/**
+	 * 
+	 * @todo:添加聊天
+	 * @date:2014-12-19 下午3:41:10
+	 * @author:hg_liuzl@163.com
+	 * @params:
+	 */
+	private void doChat() {
+		if(BGApp.getInstance().getUserName().equals(user.username)){
+			BToast.show(mActivity, "不能与自己聊天");
+			return;
+		}else if(!BGApp.getInstance().getContactList().containsKey(user.username)){
+			BToast.show(mActivity, "请先成为好友再聊天");
+			return;
+		}else if(BGApp.getInstance().getContactList().containsKey(user.username)){
+			Intent intent = new Intent(mActivity,ChatActivity.class);
+			intent.putExtra("userId", user.username);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(intent);
+			finish();
+		}
+	}
+	/**
+	 * 
+	 * @todo:添加好友 
+	 * @date:2014-12-19 下午3:39:34
+	 * @author:hg_liuzl@163.com
+	 * @params:
+	 */
+	public void addContact(){
+		if(BGApp.getInstance().getUserName().equals(user.username)){
+			BToast.show(mActivity, "不能添加自己");
+			return;
+		}else if(BGApp.getInstance().getContactList().containsKey(user.username)){
+			BToast.show(mActivity, "此用户已是你的好友");
+			return;
+		}else{
+			progressDialog = new ProgressDialog(this);
+			progressDialog.setMessage("正在发送请求...");
+			progressDialog.setCanceledOnTouchOutside(false);
+			progressDialog.show();
+			new Thread(new Runnable() {
+				public void run() {
+					
+					try {
+						//demo写死了个reason，实际应该让用户手动填入
+						EMContactManager.getInstance().addContact(BGApp.currentUserNick, "加个好友呗");
+						runOnUiThread(new Runnable() {
+							public void run() {
+								progressDialog.dismiss();
+								BToast.show(mActivity, "请求添加好友成功");
+							}
+						});
+					} catch (final Exception e) {
+						runOnUiThread(new Runnable() {
+							public void run() {
+								progressDialog.dismiss();
+								BToast.show(mActivity, "请求添加好友失败");
+							}
+						});
+					}
+				}
+			}).start();
+		}
+	}
+	
+	
+	 
+	
 	
 	/**
      * 设置用户数据显示方法
@@ -229,6 +289,9 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 				break;
 				case 820004:
 					BToast.show(mActivity, "关注成功");
+				break;
+				case 850007:
+					BToast.show(mActivity, "加好友请求已经成功，等待对应回应");
 				break;
 
 				default:

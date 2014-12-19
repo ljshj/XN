@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
-import com.bgood.xn.ui.BaseFragment;
+import com.bgood.xn.ui.base.BaseFragment;
 
 /**
  * 

@@ -229,6 +229,53 @@ public class DBHelper extends CommonDB {
         }
     }
 	
+    
+	/**
+     * 好友表
+     */
+    public static class Friend{
+    	
+    	/**全路径*/
+    	public final static String FULL_PATH_NAME = "full_path_name";
+    	/**文件名*/
+    	public final static String FILENAME = "filename";
+        /** url */
+        public final static String URL = "url";
+        /** 断点 */
+        public final static String BREAKPOINT = "breakpoint";
+        /**文件大小*/
+        public final static String TOTAL_SIZE = "totalsize";
+        /** 保存路径 */
+        public final static String SAVE_PATH = "savePath";
+        /**下载状态 0，未完成下载; 1，已经下载完成,默认是未下载完成**/
+        public final static String STATE = "state";
+        /**下载完成*/
+        public final static int DOLOAD_COMPLETE = 1;
+        /**下载未成功*/
+        public final static int DOLOAD_UN_COMPLETE = 0;
+        
+        public static String newCreateTableString() {
+            StringBuffer buffer = new StringBuffer(512);
+            buffer.append("create table ")
+                    .append(TB_DOWNLOAD).append(" (")
+                    .append(FD_ID).append(" ").append("integer primary key autoincrement").append(",")
+                    .append(FULL_PATH_NAME).append(" ").append("varchar").append(",")
+                    .append(FILENAME).append(" ").append("varchar").append(",")
+                    .append(URL).append(" ").append("varchar").append(",")
+                    .append(SAVE_PATH).append(" ").append("varchar").append(",")
+                    .append(TOTAL_SIZE).append(" ").append("long").append(",")
+                    .append(STATE).append(" ").append("integer").append(",")
+                    .append(BREAKPOINT).append(" ").append("long").append(")");
+            return buffer.toString();
+        }
+        
+        public static String newDeleteTableString() {
+            StringBuffer buffer = new StringBuffer(64);
+            buffer.append("DROP TABLE IF EXISTS ")
+                .append(TB_DOWNLOAD);
+            return buffer.toString();
+        }
+    }
 	
 }
 

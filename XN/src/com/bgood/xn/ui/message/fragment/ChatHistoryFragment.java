@@ -10,7 +10,6 @@ import java.util.List;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.ContextMenu;
@@ -36,6 +35,7 @@ import android.widget.Toast;
 
 import com.bgood.xn.R;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.ui.base.BaseFragment;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContact;
 import com.easemob.chat.EMConversation;
@@ -52,13 +52,11 @@ import com.easemob.chat.db.InviteMessgeDao;
  * @date:2014-12-12 下午2:45:19
  * @author:hg_liuzl@163.com
  */
-public class ChatHistoryFragment extends Fragment {
+public class ChatHistoryFragment extends BaseFragment {
 
 	private InputMethodManager inputMethodManager;
 	private ListView listView;
 	private ChatAllHistoryAdapter adapter;
-	private EditText query;
-	private ImageButton clearSearch;
 	public RelativeLayout errorItem;
 	public TextView errorText;
 	private boolean hidden;
@@ -132,35 +130,6 @@ public class ChatHistoryFragment extends Fragment {
 			}
 
 		});
-		// 搜索框
-		query = (EditText) getView().findViewById(R.id.query);
-		// 搜索框中清除button
-		clearSearch = (ImageButton) getView().findViewById(R.id.search_clear);
-		query.addTextChangedListener(new TextWatcher() {
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-				adapter.getFilter().filter(s);
-				if (s.length() > 0) {
-					clearSearch.setVisibility(View.VISIBLE);
-				} else {
-					clearSearch.setVisibility(View.INVISIBLE);
-				}
-			}
-
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-			}
-
-			public void afterTextChanged(Editable s) {
-			}
-		});
-		clearSearch.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				query.getText().clear();
-				hideSoftKeyboard();
-			}
-		});
-
 	}
 
 	void hideSoftKeyboard() {

@@ -46,7 +46,7 @@ import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.system.BGApp;
-import com.bgood.xn.ui.BaseFragment;
+import com.bgood.xn.ui.base.BaseFragment;
 import com.bgood.xn.ui.home.SearchResultActivity;
 import com.bgood.xn.ui.user.account.LoginActivity;
 import com.bgood.xn.ui.user.info.NameCardActivity;

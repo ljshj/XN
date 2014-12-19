@@ -11,13 +11,15 @@ import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
 
 /**
- * @todo:需要列表展示数据的activity 基类
- * @date:2014-12-5 上午10:56:12
+ * @todo:刷新数据的fragment
+ * @date:2014-12-19 上午10:53:22
  * @author:hg_liuzl@163.com
  */
-public class BaseShowDataActivity extends BaseActivity {
+public class BaseShowDataFragment extends BaseFragment {
+	
+	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
 	
@@ -26,7 +28,7 @@ public class BaseShowDataActivity extends BaseActivity {
 	public boolean isRefreshAction = true;
 	public String mRefreshTime = "";
     @SuppressWarnings({ "rawtypes", "unchecked" })
-	public void setDataAdapter(XListView xListView,KBaseAdapter adapter,List<?> showList,List resultlist,boolean isRefresh)
+	public void setDataAdapter(XListView xListView,KBaseAdapter adapter,List<?> showList,List resultlist)
     {
     	mRefreshTime = ToolUtils.getNowTime();
     	xListView.setRefreshTime(mRefreshTime);
@@ -48,9 +50,9 @@ public class BaseShowDataActivity extends BaseActivity {
         	 xListView.setPullLoadEnable(true);
          }
     	 
-    	 if(isRefresh){
+    	 if(isRefreshAction){
     		 showList.clear();
-    		 isRefresh = false;
+    		 isRefreshAction = false;
     	 }
     	 
     	 showList.addAll(resultlist);

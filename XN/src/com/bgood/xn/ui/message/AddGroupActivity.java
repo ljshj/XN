@@ -118,6 +118,7 @@ public class AddGroupActivity extends BaseShowDataActivity implements IXListView
 
 	@Override
 	public void onLoadMore() {
+		isRefreshAction = false;
 		doRequest();
 	}
 
@@ -129,7 +130,7 @@ public class AddGroupActivity extends BaseShowDataActivity implements IXListView
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				JokeResponse response = JSON.parseObject(strJson, JokeResponse.class);
 				m_start += PAGE_SIZE_ADD;
-				setDataAdapter(m_memberXLv, m_memberAdapter, m_memberList, response.jokes);
+				setDataAdapter(m_memberXLv, m_memberAdapter, m_memberList, response.jokes,isRefreshAction);
 				}
 			}
 	}

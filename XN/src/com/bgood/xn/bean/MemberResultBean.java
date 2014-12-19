@@ -17,7 +17,6 @@ public class MemberResultBean {
       public String ineed;
       public int searchtype;
       public int guanzhutype;
-     
 }
 
 
