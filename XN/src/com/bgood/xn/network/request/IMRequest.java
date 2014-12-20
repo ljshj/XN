@@ -56,7 +56,7 @@ public class IMRequest extends BaseNetWork {
 	 * @params:@param vertify 验证信息
 	 */
 	public void requestFriendADD(TaskListenerWithState mHttpTaskListener,Context context,String sendername,String sender,String userid,String vertify) {
-		setMessageType(50007);
+		setMessageType(500027);
 		JSONObject body = new JSONObject();
 		try {
 			body.put("sendername", sendername);

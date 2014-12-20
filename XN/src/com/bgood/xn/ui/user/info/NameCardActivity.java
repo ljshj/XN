@@ -20,6 +20,7 @@ import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpRequestInfo;
 import com.bgood.xn.network.http.HttpResponseInfo;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
+import com.bgood.xn.network.request.IMRequest;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
@@ -184,32 +185,34 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 			BToast.show(mActivity, "此用户已是你的好友");
 			return;
 		}else{
-			progressDialog = new ProgressDialog(this);
-			progressDialog.setMessage("正在发送请求...");
-			progressDialog.setCanceledOnTouchOutside(false);
-			progressDialog.show();
-			new Thread(new Runnable() {
-				public void run() {
-					
-					try {
-						//demo写死了个reason，实际应该让用户手动填入
-						EMContactManager.getInstance().addContact(BGApp.currentUserNick, "加个好友呗");
-						runOnUiThread(new Runnable() {
-							public void run() {
-								progressDialog.dismiss();
-								BToast.show(mActivity, "请求添加好友成功");
-							}
-						});
-					} catch (final Exception e) {
-						runOnUiThread(new Runnable() {
-							public void run() {
-								progressDialog.dismiss();
-								BToast.show(mActivity, "请求添加好友失败");
-							}
-						});
-					}
-				}
-			}).start();
+//			progressDialog = new ProgressDialog(this);
+//			progressDialog.setMessage("正在发送请求...");
+//			progressDialog.setCanceledOnTouchOutside(false);
+//			progressDialog.show();
+//			new Thread(new Runnable() {
+//				public void run() {
+//					
+//					try {
+//						//demo写死了个reason，实际应该让用户手动填入
+//						EMContactManager.getInstance().addContact(BGApp.currentUserNick, "加个好友呗");
+//						runOnUiThread(new Runnable() {
+//							public void run() {
+//								progressDialog.dismiss();
+//								BToast.show(mActivity, "请求添加好友成功");
+//							}
+//						});
+//					} catch (final Exception e) {
+//						runOnUiThread(new Runnable() {
+//							public void run() {
+//								progressDialog.dismiss();
+//								BToast.show(mActivity, "请求添加好友失败");
+//							}
+//						});
+//					}
+//				}
+//			}).start();
+			
+			IMRequest.getInstance().requestFriendADD(NameCardActivity.this, mActivity, BGApp.mUserBean.username, BGApp.mUserId, userId, "加个好友吧");
 		}
 	}
 	
