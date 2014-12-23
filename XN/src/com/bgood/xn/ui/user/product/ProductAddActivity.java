@@ -228,7 +228,7 @@ public class ProductAddActivity extends BaseActivity implements OnClickListener,
 		tempFile = new File(path);
 		Bitmap mBitmapUploaded = BitmapFactory.decodeFile(path);
 		m_photoImgV.setImageBitmap(mBitmapUploaded);
-		FileRequest.getInstance().requestUpLoadFile(this,mActivity,true,tempFile, String.valueOf(BGApp.mLoginBean.userid), "shop", "png");
+		FileRequest.getInstance().requestUpLoadFile(this,mActivity,true,tempFile, String.valueOf(BGApp.mUserId), "shop", "png");
 	}
 
 	@Override

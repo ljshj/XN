@@ -256,7 +256,7 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 					imgs[uploadCount] = object.optString("url");
 					uploadCount++;
 					if(uploadCount < files.size()){	//上传图片
-						FileRequest.getInstance().requestUpLoadFile(this,mActivity,false,files.get(uploadCount), String.valueOf(BGApp.mLoginBean.userid), "webo", "jpg");
+						FileRequest.getInstance().requestUpLoadFile(this,mActivity,false,files.get(uploadCount), String.valueOf(BGApp.mUserId), "webo", "jpg");
 					}else{	//图片上传完毕
 						checkInfo();
 					}
@@ -283,7 +283,7 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 				imgs = new String[files.size()];
 				smallImgs = new String[files.size()];
 				LoadingProgress.getInstance().show(mActivity, "正在投稿");
-				FileRequest.getInstance().requestUpLoadFile(this,mActivity,false,files.get(uploadCount), String.valueOf(BGApp.mLoginBean.userid), "webo", "jpg");
+				FileRequest.getInstance().requestUpLoadFile(this,mActivity,false,files.get(uploadCount), String.valueOf(BGApp.mUserId), "webo", "jpg");
 			}else{
 				checkInfo();
 			}

@@ -41,7 +41,7 @@ public class GroupAdapter extends KBaseAdapter {
 		
 		holder.name.setText(group.name);
 		
-	   holder.groupType.setImageDrawable(mActivity.getResources().getDrawable(group.grouptype == 0? R.drawable.img_common_sex_male:R.drawable.img_common_sex_female));
+	   holder.groupType.setImageDrawable(mActivity.getResources().getDrawable(group.grouptype.equals("0")? R.drawable.img_common_sex_male:R.drawable.img_common_sex_female));
 
 		
 		holder.summary.setText(group.intro);

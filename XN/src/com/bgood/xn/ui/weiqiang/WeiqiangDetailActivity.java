@@ -353,7 +353,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 					}else{
 						
 						CommentBean wcb = new CommentBean();
-						wcb.userid = String.valueOf(BGApp.mLoginBean.userid);
+						wcb.userid = String.valueOf(BGApp.mUserId);
 						wcb.name = BGApp.mUserBean.nickn;
 						wcb.photo = BGApp.mUserBean.photo;
 						wcb.content = content;

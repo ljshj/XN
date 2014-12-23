@@ -19,6 +19,7 @@
 			    
 			    <TextView
 			  		style="@style/group_text_tag"
+			  		android:singleLine="true"
 			        android:text="请输入群名"/>
 			    
 			    <EditText 

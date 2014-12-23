@@ -7,7 +7,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -54,6 +53,8 @@ import android.widget.Toast;
 import com.bgood.xn.R;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.message.GroupDetailsActivity;
+import com.bgood.xn.utils.LogUtils;
+import com.bgood.xn.widget.TitleBar;
 import com.easemob.EMError;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContactManager;
@@ -167,6 +168,8 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	private boolean haveMoreData = true;
 	private Button btnMore;
 	public String playMsgId;
+	
+	
 
 	private Handler micImageHandler = new Handler() {
 		@Override
@@ -1143,6 +1146,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				LogUtils.i("----------表情------"+position);
 				String filename = expressionAdapter.getItem(position);
 				try {
 					// 文字输入框可见时，才可输入表情
@@ -1151,7 +1155,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 
 						if (filename != "delete_expression") { // 不是删除键，显示表情
 							// 这里用的反射，所以混淆的时候不要混淆SmileUtils这个类
-							Class clz = Class.forName("com.easemob.chatuidemo.utils.SmileUtils");
+							Class clz = Class.forName("com.easemob.chat.utils.SmileUtils");
 							Field field = clz.getField(filename);
 							mEditTextContent.append(SmileUtils.getSmiledText(ChatActivity.this, (String) field.get(null)));
 						} else { // 删除文字或者表情

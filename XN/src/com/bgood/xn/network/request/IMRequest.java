@@ -43,26 +43,25 @@ public class IMRequest extends BaseNetWork {
 		setMessageType(50006);
 		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 	}
+
 	/**
 	 * 
 	 * @todo:TODO 请求添加好友 
-	 * @date:2014-12-8 下午5:10:14
+	 * @date:2014-12-22 上午11:54:35
 	 * @author:hg_liuzl@163.com
 	 * @params:@param mHttpTaskListener
 	 * @params:@param context
-	 * @params:@param sendername  发送人
-	 * @params:@param sender 发送人ID
-	 * @params:@param userid 好友ID
-	 * @params:@param vertify 验证信息
+	 * @params:@param recver  对方的ID
+	 * @params:@param msg 是否同意 true ,false
+	 * @params:@param userid 自己的ID
 	 */
-	public void requestFriendADD(TaskListenerWithState mHttpTaskListener,Context context,String sendername,String sender,String userid,String vertify) {
-		setMessageType(500027);
+	public void requestFriendADD(TaskListenerWithState mHttpTaskListener,Context context,String userid,String recver,String msg) {
+		setMessageType(50027);
 		JSONObject body = new JSONObject();
 		try {
-			body.put("sendername", sendername);
-			body.put("sender", sender);
 			body.put("userid", userid);
-			body.put("vertify", vertify);
+			body.put("recver", recver);
+			body.put("msg", msg);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

@@ -301,7 +301,7 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
             // 名片预览按钮
             case R.id.presonal_data_btn_done:
                 intent = new Intent(PersonalDataActivity.this, NameCardActivity.class);
-                intent.putExtra(UserInfoBean.KEY_USER_ID, String.valueOf(BGApp.mLoginBean.userid));
+                intent.putExtra(UserInfoBean.KEY_USER_ID, String.valueOf(BGApp.mUserId));
                 startActivity(intent);
                 break;
             case R.id.btn_take_photo:
@@ -409,7 +409,7 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
 				tempFile = new File(path);
 				mBitmapUploaded = BitmapFactory.decodeFile(path);
 				m_iconImgV.setImageBitmap(mBitmapUploaded);
-				FileRequest.getInstance().requestUpLoadFile(PersonalDataActivity.this,mActivity,true,tempFile, String.valueOf(BGApp.mLoginBean.userid), "userInfo", "png");
+				FileRequest.getInstance().requestUpLoadFile(PersonalDataActivity.this,mActivity,true,tempFile, String.valueOf(BGApp.mUserId), "userInfo", "png");
 			}
 		}
 	}

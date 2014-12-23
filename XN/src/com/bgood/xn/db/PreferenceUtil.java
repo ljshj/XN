@@ -187,5 +187,16 @@ public class PreferenceUtil {
 		return sp.getString("joke_random", "");
 	}
 	
+
+	/**************************************IM聊天模块*******************************************/
 	
+	/**设置初始化IM成员与群组信息**/
+	public void setInitFriendAndGroup(boolean isInit) {
+		editor.putBoolean("im_init", isInit);
+		editor.commit();
+	}
+
+	public boolean hasInitFriendAndGroup() {
+		return sp.getBoolean("im_init", false);
+	}
 }

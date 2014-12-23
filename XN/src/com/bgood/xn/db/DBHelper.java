@@ -72,7 +72,7 @@ public class DBHelper extends CommonDB {
 			        .append(F_SEX).append(" ").append("varchar").append(",")
 			        .append(F_LEVEL).append(" ").append("varchar").append(",")
 			        .append(F_PHOTO).append(" ").append("varchar").append(",")
-			        .append(F_SIGNATURE).append(" ").append("varchar").append(",");
+			        .append(F_SIGNATURE).append(" ").append("varchar");
             return buffer.toString();
         }
         
@@ -111,7 +111,7 @@ public class DBHelper extends CommonDB {
 			        .append(G_NAME).append(" ").append("varchar").append(",")
 			        .append(G_INTRO).append(" ").append("varchar").append(",")
 			        .append(G_PHOTO).append(" ").append("varchar").append(",")
-			        .append(G_GROUPTYPE).append(" ").append("varchar").append(",");
+			        .append(G_GROUPTYPE).append(" ").append("varchar");
             return buffer.toString();
         }
         

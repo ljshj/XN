@@ -27,6 +27,7 @@ import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.user.product.ShowcaseActivity;
 import com.bgood.xn.ui.weiqiang.WeiqiangPersonActivity;
 import com.bgood.xn.ui.xuanneng.XuanNengMainActivity;
+import com.bgood.xn.utils.LogUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
 import com.easemob.chat.EMContactManager;
@@ -59,8 +60,8 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
     private TextView tvWeiqiang;
     private TextView tvXuanneg;
     private TextView tvChuchuang;
-	private ProgressDialog progressDialog;
 	
+    private ProgressDialog progressDialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -71,7 +72,7 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 		findView();
 		userId = getIntent().getStringExtra(UserInfoBean.KEY_USER_ID);
 		if(null != userId){
-			isSelf = userId.equals(String.valueOf(BGApp.mLoginBean.userid));
+			isSelf = userId.equals(String.valueOf(BGApp.mUserId));
 			UserCenterRequest.getInstance().requestPersonInfo(this, mActivity, userId);
 		}else{
 			finish();
@@ -185,34 +186,35 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 			BToast.show(mActivity, "此用户已是你的好友");
 			return;
 		}else{
-//			progressDialog = new ProgressDialog(this);
-//			progressDialog.setMessage("正在发送请求...");
-//			progressDialog.setCanceledOnTouchOutside(false);
-//			progressDialog.show();
-//			new Thread(new Runnable() {
-//				public void run() {
-//					
-//					try {
-//						//demo写死了个reason，实际应该让用户手动填入
-//						EMContactManager.getInstance().addContact(BGApp.currentUserNick, "加个好友呗");
-//						runOnUiThread(new Runnable() {
-//							public void run() {
-//								progressDialog.dismiss();
-//								BToast.show(mActivity, "请求添加好友成功");
-//							}
-//						});
-//					} catch (final Exception e) {
-//						runOnUiThread(new Runnable() {
-//							public void run() {
-//								progressDialog.dismiss();
-//								BToast.show(mActivity, "请求添加好友失败");
-//							}
-//						});
-//					}
-//				}
-//			}).start();
+			progressDialog = new ProgressDialog(this);
+			progressDialog.setMessage("正在发送请求...");
+			progressDialog.setCanceledOnTouchOutside(false);
+			progressDialog.show();
+			new Thread(new Runnable() {
+				public void run() {
+					
+					try {
+						//demo写死了个reason，实际应该让用户手动填入
+						EMContactManager.getInstance().addContact("bg"+userId, "bg"+BGApp.mUserId+"加个好友呗");
+						LogUtils.print("------------------编号是-----------------------"+"bg"+userId);
+						runOnUiThread(new Runnable() {
+							public void run() {
+								progressDialog.dismiss();
+								BToast.show(mActivity, "请求添加好友成功");
+							}
+						});
+					} catch (final Exception e) {
+						runOnUiThread(new Runnable() {
+							public void run() {
+								progressDialog.dismiss();
+								BToast.show(mActivity, "请求添加好友失败");
+							}
+						});
+					}
+				}
+			}).start();
 			
-			IMRequest.getInstance().requestFriendADD(NameCardActivity.this, mActivity, BGApp.mUserBean.username, BGApp.mUserId, userId, "加个好友吧");
+//			IMRequest.getInstance().requestFriendADD(NameCardActivity.this, mActivity,BGApp.mUserId, userId, "true");
 		}
 	}
 	
@@ -293,9 +295,9 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 				case 820004:
 					BToast.show(mActivity, "关注成功");
 				break;
-				case 850007:
-					BToast.show(mActivity, "加好友请求已经成功，等待对应回应");
-				break;
+//				case 850027:
+//					BToast.show(mActivity, "加好友请求已经成功，等待对应回应");
+//				break;
 
 				default:
 					break;

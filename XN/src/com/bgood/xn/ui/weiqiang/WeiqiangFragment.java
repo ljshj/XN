@@ -276,7 +276,7 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 		case R.id.tv_weiqiang_me:
 			dissmissPopupMore();
 			intent = new Intent(mActivity, WeiqiangPersonActivity.class);
-			intent.putExtra(UserInfoBean.KEY_USER_ID, String.valueOf(BGApp.mLoginBean.userid));
+			intent.putExtra(UserInfoBean.KEY_USER_ID, String.valueOf(BGApp.mUserId));
 			mActivity.startActivity(intent);
 			break;
 		case R.id.tv_weiqiang_publish:

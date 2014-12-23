@@ -58,6 +58,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 			holder.reason = (TextView) convertView.findViewById(R.id.message);
 			holder.name = (TextView) convertView.findViewById(R.id.name);
 			holder.status = (Button) convertView.findViewById(R.id.user_state);
+			holder.refuse = (Button) convertView.findViewById(R.id.user_refuse);
 			holder.groupContainer = (LinearLayout) convertView.findViewById(R.id.ll_group);
 			holder.groupname = (TextView) convertView.findViewById(R.id.tv_groupName);
 			// holder.time = (TextView) convertView.findViewById(R.id.time);
@@ -102,6 +103,28 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 					public void onClick(View v) {
 						// 同意别人发的好友请求
 						acceptInvitation(holder.status, msg);
+					}
+				});
+			}else if (msg.getStatus() == InviteMesageStatus.BEINVITEED || msg.getStatus() == InviteMesageStatus.BEAPPLYED) {
+				holder.refuse.setVisibility(View.VISIBLE);
+				holder.refuse.setText("拒绝");
+				if(msg.getStatus() == InviteMesageStatus.BEINVITEED){
+					if (msg.getReason() == null) {
+						// 如果没写理由
+						holder.reason.setText("请求加你为好友");
+					}
+				}else{ //入群申请
+					if (TextUtils.isEmpty(msg.getReason())) {
+						holder.reason.setText("申请加入群：" + msg.getGroupName());
+					}
+				}
+				// 设置点击事件
+				holder.refuse.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// 拒绝别人发的好友请求
+						refuseInvitation(holder.refuse, msg);
 					}
 				});
 			} else if (msg.getStatus() == InviteMesageStatus.AGREED) {
@@ -170,12 +193,69 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 			}
 		}).start();
 	}
+	
+	
+
+	/**
+	 * 拒绝好友请求或者群申请
+	 * 
+	 * @param button
+	 * @param username
+	 */
+	private void refuseInvitation(final Button button, final InviteMessage msg) {
+		final ProgressDialog pd = new ProgressDialog(context);
+		pd.setMessage("正在拒绝...");
+		pd.setCanceledOnTouchOutside(false);
+		pd.show();
+
+		new Thread(new Runnable() {
+			public void run() {
+				// 调用sdk的拒绝方法
+				try {
+					if(msg.getGroupId() == null) //拒绝好友请求
+						EMChatManager.getInstance().refuseInvitation(msg.getFrom());
+					else //同意加群申请
+					{
+						
+					}
+					//	EMGroupManager.getInstance().acceptApplication(msg.getFrom(), msg.getGroupId());
+					
+					((Activity) context).runOnUiThread(new Runnable() {
+
+						@Override
+						public void run() {
+							pd.dismiss();
+							button.setText("已拒绝");
+							msg.setStatus(InviteMesageStatus.REFUSED);
+//							// 更新db
+//							ContentValues values = new ContentValues();
+//							values.put(InviteMessgeDao.COLUMN_NAME_STATUS, msg.getStatus().ordinal());
+//							messgeDao.updateMessage(msg.getId(), values);
+							button.setBackgroundDrawable(null);
+							button.setEnabled(false);
+
+						}
+					});
+				} catch (final Exception e) {
+					((Activity) context).runOnUiThread(new Runnable() {
+
+						@Override
+						public void run() {
+							pd.dismiss();
+							Toast.makeText(context, "拒绝失败: " + e.getMessage(), 1).show();
+						}
+					});
+
+				}
+			}
+		}).start();
+	}
 
 	private static class ViewHolder {
 		ImageView avator;
 		TextView name;
 		TextView reason;
-		Button status;
+		Button status,refuse;
 		LinearLayout groupContainer;
 		TextView groupname;
 		// TextView time;

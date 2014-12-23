@@ -182,7 +182,7 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 					String searchContent = m_searchEt.getText().toString().trim();
                     Intent intent = new Intent(ShowcaseActivity.this, ProductListActivity.class);
                     intent.putExtra("content", searchContent);
-                    intent.putExtra("userid", String.valueOf(BGApp.mLoginBean.userid));
+                    intent.putExtra("userid", String.valueOf(BGApp.mUserId));
                     startActivity(intent);
 				}
 				return false;

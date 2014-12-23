@@ -5,11 +5,49 @@
     android:layout_height="match_parent"
     android:background="#f2f0eb" >
 
-    <RelativeLayout
+    
+      <RelativeLayout
+           android:id="@+id/top_bar"
+        style="@style/common_top_title_style" >
+
+        <Button
+            style="@style/common_btn_back_style"
+            android:clickable="true"
+  			android:onClick="back"
+             />
+
+        <TextView
+            android:id="@+id/name"
+            style="@style/common_tv_title_style"/>
+        
+         <Button
+            android:id="@+id/container_remove"
+            style="@style/common_btn_title_right_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="emptyHistory"
+            android:background="@drawable/img_common_delete"
+            android:layout_marginRight="15dp"
+             />
+        
+         <Button
+            android:id="@+id/container_to_group"
+            style="@style/common_btn_title_right_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="toGroupDetails"
+            android:visibility="gone" 
+            android:background="@drawable/to_group_details_normal"
+            android:layout_marginRight="15dp"
+             />
+         
+    </RelativeLayout>
+    
+    <!--   <RelativeLayout
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
-        android:background="@color/top_bar_normal_bg"
+        android:background="@color/white"
         android:gravity="center_vertical" >
 
         <include layout="@layout/commom_back_btn" />
@@ -19,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textColor="#ffffff"
+            android:textColor="@color/common_title"
             android:textSize="20sp" />
 
         <RelativeLayout
@@ -37,7 +75,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="9dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/mm_title_remove" />
+                android:background="@drawable/img_common_delete" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -57,7 +95,7 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/to_group_details_normal" />
         </RelativeLayout>
-    </RelativeLayout>
+    </RelativeLayout> --> -->
 
     <LinearLayout
         android:id="@+id/bar_bottom"
@@ -397,6 +435,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:visibility="invisible"
                         android:orientation="vertical" >
 
                         <RelativeLayout

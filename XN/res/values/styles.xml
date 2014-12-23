@@ -353,6 +353,7 @@
         <item name ="android:textColor">@color/black</item>
         <item name ="android:textSize">12sp</item>
         <item name ="android:background">@drawable/img_user_center_bg</item>
+        <item name ="android:gravity">top|right</item>
     </style>
     
     

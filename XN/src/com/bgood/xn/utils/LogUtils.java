@@ -56,4 +56,10 @@ public class LogUtils {
 	public static void w(String tag,Throwable throwable) {
 		if(DEBUG) Log.w(tag, "-------------------------:"+throwable);
 	}
+	
+	public static void print(String msg){
+		if(DEBUG){
+			System.out.println(msg);
+		}
+	}
 }

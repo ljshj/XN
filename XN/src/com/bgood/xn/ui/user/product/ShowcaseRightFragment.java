@@ -54,7 +54,7 @@ public class ShowcaseRightFragment extends Fragment implements OnClickListener
 			break;
 		case R.id.tv_list_product:
 			intent = new Intent(m_showcaseActivity, ProductEditListActivity.class);
-			intent.putExtra("userid", String.valueOf(BGApp.mLoginBean.userid));
+			intent.putExtra("userid", String.valueOf(BGApp.mUserId));
 			startActivity(intent);
 			if (!m_slidingMenu.isMenuShowing())
 			{
