@@ -2,7 +2,9 @@ package com.bgood.xn.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -36,10 +38,10 @@ public class GroupBean implements Serializable
 	 * @params:@param mDBHelper
 	 * @params:@return
 	 */
-	public static List<GroupBean> queryGroupBean(DBHelper mDBHelper){
+	public static Map<String,GroupBean> queryGroupBeanByType(DBHelper mDBHelper,int type){
 		   LogUtils.i("------from database----");
-	       Cursor c = mDBHelper.queryAll(DBHelper.TB_GROUP);
-	       List<GroupBean>list = new ArrayList<GroupBean>();
+	       Cursor c = mDBHelper.queryAndAll(DBHelper.TB_GROUP, DBHelper.Group.G_GROUPTYPE, String.valueOf(type));
+	       Map<String,GroupBean> map = new HashMap<String,GroupBean>();
 	       c.moveToFirst();
 	       do {
 	    	   if(c!=null&&c.getCount()>0){
@@ -55,14 +57,14 @@ public class GroupBean implements Serializable
 	           group.name = name;
 	           group.intro = intro;
 	           group.grouptype = groupType;
-	           list.add(group);
-	           }
+	           map.put(name, group);
+	          }
 		} while (c.moveToNext());
 	       
 	       if(null!=c)
 				c.close();
 	       
-	     return list;
+	     return map;
 	}
 	/**
 	 * 

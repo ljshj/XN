@@ -1,22 +1,73 @@
 package com.bgood.xn.view;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
-
-import com.bgood.xn.view.dialog.CustomLoadingDialog;
 
 public class LoadingProgress {
 
-	private static LoadingProgress intance = null;
+//	private static LoadingProgress intance = null;
+//
+//	private CustomLoadingDialog mDialog;
+//
+//	private int mShownCount;
+//
+//	public static synchronized LoadingProgress getInstance() {
+//		if(null == intance)
+//		{
+//			intance = new LoadingProgress();
+//		}
+//		return intance;
+//	}
+//
+//	private LoadingProgress() {
+//	}
+//
+//	public void show(Context context) {
+//		show(context, "加载中...");
+//	}
+//
+//	public void show(Context context, String message) {
+//		if (haveShown()) {
+//			mShownCount++;
+//			return;
+//		}
+//
+//		createLoadingDialog(context, message);
+//
+//		if (!mDialog.isShowing()) {
+//			mShownCount++;
+//			mDialog.show();
+//		}
+//	}
+//
+//	private boolean haveShown() {
+//		return mShownCount != 0 ? true : false;
+//	}
+//
+//	private void createLoadingDialog(Context context, String message) {
+//		mDialog = new CustomLoadingDialog(context);
+//		mDialog.setCancelable(true);
+//		mDialog.setCanceledOnTouchOutside(false);
+//		mDialog.setMessage(message);
+//	}
+//
+//	public void dismiss() {
+//		if (mDialog != null && mDialog.isShowing()) {
+//			mShownCount = 0;
+//			mDialog.cancel();
+//			mDialog = null;
+//		}
+//	}
+	
+	
+	private ProgressDialog mDialog;
 
-	private CustomLoadingDialog mDialog;
+	private static LoadingProgress intance = new LoadingProgress();
 
 	private int mShownCount;
 
-	public static synchronized LoadingProgress getInstance() {
-		if(null == intance)
-		{
-			intance = new LoadingProgress();
-		}
+	public static LoadingProgress getInstance() {
 		return intance;
 	}
 
@@ -24,7 +75,7 @@ public class LoadingProgress {
 	}
 
 	public void show(Context context) {
-		show(context, "加载中...");
+		show(context, "正在加载中...");
 	}
 
 	public void show(Context context, String message) {
@@ -36,7 +87,6 @@ public class LoadingProgress {
 		createLoadingDialog(context, message);
 
 		if (!mDialog.isShowing()) {
-			mShownCount++;
 			mDialog.show();
 		}
 	}
@@ -46,17 +96,19 @@ public class LoadingProgress {
 	}
 
 	private void createLoadingDialog(Context context, String message) {
-		mDialog = new CustomLoadingDialog(context);
+		mDialog = new ProgressDialog(context);
 		mDialog.setCancelable(true);
 		mDialog.setCanceledOnTouchOutside(false);
-		//mDialog.setMessage(message);
+		mDialog.setIndeterminate(false);
+		mDialog.setInverseBackgroundForced(false);
+		mDialog.setMessage(message);
 	}
 
 	public void dismiss() {
 		if (mDialog != null && mDialog.isShowing()) {
+			System.out.println("关闭ProgressDialog");
 			mShownCount = 0;
 			mDialog.cancel();
-			mDialog = null;
 		}
 	}
 

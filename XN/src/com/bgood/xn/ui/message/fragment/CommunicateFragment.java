@@ -1,6 +1,11 @@
 package com.bgood.xn.ui.message.fragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,29 +23,20 @@ import android.widget.TextView.OnEditorActionListener;
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.GroupAdapter;
 import com.bgood.xn.bean.GroupBean;
-import com.bgood.xn.network.BaseNetWork;
-import com.bgood.xn.network.BaseNetWork.ReturnCode;
-import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
-import com.bgood.xn.network.http.HttpRequestInfo;
-import com.bgood.xn.network.http.HttpResponseInfo;
-import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
-import com.bgood.xn.network.request.IMRequest;
 import com.bgood.xn.ui.base.BaseShowDataFragment;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
-import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
-
 /**
  * @todo:交流厅
  * @date:2014-12-12 上午10:01:05
  * @author:hg_liuzl@163.com
  */
-public class CommunicateFragment extends BaseShowDataFragment implements IXListViewListener,TaskListenerWithState {
-	
+public class CommunicateFragment extends BaseShowDataFragment {
 	private EditText etContent;
 	private ImageButton ibClear;
 	private XListView m_groupXLv;
-	private ArrayList<GroupBean> m_groupList = new ArrayList<GroupBean>();
+	private List<GroupBean> m_groupList = new ArrayList<GroupBean>();
+	private Map<String,GroupBean> m_groupMap = new HashMap<String,GroupBean>();
 	private String mKeyWord = "";
 	private GroupAdapter groupAdapter;
 	private View layout;
@@ -49,7 +45,7 @@ public class CommunicateFragment extends BaseShowDataFragment implements IXListV
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		layout =  inflater.inflate(R.layout.fragment_group_list, container, false);
 		initView();
-		doRequest();
+		doGetGroupData();
 		return layout;
 	}
 
@@ -78,8 +74,7 @@ public class CommunicateFragment extends BaseShowDataFragment implements IXListV
 		
 		m_groupXLv = (XListView) layout.findViewById(R.id.common_xlv);
 		m_groupXLv.setPullLoadEnable(false);
-		m_groupXLv.setPullRefreshEnable(true);
-		m_groupXLv.setXListViewListener(this);
+		m_groupXLv.setPullRefreshEnable(false);
 		groupAdapter = new GroupAdapter(m_groupList, getActivity());
 		m_groupXLv.setAdapter(groupAdapter);
 	}
@@ -90,7 +85,7 @@ public class CommunicateFragment extends BaseShowDataFragment implements IXListV
 			BToast.show(mActivity, "请输入关键字");
 			return;
 		}else{
-			doRequest();
+			searchGroup(mKeyWord);
 		}
 	}
 	
@@ -99,7 +94,7 @@ public class CommunicateFragment extends BaseShowDataFragment implements IXListV
 		super.onHiddenChanged(hidden);
 		this.hidden = hidden;
 		if (!hidden) {
-			doRequest();
+			doGetGroupData();
 		}
 	}
 
@@ -107,30 +102,33 @@ public class CommunicateFragment extends BaseShowDataFragment implements IXListV
 	public void onResume() {
 		super.onResume();
 		if (!hidden) {
-			doRequest();
+			doGetGroupData();
 		}
 	}
 	
-	private void doRequest(){
-		IMRequest.getInstance().requestContactsList(this, mActivity);
-	}
+	private void doGetGroupData(){
+		m_groupMap.clear();
+		m_groupList.clear();
 
-	@Override
-	public void onRefresh() {
-		doRequest();
+		m_groupMap = GroupBean.queryGroupBeanByType(dbHelper, 1);
+		
+		Iterator<Entry<String, GroupBean>> iter = m_groupMap.entrySet().iterator();
+		while (iter.hasNext()) {
+			Entry<String, GroupBean> entry = (Entry<String, GroupBean>) iter.next();
+			m_groupList.add(entry.getValue());
+		}
+		groupAdapter.notifyDataSetChanged();		
 	}
-
-	@Override
-	public void onLoadMore() {
-	}
-
-	@Override
-	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
-		if(info.getState() == HttpTaskState.STATE_OK){
-			BaseNetWork bNetWork = info.getmBaseNetWork();
-			String strJson = bNetWork.getStrJson();
-			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
-				}
+	
+	private void searchGroup(String keyWord) {
+		m_groupList.clear();
+		Iterator<Entry<String, GroupBean>> iter = m_groupMap.entrySet().iterator();
+		while (iter.hasNext()) {
+			Entry<String, GroupBean> entry = (Entry<String, GroupBean>) iter.next();
+			if(entry.getKey().contains(keyWord)){
+			m_groupList.add(entry.getValue());
 			}
 		}
+		groupAdapter.notifyDataSetChanged();
+	}
 }

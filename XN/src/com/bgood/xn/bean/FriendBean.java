@@ -23,6 +23,42 @@ public class FriendBean {
 	public String photo;
 	public String signature;
 	
+	private int unreadMsgCount;
+	private String header;
+	private String nick;
+
+	public String getHeader() {
+		return header;
+	}
+
+	public void setHeader(String header) {
+		this.header = header;
+	}
+
+	public int getUnreadMsgCount() {
+		return unreadMsgCount;
+	}
+
+	public void setUnreadMsgCount(int unreadMsgCount) {
+		this.unreadMsgCount = unreadMsgCount;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getNick() {
+		return nick;
+	}
+
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+
 	/**
 	 * @todo:从数据库查询群组
 	 * @date:2014-12-22 上午10:25:18

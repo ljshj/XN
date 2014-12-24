@@ -61,6 +61,10 @@ public class DBHelper extends CommonDB {
         public final static String F_SIGNATURE = "signature";
      
         
+        
+        
+        
+        
         public static String newCreateTableString() {
             StringBuffer buffer = new StringBuffer(512);
               buffer.append("create table ")
@@ -72,7 +76,7 @@ public class DBHelper extends CommonDB {
 			        .append(F_SEX).append(" ").append("varchar").append(",")
 			        .append(F_LEVEL).append(" ").append("varchar").append(",")
 			        .append(F_PHOTO).append(" ").append("varchar").append(",")
-			        .append(F_SIGNATURE).append(" ").append("varchar");
+			        .append(F_SIGNATURE).append(" ").append("varchar").append(")");
             return buffer.toString();
         }
         
@@ -111,7 +115,7 @@ public class DBHelper extends CommonDB {
 			        .append(G_NAME).append(" ").append("varchar").append(",")
 			        .append(G_INTRO).append(" ").append("varchar").append(",")
 			        .append(G_PHOTO).append(" ").append("varchar").append(",")
-			        .append(G_GROUPTYPE).append(" ").append("varchar");
+			        .append(G_GROUPTYPE).append(" ").append("varchar").append(")");
             return buffer.toString();
         }
         

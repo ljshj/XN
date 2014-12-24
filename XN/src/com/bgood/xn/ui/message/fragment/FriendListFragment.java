@@ -42,8 +42,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.bgood.xn.R;
+import com.bgood.xn.bean.FriendBean;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseFragment;
+import com.bgood.xn.view.BToast;
 import com.easemob.chat.Constant;
 import com.easemob.chat.EMContactManager;
 import com.easemob.chat.activity.ChatActivity;
@@ -63,7 +65,7 @@ import com.easemob.exceptions.EaseMobException;
  */
 public class FriendListFragment extends BaseFragment {
 	private ContactAdapter adapter;
-	private List<User> contactList;
+	private List<FriendBean> contactList;
 	private ListView listView;
 	private Sidebar sidebar;
 	private InputMethodManager inputMethodManager;
@@ -87,7 +89,7 @@ public class FriendListFragment extends BaseFragment {
 		sidebar.setListView(listView);
 		//黑名单列表
 		blackList = EMContactManager.getInstance().getBlackListUsernames();
-		contactList = new ArrayList<User>();
+		contactList = new ArrayList<FriendBean>();
 		// 获取设置contactlist
 		getContactList();
 		// 设置adapter
@@ -97,15 +99,15 @@ public class FriendListFragment extends BaseFragment {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				String username = adapter.getItem(position).getUsername();
+				String username = adapter.getItem(position).getName();
 				if (Constant.NEW_FRIENDS_USERNAME.equals(username)) {
 					// 进入申请与通知页面
-					User user = BGApp.getInstance().getContactList().get(Constant.NEW_FRIENDS_USERNAME);
+					FriendBean user = BGApp.getInstance().getFriendMap().get(Constant.NEW_FRIENDS_USERNAME);
 					user.setUnreadMsgCount(0);
 					startActivity(new Intent(getActivity(), NewFriendsMsgActivity.class));
 				}else {
 					// demo中直接进入聊天页面，实际一般是进入用户详情页
-					startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", adapter.getItem(position).getUsername()));
+					startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", adapter.getItem(position).getName()));
 				}
 			}
 		});
@@ -138,16 +140,16 @@ public class FriendListFragment extends BaseFragment {
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.delete_contact) {
-			User tobeDeleteUser = adapter.getItem(((AdapterContextMenuInfo) item.getMenuInfo()).position);
+			FriendBean tobeDeleteUser = adapter.getItem(((AdapterContextMenuInfo) item.getMenuInfo()).position);
 			// 删除此联系人
 			deleteContact(tobeDeleteUser);
 			// 删除相关的邀请消息
 			InviteMessgeDao dao = new InviteMessgeDao(getActivity());
-			dao.deleteMessage(tobeDeleteUser.getUsername());
+			dao.deleteMessage(tobeDeleteUser.getName());
 			return true;
 		}else if(item.getItemId() == R.id.add_to_blacklist){
-			User user = adapter.getItem(((AdapterContextMenuInfo) item.getMenuInfo()).position);
-			moveToBlacklist(user.getUsername());
+			FriendBean user = adapter.getItem(((AdapterContextMenuInfo) item.getMenuInfo()).position);
+			moveToBlacklist(user.getName());
 			return true;
 		}
 		return super.onContextItemSelected(item);
@@ -175,7 +177,7 @@ public class FriendListFragment extends BaseFragment {
 	 * 
 	 * @param toDeleteUser
 	 */
-	public void deleteContact(final User tobeDeleteUser) {
+	public void deleteContact(final FriendBean tobeDeleteUser) {
 		final ProgressDialog pd = new ProgressDialog(getActivity());
 		pd.setMessage("正在删除...");
 		pd.setCanceledOnTouchOutside(false);
@@ -183,11 +185,8 @@ public class FriendListFragment extends BaseFragment {
 		new Thread(new Runnable() {
 			public void run() {
 				try {
-					EMContactManager.getInstance().deleteContact(tobeDeleteUser.getUsername());
-					// 删除db和内存中此用户的数据
-					UserDao dao = new UserDao(getActivity());
-					dao.deleteContact(tobeDeleteUser.getUsername());
-					BGApp.getInstance().getContactList().remove(tobeDeleteUser.getUsername());
+					
+					FriendBean.deleteFriendBean(dbHelper, tobeDeleteUser);
 					getActivity().runOnUiThread(new Runnable() {
 						public void run() {
 							pd.dismiss();
@@ -200,7 +199,7 @@ public class FriendListFragment extends BaseFragment {
 					getActivity().runOnUiThread(new Runnable() {
 						public void run() {
 							pd.dismiss();
-							Toast.makeText(getActivity(), "删除失败: " + e.getMessage(), 1).show();
+							BToast.show(mActivity, "删除失败");
 						}
 					});
 
@@ -227,7 +226,7 @@ public class FriendListFragment extends BaseFragment {
 					getActivity().runOnUiThread(new Runnable() {
 						public void run() {
 							pd.dismiss();
-							Toast.makeText(getActivity(), "移入黑名单成功", 0).show();
+							BToast.show(mActivity, "移入黑名单成功");
 							refresh();
 						}
 					});
@@ -236,7 +235,7 @@ public class FriendListFragment extends BaseFragment {
 					getActivity().runOnUiThread(new Runnable() {
 						public void run() {
 							pd.dismiss();
-							Toast.makeText(getActivity(), "移入黑名单失败", 0).show();
+							BToast.show(mActivity, "移入黑名单成功");
 						}
 					});
 				}
@@ -267,20 +266,20 @@ public class FriendListFragment extends BaseFragment {
 	private void getContactList() {
 		contactList.clear();
 		//获取本地好友列表
-		Map<String, User> users = BGApp.getInstance().getContactList();
-		Iterator<Entry<String, User>> iterator = users.entrySet().iterator();
+		Map<String, FriendBean> users = BGApp.getInstance().getFriendMap();
+		Iterator<Entry<String, FriendBean>> iterator = users.entrySet().iterator();
 		while (iterator.hasNext()) {
-			Entry<String, User> entry = iterator.next();
+			Entry<String, FriendBean> entry = iterator.next();
 			if (!entry.getKey().equals(Constant.NEW_FRIENDS_USERNAME) && !entry.getKey().equals(Constant.GROUP_USERNAME)
 					&& !blackList.contains(entry.getKey()))
 				contactList.add(entry.getValue());
 		}
 		// 排序
-		Collections.sort(contactList, new Comparator<User>() {
+		Collections.sort(contactList, new Comparator<FriendBean>() {
 
 			@Override
-			public int compare(User lhs, User rhs) {
-				return lhs.getUsername().compareTo(rhs.getUsername());
+			public int compare(FriendBean lhs, FriendBean rhs) {
+				return lhs.getName().compareTo(rhs.getName());
 			}
 		});
 		// 把"申请与通知"添加到首位

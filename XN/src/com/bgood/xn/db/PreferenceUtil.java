@@ -17,6 +17,33 @@ public class PreferenceUtil {
 		editor = sp.edit();
 	}
 	
+	/**存文件服务器**/
+	public void setFileServerUrl(String fileServer){
+		editor.putString("file_server", fileServer);
+		editor.commit();
+	}
+	
+	/**获取文件服务器**/
+	public String getFileServerUrl(){
+		return sp.getString("file_server", "");
+	}
+
+	/**存业务服务器**/
+	public void setBSServerUrl(String fileServer){
+		editor.putString("bs_server", fileServer);
+		editor.commit();
+	}
+	
+	/**获取业务服务器**/
+	public String getBSServerUrl(){
+		return sp.getString("bs_server", "");
+	}
+	
+	public static String FILE_SERVER = null;
+	
+	public static String BS_SERVER = null;
+	
+	
 	/**设置是否展示微墙页**/
 	public void setShowWelcomePage(boolean isShow) {
 		editor.putBoolean("welcome_show", isShow);

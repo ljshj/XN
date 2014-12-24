@@ -36,6 +36,7 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
+import com.bgood.xn.bean.FriendBean;
 import com.easemob.chat.Constant;
 import com.easemob.chat.domain.User;
 import com.easemob.chat.widget.Sidebar;
@@ -44,7 +45,7 @@ import com.easemob.chat.widget.Sidebar;
  * 简单的好友Adapter实现
  *
  */
-public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexer{
+public class ContactAdapter extends ArrayAdapter<FriendBean>  implements SectionIndexer{
 
 	private LayoutInflater layoutInflater;
 	private EditText query;
@@ -54,7 +55,7 @@ public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexe
 	private Sidebar sidebar;
 	private int res;
 
-	public ContactAdapter(Context context, int resource, List<User> objects,Sidebar sidebar) {
+	public ContactAdapter(Context context, int resource, List<FriendBean> objects,Sidebar sidebar) {
 		super(context, resource, objects);
 		this.res = resource;
 		this.sidebar=sidebar;
@@ -121,11 +122,13 @@ public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexe
 			TextView unreadMsgView = (TextView) convertView.findViewById(R.id.unread_msg_number);
 			TextView nameTextview = (TextView) convertView.findViewById(R.id.name);
 			TextView tvHeader = (TextView) convertView.findViewById(R.id.header);
-			User user = getItem(position);
+			FriendBean user = getItem(position);
 			if(user == null)
-				Log.d("ContactAdapter", position + "");
+			{
+				return null;
+			}
 			//设置nick，demo里不涉及到完整user，用username代替nick显示
-			String username = user.getUsername();
+			String username = user.getName();
 			String header = user.getHeader();
 			if (position == 0 || header != null && !header.equals(getItem(position - 1).getHeader())) {
 				if ("".equals(header)) {
@@ -163,8 +166,8 @@ public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexe
 	}
 	
 	@Override
-	public User getItem(int position) {
-		User user = new User();
+	public FriendBean getItem(int position) {
+		FriendBean user = new FriendBean();
 		user.setHeader(getContext().getString(R.string.search_header));
 		return position == 0 ? user : super.getItem(position - 1);
 	}
@@ -195,7 +198,7 @@ public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexe
 		for (int i = 1; i < count; i++) {
 
 			String letter = getItem(i).getHeader();
-			System.err.println("contactadapter getsection getHeader:" + letter + " name:" + getItem(i).getUsername());
+			System.err.println("contactadapter getsection getHeader:" + letter + " name:" + getItem(i).getName());
 			int section = list.size() - 1;
 			if (list.get(section) != null && !list.get(section).equals(letter)) {
 				list.add(letter);

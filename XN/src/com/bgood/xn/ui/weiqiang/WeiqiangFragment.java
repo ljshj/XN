@@ -50,6 +50,7 @@ import com.bgood.xn.ui.base.BaseFragment;
 import com.bgood.xn.ui.home.SearchResultActivity;
 import com.bgood.xn.ui.user.account.LoginActivity;
 import com.bgood.xn.ui.user.info.NameCardActivity;
+import com.bgood.xn.utils.LogUtils;
 import com.bgood.xn.utils.ShareUtils;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
@@ -109,6 +110,10 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
     
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+		
+		LogUtils.i("------------------------WeiqiangFragment--onCreateView----------------------------------------");
+		
+		
 		share = new ShareUtils(mActivity);
 		layout = inflater.inflate(R.layout.weiqiang_layout_main, container, false);
 		initViews();
@@ -144,6 +149,29 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
     	pUitl.setWeiqiangAllRefreshTime(mAllWeiqiangRefreshTime);
 		pUitl.setWeiqiangAttionRefreshTime(mAttionWeiqiangRefreshTime);
 	}
+	
+	
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if (isVisibleToUser) {
+//            //相当于Fragment的onResume
+//        	mAllWeiqiangRefreshTime = pUitl.getWeiqiangAllRefreshTime();
+//    		m_allFriendsXLv.setRefreshTime(mAllWeiqiangRefreshTime);
+//    		
+//    		mAttionWeiqiangRefreshTime = pUitl.getWeiqiangAllRefreshTime();
+//    		m_allFriendsXLv.setRefreshTime(mAllWeiqiangRefreshTime);
+//        } else {
+//            //相当于Fragment的onPause
+//        	 //相当于Fragment的onPause
+//        	pUitl.setWeiqiangAllRefreshTime(mAllWeiqiangRefreshTime);
+//    		pUitl.setWeiqiangAttionRefreshTime(mAttionWeiqiangRefreshTime);
+//        }
+//    }
+	
+	
+	
+	
 	
 	@SuppressLint("InflateParams")
 	private void initViews()

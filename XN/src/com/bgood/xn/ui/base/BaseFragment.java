@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.bgood.xn.db.DBHelper;
 import com.bgood.xn.db.PreferenceUtil;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.user.account.LoginActivity;
@@ -38,12 +39,16 @@ public class BaseFragment extends Fragment {
 	public View layout;
 	public PreferenceUtil pUitl;
 	public boolean hidden;
+	
+	public DBHelper dbHelper = null;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mActivity = getActivity();
 		inflater = LayoutInflater.from(mActivity);
 		pUitl = new PreferenceUtil(mActivity, PreferenceUtil.PREFERENCE_FILE);
+		dbHelper = new DBHelper(mActivity);
 		
 		notificationManager = (NotificationManager)mActivity.getSystemService(Context.NOTIFICATION_SERVICE);
 	}

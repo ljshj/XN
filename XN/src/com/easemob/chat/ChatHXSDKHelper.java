@@ -34,6 +34,8 @@ import com.easemob.chat.utils.CommonUtils;
  *
  */
 public class ChatHXSDKHelper extends HXSDKHelper{
+	
+
 
     /**
      * contact list in cache

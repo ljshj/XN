@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.bean.response.WeiqiangResponse;
+import com.bgood.xn.db.PreferenceUtil;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.system.SystemConfig;
@@ -26,6 +27,7 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 	private BaseNetWork bNetWork;
 	private boolean mCommonLoading = true;	//进度条是通用的
 	private ServerType type;
+	private PreferenceUtil pUtil;
 	
 	public HttpRequestAsyncTask(boolean commonLoading,ServerType type,BaseNetWork b,TaskListenerWithState listner,Context c) {
 		this.mCommonLoading = commonLoading;
@@ -47,12 +49,13 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 
 	
 	private void setRequestUrl(ServerType type,BaseNetWork b,TaskListenerWithState listner) {
+			pUtil = new PreferenceUtil(context, PreferenceUtil.PREFERENCE_FILE);
 			//1.服务器分配地址 2.登录后的操作要分配session
 			if(type == ServerType.LoginServer){
 				serverUrl = SystemConfig.HttpServer;
 				
 			}else if(type == ServerType.BusinessServer){
-				serverUrl = SystemConfig.BS_SERVER;
+				serverUrl = null!=SystemConfig.BS_SERVER ? SystemConfig.BS_SERVER:pUtil.getBSServerUrl() ;
 				b.setSessionID(SystemConfig.SessionID);
 				
 			}else if(type == ServerType.IMServer){
@@ -60,7 +63,7 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 				b.setSessionID(SystemConfig.SessionID);
 				
 			}else if(type == ServerType.FileServer){
-				serverUrl = SystemConfig.FILE_SERVER+"/Upload.ashx"+b.getConnUrl();	//注意这里是文件类型
+				serverUrl = null!=SystemConfig.FILE_SERVER ? SystemConfig.FILE_SERVER:pUtil.getFileServerUrl()+"/Upload.ashx"+b.getConnUrl();	//注意这里是文件类型
 				b.setSessionID(SystemConfig.SessionID);
 				
 			}else{
@@ -175,7 +178,7 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 	protected void onPreExecute() {
 		super.onPreExecute();
 		if(mCommonLoading){
-		LoadingProgress.getInstance().show(context);
+			LoadingProgress.getInstance().show(context);
 		}
 	}
 

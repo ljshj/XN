@@ -1,5 +1,8 @@
 package com.bgood.xn.system;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
@@ -8,11 +11,12 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
+import com.bgood.xn.bean.FriendBean;
+import com.bgood.xn.bean.GroupBean;
 import com.bgood.xn.bean.MemberLoginBean;
 import com.bgood.xn.bean.UserInfoBean;
 import com.easemob.EMCallBack;
 import com.easemob.chat.ChatHXSDKHelper;
-import com.easemob.chat.domain.User;
 import com.iflytek.cloud.SpeechUtility;
 
 public class BGApp extends Application {
@@ -39,6 +43,14 @@ public class BGApp extends Application {
 	 */
 	public static String currentUserNick = "";
 	public static ChatHXSDKHelper hxSDKHelper = new ChatHXSDKHelper();
+	
+	/**存放好友列表*/
+	public Map<String, FriendBean> friendMap = new HashMap<String, FriendBean>();
+	/**存放好友列表*/
+	public Map<String, GroupBean> groupMap = new HashMap<String, GroupBean>();
+	/**存放好友列表*/
+	public Map<String, GroupBean> tempMap = new HashMap<String, GroupBean>();
+	
 
 	@Override
 	public void onCreate()
@@ -109,33 +121,35 @@ public class BGApp extends Application {
         m_activityStack.clear();
     }
     
-    
-    
-    
-    
     /********************************环信配置*************************************/
     
 
 	public static BGApp getInstance() {
 		return instance;
 	}
- 
-	/**
-	 * 获取内存中好友user list
-	 *
-	 * @return
-	 */
-	public Map<String, User> getContactList() {
-	    return hxSDKHelper.getContactList();
+
+	public Map<String, FriendBean> getFriendMap() {
+		return friendMap;
 	}
 
-	/**
-	 * 设置好友user list到内存中
-	 *
-	 * @param contactList
-	 */
-	public void setContactList(Map<String, User> contactList) {
-	    hxSDKHelper.setContactList(contactList);
+	public void setFriendMap(Map<String, FriendBean> friendMap) {
+		this.friendMap = friendMap;
+	}
+
+	public Map<String, GroupBean> getGroupMap() {
+		return groupMap;
+	}
+
+	public void setGroupMap(Map<String, GroupBean> groupMap) {
+		this.groupMap = groupMap;
+	}
+
+	public Map<String, GroupBean> getTempMap() {
+		return tempMap;
+	}
+
+	public void setTempMap(Map<String, GroupBean> tempMap) {
+		this.tempMap = tempMap;
 	}
 
 	/**
@@ -181,5 +195,10 @@ public class BGApp extends Application {
 	public void logout(final EMCallBack emCallBack) {
 		// 先调用sdk logout，在清理app中自己的数据
 	    hxSDKHelper.logout(emCallBack);
+	}
+	
+	/**是否登录聊天服务器*/
+	public boolean isLogin(){
+		return hxSDKHelper.isLogined();
 	}
 }
