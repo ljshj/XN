@@ -37,6 +37,10 @@ public class GroupAdapter extends KBaseAdapter {
 		
 		final GroupBean group = (GroupBean) mList.get(position);
 		
+		if(null == group){
+			return null;
+		}
+		
 		mImageLoader.displayImage(group.photo, holder.icon, options);
 		
 		holder.name.setText(group.name);

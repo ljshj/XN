@@ -31,14 +31,14 @@ import com.bgood.xn.bean.JokeBean.JokeActionType;
 import com.bgood.xn.bean.response.JokeResponse;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpRequestInfo;
 import com.bgood.xn.network.http.HttpResponseInfo;
-import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.ui.base.BaseShowDataActivity;
-import com.bgood.xn.ui.xuanneng.XuannengFragment;
+import com.bgood.xn.ui.xuanneng.XuannengActivity;
 import com.bgood.xn.utils.ShareUtils;
 import com.bgood.xn.view.dialog.BGDialog;
 import com.bgood.xn.view.xlistview.XListView;
@@ -194,16 +194,16 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 		}
 		switch (flag) {
 		case CHOOSE_DAY:
-			XuannengRequest.getInstance().requestXuanRank(this, mActivity, XuannengFragment.XUANNENG_JOKE, CHOOSE_DAY, m_start_day, m_start_day+PAGE_SIZE_ADD);
+			XuannengRequest.getInstance().requestXuanRank(this, mActivity, XuannengActivity.XUANNENG_JOKE, CHOOSE_DAY, m_start_day, m_start_day+PAGE_SIZE_ADD);
 			break;
 		case CHOOSE_WEEK:
-			XuannengRequest.getInstance().requestXuanRank(this, mActivity, XuannengFragment.XUANNENG_JOKE, CHOOSE_WEEK, m_start_week, m_start_week+PAGE_SIZE_ADD);
+			XuannengRequest.getInstance().requestXuanRank(this, mActivity, XuannengActivity.XUANNENG_JOKE, CHOOSE_WEEK, m_start_week, m_start_week+PAGE_SIZE_ADD);
 			break;
 		case CHOOSE_MONTH:
-			XuannengRequest.getInstance().requestXuanRank(this, mActivity, XuannengFragment.XUANNENG_JOKE, CHOOSE_MONTH, m_start_month, m_start_month+PAGE_SIZE_ADD);
+			XuannengRequest.getInstance().requestXuanRank(this, mActivity, XuannengActivity.XUANNENG_JOKE, CHOOSE_MONTH, m_start_month, m_start_month+PAGE_SIZE_ADD);
 			break;
 		case CHOOSE_YEAR:
-			XuannengRequest.getInstance().requestXuanRank(this, mActivity, XuannengFragment.XUANNENG_JOKE, CHOOSE_YEAR, m_start_year, m_start_year+PAGE_SIZE_ADD);
+			XuannengRequest.getInstance().requestXuanRank(this, mActivity, XuannengActivity.XUANNENG_JOKE, CHOOSE_YEAR, m_start_year, m_start_year+PAGE_SIZE_ADD);
 			break;
 		default:
 			break;

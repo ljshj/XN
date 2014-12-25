@@ -14,8 +14,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
 
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
@@ -24,16 +24,16 @@ import com.bgood.xn.adapter.KBaseAdapter;
 import com.bgood.xn.bean.JokeBean;
 import com.bgood.xn.bean.JokeBean.JokeActionType;
 import com.bgood.xn.bean.response.JokeResponse;
-import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.BaseNetWork;
+import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpRequestInfo;
 import com.bgood.xn.network.http.HttpResponseInfo;
-import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.ui.base.BaseActivity;
-import com.bgood.xn.ui.xuanneng.XuannengFragment;
+import com.bgood.xn.ui.xuanneng.XuannengActivity;
 import com.bgood.xn.utils.ShareUtils;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
@@ -80,7 +80,7 @@ public class JokeRandomActivity extends BaseActivity implements OnItemClickListe
 		m_listXlv.setOnItemClickListener(this);
 		adapter = new JokeAdapter(listJoke, mActivity,this);
 		m_listXlv.setAdapter(adapter);
-		XuannengRequest.getInstance().requestJokeList(this, this, XuannengFragment.XUANNENG_JOKE, JokeBean.JOKE_RADOM, m_start_size, m_start_size+PAGE_SIZE_ADD);
+		XuannengRequest.getInstance().requestJokeList(this, this, XuannengActivity.XUANNENG_JOKE, JokeBean.JOKE_RADOM, m_start_size, m_start_size+PAGE_SIZE_ADD);
 	}
 
 	
@@ -269,11 +269,11 @@ public class JokeRandomActivity extends BaseActivity implements OnItemClickListe
 	public void onRefresh() {
 		isRefresh = true;
 		m_start_size = 0;
-		XuannengRequest.getInstance().requestJokeList(this, this, XuannengFragment.XUANNENG_JOKE, JokeBean.JOKE_RADOM, m_start_size, m_start_size+PAGE_SIZE_ADD);
+		XuannengRequest.getInstance().requestJokeList(this, this, XuannengActivity.XUANNENG_JOKE, JokeBean.JOKE_RADOM, m_start_size, m_start_size+PAGE_SIZE_ADD);
 	}
 	@Override
 	public void onLoadMore() {
 		isRefresh = false;
-		XuannengRequest.getInstance().requestJokeList(this, this, XuannengFragment.XUANNENG_JOKE, JokeBean.JOKE_RADOM, m_start_size, m_start_size+PAGE_SIZE_ADD);
+		XuannengRequest.getInstance().requestJokeList(this, this, XuannengActivity.XUANNENG_JOKE, JokeBean.JOKE_RADOM, m_start_size, m_start_size+PAGE_SIZE_ADD);
 	}
 }

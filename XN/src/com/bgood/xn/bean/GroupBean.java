@@ -24,6 +24,7 @@ public class GroupBean implements Serializable
 	 * @author:hg_liuzl@163.com
 	 */
 	private static final long serialVersionUID = 1L;
+	public String hxgroupid;
 	public String roomid;
 	public String name;
 	public String intro;
@@ -46,6 +47,7 @@ public class GroupBean implements Serializable
 	       do {
 	    	   if(c!=null&&c.getCount()>0){
 	    		   String roomid = c.getString(c.getColumnIndex(DBHelper.Group.G_ROOMID));
+	    		   String hx_groupid = c.getString(c.getColumnIndex(DBHelper.Group.G_HX_GROUPID));
 	    		   String photo = c.getString(c.getColumnIndex(DBHelper.Group.G_PHOTO));
 	    		   String name = c.getString(c.getColumnIndex(DBHelper.Group.G_NAME));
 	    		   String intro = c.getString(c.getColumnIndex(DBHelper.Group.G_INTRO));
@@ -53,6 +55,7 @@ public class GroupBean implements Serializable
 
 	           GroupBean group = new GroupBean();
 	           group.roomid = roomid;
+	           group.hxgroupid = hx_groupid;
 	           group.photo = photo;
 	           group.name = name;
 	           group.intro = intro;
@@ -78,6 +81,7 @@ public class GroupBean implements Serializable
 			for(GroupBean g:listGroup){
 			
 				ContentValues values = new ContentValues();
+				values.put(DBHelper.Group.G_HX_GROUPID, g.hxgroupid);
 				values.put(DBHelper.Group.G_ROOMID, g.roomid);
 				values.put(DBHelper.Group.G_PHOTO, g.photo);
 				values.put(DBHelper.Group.G_NAME, g.name);
@@ -100,6 +104,7 @@ public class GroupBean implements Serializable
 	 */
 	public static void insertGroupBean(DBHelper dbHelper,GroupBean g) {
 		ContentValues values = new ContentValues();
+		values.put(DBHelper.Group.G_HX_GROUPID, g.hxgroupid);
 		values.put(DBHelper.Group.G_ROOMID, g.roomid);
 		values.put(DBHelper.Group.G_PHOTO, g.photo);
 		values.put(DBHelper.Group.G_NAME, g.name);

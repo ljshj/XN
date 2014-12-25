@@ -109,7 +109,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_search_result);
 		new TitleBar(mActivity).initTitleBar("搜索结果");
-		search_type = getIntent().getIntExtra(HomeFragment.ACTION_TYPE, 0);
+		search_type = getIntent().getIntExtra(HomeActivity.ACTION_TYPE, 0);
 		m_msg = getIntent().getStringExtra("msg");
 		findView();
 		setListeners();

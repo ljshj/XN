@@ -3,6 +3,7 @@ package com.bgood.xn.bean.response;
 import java.util.List;
 
 import com.bgood.xn.bean.FriendBean;
+import com.bgood.xn.bean.FriendGroupBean;
 import com.bgood.xn.bean.GroupBean;
 
 /**
@@ -12,7 +13,7 @@ import com.bgood.xn.bean.GroupBean;
  */
 public class FriendAndGroupResponse {
 	
-	public List<FriendBean> groups;
+	public List<FriendGroupBean> groups;
 	public List<GroupBean> fixrooms;
 	
 }

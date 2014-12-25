@@ -109,7 +109,7 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
     }
     
     @Override
-    protected void onResume() {
+	public void onResume() {
     	super.onResume();
     	mUserBean = BGApp.mUserBean;
     	setData(BGApp.mUserBean);

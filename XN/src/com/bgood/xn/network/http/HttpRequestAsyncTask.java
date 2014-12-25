@@ -39,6 +39,7 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 	}
 	
 	public HttpRequestAsyncTask(ServerType type,BaseNetWork b,TaskListenerWithState listner,Context c) {
+		this.mCommonLoading = true;
 		this.bNetWork = b;
 		this.context=c;
 		this.type = type;

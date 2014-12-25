@@ -47,7 +47,7 @@ public class SpeechSearchActivity extends BaseActivity
     }
     
     @Override
-    protected void onResume() 
+	public void onResume() 
     {
     	super.onResume();
         SpeechUtility.getUtility().checkServiceInstalled();

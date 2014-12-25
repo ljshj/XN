@@ -75,6 +75,32 @@
             android:screenOrientation="portrait" />
          
          
+          <activity
+            android:name=".ui.home.HomeActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+          
+          <activity
+            android:name=".ui.weiqiang.WeiqiangActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+                    
+          <activity
+            android:name=".ui.xuanneng.XuannengActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+                              
+          <activity
+            android:name=".ui.message.MessageActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+                                        
+          <activity
+            android:name=".ui.user.UserCenterActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+         
+         
          <!-- 关于账号模块 -->
          
           <activity

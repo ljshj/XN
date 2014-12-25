@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -32,23 +30,19 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.WeiqiangAdapter;
-import com.bgood.xn.bean.MemberResultBean;
 import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.bean.WeiQiangBean.WeiqiangActionType;
 import com.bgood.xn.bean.response.WeiqiangResponse;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpRequestInfo;
 import com.bgood.xn.network.http.HttpResponseInfo;
-import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
-import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.system.BGApp;
-import com.bgood.xn.ui.base.BaseFragment;
-import com.bgood.xn.ui.home.SearchResultActivity;
-import com.bgood.xn.ui.user.account.LoginActivity;
+import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.utils.LogUtils;
 import com.bgood.xn.utils.ShareUtils;
@@ -57,15 +51,13 @@ import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.dialog.BGDialog;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
-import com.umeng.socialize.sso.SinaSsoHandler;
-import com.umeng.socialize.sso.UMSsoHandler;
 
 /**
  * 我的微墙主页
  * @author ChenGuoqing 2014-8-20下午3:46:57
  * @date:2014-10-24 下午2:21:22
  */
-public class WeiqiangFragment extends BaseFragment implements OnItemClickListener,TaskListenerWithState,OnClickListener,OnPageChangeListener,IXListViewListener
+public class WeiqiangActivity extends BaseActivity implements OnItemClickListener,TaskListenerWithState,OnClickListener,OnPageChangeListener,IXListViewListener
 {
 	/**请示去查看微墙详情**/
 	public static final int REQUEST_WEIQIANG_DETAIL = 100;
@@ -96,7 +88,6 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 	
 	private int m_type = WeiQiangBean.WEIQIANG_ALL;
     
-    
     private int weiqiang_all_start = 0;	//关注
     private int weiqiang_attion_start = 0;	//非关注（全部）
     
@@ -107,34 +98,19 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
     
 	private ShareUtils share = null;
 	
-    
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-		
-		LogUtils.i("------------------------WeiqiangFragment--onCreateView----------------------------------------");
-		
-		
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		share = new ShareUtils(mActivity);
-		layout = inflater.inflate(R.layout.weiqiang_layout_main, container, false);
+		setContentView(R.layout.weiqiang_layout_main);
 		initViews();
 		setListeners();
 		setAdapter();
-		if(m_type == WeiQiangBean.WEIQIANG_ALL){
-			if(m_allFriendsList.size() == 0){
-				WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(m_type),BGApp.mUserId, String.valueOf(weiqiang_all_start), String.valueOf(weiqiang_all_start+PAGE_SIZE_ADD));
-			}
-		}else{
-			if(m_followFriendsList.size() == 0){
-			WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(m_type),BGApp.mUserId, String.valueOf(weiqiang_attion_start), String.valueOf(weiqiang_attion_start+PAGE_SIZE_ADD));
-			}
-		}
-		return layout;
 	}
-	 
+	
 	 @Override
 	public void onResume() {
 		super.onResume();
-		
 		mAllWeiqiangRefreshTime = pUitl.getWeiqiangAllRefreshTime();
 		m_allFriendsXLv.setRefreshTime(mAllWeiqiangRefreshTime);
 		
@@ -146,42 +122,19 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 	public void onPause() {
 		super.onPause();
 		 //相当于Fragment的onPause
-    	pUitl.setWeiqiangAllRefreshTime(mAllWeiqiangRefreshTime);
+		pUitl.setWeiqiangAllRefreshTime(mAllWeiqiangRefreshTime);
 		pUitl.setWeiqiangAttionRefreshTime(mAttionWeiqiangRefreshTime);
 	}
-	
-	
-//    @Override
-//    public void setUserVisibleHint(boolean isVisibleToUser) {
-//        super.setUserVisibleHint(isVisibleToUser);
-//        if (isVisibleToUser) {
-//            //相当于Fragment的onResume
-//        	mAllWeiqiangRefreshTime = pUitl.getWeiqiangAllRefreshTime();
-//    		m_allFriendsXLv.setRefreshTime(mAllWeiqiangRefreshTime);
-//    		
-//    		mAttionWeiqiangRefreshTime = pUitl.getWeiqiangAllRefreshTime();
-//    		m_allFriendsXLv.setRefreshTime(mAllWeiqiangRefreshTime);
-//        } else {
-//            //相当于Fragment的onPause
-//        	 //相当于Fragment的onPause
-//        	pUitl.setWeiqiangAllRefreshTime(mAllWeiqiangRefreshTime);
-//    		pUitl.setWeiqiangAttionRefreshTime(mAttionWeiqiangRefreshTime);
-//        }
-//    }
-	
-	
-	
-	
 	
 	@SuppressLint("InflateParams")
 	private void initViews()
 	{
-		weiqiang_main_b_more_operate = (Button) layout.findViewById(R.id.weiqiang_main_b_more_operate);
-		tv_weiqiang_type_left_select = (TextView) layout.findViewById(R.id.tv_weiqiang_type_left_select);
-		tv_weiqiang_type_right_select = (TextView) layout.findViewById(R.id.tv_weiqiang_type_right_select);
-		v_weiqiang_type_select_left_underline = layout.findViewById(R.id.v_weiqiang_type_select_left_underline);
-		v_weiqiang_type_select_right_underline = layout.findViewById(R.id.v_weiqiang_type_select_right_underline);
-		vp_weiqiang_type_select = (ViewPager) layout.findViewById(R.id.vp_weiqiang_type_select);
+		weiqiang_main_b_more_operate = (Button) findViewById(R.id.weiqiang_main_b_more_operate);
+		tv_weiqiang_type_left_select = (TextView) findViewById(R.id.tv_weiqiang_type_left_select);
+		tv_weiqiang_type_right_select = (TextView) findViewById(R.id.tv_weiqiang_type_right_select);
+		v_weiqiang_type_select_left_underline = findViewById(R.id.v_weiqiang_type_select_left_underline);
+		v_weiqiang_type_select_right_underline = findViewById(R.id.v_weiqiang_type_select_right_underline);
+		vp_weiqiang_type_select = (ViewPager) findViewById(R.id.vp_weiqiang_type_select);
 		checkType(0);
 		
 		m_followFriendsLayout = inflater.inflate(R.layout.item_weiqiang_xlistview, null);
@@ -247,8 +200,8 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 	{
 		weiqiang_main_b_more_operate.setOnClickListener(this);
 		
-		layout.findViewById(R.id.layout_weiqiang_type_right_select).setOnClickListener(this);
-		layout.findViewById(R.id.layout_weiqiang_type_left_select).setOnClickListener(this);
+		findViewById(R.id.layout_weiqiang_type_right_select).setOnClickListener(this);
+		findViewById(R.id.layout_weiqiang_type_left_select).setOnClickListener(this);
 		
 		m_followFriendsXLv.setXListViewListener(this);
 		m_allFriendsXLv.setXListViewListener(this);
@@ -402,7 +355,7 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 							mActionWeiqiang.forward_count = String.valueOf(Integer.valueOf(mActionWeiqiang.forward_count)+1);
 							m_followFriendsAdapter.notifyDataSetChanged();
 						}
-						WeiqiangRequest.getInstance().requestWeiqiangTranspond(WeiqiangFragment.this, mActivity, mActionWeiqiang.weiboid,content);
+						WeiqiangRequest.getInstance().requestWeiqiangTranspond(WeiqiangActivity.this, mActivity, mActionWeiqiang.weiboid,content);
 					}else{
 						if(m_type == WeiQiangBean.WEIQIANG_ALL){
 							mActionWeiqiang.comment_count = String.valueOf(Integer.valueOf(mActionWeiqiang.comment_count)+1);
@@ -411,7 +364,7 @@ public class WeiqiangFragment extends BaseFragment implements OnItemClickListene
 							mActionWeiqiang.comment_count = String.valueOf(Integer.valueOf(mActionWeiqiang.comment_count)+1);
 							m_followFriendsAdapter.notifyDataSetChanged();
 						}
-						WeiqiangRequest.getInstance().requestWeiqiangReply(WeiqiangFragment.this, mActivity, mActionWeiqiang.weiboid,content);
+						WeiqiangRequest.getInstance().requestWeiqiangReply(WeiqiangActivity.this, mActivity, mActionWeiqiang.weiboid,content);
 					}
 					
 				}

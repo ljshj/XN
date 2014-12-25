@@ -14,27 +14,26 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
 
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.JokeAdapter;
 import com.bgood.xn.adapter.KBaseAdapter;
 import com.bgood.xn.bean.JokeBean;
-import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.bean.JokeBean.JokeActionType;
 import com.bgood.xn.bean.response.JokeResponse;
-import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.BaseNetWork;
+import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpRequestInfo;
 import com.bgood.xn.network.http.HttpResponseInfo;
-import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.ui.base.BaseActivity;
-import com.bgood.xn.ui.xuanneng.XuannengFragment;
+import com.bgood.xn.ui.xuanneng.XuannengActivity;
 import com.bgood.xn.utils.ShareUtils;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
@@ -42,10 +41,11 @@ import com.bgood.xn.view.dialog.BGDialog;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 
+
 /**
  * 
- * @todo:炫能排序页
- * @date:2014-11-21 下午5:50:53
+ * @todo:幽默秀排序
+ * @date:2014-12-25 上午11:21:29
  * @author:hg_liuzl@163.com
  */
 public class JokeOrderActivity extends BaseActivity implements OnItemClickListener,TaskListenerWithState,OnClickListener,IXListViewListener
@@ -81,7 +81,7 @@ public class JokeOrderActivity extends BaseActivity implements OnItemClickListen
 		m_listXlv.setOnItemClickListener(this);
 		adapter = new JokeAdapter(listJoke, mActivity,this);
 		m_listXlv.setAdapter(adapter);
-		XuannengRequest.getInstance().requestJokeList(this, this, XuannengFragment.XUANNENG_JOKE, JokeBean.JOKE_ORDER, m_start_size, m_start_size+PAGE_SIZE_ADD);
+		XuannengRequest.getInstance().requestJokeList(this, this, XuannengActivity.XUANNENG_JOKE, JokeBean.JOKE_ORDER, m_start_size, m_start_size+PAGE_SIZE_ADD);
 	}
 	
 	
@@ -268,11 +268,11 @@ public class JokeOrderActivity extends BaseActivity implements OnItemClickListen
 	public void onRefresh() {
 		isRefresh = true;
 		m_start_size = 0;
-		XuannengRequest.getInstance().requestJokeList(this, this, XuannengFragment.XUANNENG_JOKE, JokeBean.JOKE_ORDER, m_start_size, m_start_size+PAGE_SIZE_ADD);
+		XuannengRequest.getInstance().requestJokeList(this, this, XuannengActivity.XUANNENG_JOKE, JokeBean.JOKE_ORDER, m_start_size, m_start_size+PAGE_SIZE_ADD);
 	}
 	@Override
 	public void onLoadMore() {
 		isRefresh = false;
-		XuannengRequest.getInstance().requestJokeList(this, this, XuannengFragment.XUANNENG_JOKE, JokeBean.JOKE_ORDER, m_start_size, m_start_size+PAGE_SIZE_ADD);
+		XuannengRequest.getInstance().requestJokeList(this, this, XuannengActivity.XUANNENG_JOKE, JokeBean.JOKE_ORDER, m_start_size, m_start_size+PAGE_SIZE_ADD);
 	}
 }

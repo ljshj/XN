@@ -95,6 +95,9 @@ public class DBHelper extends CommonDB {
      * @author:hg_liuzl@163.com
      */
     public static class Group{
+    	
+    	/**环信groupID*/
+    	public final static String G_HX_GROUPID = "hx_groupid";
     	/**群ID*/
     	public final static String G_ROOMID = "roomid";
     	/**群名称*/
@@ -111,6 +114,7 @@ public class DBHelper extends CommonDB {
               buffer.append("create table ")
 			        .append(TB_GROUP).append(" (")
 			        .append(FD_ID).append(" ").append("integer primary key autoincrement").append(",")
+			        .append(G_HX_GROUPID).append(" ").append("varchar").append(",")
 			        .append(G_ROOMID).append(" ").append("varchar").append(",")
 			        .append(G_NAME).append(" ").append("varchar").append(",")
 			        .append(G_INTRO).append(" ").append("varchar").append(",")

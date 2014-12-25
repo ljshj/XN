@@ -42,7 +42,7 @@ public class SearchActivity extends BaseActivity implements OnClickListener, OnI
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_search);
-		search_type = getIntent().getIntExtra(HomeFragment.ACTION_TYPE, 0);
+		search_type = getIntent().getIntExtra(HomeActivity.ACTION_TYPE, 0);
 		getHistory();
 		findView();
 	}
@@ -92,7 +92,7 @@ public class SearchActivity extends BaseActivity implements OnClickListener, OnI
 	
 	private void doSearch(String searchText) {
 		Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
-		intent.putExtra(HomeFragment.ACTION_TYPE, search_type);
+		intent.putExtra(HomeActivity.ACTION_TYPE, search_type);
 		intent.putExtra("msg",searchText);
 		startActivity(intent);
 	}

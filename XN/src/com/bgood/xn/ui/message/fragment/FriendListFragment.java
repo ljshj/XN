@@ -107,7 +107,8 @@ public class FriendListFragment extends BaseFragment {
 					startActivity(new Intent(getActivity(), NewFriendsMsgActivity.class));
 				}else {
 					// demo中直接进入聊天页面，实际一般是进入用户详情页
-					startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", adapter.getItem(position).getName()));
+					//startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", adapter.getItem(position).getName()));
+					startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", "bg"+adapter.getItem(position).userid));
 				}
 			}
 		});
@@ -186,7 +187,7 @@ public class FriendListFragment extends BaseFragment {
 			public void run() {
 				try {
 					
-					FriendBean.deleteFriendBean(dbHelper, tobeDeleteUser);
+					FriendBean.deleteFriendBean(dbHelper, tobeDeleteUser.userid);
 					getActivity().runOnUiThread(new Runnable() {
 						public void run() {
 							pd.dismiss();
@@ -283,6 +284,6 @@ public class FriendListFragment extends BaseFragment {
 			}
 		});
 		// 把"申请与通知"添加到首位
-		contactList.add(0, users.get(Constant.NEW_FRIENDS_USERNAME));
+	//	contactList.add(0, users.get(Constant.NEW_FRIENDS_USERNAME));
 	}
 }

@@ -80,30 +80,5 @@ public class BaseFragment extends Fragment {
 		}
 	}
 	
-    /**
-     * 当应用在前台时，如果当前消息不是属于当前会话，在状态栏提示一下
-     * 如果不需要，注释掉即可
-     * @param message
-     */
-     public void notifyNewMessage(EMMessage message) {
-        //如果是设置了不提醒只显示数目的群组(这个是app里保存这个数据的，demo里不做判断)
-        //以及设置了setShowNotificationInbackgroup:false(设为false后，后台时sdk也发送广播)
-        if(!EasyUtils.isAppRunningForeground(mActivity)){
-            return;
-        }
-        
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mActivity)
-                .setSmallIcon(mActivity.getApplicationInfo().icon)
-                .setWhen(System.currentTimeMillis()).setAutoCancel(true);
-        
-        String ticker = CommonUtils.getMessageDigest(message, mActivity);
-        if(message.getType() == Type.TXT)
-            ticker = ticker.replaceAll("\\[.{2,3}\\]", "[表情]");
-        //设置状态栏提示
-        mBuilder.setTicker(message.getFrom()+": " + ticker);
-
-        Notification notification = mBuilder.build();
-        notificationManager.notify(notifiId, notification);
-        notificationManager.cancel(notifiId);
-    }
+   
 }

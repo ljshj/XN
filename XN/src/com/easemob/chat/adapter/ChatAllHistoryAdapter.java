@@ -84,6 +84,12 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 
 		// 获取与此用户/群组的会话
 		EMConversation conversation = getItem(position);
+		
+		if(null == conversation)
+		{
+			return null;
+		}
+		
 		// 获取用户username或者群组groupid
 		String username = conversation.getUserName();
 		List<EMGroup> groups = EMGroupManager.getInstance().getAllGroups();

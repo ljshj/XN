@@ -70,7 +70,6 @@ public class FriendBean {
 		   LogUtils.i("------from database----");
 	       Cursor c = mDBHelper.queryAll(DBHelper.TB_FRIEND);
 	       List<FriendBean>list = new ArrayList<FriendBean>();
-	       c.moveToFirst();
 	       do {
 	    	   if(c!=null&&c.getCount()>0){
 	    		   String userId = c.getString(c.getColumnIndex(DBHelper.Friend.F_USERID));
@@ -83,12 +82,12 @@ public class FriendBean {
 
 		           FriendBean friend = new FriendBean();
 		           friend.userid = userId;
-		           friend.userid = type;
-		           friend.userid = singture;
-		           friend.userid = sex;
-		           friend.userid = photo;
-		           friend.userid = name;
-		           friend.userid = level;
+		           friend.type = type;
+		           friend.signature = singture;
+		           friend.sex = sex;
+		           friend.photo = photo;
+		           friend.name = name;
+		           friend.level = level;
 		           
 	           list.add(friend);
 	           }
@@ -154,8 +153,8 @@ public class FriendBean {
 	 * @params:@param dbHelper
 	 * @params:@param FriendBean
 	 */
-	public static void deleteFriendBean(DBHelper dbHelper,FriendBean f) {
-		int count = dbHelper.deleteAll(DBHelper.TB_FRIEND, DBHelper.Friend.F_USERID, f.userid);
+	public static void deleteFriendBean(DBHelper dbHelper,String userid) {
+		int count = dbHelper.deleteAll(DBHelper.TB_FRIEND, DBHelper.Friend.F_USERID, userid);
 		LogUtils.i("-------------删除数据------------"+count);
 	}
 }

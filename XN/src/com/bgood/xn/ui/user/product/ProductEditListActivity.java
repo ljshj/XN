@@ -57,7 +57,7 @@ public class ProductEditListActivity extends BaseActivity implements OnItemClick
     }
     
     @Override
-    protected void onResume() {
+	public void onResume() {
     	super.onResume();
     	m_list.clear();
     	ProductRequest.getInstance().requestProductList(this, this, mUserid, mKeyWord, String.valueOf(m_start_size), String.valueOf(m_start_size+PAGE_SIZE_ADD));
