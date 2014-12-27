@@ -27,6 +27,8 @@ public class IMRequest extends BaseNetWork {
 		return instance;
 	}
 	
+	
+	
 	/**
 	 * 
 	 * @todo:获取联系人列表
@@ -39,9 +41,9 @@ public class IMRequest extends BaseNetWork {
 	 * @params:@param userid
 	 * @params:@param vertify
 	 */
-	public void requestContactsList(TaskListenerWithState mHttpTaskListener,Context context) {
+	public void requestContactsList(TaskListenerWithState mHttpTaskListener,Context context,boolean showDialog) {
 		setMessageType(50006);
-		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+		new HttpRequestAsyncTask(showDialog,ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 	}
 
 	/**
@@ -55,18 +57,18 @@ public class IMRequest extends BaseNetWork {
 	 * @params:@param msg 是否同意 true ,false
 	 * @params:@param userid 自己的ID
 	 */
-	public void requestFriendADD(TaskListenerWithState mHttpTaskListener,Context context,String userid,String recver,String msg) {
+	public void requestFriendADD(TaskListenerWithState mHttpTaskListener,Context context,String userid,String recver) {
 		setMessageType(50027);
 		JSONObject body = new JSONObject();
 		try {
 			body.put("userid", userid);
 			body.put("recver", recver);
-			body.put("msg", msg);
+			body.put("msg", "true");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		setBody(body);
-		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+		new HttpRequestAsyncTask(false,ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 	}
 	
 		/**
@@ -87,7 +89,7 @@ public class IMRequest extends BaseNetWork {
 			e.printStackTrace();
 		}
 		setBody(body);
-		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+		new HttpRequestAsyncTask(false,ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 	}
 	
 		/**
@@ -147,7 +149,7 @@ public class IMRequest extends BaseNetWork {
 	 * @params:@param sendername
 	 * @params:@param id
 	 */
-	public void requestGroupMembers(TaskListenerWithState mHttpTaskListener,Context context,String sendername,String id) {
+	public void requestGroupMembers(TaskListenerWithState mHttpTaskListener,Context context,String id) {
 		setMessageType(50013);
 		JSONObject body = new JSONObject();
 		try {

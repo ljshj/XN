@@ -142,9 +142,7 @@ public class ChatHistoryFragment extends BaseFragment {
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
-		// if(((AdapterContextMenuInfo)menuInfo).position > 0){ m,
-		getActivity().getMenuInflater().inflate(R.menu.delete_message, menu);
-		// }
+			getActivity().getMenuInflater().inflate(R.menu.delete_message, menu);
 	}
 
 	@Override

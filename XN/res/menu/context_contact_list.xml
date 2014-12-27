@@ -7,4 +7,8 @@
         android:id="@+id/add_to_blacklist"
         android:title="移入黑名单"/>
 
+      <item
+        android:id="@+id/add_oo_blacklist"
+        android:title="黑名单"/>
+     
 </menu>

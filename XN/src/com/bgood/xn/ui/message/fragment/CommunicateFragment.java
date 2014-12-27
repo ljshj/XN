@@ -23,6 +23,7 @@ import android.widget.TextView.OnEditorActionListener;
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.GroupAdapter;
 import com.bgood.xn.bean.GroupBean;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseShowDataFragment;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
@@ -106,11 +107,23 @@ public class CommunicateFragment extends BaseShowDataFragment {
 		}
 	}
 	
+	public void refresh() {
+		try {
+			getActivity().runOnUiThread(new Runnable() {
+				public void run() {
+					doGetGroupData();
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private void doGetGroupData(){
 		m_groupMap.clear();
 		m_groupList.clear();
 
-		m_groupMap = GroupBean.queryGroupBeanByType(dbHelper, 1);
+		m_groupMap = BGApp.getInstance().tempMap;
 		
 		Iterator<Entry<String, GroupBean>> iter = m_groupMap.entrySet().iterator();
 		while (iter.hasNext()) {

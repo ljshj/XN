@@ -44,11 +44,16 @@ public class BGApp extends Application {
 	public static String currentUserNick = "";
 	public static ChatHXSDKHelper hxSDKHelper = new ChatHXSDKHelper();
 	
-	/**存放好友列表*/
-	public Map<String, FriendBean> friendMap = new HashMap<String, FriendBean>();
-	/**存放好友列表*/
+	/**存放好友列表 （好友名字,好友实体类）*/
+	public Map<String, FriendBean> friendMapByName = new HashMap<String, FriendBean>();
+	
+	/**存放好友列表 （好友ID,好友实体类）*/
+	public Map<String, FriendBean> friendMapById = new HashMap<String, FriendBean>();
+	
+	/**存放固定群列表   （群ID, 群实体类）*/
 	public Map<String, GroupBean> groupMap = new HashMap<String, GroupBean>();
-	/**存放好友列表*/
+	
+	/**存放临时群列表   （群ID, 群实体类）*/
 	public Map<String, GroupBean> tempMap = new HashMap<String, GroupBean>();
 	
 
@@ -128,12 +133,20 @@ public class BGApp extends Application {
 		return instance;
 	}
 
-	public Map<String, FriendBean> getFriendMap() {
-		return friendMap;
+	public Map<String, FriendBean> getFriendMapByName() {
+		return friendMapByName;
 	}
 
-	public void setFriendMap(Map<String, FriendBean> friendMap) {
-		this.friendMap = friendMap;
+	public void setFriendMapByName(Map<String, FriendBean> friendMapByName) {
+		this.friendMapByName = friendMapByName;
+	}
+
+	public Map<String, FriendBean> getFriendMapById() {
+		return friendMapById;
+	}
+
+	public void setFriendMapById(Map<String, FriendBean> friendMapById) {
+		this.friendMapById = friendMapById;
 	}
 
 	public Map<String, GroupBean> getGroupMap() {

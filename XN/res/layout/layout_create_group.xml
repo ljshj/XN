@@ -25,6 +25,7 @@
 			    <EditText 
 			        android:id="@+id/et_group_name"
 			        style="@style/group_edit_tag"
+			        android:gravity="center_vertical"
 			        android:layout_height="40dp"/>
 			    
 			    <TextView

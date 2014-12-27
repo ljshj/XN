@@ -160,12 +160,12 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 		if(BGApp.getInstance().getUserName().equals(user.username)){
 			BToast.show(mActivity, "不能与自己聊天");
 			return;
-		}else if(!BGApp.getInstance().getFriendMap().containsKey(user.username)){
+		}else if(!BGApp.getInstance().getFriendMapById().containsKey(userId)){
 			BToast.show(mActivity, "请先成为好友再聊天");
 			return;
-		}else if(BGApp.getInstance().getFriendMap().containsKey(user.username)){
+		}else if(BGApp.getInstance().getFriendMapById().containsKey(userId)){
 			Intent intent = new Intent(mActivity,ChatActivity.class);
-			intent.putExtra("userId", user.username);
+			intent.putExtra("userId", userId);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 			finish();
@@ -182,7 +182,7 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 		if(BGApp.getInstance().getUserName().equals(user.username)){
 			BToast.show(mActivity, "不能添加自己");
 			return;
-		}else if(BGApp.getInstance().getFriendMap().containsKey(user.username)){
+		}else if(BGApp.getInstance().getFriendMapById().containsKey(userId)){
 			BToast.show(mActivity, "此用户已是你的好友");
 			return;
 		}else{

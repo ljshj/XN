@@ -7,14 +7,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -27,6 +34,7 @@ import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseShowDataFragment;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
+import com.easemob.chat.activity.ChatActivity;
 
 /**
  * @todo:固定群
@@ -80,6 +88,36 @@ public class GroupFragment extends BaseShowDataFragment {
 		m_groupXLv.setPullRefreshEnable(false);
 		groupAdapter = new GroupAdapter(m_groupList, getActivity());
 		m_groupXLv.setAdapter(groupAdapter);
+		
+		
+		m_groupXLv.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+				
+				final GroupBean groupBean = (GroupBean) adapter.getAdapter().getItem(position);
+				//进入群聊
+				Intent intent = new Intent(mActivity, ChatActivity.class);
+				// it is group chat
+				intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+				intent.putExtra("groupId", groupBean.hxgroupid);
+				startActivityForResult(intent, 0);
+			}
+
+		});
+		m_groupXLv.setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if (mActivity.getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
+					if (mActivity.getCurrentFocus() != null){
+						inputMethodManager.hideSoftInputFromWindow(mActivity.getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+					}
+				}
+				return false;
+			}
+		});
+		
 	}
 	
 	private void doSearch() {
@@ -109,6 +147,18 @@ public class GroupFragment extends BaseShowDataFragment {
 		}
 	}
 	
+	public void refresh() {
+		try {
+			getActivity().runOnUiThread(new Runnable() {
+				public void run() {
+					doGetGroupData();
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private void doGetGroupData(){
 		m_groupMap.clear();
 		m_groupList.clear();
@@ -134,4 +184,7 @@ public class GroupFragment extends BaseShowDataFragment {
 		}
 		groupAdapter.notifyDataSetChanged();
 	}
+	
+	
+	
 }

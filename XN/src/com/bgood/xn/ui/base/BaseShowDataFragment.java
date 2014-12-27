@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.inputmethod.InputMethodManager;
 
 import com.bgood.xn.adapter.KBaseAdapter;
 import com.bgood.xn.utils.ToolUtils;

@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.bgood.xn.db.DBHelper;
 import com.bgood.xn.db.PreferenceUtil;
@@ -34,6 +35,8 @@ public class BaseFragment extends Fragment {
 	
 	public static final int PAGE_SIZE_ADD = BaseActivity.PAGE_SIZE_ADD;
 	
+	public InputMethodManager inputMethodManager;
+	
 	public Activity mActivity = null;
 	public LayoutInflater inflater = null;
 	public View layout;
@@ -46,6 +49,7 @@ public class BaseFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mActivity = getActivity();
+		inputMethodManager = (InputMethodManager)mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
 		inflater = LayoutInflater.from(mActivity);
 		pUitl = new PreferenceUtil(mActivity, PreferenceUtil.PREFERENCE_FILE);
 		dbHelper = new DBHelper(mActivity);

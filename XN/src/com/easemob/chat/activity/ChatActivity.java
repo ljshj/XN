@@ -51,10 +51,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bgood.xn.R;
+import com.bgood.xn.bean.FriendBean;
+import com.bgood.xn.bean.GroupBean;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.message.GroupDetailsActivity;
 import com.bgood.xn.utils.LogUtils;
-import com.bgood.xn.widget.TitleBar;
 import com.easemob.EMError;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContactManager;
@@ -85,10 +86,15 @@ import com.easemob.util.PathUtil;
 import com.easemob.util.VoiceRecorder;
 
 /**
- * 聊天页面
  * 
+ * @todo:聊天界面
+ * @date:2014-12-26 下午2:02:21
+ * @author:hg_liuzl@163.com
  */
 public class ChatActivity extends BaseActivity implements OnClickListener {
+	
+	/**好友的实体类**/
+	public static final String KEY_FRIEND_BEAN = "key_friend_bean";
 
 	private static final int REQUEST_CODE_EMPTY_HISTORY = 2;
 	public static final int REQUEST_CODE_CONTEXT_MENU = 3;
@@ -150,6 +156,8 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	private EMConversation conversation;
 	private NewMessageBroadcastReceiver receiver;
 	public static ChatActivity activityInstance = null;
+	
+	private String mUserId = null;
 	// 给谁发送消息
 	private String toChatUsername;
 	private VoiceRecorder voiceRecorder;
@@ -178,7 +186,8 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 			micImage.setImageDrawable(micImages[msg.what]);
 		}
 	};
-	private EMGroup group;
+	private GroupBean group;
+	public FriendBean friendBean;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -300,20 +309,18 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 		chatType = getIntent().getIntExtra("chatType", CHATTYPE_SINGLE);
 
 		if (chatType == CHATTYPE_SINGLE) { // 单聊
-			toChatUsername = getIntent().getStringExtra("userId");
-			((TextView) findViewById(R.id.name)).setText(toChatUsername);
-			// conversation =
-			// EMChatManager.getInstance().getConversation(toChatUsername,false);
+			mUserId = getIntent().getStringExtra("userId");
+			friendBean = BGApp.getInstance().getFriendMapById().get(mUserId);
+			toChatUsername = "bg"+mUserId;
+			((TextView) findViewById(R.id.name)).setText(friendBean.name);
 		} else {
 			// 群聊
 			findViewById(R.id.container_to_group).setVisibility(View.VISIBLE);
 			findViewById(R.id.container_remove).setVisibility(View.GONE);
 			findViewById(R.id.container_voice_call).setVisibility(View.GONE);
 			toChatUsername = getIntent().getStringExtra("groupId");
-			group = EMGroupManager.getInstance().getGroup(toChatUsername);
-			((TextView) findViewById(R.id.name)).setText(group.getGroupName());
-			// conversation =
-			// EMChatManager.getInstance().getConversation(toChatUsername,true);
+			group = BGApp.getInstance().getGroupMap().get(toChatUsername);
+ 			((TextView) findViewById(R.id.name)).setText(group.name);
 		}
 		conversation = EMChatManager.getInstance().getConversation(toChatUsername);
 		// 把此会话的未读数置为0
@@ -1225,7 +1232,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	protected void onResume() {
 		super.onResume();
 		if(group != null)
-			((TextView) findViewById(R.id.name)).setText(group.getGroupName());
+			((TextView) findViewById(R.id.name)).setText(group.name);
 		adapter.refresh();
 	}
 
@@ -1431,8 +1438,8 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 
 	}
 
-	public String getToChatUsername() {
-		return toChatUsername;
+	public String getToChatUserId() {
+		return mUserId;
 	}
 
 }

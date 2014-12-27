@@ -41,8 +41,17 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.FriendBean;
+import com.bgood.xn.bean.response.FriendAndGroupResponse;
+import com.bgood.xn.network.BaseNetWork;
+import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
+import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
+import com.bgood.xn.network.http.HttpRequestInfo;
+import com.bgood.xn.network.http.HttpResponseInfo;
+import com.bgood.xn.network.request.IMRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseFragment;
 import com.bgood.xn.view.BToast;
@@ -63,13 +72,15 @@ import com.easemob.exceptions.EaseMobException;
  * @date:2014-12-12 下午2:45:46
  * @author:hg_liuzl@163.com
  */
-public class FriendListFragment extends BaseFragment {
+public class FriendListFragment extends BaseFragment implements TaskListenerWithState {
 	private ContactAdapter adapter;
 	private List<FriendBean> contactList;
 	private ListView listView;
 	private Sidebar sidebar;
 	private InputMethodManager inputMethodManager;
 	private List<String> blackList;
+	/**要操作的实体类*/
+	private FriendBean mActionFriendBean = null;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -102,12 +113,11 @@ public class FriendListFragment extends BaseFragment {
 				String username = adapter.getItem(position).getName();
 				if (Constant.NEW_FRIENDS_USERNAME.equals(username)) {
 					// 进入申请与通知页面
-					FriendBean user = BGApp.getInstance().getFriendMap().get(Constant.NEW_FRIENDS_USERNAME);
+					FriendBean user = BGApp.getInstance().getFriendMapByName().get(Constant.NEW_FRIENDS_USERNAME);
 					user.setUnreadMsgCount(0);
 					startActivity(new Intent(getActivity(), NewFriendsMsgActivity.class));
 				}else {
 					// demo中直接进入聊天页面，实际一般是进入用户详情页
-					//startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", adapter.getItem(position).getName()));
 					startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", "bg"+adapter.getItem(position).userid));
 				}
 			}
@@ -141,16 +151,17 @@ public class FriendListFragment extends BaseFragment {
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.delete_contact) {
-			FriendBean tobeDeleteUser = adapter.getItem(((AdapterContextMenuInfo) item.getMenuInfo()).position);
+			mActionFriendBean = adapter.getItem(((AdapterContextMenuInfo) item.getMenuInfo()).position);
+			
 			// 删除此联系人
-			deleteContact(tobeDeleteUser);
+			deleteContact(mActionFriendBean);
 			// 删除相关的邀请消息
 			InviteMessgeDao dao = new InviteMessgeDao(getActivity());
-			dao.deleteMessage(tobeDeleteUser.getName());
+			dao.deleteMessage("bg"+mActionFriendBean.userid);
 			return true;
 		}else if(item.getItemId() == R.id.add_to_blacklist){
-			FriendBean user = adapter.getItem(((AdapterContextMenuInfo) item.getMenuInfo()).position);
-			moveToBlacklist(user.getName());
+//			mActionFriendBean = adapter.getItem(((AdapterContextMenuInfo) item.getMenuInfo()).position);
+//			moveToBlacklist(user.getName());
 			return true;
 		}
 		return super.onContextItemSelected(item);
@@ -179,36 +190,7 @@ public class FriendListFragment extends BaseFragment {
 	 * @param toDeleteUser
 	 */
 	public void deleteContact(final FriendBean tobeDeleteUser) {
-		final ProgressDialog pd = new ProgressDialog(getActivity());
-		pd.setMessage("正在删除...");
-		pd.setCanceledOnTouchOutside(false);
-		pd.show();
-		new Thread(new Runnable() {
-			public void run() {
-				try {
-					
-					FriendBean.deleteFriendBean(dbHelper, tobeDeleteUser.userid);
-					getActivity().runOnUiThread(new Runnable() {
-						public void run() {
-							pd.dismiss();
-							adapter.remove(tobeDeleteUser);
-							adapter.notifyDataSetChanged();
-
-						}
-					});
-				} catch (final Exception e) {
-					getActivity().runOnUiThread(new Runnable() {
-						public void run() {
-							pd.dismiss();
-							BToast.show(mActivity, "删除失败");
-						}
-					});
-
-				}
-
-			}
-		}).start();
-
+		IMRequest.getInstance().requestFriendDelete(FriendListFragment.this, mActivity, tobeDeleteUser.userid);
 	}
 
 	/**
@@ -267,7 +249,7 @@ public class FriendListFragment extends BaseFragment {
 	private void getContactList() {
 		contactList.clear();
 		//获取本地好友列表
-		Map<String, FriendBean> users = BGApp.getInstance().getFriendMap();
+		Map<String, FriendBean> users = BGApp.getInstance().getFriendMapByName();
 		Iterator<Entry<String, FriendBean>> iterator = users.entrySet().iterator();
 		while (iterator.hasNext()) {
 			Entry<String, FriendBean> entry = iterator.next();
@@ -284,6 +266,27 @@ public class FriendListFragment extends BaseFragment {
 			}
 		});
 		// 把"申请与通知"添加到首位
-	//	contactList.add(0, users.get(Constant.NEW_FRIENDS_USERNAME));
+		contactList.add(0, users.get(Constant.NEW_FRIENDS_USERNAME));
+	}
+
+	@Override
+	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
+		if(info.getState() == HttpTaskState.STATE_OK){
+			BaseNetWork bNetWork = info.getmBaseNetWork();
+			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+				switch (bNetWork.getMessageType()) {
+				case 850008:
+					BGApp.getInstance().friendMapById.remove(mActionFriendBean);
+					adapter.remove(mActionFriendBean);
+					adapter.notifyDataSetChanged();
+					break;
+				case 850027:
+					break;
+
+				default:
+					break;
+				}
+			}
+		}
 	}
 }

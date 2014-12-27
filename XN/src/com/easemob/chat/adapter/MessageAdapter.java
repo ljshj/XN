@@ -22,7 +22,6 @@ import java.util.TimerTask;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -58,6 +57,7 @@ import com.easemob.chat.NormalFileMessageBody;
 import com.easemob.chat.TextMessageBody;
 import com.easemob.chat.VideoMessageBody;
 import com.easemob.chat.VoiceMessageBody;
+import com.easemob.chat.activity.AlertDialog;
 import com.easemob.chat.activity.BaiduMapActivity;
 import com.easemob.chat.activity.ChatActivity;
 import com.easemob.chat.activity.ContextMenu;

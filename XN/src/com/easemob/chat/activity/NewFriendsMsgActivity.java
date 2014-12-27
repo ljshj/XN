@@ -48,7 +48,7 @@ public class NewFriendsMsgActivity extends BaseActivity {
 		//设置adapter
 		NewFriendsMsgAdapter adapter = new NewFriendsMsgAdapter(this, 1, msgs); 
 		listView.setAdapter(adapter);
-		BGApp.getInstance().getFriendMap().get(Constant.NEW_FRIENDS_USERNAME).setUnreadMsgCount(0);
+		BGApp.getInstance().getFriendMapByName().get(Constant.NEW_FRIENDS_USERNAME).setUnreadMsgCount(0);
 		
 	}
 
