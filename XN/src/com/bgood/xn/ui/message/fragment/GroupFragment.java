@@ -51,9 +51,11 @@ public class GroupFragment extends BaseShowDataFragment {
 	private String mKeyWord = "";
 	private GroupAdapter groupAdapter;
 	private View layout;
+	public static GroupFragment instance = null;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+		instance = this;
 		layout =  inflater.inflate(R.layout.fragment_group_list, container, false);
 		initView();
 		doGetGroupData();

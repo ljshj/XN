@@ -73,7 +73,7 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 		userId = getIntent().getStringExtra(UserInfoBean.KEY_USER_ID);
 		if(null != userId){
 			isSelf = userId.equals(String.valueOf(BGApp.mUserId));
-			UserCenterRequest.getInstance().requestPersonInfo(this, mActivity, userId);
+			UserCenterRequest.getInstance().requestPersonInfo(this, mActivity, userId,true);
 		}else{
 			finish();
 		}

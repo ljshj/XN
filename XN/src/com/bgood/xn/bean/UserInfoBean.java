@@ -73,7 +73,7 @@ public class UserInfoBean implements Serializable {
 //	<fansnumber/>//我的粉丝数
 //	<weiqiang/>//我的微墙数
 	
-	
+	public String userid;
 	public String username;
 	public String ican;
 	public String ineed;

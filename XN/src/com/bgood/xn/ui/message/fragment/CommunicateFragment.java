@@ -123,7 +123,7 @@ public class CommunicateFragment extends BaseShowDataFragment {
 		m_groupMap.clear();
 		m_groupList.clear();
 
-		m_groupMap = BGApp.getInstance().tempMap;
+		m_groupMap = BGApp.getInstance().getTempMap();
 		
 		Iterator<Entry<String, GroupBean>> iter = m_groupMap.entrySet().iterator();
 		while (iter.hasNext()) {

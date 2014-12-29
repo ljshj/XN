@@ -111,7 +111,7 @@ public class ChatHistoryFragment extends BaseFragment {
 						intent.putExtra("groupId", ((EMGroup) emContact).getGroupId());
 					} else {
 						// it is single chat
-						intent.putExtra("userId", username);
+						intent.putExtra("userId", username.substring(2)); //去掉bg 就是这个用户的userId
 					}
 					startActivity(intent);
 				}

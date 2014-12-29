@@ -6,7 +6,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 
+import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
+import com.bgood.xn.bean.GroupBean;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
@@ -15,6 +17,7 @@ import com.bgood.xn.network.http.HttpResponseInfo;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.IMRequest;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.ui.message.fragment.GroupFragment;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
 
@@ -69,8 +72,13 @@ public class CreateGroupActivity extends BaseActivity implements TaskListenerWit
 	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
+			String json = bNetWork.getStrJson();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+				GroupBean group = JSON.parseObject(json, GroupBean.class);
+				GroupBean.insertGroupBean(dbHelper,group);
 				BToast.show(mActivity, "群创建成功");
+				MessageActivity.instance.dealIMFriendAndGroup();	//刷新一下数据
+				GroupFragment.instance.refresh();	//刷新一下数据
 				finish();
 			}
 		}

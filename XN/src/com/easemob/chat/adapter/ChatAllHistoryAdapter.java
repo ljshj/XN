@@ -16,11 +16,14 @@ package com.easemob.chat.adapter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.ImageView;
@@ -29,6 +32,9 @@ import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
 import com.bgood.xn.R;
+import com.bgood.xn.bean.FriendBean;
+import com.bgood.xn.bean.GroupBean;
+import com.bgood.xn.system.BGApp;
 import com.easemob.chat.Constant;
 import com.easemob.chat.EMContact;
 import com.easemob.chat.EMConversation;
@@ -39,6 +45,10 @@ import com.easemob.chat.ImageMessageBody;
 import com.easemob.chat.TextMessageBody;
 import com.easemob.chat.utils.SmileUtils;
 import com.easemob.util.DateUtils;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 /**
  * 显示所有聊天记录adpater
@@ -46,27 +56,38 @@ import com.easemob.util.DateUtils;
  */
 public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 
+	private Context mContext;
 	private LayoutInflater inflater;
 	private List<EMConversation> conversationList;
 	private List<EMConversation> copyConversationList;
 	private ConversationFilter conversationFilter;
-
+	public ImageLoader mImageLoader;
+	public DisplayImageOptions options;
+	
 	public ChatAllHistoryAdapter(Context context, int textViewResourceId, List<EMConversation> objects) {
 		super(context, textViewResourceId, objects);
+		this.mContext = context;
 		this.conversationList = objects;
 		copyConversationList = new ArrayList<EMConversation>();
 		copyConversationList.addAll(objects);
 		inflater = LayoutInflater.from(context);
+		
+		options = new DisplayImageOptions.Builder()
+		.showStubImage(R.drawable.icon_default)
+		.showImageForEmptyUri(R.drawable.icon_default)
+		.cacheInMemory()
+		.cacheOnDisc()
+		.build();
+		mImageLoader = ImageLoader.getInstance();
+		mImageLoader.init(ImageLoaderConfiguration.createDefault(context));
 	}
 
+	ViewHolder holder;
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.row_chat_history, parent, false);
-		}
-		ViewHolder holder = (ViewHolder) convertView.getTag();
-		if (holder == null) {
 			holder = new ViewHolder();
+			convertView = inflater.inflate(R.layout.row_chat_history, parent, false);
 			holder.name = (TextView) convertView.findViewById(R.id.name);
 			holder.unreadLabel = (TextView) convertView.findViewById(R.id.unread_msg_number);
 			holder.message = (TextView) convertView.findViewById(R.id.message);
@@ -75,6 +96,9 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 			holder.msgState = convertView.findViewById(R.id.msg_state);
 			holder.list_item_layout = (RelativeLayout) convertView.findViewById(R.id.list_item_layout);
 			convertView.setTag(holder);
+		}else{
+			holder = (ViewHolder) convertView.getTag();
+			
 		}
 		if (position % 2 == 0) {
 			holder.list_item_layout.setBackgroundResource(R.drawable.mm_listitem);
@@ -103,19 +127,54 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 			}
 		}
 		if (isGroup) {
+			
+			final GroupBean group = BGApp.getInstance().getGroupMap().get(username);//这里获取到的是环信id
+			if(null == group){
+				return null;
+			}
+				
+			
+			mImageLoader.displayImage(group.photo,holder.avatar, options, new SimpleImageLoadingListener() {
+				@Override
+				public void onLoadingComplete() {
+					Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.fade_in);
+					holder.avatar.setAnimation(anim);
+					anim.start();
+				}
+			});
+			
+			
 			// 群聊消息，显示群聊头像
 			holder.avatar.setImageResource(R.drawable.group_icon);
-			holder.name.setText(contact.getNick() != null ? contact.getNick() : username);
+			//Map<String, GroupBean> mapGroups = BGApp.getInstance().getGroupMap().get(arg0);;
+			holder.name.setText(group.name);
 		} else {
-			// 本地或者服务器获取用户详情，以用来显示头像和nick
-			holder.avatar.setImageResource(R.drawable.default_avatar);
-			if (username.equals(Constant.GROUP_USERNAME)) {
-				holder.name.setText("群聊");
-
-			} else if (username.equals(Constant.NEW_FRIENDS_USERNAME)) {
-				holder.name.setText("申请与通知");
+			
+			final FriendBean fb = BGApp.getInstance().getFriendMapById().get(username.substring(2));//去掉bg 得到用户id
+			
+			if(null == fb){
+				return null;
 			}
-			holder.name.setText(username);
+			
+			mImageLoader.displayImage(fb.photo,holder.avatar, options, new SimpleImageLoadingListener() {
+				@Override
+				public void onLoadingComplete() {
+					Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.fade_in);
+					holder.avatar.setAnimation(anim);
+					anim.start();
+				}
+			});
+			
+			
+			// 本地或者服务器获取用户详情，以用来显示头像和nick
+//			holder.avatar.setImageResource(R.drawable.default_avatar);
+//			if (username.equals(Constant.GROUP_USERNAME)) {
+//				holder.name.setText("群聊");
+//
+//			} else if (username.equals(Constant.NEW_FRIENDS_USERNAME)) {
+//				holder.name.setText("申请与通知");
+//			}
+			holder.name.setText(fb.name);
 		}
 
 		if (conversation.getUnreadMsgCount() > 0) {

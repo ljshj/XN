@@ -102,8 +102,10 @@ public class DBHelper extends CommonDB {
     	public final static String G_ROOMID = "roomid";
     	/**群名称*/
     	public final static String G_NAME = "name";
-        /** 群简介 */
-        public final static String G_INTRO = "intro";
+    	/** 群简介 */
+    	public final static String G_INTRO = "intro";
+        /** 群公告 */
+        public final static String G_NOTICE = "notice";
         /** 群图片*/
         public final static String G_PHOTO = "photo";
         /** //群类型 0，固定群；1，临时群*/
@@ -118,6 +120,7 @@ public class DBHelper extends CommonDB {
 			        .append(G_ROOMID).append(" ").append("varchar").append(",")
 			        .append(G_NAME).append(" ").append("varchar").append(",")
 			        .append(G_INTRO).append(" ").append("varchar").append(",")
+			        .append(G_NOTICE).append(" ").append("varchar").append(",")
 			        .append(G_PHOTO).append(" ").append("varchar").append(",")
 			        .append(G_GROUPTYPE).append(" ").append("varchar").append(")");
             return buffer.toString();

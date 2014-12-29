@@ -13,7 +13,14 @@
  */
 package com.easemob.chat.domain;
 
+import com.bgood.xn.bean.UserInfoBean;
+
 public class InviteMessage {
+	
+	private String userPhotoUrl;
+	
+	private String userNick;
+	
 	private String from;
 	//时间
 	private long time;
@@ -27,9 +34,37 @@ public class InviteMessage {
 	//群名称
 	private String groupName;
 	
+	private UserInfoBean user;
 
 	private int id;
-	
+
+	public String getUserPhotoUrl() {
+		return userPhotoUrl;
+	}
+
+	public void setUserPhotoUrl(String userPhotoUrl) {
+		this.userPhotoUrl = userPhotoUrl;
+	}
+
+	public String getUserNick() {
+		return userNick;
+	}
+
+	public void setUserNick(String userNick) {
+		this.userNick = userNick;
+	}
+
+	public UserInfoBean getUser() {
+		return user;
+	}
+
+	public void setUser(UserInfoBean user) {
+		this.user = user;
+		this.setFrom("bg"+user.userid);
+		this.setUserPhotoUrl(user.photo);
+		this.setUserNick(user.nickn);
+	}
+
 	public String getFrom() {
 		return from;
 	}
@@ -89,6 +124,8 @@ public class InviteMessage {
 		this.groupName = groupName;
 	}
 
+	
+	
 
 
 	public enum InviteMesageStatus{

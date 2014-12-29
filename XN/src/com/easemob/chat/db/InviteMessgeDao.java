@@ -28,6 +28,13 @@ public class InviteMessgeDao {
 	public static final String TABLE_NAME = "new_friends_msgs";
 	public static final String COLUMN_NAME_ID = "id";
 	public static final String COLUMN_NAME_FROM = "username";
+	
+	public static final String COLUMN_NAME_PHOTO = "column_name_photo";
+	public static final String COLUMN_NAME_NICK = "column_name_nick";
+	
+	
+	
+	
 	public static final String COLUMN_NAME_GROUP_ID = "groupid";
 	public static final String COLUMN_NAME_GROUP_Name = "groupname";
 	
@@ -53,6 +60,8 @@ public class InviteMessgeDao {
 		if(db.isOpen()){
 			ContentValues values = new ContentValues();
 			values.put(COLUMN_NAME_FROM, message.getFrom());
+			values.put(COLUMN_NAME_NICK, message.getUserNick());
+			values.put(COLUMN_NAME_PHOTO, message.getUserPhotoUrl());
 			values.put(COLUMN_NAME_GROUP_ID, message.getGroupId());
 			values.put(COLUMN_NAME_GROUP_Name, message.getGroupName());
 			values.put(COLUMN_NAME_REASON, message.getReason());
@@ -95,6 +104,10 @@ public class InviteMessgeDao {
 				InviteMessage msg = new InviteMessage();
 				int id = cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_ID));
 				String from = cursor.getString(cursor.getColumnIndex(COLUMN_NAME_FROM));
+				
+				String userNick = cursor.getString(cursor.getColumnIndex(COLUMN_NAME_NICK));
+				String photo = cursor.getString(cursor.getColumnIndex(COLUMN_NAME_PHOTO));
+				
 				String groupid = cursor.getString(cursor.getColumnIndex(COLUMN_NAME_GROUP_ID));
 				String groupname = cursor.getString(cursor.getColumnIndex(COLUMN_NAME_GROUP_Name));
 				String reason = cursor.getString(cursor.getColumnIndex(COLUMN_NAME_REASON));
@@ -103,6 +116,9 @@ public class InviteMessgeDao {
 				
 				msg.setId(id);
 				msg.setFrom(from);
+				msg.setUserNick(userNick);
+				msg.setUserPhotoUrl(photo);
+				
 				msg.setGroupId(groupid);
 				msg.setGroupName(groupname);
 				msg.setReason(reason);

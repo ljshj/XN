@@ -143,8 +143,18 @@ public class UserCenterRequest extends BaseNetWork {
 			 new HttpRequestAsyncTask(ServerType.LoginServer,this, mHttpTaskListener, context).execute();
 		}
 	 
-	 /**获取个人资料*/
-	 public void requestPersonInfo(TaskListenerWithState mHttpTaskListener,Context context,String userid){
+	 
+	 /**
+	  * 
+	  * @todo:获取个人资料
+	  * @date:2014-12-29 下午4:35:57
+	  * @author:hg_liuzl@163.com
+	  * @params:@param mHttpTaskListener
+	  * @params:@param context
+	  * @params:@param userid
+	  * @params:@param showDialog 是否需要展示进度条   false 不需要， true需要
+	  */
+	 public void requestPersonInfo(TaskListenerWithState mHttpTaskListener,Context context,String userid,boolean showDialog){
 		 	setMessageType(20001);
 			JSONObject body = new JSONObject();
 			try {
@@ -153,7 +163,7 @@ public class UserCenterRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			new HttpRequestAsyncTask(showDialog,ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		}
 	 
 	 /**修改个人资料

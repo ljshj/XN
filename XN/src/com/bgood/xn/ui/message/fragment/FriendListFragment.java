@@ -118,7 +118,7 @@ public class FriendListFragment extends BaseFragment implements TaskListenerWith
 					startActivity(new Intent(getActivity(), NewFriendsMsgActivity.class));
 				}else {
 					// demo中直接进入聊天页面，实际一般是进入用户详情页
-					startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", "bg"+adapter.getItem(position).userid));
+					startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", adapter.getItem(position).userid));
 				}
 			}
 		});
@@ -190,7 +190,7 @@ public class FriendListFragment extends BaseFragment implements TaskListenerWith
 	 * @param toDeleteUser
 	 */
 	public void deleteContact(final FriendBean tobeDeleteUser) {
-		IMRequest.getInstance().requestFriendDelete(FriendListFragment.this, mActivity, tobeDeleteUser.userid);
+		IMRequest.getInstance().requestFriendDelete(FriendListFragment.this, mActivity, new String[]{tobeDeleteUser.userid});
 	}
 
 	/**
@@ -276,7 +276,7 @@ public class FriendListFragment extends BaseFragment implements TaskListenerWith
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				switch (bNetWork.getMessageType()) {
 				case 850008:
-					BGApp.getInstance().friendMapById.remove(mActionFriendBean);
+					BGApp.getInstance().getFriendMapById().remove(mActionFriendBean);
 					adapter.remove(mActionFriendBean);
 					adapter.notifyDataSetChanged();
 					break;

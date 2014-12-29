@@ -30,19 +30,9 @@ import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
  */
 public class WeiqiangAdapter extends KBaseAdapter 
 {
-	private ImageLoader mImageLoader;
-	private DisplayImageOptions options;
-
 	public WeiqiangAdapter(List<?> mList, Activity mActivity,OnClickListener listener) {
 		super(mList, mActivity, listener);
-		options = new DisplayImageOptions.Builder()
-		.showStubImage(R.drawable.icon_default)
-		.showImageForEmptyUri(R.drawable.icon_default)
-		.cacheInMemory()
-		.cacheOnDisc()
-		.build();
-		mImageLoader = ImageLoader.getInstance();
-		mImageLoader.init(ImageLoaderConfiguration.createDefault(mActivity));
+		
 	}
 
 	@Override

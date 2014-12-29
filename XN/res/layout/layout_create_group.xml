@@ -26,7 +26,7 @@
 			        android:id="@+id/et_group_name"
 			        style="@style/group_edit_tag"
 			        android:gravity="center_vertical"
-			        android:layout_height="40dp"/>
+			        android:layout_height="35dp"/>
 			    
 			    <TextView
 			  		style="@style/group_text_tag"

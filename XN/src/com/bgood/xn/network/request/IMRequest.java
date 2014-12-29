@@ -1,15 +1,15 @@
 package com.bgood.xn.network.request;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
-import com.bgood.xn.bean.MessageBean;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.http.HttpRequestAsyncTask;
 import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
-import com.bgood.xn.system.SystemConfig;
 import com.bgood.xn.system.SystemConfig.ServerType;
 
 /**
@@ -41,9 +41,9 @@ public class IMRequest extends BaseNetWork {
 	 * @params:@param userid
 	 * @params:@param vertify
 	 */
-	public void requestContactsList(TaskListenerWithState mHttpTaskListener,Context context,boolean showDialog) {
+	public void requestContactsList(TaskListenerWithState mHttpTaskListener,Context context) {
 		setMessageType(50006);
-		new HttpRequestAsyncTask(showDialog,ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 	}
 
 	/**
@@ -57,12 +57,18 @@ public class IMRequest extends BaseNetWork {
 	 * @params:@param msg 是否同意 true ,false
 	 * @params:@param userid 自己的ID
 	 */
-	public void requestFriendADD(TaskListenerWithState mHttpTaskListener,Context context,String userid,String recver) {
+	@SuppressLint("NewApi")
+	public void requestFriendADD(TaskListenerWithState mHttpTaskListener,Context context,String userid,String[] recver) {
 		setMessageType(50027);
 		JSONObject body = new JSONObject();
 		try {
+			
+			JSONArray array = new JSONArray();
+			for(String uid:recver){
+				array.put(uid);
+			}
 			body.put("userid", userid);
-			body.put("recver", recver);
+			body.put("recver", array);
 			body.put("msg", "true");
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -80,11 +86,17 @@ public class IMRequest extends BaseNetWork {
 		 * @params:@param context
 		 * @params:@param userid
 		 */
-	public void requestFriendDelete(TaskListenerWithState mHttpTaskListener,Context context,String userid) {
+	@SuppressLint("NewApi")
+	public void requestFriendDelete(TaskListenerWithState mHttpTaskListener,Context context,String[] userid) {
 		setMessageType(50008);
 		JSONObject body = new JSONObject();
 		try {
-			body.put("userid", userid);
+			
+			JSONArray array = new JSONArray();
+			for(String uid:userid){
+				array.put(uid);
+			}
+			body.put("userid", array);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

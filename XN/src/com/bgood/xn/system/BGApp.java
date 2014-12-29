@@ -1,15 +1,16 @@
 package com.bgood.xn.system;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 
 import com.bgood.xn.bean.FriendBean;
 import com.bgood.xn.bean.GroupBean;
@@ -17,6 +18,10 @@ import com.bgood.xn.bean.MemberLoginBean;
 import com.bgood.xn.bean.UserInfoBean;
 import com.easemob.EMCallBack;
 import com.easemob.chat.ChatHXSDKHelper;
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMMessage;
+import com.easemob.chat.EMMessage.ChatType;
+import com.easemob.chat.activity.ChatActivity;
 import com.iflytek.cloud.SpeechUtility;
 
 public class BGApp extends Application {
@@ -45,16 +50,16 @@ public class BGApp extends Application {
 	public static ChatHXSDKHelper hxSDKHelper = new ChatHXSDKHelper();
 	
 	/**存放好友列表 （好友名字,好友实体类）*/
-	public Map<String, FriendBean> friendMapByName = new HashMap<String, FriendBean>();
+	private Map<String, FriendBean> friendMapByName = new HashMap<String, FriendBean>();
 	
 	/**存放好友列表 （好友ID,好友实体类）*/
-	public Map<String, FriendBean> friendMapById = new HashMap<String, FriendBean>();
+	private Map<String, FriendBean> friendMapById = new HashMap<String, FriendBean>();
 	
 	/**存放固定群列表   （群ID, 群实体类）*/
-	public Map<String, GroupBean> groupMap = new HashMap<String, GroupBean>();
+	private Map<String, GroupBean> groupMap = new HashMap<String, GroupBean>();
 	
 	/**存放临时群列表   （群ID, 群实体类）*/
-	public Map<String, GroupBean> tempMap = new HashMap<String, GroupBean>();
+	private Map<String, GroupBean> tempMap = new HashMap<String, GroupBean>();
 	
 
 	@Override
@@ -87,6 +92,7 @@ public class BGApp extends Application {
          * }
          */
         hxSDKHelper.onInit(applicationContext);
+        registerReciverMsg();
 	}
 	
 	
@@ -214,4 +220,50 @@ public class BGApp extends Application {
 	public boolean isLogin(){
 		return hxSDKHelper.isLogined();
 	}
+	
+	private void registerReciverMsg() {
+		// 注册一个接收消息的BroadcastReceiver
+		IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
+		intentFilter.setPriority(3);
+		registerReceiver(msgReceiver, intentFilter);
+
+	}
+	
+	/**接受消息的广播*/
+	private BroadcastReceiver msgReceiver = new BroadcastReceiver(){
+
+		@Override
+		public void onReceive(Context arg0, Intent intent) {
+			// 主页面收到消息后，主要为了提示未读，实际消息内容需要到chat页面查看
+
+			String from = intent.getStringExtra("from");
+			// 消息id
+			String msgId = intent.getStringExtra("msgid");
+			EMMessage message = EMChatManager.getInstance().getMessage(msgId);
+			// 2014-10-22 修复在某些机器上，在聊天页面对方发消息过来时不立即显示内容的bug
+			if (ChatActivity.activityInstance != null) {
+				if (message.getChatType() == ChatType.GroupChat) {
+					if (message.getTo().equals("bg"+ChatActivity.activityInstance.getToChatUserId()))
+						return;
+				} else {
+					if (from.equals("bg"+ChatActivity.activityInstance.getToChatUserId()))
+						return;
+				}
+			}
+			
+			// 注销广播接收者，否则在ChatActivity中会收到这个广播
+			abortBroadcast();
+			
+//			notifyNewMessage(message);
+
+//			// 刷新bottom bar消息未读数
+//			updateUnreadLabel();
+//			if (currentTabIndex == 0) {
+//				// 当前页面如果为聊天历史页面，刷新此页面
+//				if (chatHistoryFragment != null) {
+//					chatHistoryFragment.refresh();
+//				}
+//			}
+		}
+	};
 }

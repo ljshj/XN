@@ -22,6 +22,8 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -31,21 +33,38 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bgood.xn.R;
+import com.bgood.xn.bean.UserInfoBean;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.db.InviteMessgeDao;
 import com.easemob.chat.domain.InviteMessage;
 import com.easemob.chat.domain.InviteMessage.InviteMesageStatus;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 
 	private Context context;
 	private InviteMessgeDao messgeDao;
+	
+	public ImageLoader mImageLoader;
+	public DisplayImageOptions options;
 
 	public NewFriendsMsgAdapter(Context context, int textViewResourceId, List<InviteMessage> objects) {
 		super(context, textViewResourceId, objects);
 		this.context = context;
 		messgeDao = new InviteMessgeDao(context);
+		
+		options = new DisplayImageOptions.Builder()
+		.showStubImage(R.drawable.icon_default)
+		.showImageForEmptyUri(R.drawable.icon_default)
+		.cacheInMemory()
+		.cacheOnDisc()
+		.build();
+		mImageLoader = ImageLoader.getInstance();
+		mImageLoader.init(ImageLoaderConfiguration.createDefault(context));
 	}
 
 	@Override
@@ -68,6 +87,16 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 		}
 
 		final InviteMessage msg = getItem(position);
+		mImageLoader.displayImage(msg.getUserPhotoUrl(),holder.avator, options, new SimpleImageLoadingListener() {
+			@Override
+			public void onLoadingComplete() {
+				Animation anim = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+				holder.avator.setAnimation(anim);
+				anim.start();
+			}
+		});
+		
+		
 		if (msg != null) {
 			if(msg.getGroupId() != null){ // 显示群聊提示
 				holder.groupContainer.setVisibility(View.VISIBLE);
@@ -77,7 +106,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 			}
 			
 			holder.reason.setText(msg.getReason());
-			holder.name.setText(msg.getFrom());
+			holder.name.setText(msg.getUserNick());
 			// holder.time.setText(DateUtils.getTimestampString(new
 			// Date(msg.getTime())));
 			if (msg.getStatus() == InviteMesageStatus.BEAGREED) {
@@ -207,7 +236,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 		pd.setMessage("正在拒绝...");
 		pd.setCanceledOnTouchOutside(false);
 		pd.show();
-
+		
 		new Thread(new Runnable() {
 			public void run() {
 				// 调用sdk的拒绝方法
