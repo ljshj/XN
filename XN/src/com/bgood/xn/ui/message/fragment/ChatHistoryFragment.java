@@ -36,6 +36,7 @@ import android.widget.Toast;
 import com.bgood.xn.R;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseFragment;
+import com.bgood.xn.ui.message.MessageActivity;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContact;
 import com.easemob.chat.EMConversation;
@@ -157,7 +158,7 @@ public class ChatHistoryFragment extends BaseFragment {
 			adapter.notifyDataSetChanged();
 
 //			// 更新消息未读数
-//			((MainActivity) getActivity()).updateUnreadLabel();
+			((MessageActivity) getActivity()).updateUnreadLabel();
 
 			return true;
 		}
@@ -229,15 +230,15 @@ public class ChatHistoryFragment extends BaseFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-//		if (!hidden && ! ((MainActivity)getActivity()).isConflict) {
-//			refresh();
-//		}
+		if (!hidden && ! ((MessageActivity)getActivity()).isConflict) {
+			refresh();
+		}
 	}
 
 	@Override
     public void onSaveInstanceState(Bundle outState) {
-//        if(((MainActivity)getActivity()).isConflict)
-//            outState.putBoolean("isConflict", true);
+        if(((MessageActivity)getActivity()).isConflict)
+            outState.putBoolean("isConflict", true);
         super.onSaveInstanceState(outState);
         
     }

@@ -21,6 +21,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
+import com.bgood.xn.db.DBHelper;
+import com.bgood.xn.db.PreferenceUtil;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.EMMessage.Type;
@@ -30,12 +32,16 @@ import com.easemob.util.EasyUtils;
 import com.umeng.analytics.MobclickAgent;
 
 public class BaseActivity extends FragmentActivity {
-    private static final int notifiId = 11;
+    private static final int notifiId = 15;
     protected NotificationManager notificationManager;
+	public PreferenceUtil pUitl;
+	public DBHelper dbHelper = null;
 
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
+		pUitl = new PreferenceUtil(this, PreferenceUtil.PREFERENCE_FILE);
+		dbHelper = new DBHelper(this);
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
     }
 

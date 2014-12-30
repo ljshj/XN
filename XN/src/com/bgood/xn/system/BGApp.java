@@ -16,6 +16,7 @@ import com.bgood.xn.bean.FriendBean;
 import com.bgood.xn.bean.GroupBean;
 import com.bgood.xn.bean.MemberLoginBean;
 import com.bgood.xn.bean.UserInfoBean;
+import com.bgood.xn.utils.LogUtils;
 import com.easemob.EMCallBack;
 import com.easemob.chat.ChatHXSDKHelper;
 import com.easemob.chat.EMChatManager;
@@ -92,7 +93,6 @@ public class BGApp extends Application {
          * }
          */
         hxSDKHelper.onInit(applicationContext);
-        registerReciverMsg();
 	}
 	
 	
@@ -220,50 +220,4 @@ public class BGApp extends Application {
 	public boolean isLogin(){
 		return hxSDKHelper.isLogined();
 	}
-	
-	private void registerReciverMsg() {
-		// 注册一个接收消息的BroadcastReceiver
-		IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
-		intentFilter.setPriority(3);
-		registerReceiver(msgReceiver, intentFilter);
-
-	}
-	
-	/**接受消息的广播*/
-	private BroadcastReceiver msgReceiver = new BroadcastReceiver(){
-
-		@Override
-		public void onReceive(Context arg0, Intent intent) {
-			// 主页面收到消息后，主要为了提示未读，实际消息内容需要到chat页面查看
-
-			String from = intent.getStringExtra("from");
-			// 消息id
-			String msgId = intent.getStringExtra("msgid");
-			EMMessage message = EMChatManager.getInstance().getMessage(msgId);
-			// 2014-10-22 修复在某些机器上，在聊天页面对方发消息过来时不立即显示内容的bug
-			if (ChatActivity.activityInstance != null) {
-				if (message.getChatType() == ChatType.GroupChat) {
-					if (message.getTo().equals("bg"+ChatActivity.activityInstance.getToChatUserId()))
-						return;
-				} else {
-					if (from.equals("bg"+ChatActivity.activityInstance.getToChatUserId()))
-						return;
-				}
-			}
-			
-			// 注销广播接收者，否则在ChatActivity中会收到这个广播
-			abortBroadcast();
-			
-//			notifyNewMessage(message);
-
-//			// 刷新bottom bar消息未读数
-//			updateUnreadLabel();
-//			if (currentTabIndex == 0) {
-//				// 当前页面如果为聊天历史页面，刷新此页面
-//				if (chatHistoryFragment != null) {
-//					chatHistoryFragment.refresh();
-//				}
-//			}
-		}
-	};
 }

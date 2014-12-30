@@ -976,6 +976,9 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	private class NewMessageBroadcastReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
+			
+			LogUtils.i("--------------------------聊天界面，接受消息的广播---------------");
+			
 			// 记得把广播给终结掉
 			abortBroadcast();
 

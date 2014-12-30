@@ -74,7 +74,7 @@ public class UserCenterRequest extends BaseNetWork {
 			try {
 				body.put("pnum", phone);
 				body.put("userid", userid);
-				body.put("pwd",MD5.getMD5(pwd));
+				body.put("pwd",MD5.GetMD5Code(pwd));
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -88,7 +88,7 @@ public class UserCenterRequest extends BaseNetWork {
 			JSONObject body = new JSONObject();
 			try {
 				body.put("userid", userid);
-				body.put("pwd", MD5.getMD5(pwd));
+				body.put("pwd", MD5.GetMD5Code(pwd));
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -115,7 +115,7 @@ public class UserCenterRequest extends BaseNetWork {
 			JSONObject body = new JSONObject();
 			try {
 				body.put("userid", userid);
-				body.put("pwd",  MD5.getMD5(pwd));
+				body.put("pwd",  MD5.GetMD5Code(pwd));
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -280,8 +280,8 @@ public class UserCenterRequest extends BaseNetWork {
 		 	setMessageType(20006);
 			JSONObject body = new JSONObject();
 			try {
-				body.put("oldpassword", MD5.getMD5(oldPwd));
-				body.put("newpassword", MD5.getMD5(newPwd));
+				body.put("oldpassword", MD5.GetMD5Code(oldPwd));
+				body.put("newpassword", MD5.GetMD5Code(newPwd));
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
