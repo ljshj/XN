@@ -15,9 +15,10 @@ public class DBHelper extends CommonDB {
 	private final static int DATABASE_VERSION = 1;         //数据库版本
 	/** 好友 表 */
 	public final static String TB_FRIEND = "tab_friend";
-	
 	/** 群组表 */
 	public final static String TB_GROUP = "tab_group";
+	/** 群成员表 */
+	public final static String TB_GROUP_MEMBER = "tab_group_member";
 	
 	public DBHelper(Context context) {
 		super(context,DATABASE_NAME,DATABASE_VERSION);
@@ -27,12 +28,14 @@ public class DBHelper extends CommonDB {
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(Friend.newCreateTableString());  //创建好友信息表
 		db.execSQL(Group.newCreateTableString());  //创建群组信息表
+		db.execSQL(GroupMember.newCreateTableString());  //创建群成员信息表
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL(Friend.newDeleteTableString());
 		db.execSQL(Group.newDeleteTableString());
+		db.execSQL(GroupMember.newDeleteTableString());
 		onCreate(db);
 	}
 
@@ -44,7 +47,6 @@ public class DBHelper extends CommonDB {
      * @author:hg_liuzl@163.com
      */
     public static class Friend{
-    	
     	/**用户ID*/
     	public final static String F_USERID = "userid";
     	/**用户类型，是普通用户，还是管理员*/
@@ -59,11 +61,6 @@ public class DBHelper extends CommonDB {
         public final static String F_PHOTO = "photo";
         /** 用户签名*/
         public final static String F_SIGNATURE = "signature";
-     
-        
-        
-        
-        
         
         public static String newCreateTableString() {
             StringBuffer buffer = new StringBuffer(512);
@@ -95,7 +92,6 @@ public class DBHelper extends CommonDB {
      * @author:hg_liuzl@163.com
      */
     public static class Group{
-    	
     	/**环信groupID*/
     	public final static String G_HX_GROUPID = "hx_groupid";
     	/**群ID*/
@@ -133,6 +129,52 @@ public class DBHelper extends CommonDB {
             return buffer.toString();
         }
     }
-	
+    
+    /**
+     * 
+     * @todo:群成员
+     * @date:2014-12-20 下午3:12:04
+     * @author:hg_liuzl@163.com
+     */
+    public static class GroupMember{
+    	/**群ID*/
+    	public final static String GM_GROUPID = "group_id";
+    	/**用户ID*/
+    	public final static String GM_USERID = "userid";
+    	/**用户类型，是普通用户，还是管理员*/
+    	public final static String GM_TYPE = "type";
+        /** 用户昵称 */
+        public final static String GM_NAME = "name";
+        /** 用户性别*/
+        public final static String GM_SEX = "sex";
+        /** 用户等级*/
+        public final static String GM_LEVEL = "level";
+        /** 用户图片 */
+        public final static String GM_PHOTO = "photo";
+        /** 用户签名*/
+        public final static String GM_SIGNATURE = "signature";
+        
+        public static String newCreateTableString() {
+            StringBuffer buffer = new StringBuffer(512);
+              buffer.append("create table ")
+			        .append(TB_GROUP_MEMBER).append(" (")
+			        .append(FD_ID).append(" ").append("integer primary key autoincrement").append(",")
+			        .append(GM_GROUPID).append(" ").append("varchar").append(",")
+			        .append(GM_USERID).append(" ").append("varchar").append(",")
+			        .append(GM_TYPE).append(" ").append("varchar").append(",")
+			        .append(GM_NAME).append(" ").append("varchar").append(",")
+			        .append(GM_SEX).append(" ").append("varchar").append(",")
+			        .append(GM_LEVEL).append(" ").append("varchar").append(",")
+			        .append(GM_PHOTO).append(" ").append("varchar").append(",")
+			        .append(GM_SIGNATURE).append(" ").append("varchar").append(")");
+            return buffer.toString();
+        }
+        
+        public static String newDeleteTableString() {
+            StringBuffer buffer = new StringBuffer(64);
+            buffer.append("DROP TABLE IF EXISTS ").append(TB_GROUP_MEMBER);
+            return buffer.toString();
+        }
+    }
 }
 

@@ -38,7 +38,7 @@
             
 	     	 <TextView
 		  		style="@style/group_text_tag"
-		        android:text="请输入群简介"/>
+		        android:text="群简介"/>
 		    
 		    <TextView 
 		        android:id="@+id/tv_group_intro"
@@ -47,7 +47,7 @@
 		    
 		     <TextView
 		  		style="@style/group_text_tag"
-		        android:text="请输入群公告"/>
+		        android:text="群公告"/>
 		    
 		    <TextView 
 		        android:id="@+id/tv_group_notice"

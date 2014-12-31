@@ -5,7 +5,7 @@
     style="@style/common_listview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/common_page_bg"
-    android:divider="@android:color/transparent"
+    android:background="@color/white"
+    android:divider="@color/gray"
     android:dividerHeight="@dimen/divierHeight" >
 </com.bgood.xn.view.xlistview.XListView>
