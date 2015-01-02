@@ -1,6 +1,7 @@
 package com.bgood.xn.system;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
@@ -61,6 +62,9 @@ public class BGApp extends Application {
 	
 	/**存放临时群列表   （群ID, 群实体类）*/
 	private Map<String, GroupBean> tempMap = new HashMap<String, GroupBean>();
+	
+	/**存放群Id,和群成员**/
+	private Map<String,List<FriendBean>> groupMemberBean = new HashMap<String,List<FriendBean>>();
 	
 
 	@Override
@@ -169,6 +173,14 @@ public class BGApp extends Application {
 
 	public void setTempMap(Map<String, GroupBean> tempMap) {
 		this.tempMap = tempMap;
+	}
+
+	public Map<String, List<FriendBean>> getGroupMemberBean() {
+		return groupMemberBean;
+	}
+
+	public void setGroupMemberBean(Map<String, List<FriendBean>> groupMemberBean) {
+		this.groupMemberBean = groupMemberBean;
 	}
 
 	/**

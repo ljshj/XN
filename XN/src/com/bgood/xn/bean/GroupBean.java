@@ -130,8 +130,8 @@ public class GroupBean implements Serializable
 	 * @params:@param dbHelper
 	 * @params:@param groupBean
 	 */
-	public static void deleteGroupBean(DBHelper dbHelper,GroupBean groupBean) {
-		int count = dbHelper.deleteAll(DBHelper.TB_GROUP, DBHelper.Group.G_ROOMID, groupBean.id);
+	public static void deleteGroupBean(DBHelper dbHelper,String groupId) {
+		int count = dbHelper.deleteAll(DBHelper.TB_GROUP, DBHelper.Group.G_ROOMID, groupId);
 		LogUtils.i("-------------删除数据------------"+count);
 	}
 }

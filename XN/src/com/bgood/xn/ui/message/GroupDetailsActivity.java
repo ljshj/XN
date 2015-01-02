@@ -117,7 +117,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		group = BGApp.getInstance().getGroupMap().get(groupId);
 		
 		/**获取群成员*/
-		IMRequest.getInstance().requestGroupMembers(GroupDetailsActivity.this, this,groupId);
+		IMRequest.getInstance().requestGroupMembers(GroupDetailsActivity.this, this,groupId,true);
 	}
 	
 	private void initView(final List<FriendBean> friends) {

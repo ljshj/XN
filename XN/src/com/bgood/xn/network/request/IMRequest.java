@@ -161,7 +161,7 @@ public class IMRequest extends BaseNetWork {
 	 * @params:@param sendername
 	 * @params:@param id
 	 */
-	public void requestGroupMembers(TaskListenerWithState mHttpTaskListener,Context context,String id) {
+	public void requestGroupMembers(TaskListenerWithState mHttpTaskListener,Context context,String id,boolean showDialog) {
 		setMessageType(50013);
 		JSONObject body = new JSONObject();
 		try {
@@ -170,7 +170,7 @@ public class IMRequest extends BaseNetWork {
 			e.printStackTrace();
 		}
 		setBody(body);
-		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+		new HttpRequestAsyncTask(showDialog,ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 	}
 	
 
@@ -346,21 +346,55 @@ public class IMRequest extends BaseNetWork {
 //		setBody(body);
 //		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 //	}
-////	请求加入群或邀请加入群
-//	public void requestGroupMemberJoinOrInvite(TaskListenerWithState mHttpTaskListener,Context context,String sendername,String sender,String userid,String vertify) {
-//		setMessageType(50007);
-//		JSONObject body = new JSONObject();
-//		try {
-//			body.put("sendername", sendername);
-//			body.put("sender", sender);
-//			body.put("userid", userid);
-//			body.put("vertify", vertify);
-//		} catch (JSONException e) {
-//			e.printStackTrace();
-//		}
-//		setBody(body);
-//		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
-//	}
+	
+	/**
+	 * 
+	 * @todo:移除群成员
+	 * @date:2015-1-2 下午4:34:01
+	 * @author:hg_liuzl@163.com
+	 * @params:@param mHttpTaskListener
+	 * @params:@param context
+	 * @params:@param userid
+	 * @params:@param groupid
+	 */
+	public void requestGroupMemberRemove(TaskListenerWithState mHttpTaskListener,Context context,String userid,String groupid) {
+		setMessageType(50024);
+		JSONObject body = new JSONObject();
+		try {
+			body.put("userid", userid);
+			body.put("groupid", groupid);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		setBody(body);
+		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+	}
+	
+	/**
+	 * 
+	 * @todo:添加群成员
+	 * @date:2015-1-2 下午4:34:01
+	 * @author:hg_liuzl@163.com
+	 * @params:@param mHttpTaskListener
+	 * @params:@param context
+	 * @params:@param userid
+	 * @params:@param groupid
+	 */
+	public void requestGroupMemberJoinOrInvite(TaskListenerWithState mHttpTaskListener,Context context,String userid,String groupid) {
+		setMessageType(50025);
+		JSONObject body = new JSONObject();
+		try {
+			body.put("userid", userid);
+			body.put("groupid", groupid);
+			body.put("type", 0);
+			body.put("agr", "true");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		setBody(body);
+		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+	}
+	
 ////	移除群成员
 //	public void requestGroupMemberRemove(TaskListenerWithState mHttpTaskListener,Context context,String sendername,String sender,String userid,String vertify) {
 //		setMessageType(50007);

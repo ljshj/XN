@@ -62,6 +62,20 @@ public class FriendBean {
 		this.nick = nick;
 	}
 
+	/**复制FriendBean*/
+	public static FriendBean copyUserInfo(final UserInfoBean user) {
+		FriendBean fb = new FriendBean();
+		fb.userid = user.userid;
+		fb.type = "0";
+		fb.name = user.username;
+		fb.sex = String.valueOf(user.sex);
+		fb.level = String.valueOf(user.level);
+		fb.photo = user.photo;
+		fb.signature = user.signature;
+		return fb;
+	}
+	
+	
 	/**
 	 * @todo:从数据库查询群组
 	 * @date:2014-12-22 上午10:25:18

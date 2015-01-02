@@ -102,24 +102,18 @@ public class GroupMemberBean {
 			           friend.name = name;
 			           friend.level = level;
 			           listFriends.add(friend);
-		           
 	           }
 		} while (c.moveToNext());
 	       
 	       if(null!=c)
 				c.close();
 	       
-	       
+	       List<FriendBean> list = new ArrayList<FriendBean>();
 	       for(FriendBean fb:listFriends){
-	    	   String groupId = fb.groupid;
-	    	   if(mapGroup.containsKey(groupId))
-	    	   {
-	    		   
-	    	   }else{
-	    		   
-	    	   }
+    	   	   list.clear();
+    		   list.add(fb);
+    		   mapGroup.put(fb.groupid, list);
 	       }
-	       
 	       
 	     return mapGroup;
 	}
@@ -176,6 +170,19 @@ public class GroupMemberBean {
 	/**
 	 * 
 	 * @todo:删除一个群成员
+	 * @date:2014-12-22 上午10:55:51
+	 * @author:hg_liuzl@163.com
+	 * @params:@param dbHelper
+	 * @params:@param FriendBean
+	 */
+	public static void deleteGroupMemberBean(DBHelper dbHelper,String groupId) {
+		int count = dbHelper.deleteAll(DBHelper.TB_GROUP_MEMBER, new String[]{DBHelper.GroupMember.GM_GROUPID}, new String[]{groupId});
+		LogUtils.i("--删除-----"+count+"个群成员");
+	}
+	
+	/**
+	 * 
+	 * @todo:删除一个群的某个成员
 	 * @date:2014-12-22 上午10:55:51
 	 * @author:hg_liuzl@163.com
 	 * @params:@param dbHelper
