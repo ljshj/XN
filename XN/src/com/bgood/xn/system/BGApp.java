@@ -57,14 +57,17 @@ public class BGApp extends Application {
 	/**存放好友列表 （好友ID,好友实体类）*/
 	private Map<String, FriendBean> friendMapById = new HashMap<String, FriendBean>();
 	
-	/**存放固定群列表   （群ID, 群实体类）*/
+	/**存放固定群列表   （群 hxGroupID, 群实体类）*/
 	private Map<String, GroupBean> groupMap = new HashMap<String, GroupBean>();
 	
-	/**存放临时群列表   （群ID, 群实体类）*/
+	/**存放临时群列表   （群hxGroupID, 群实体类）*/
 	private Map<String, GroupBean> tempMap = new HashMap<String, GroupBean>();
 	
 	/**存放群Id,和群成员**/
 	private Map<String,List<FriendBean>> groupMemberBean = new HashMap<String,List<FriendBean>>();
+	
+	/**存放环信Id,和群成员**/
+	private Map<String,List<FriendBean>> groupMemberAndHxId = new HashMap<String,List<FriendBean>>();
 	
 
 	@Override
@@ -181,6 +184,15 @@ public class BGApp extends Application {
 
 	public void setGroupMemberBean(Map<String, List<FriendBean>> groupMemberBean) {
 		this.groupMemberBean = groupMemberBean;
+	}
+	
+	public Map<String, List<FriendBean>> getGroupMemberAndHxId() {
+		return groupMemberAndHxId;
+	}
+
+	public void setGroupMemberAndHxId(
+			Map<String, List<FriendBean>> groupMemberAndHxId) {
+		this.groupMemberAndHxId = groupMemberAndHxId;
 	}
 
 	/**

@@ -138,16 +138,17 @@ public class IMRequest extends BaseNetWork {
 	 * @params:@param context
 	 * @params:@param id
 	 */
-	public void requestGroupInfo(TaskListenerWithState mHttpTaskListener,Context context,String id) {
+	public void requestGroupInfo(TaskListenerWithState mHttpTaskListener,Context context,String id,String hxgroupid,boolean showProgress) {
 		setMessageType(50012);
 		JSONObject body = new JSONObject();
 		try {
 			body.put("id", id);
+			body.put("hxgroupid", hxgroupid);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		setBody(body);
-		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+		new HttpRequestAsyncTask(showProgress,ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 	}
 	
 
@@ -234,7 +235,7 @@ public class IMRequest extends BaseNetWork {
 	 * @params:@param context
 	 * @params:@param groupid
 	 */
-	public void requestGroupFire(TaskListenerWithState mHttpTaskListener,Context context,String groupid) {
+	public void requestGroupDisMiss(TaskListenerWithState mHttpTaskListener,Context context,String groupid) {
 		setMessageType(50016);
 		JSONObject body = new JSONObject();
 		try {

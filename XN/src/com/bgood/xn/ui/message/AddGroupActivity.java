@@ -54,6 +54,7 @@ public class AddGroupActivity extends BaseShowDataActivity implements IXListView
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_contact);
 		initView();
+		doRequest();
 	}
 	
 	private void initView() {
@@ -68,6 +69,7 @@ public class AddGroupActivity extends BaseShowDataActivity implements IXListView
 			}
 		});
 		etContent = (EditText) findViewById(R.id.query);
+		etContent.setHint("请输入群名称");
 		etContent.setOnEditorActionListener(new OnEditorActionListener() {
 			
 			@Override

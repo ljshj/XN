@@ -17,6 +17,7 @@ import com.bgood.xn.utils.LogUtils;
  * @author:hg_liuzl@163.com
  */
 public class FriendBean {
+	public String hxgroupid;
 	public String groupid;
 	public String userid;
 	public String type;

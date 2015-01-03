@@ -21,13 +21,6 @@ public class GroupMemberBean {
 	public String groupid;
 	public List<FriendBean> list;
 	
-	public GroupMemberBean(String groupid, List<FriendBean> list) {
-		super();
-		this.groupid = groupid;
-		this.list = list;
-	}
-	
-
 	/**
 	 * @todo:从数据库查询群组
 	 * @date:2014-12-22 上午10:25:18
@@ -35,47 +28,7 @@ public class GroupMemberBean {
 	 * @params:@param mDBHelper
 	 * @params:@return
 	 */
-	public static List<FriendBean> queryGroupMembersByGroupId(DBHelper mDBHelper,String groupId){
-		   LogUtils.i("------from database----");
-	       Cursor c = mDBHelper.queryAndAll(DBHelper.TB_GROUP_MEMBER,DBHelper.GroupMember.GM_GROUPID,groupId);
-	       List<FriendBean>list = new ArrayList<FriendBean>();
-	       do {
-	    	   if(c!=null&&c.getCount()>0){
-	    		   String userId = c.getString(c.getColumnIndex(DBHelper.Friend.F_USERID));
-	    		   String type = c.getString(c.getColumnIndex(DBHelper.Friend.F_TYPE));
-	    		   String singture = c.getString(c.getColumnIndex(DBHelper.Friend.F_SIGNATURE));
-	    		   String sex = c.getString(c.getColumnIndex(DBHelper.Friend.F_SEX));
-	    		   String photo = c.getString(c.getColumnIndex(DBHelper.Friend.F_PHOTO));
-	    		   String name = c.getString(c.getColumnIndex(DBHelper.Friend.F_NAME));
-	    		   String level = c.getString(c.getColumnIndex(DBHelper.Friend.F_LEVEL));
-
-		           FriendBean friend = new FriendBean();
-		           friend.userid = userId;
-		           friend.type = type;
-		           friend.signature = singture;
-		           friend.sex = sex;
-		           friend.photo = photo;
-		           friend.name = name;
-		           friend.level = level;
-		           
-	           list.add(friend);
-	           }
-		} while (c.moveToNext());
-	       
-	       if(null!=c)
-				c.close();
-	       
-	     return list;
-	}
-	
-	/**
-	 * @todo:从数据库查询群组
-	 * @date:2014-12-22 上午10:25:18
-	 * @author:hg_liuzl@163.com
-	 * @params:@param mDBHelper
-	 * @params:@return
-	 */
-	public static Map<String,List<FriendBean>> queryGroupMembers(DBHelper mDBHelper){
+	public static Map<String,List<FriendBean>> queryGroupMembersAndGroupId(DBHelper mDBHelper){
 		   LogUtils.i("------from database----");
 	       Cursor c = mDBHelper.queryAll(DBHelper.TB_GROUP_MEMBER);
 	       Map<String,List<FriendBean>> mapGroup = new HashMap<String,List<FriendBean>>();
@@ -83,6 +36,7 @@ public class GroupMemberBean {
 	       do {
 	    	   if(c!=null&&c.getCount()>0){
 	    		   
+	    		   String hxGroupId = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_HX_GROUPID));
 	    		   	   String groupId = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_GROUPID));
 		    		   String userId = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_USERID));
 		    		   String type = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_TYPE));
@@ -93,6 +47,7 @@ public class GroupMemberBean {
 		    		   String level = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_LEVEL));
 
 			           FriendBean friend = new FriendBean();
+			           friend.hxgroupid = hxGroupId;
 			           friend.groupid = groupId;
 			           friend.userid = userId;
 			           friend.type = type;
@@ -119,16 +74,69 @@ public class GroupMemberBean {
 	}
 	
 	/**
+	 * @todo:从数据库查询群组
+	 * @date:2014-12-22 上午10:25:18
+	 * @author:hg_liuzl@163.com
+	 * @params:@param mDBHelper
+	 * @params:@return
+	 */
+	public static Map<String,List<FriendBean>> queryGroupMembersAndHXGroupId(DBHelper mDBHelper){
+		   LogUtils.i("------from database----");
+	       Cursor c = mDBHelper.queryAll(DBHelper.TB_GROUP_MEMBER);
+	       Map<String,List<FriendBean>> mapGroup = new HashMap<String,List<FriendBean>>();
+	       List<FriendBean> listFriends = new ArrayList<FriendBean>();
+	       do {
+	    	   if(c!=null&&c.getCount()>0){
+	    		   
+	    		   	   String hxGroupId = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_HX_GROUPID));
+	    		   	   String groupId = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_GROUPID));
+		    		   String userId = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_USERID));
+		    		   String type = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_TYPE));
+		    		   String singture = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_SIGNATURE));
+		    		   String sex = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_SEX));
+		    		   String photo = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_PHOTO));
+		    		   String name = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_NAME));
+		    		   String level = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_LEVEL));
+
+			           FriendBean friend = new FriendBean();
+			           friend.hxgroupid = hxGroupId;
+			           friend.groupid = groupId;
+			           friend.userid = userId;
+			           friend.type = type;
+			           friend.signature = singture;
+			           friend.sex = sex;
+			           friend.photo = photo;
+			           friend.name = name;
+			           friend.level = level;
+			           listFriends.add(friend);
+	           }
+		} while (c.moveToNext());
+	       
+	       if(null!=c)
+				c.close();
+	       
+	       List<FriendBean> list = new ArrayList<FriendBean>();
+	       for(FriendBean fb:listFriends){
+    	   	   list.clear();
+    		   list.add(fb);
+    		   mapGroup.put(fb.hxgroupid, list);
+	       }
+	       
+	     return mapGroup;
+	}
+	
+	/**
 	 * 
 	 * @todo:批量插入群成员
 	 * @date:2014-12-22 上午10:36:29
 	 * @author:hg_liuzl@163.com
 	 * @params:
 	 */
-	public static void storeGroupMemberBean(DBHelper dbHelper,String groupId,List<FriendBean> lists) {
+	public static void storeGroupMemberBean(DBHelper dbHelper,String hxGroupId,String groupId,List<FriendBean> lists) {
 			ArrayList<ContentValues> list = new ArrayList<ContentValues>();
 			for(FriendBean f:lists){
 				ContentValues values = new ContentValues();
+				values.put(DBHelper.GroupMember.GM_HX_GROUPID, hxGroupId);
 				values.put(DBHelper.GroupMember.GM_GROUPID, groupId);
 				values.put(DBHelper.GroupMember.GM_USERID, f.userid);
 				values.put(DBHelper.GroupMember.GM_TYPE, f.type);
@@ -152,8 +160,9 @@ public class GroupMemberBean {
 	 * @params:@param dbHelper
 	 * @params:@param FriendBean
 	 */
-	public static void insertFriendBean(DBHelper dbHelper,String groupId,FriendBean f) {
+	public static void insertFriendBean(DBHelper dbHelper,String hxGroupId,String groupId,FriendBean f) {
 		ContentValues values = new ContentValues();
+		values.put(DBHelper.GroupMember.GM_HX_GROUPID, hxGroupId);
 		values.put(DBHelper.GroupMember.GM_GROUPID, groupId);
 		values.put(DBHelper.GroupMember.GM_USERID, f.userid);
 		values.put(DBHelper.GroupMember.GM_TYPE, f.type);

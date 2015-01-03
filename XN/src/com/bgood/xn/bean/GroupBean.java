@@ -25,7 +25,7 @@ public class GroupBean implements Serializable
 	 */
 	private static final long serialVersionUID = 1L;
 	public String hxgroupid;
-	public String id;
+	public String roomid;
 	public String name;
 	public String intro;
 	public String photo;
@@ -55,7 +55,7 @@ public class GroupBean implements Serializable
 	    		   String groupType = c.getString(c.getColumnIndex(DBHelper.Group.G_GROUPTYPE));
 
 	           GroupBean group = new GroupBean();
-	           group.id = roomid;
+	           group.roomid = roomid;
 	           group.hxgroupid = hx_groupid;
 	           group.photo = photo;
 	           group.name = name;
@@ -87,7 +87,7 @@ public class GroupBean implements Serializable
 			
 				ContentValues values = new ContentValues();
 				values.put(DBHelper.Group.G_HX_GROUPID, g.hxgroupid);
-				values.put(DBHelper.Group.G_ROOMID, g.id);
+				values.put(DBHelper.Group.G_ROOMID, g.roomid);
 				values.put(DBHelper.Group.G_PHOTO, g.photo);
 				values.put(DBHelper.Group.G_NAME, g.name);
 				values.put(DBHelper.Group.G_INTRO, g.intro);
@@ -111,7 +111,7 @@ public class GroupBean implements Serializable
 	public static void insertGroupBean(DBHelper dbHelper,GroupBean g) {
 		ContentValues values = new ContentValues();
 		values.put(DBHelper.Group.G_HX_GROUPID, g.hxgroupid);
-		values.put(DBHelper.Group.G_ROOMID, g.id);
+		values.put(DBHelper.Group.G_ROOMID, g.roomid);
 		values.put(DBHelper.Group.G_PHOTO, g.photo);
 		values.put(DBHelper.Group.G_NAME, g.name);
 		values.put(DBHelper.Group.G_INTRO, g.intro);
