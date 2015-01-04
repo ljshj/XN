@@ -28,7 +28,7 @@ public class GroupAdapter extends KBaseAdapter {
 			convertView = mInflater.inflate(R.layout.item_group_main, parent, false);
 			holder.icon = (ImageView) convertView.findViewById(R.id.goup_item_icon);
 			holder.name = (TextView) convertView.findViewById(R.id.goup_item_name);
-			holder.groupType = (ImageView) convertView.findViewById(R.id.iv_group_type);
+			holder.tvGroupType = (TextView) convertView.findViewById(R.id.tv_group_type);
 			holder.summary = (TextView) convertView.findViewById(R.id.goup_item_summary);
 			convertView.setTag(holder);
 		} else {
@@ -44,9 +44,16 @@ public class GroupAdapter extends KBaseAdapter {
 		mImageLoader.displayImage(group.photo, holder.icon, options);
 		
 		holder.name.setText(group.name);
-		
-	    holder.groupType.setImageDrawable(mActivity.getResources().getDrawable(group.grouptype.equals("0")? R.drawable.img_common_sex_male:R.drawable.img_common_sex_female));
 
+	    if("0".equals(group.grouptype)){	//固定群
+	    	holder.tvGroupType.setText("固定群");
+	    	holder.tvGroupType.setBackgroundResource(R.drawable.icon_fixation_group_bg);
+	    }else if("1".equals(group.grouptype)){	//临时群
+	    	holder.tvGroupType.setText("临时群");
+	    	holder.tvGroupType.setBackgroundResource(R.drawable.icon_temp_group_bg);
+	    }
+	    
+	    
 		
 		holder.summary.setText(group.intro);
 		
@@ -54,10 +61,10 @@ public class GroupAdapter extends KBaseAdapter {
 		return convertView;
 	}
 
-	class Holder {
+	final class Holder {
 		public TextView summary;
 		public TextView name;
 		public ImageView icon;
-		public ImageView groupType;
+		public TextView tvGroupType;
 	}
 }

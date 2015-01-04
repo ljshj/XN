@@ -6,10 +6,10 @@
 
     <ImageView
         android:id="@+id/goup_item_icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_centerVertical="true"
         android:background="@drawable/icon_default" />
 
@@ -22,24 +22,26 @@
          android:layout_toRightOf="@id/goup_item_icon"
           />
      
-     <ImageView
-         android:id="@+id/iv_group_type"
+     <TextView
+         android:id="@+id/tv_group_type"
          android:layout_width="20dp"
          android:layout_height="10dp"
          android:layout_toRightOf="@id/goup_item_name"
          android:layout_alignTop="@id/goup_item_name"
-         android:src="@drawable/icon_app"
+         android:textColor="@color/white"
          />
 
 	  <TextView
 	      android:id="@+id/goup_item_summary"
 	      android:layout_width="wrap_content"
 	      android:layout_height="wrap_content"
+	      android:maxLines="2"
 	      android:text="请自觉遵守群规"
 	      android:layout_alignLeft="@id/goup_item_name"
 	      android:layout_alignBottom="@id/goup_item_icon"
 	      android:textSize="15sp"
 	      android:textColor="@color/gray"
+	      android:ellipsize="end"
 	       />
 
 </RelativeLayout>

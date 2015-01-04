@@ -32,6 +32,10 @@ public class GroupBean implements Serializable
 	public String notice;
 	public String grouptype = "0";//群类型 0，固定群；1，临时群
 	
+	
+	
+	
+	
 	/**
 	 * @todo:从数据库查询群组
 	 * @date:2014-12-22 上午10:25:18

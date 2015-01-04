@@ -15,9 +15,9 @@ import android.widget.TextView.OnEditorActionListener;
 
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
-import com.bgood.xn.adapter.ResultMemberAdapter;
-import com.bgood.xn.bean.MemberResultBean;
-import com.bgood.xn.bean.response.JokeResponse;
+import com.bgood.xn.adapter.GroupAdapter;
+import com.bgood.xn.bean.GroupBean;
+import com.bgood.xn.bean.response.GroupBeanResponse;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
@@ -42,8 +42,8 @@ public class AddGroupActivity extends BaseShowDataActivity implements IXListView
 	private ImageButton ibClear;
 	private XListView m_memberXLv;
 	
-	private ResultMemberAdapter m_memberAdapter = null;
-	private ArrayList<MemberResultBean> m_memberList = new ArrayList<MemberResultBean>();
+	private GroupAdapter mGroupAdapter = null;
+	private ArrayList<GroupBean> mGroupList = new ArrayList<GroupBean>();
 	
 	private int m_start = 0;
 	private String mKeyWord = "";
@@ -94,8 +94,8 @@ public class AddGroupActivity extends BaseShowDataActivity implements IXListView
 		m_memberXLv.setPullLoadEnable(true);
 		m_memberXLv.setPullRefreshEnable(false);
 		m_memberXLv.setXListViewListener(this);
-		m_memberAdapter = new ResultMemberAdapter(m_memberList, mActivity);
-		m_memberXLv.setAdapter(m_memberAdapter);
+		mGroupAdapter = new GroupAdapter(mGroupList, mActivity);
+		m_memberXLv.setAdapter(mGroupAdapter);
 	}
 	
 	private void doSearch() {
@@ -130,9 +130,9 @@ public class AddGroupActivity extends BaseShowDataActivity implements IXListView
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			String strJson = bNetWork.getStrJson();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
-				JokeResponse response = JSON.parseObject(strJson, JokeResponse.class);
+				GroupBeanResponse response = JSON.parseObject(strJson, GroupBeanResponse.class);
 				m_start += PAGE_SIZE_ADD;
-				setDataAdapter(m_memberXLv, m_memberAdapter, m_memberList, response.jokes,isRefreshAction);
+				setDataAdapter(m_memberXLv, mGroupAdapter, mGroupList, response.items,isRefreshAction);
 				}
 			}
 	}
