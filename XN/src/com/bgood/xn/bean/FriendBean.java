@@ -7,6 +7,8 @@ import java.util.Map;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.bgood.xn.db.DBHelper;
 import com.bgood.xn.utils.LogUtils;
@@ -16,11 +18,11 @@ import com.bgood.xn.utils.LogUtils;
  * @date:2014-12-19 上午11:40:27
  * @author:hg_liuzl@163.com
  */
-public class FriendBean {
+public class FriendBean implements Parcelable {
 	public String hxgroupid;
 	public String groupid;
 	public String userid;
-	public String type;
+	public String type;  //0 普通成员，1，管理员，2，群主
 	public String name;
 	public String sex;
 	public String level;
@@ -219,4 +221,87 @@ public class FriendBean {
 		int count = dbHelper.deleteAll(DBHelper.TB_FRIEND, DBHelper.Friend.F_USERID, userid);
 		LogUtils.i("-------------删除数据------------"+count);
 	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	
+	public static final Parcelable.Creator<FriendBean> CREATOR = new Creator<FriendBean>() {  
+	    public FriendBean createFromParcel(Parcel source) {  
+	    	FriendBean friend = new FriendBean();  
+	    	
+	    	friend.hxgroupid = source.readString();  
+	    	friend.groupid = source.readString();  
+	    	friend.userid = source.readString();  
+	    	friend.type = source.readString();  
+	    	friend.name = source.readString();  
+	    	friend.sex = source.readString();  
+	    	friend.level = source.readString();  
+	    	friend.photo = source.readString();  
+	    	friend.signature = source.readString();  
+	    	friend.unreadMsgCount = source.readInt();  
+	    	friend.header = source.readString();  
+	    	friend.nick = source.readString();  
+	        return friend;  
+	    }  
+	    public FriendBean[] newArray(int size) {  
+	        return new FriendBean[size];  
+	    }  
+	}; 
+	
+	@Override
+	public void writeToParcel(Parcel parcel, int arg1) {
+		
+		parcel.writeString(hxgroupid);
+		parcel.writeString(groupid);
+		parcel.writeString(userid);
+		parcel.writeString(type);
+		parcel.writeString(name);
+		parcel.writeString(sex);
+		parcel.writeString(level);
+		parcel.writeString(photo);
+		parcel.writeString(signature);
+		parcel.writeInt(unreadMsgCount);
+		parcel.writeString(header);
+		parcel.writeString(nick);
+		
+	}
 }
+
+//
+//public static final Parcelable.Creator<Book> CREATOR = new Creator<Book>() {  
+//    public Book createFromParcel(Parcel source) {  
+//        Book mBook = new Book();  
+//        mBook.bookName = source.readString();  
+//        mBook.author = source.readString();  
+//        mBook.publishTime = source.readInt();  
+//        return mBook;  
+//    }  
+//    public Book[] newArray(int size) {  
+//        return new Book[size];  
+//    }  
+//};  
+//  
+//public int describeContents() {  
+//    return 0;  
+//}  
+//public void writeToParcel(Parcel parcel, int flags) {  
+//    parcel.writeString(bookName);  
+//    parcel.writeString(author);  
+//    parcel.writeInt(publishTime);  
+//}  
+//}  
+
+
+
+
+
+
+
+
+
+
+
+

@@ -18,6 +18,8 @@ import com.bgood.xn.utils.LogUtils;
  */
 public class GroupBean implements Serializable
 {
+	public static final String BEAN_GROUP = "bean_group";
+	
 	/**
 	 * @todo:TODO
 	 * @date:2014-12-18 下午6:40:03
@@ -34,6 +36,45 @@ public class GroupBean implements Serializable
 	
 	
 	
+	/**
+	 * @todo:从数据库查询群组
+	 * @date:2014-12-22 上午10:25:18
+	 * @author:hg_liuzl@163.com
+	 * @params:@param mDBHelper
+	 * @params:@return
+	 */
+	public static List<GroupBean> queryGroupBeanByGroupName(DBHelper mDBHelper,int type,String groupName){
+		   LogUtils.i("------from database----");
+	       Cursor c = mDBHelper.queryAndAllAndLike(DBHelper.TB_GROUP, new String[]{DBHelper.Group.G_GROUPTYPE,DBHelper.Group.G_NAME}, new String[]{String.valueOf(type),groupName},new String[]{"",DBHelper.Group.G_NAME},null);
+	       List<GroupBean> map = new ArrayList<GroupBean>();
+	       c.moveToFirst();
+	       do {
+	    	   if(c!=null&&c.getCount()>0){
+	    		   String roomid = c.getString(c.getColumnIndex(DBHelper.Group.G_ROOMID));
+	    		   String hx_groupid = c.getString(c.getColumnIndex(DBHelper.Group.G_HX_GROUPID));
+	    		   String photo = c.getString(c.getColumnIndex(DBHelper.Group.G_PHOTO));
+	    		   String name = c.getString(c.getColumnIndex(DBHelper.Group.G_NAME));
+	    		   String notice = c.getString(c.getColumnIndex(DBHelper.Group.G_NOTICE));
+	    		   String intro = c.getString(c.getColumnIndex(DBHelper.Group.G_INTRO));
+	    		   String groupType = c.getString(c.getColumnIndex(DBHelper.Group.G_GROUPTYPE));
+
+		           GroupBean group = new GroupBean();
+		           group.roomid = roomid;
+		           group.hxgroupid = hx_groupid;
+		           group.photo = photo;
+		           group.name = name;
+		           group.intro = intro;
+		           group.notice = notice;
+		           group.grouptype = groupType;
+		           map.add(group);
+	          }
+		} while (c.moveToNext());
+	       
+	       if(null!=c)
+				c.close();
+	       
+	     return map;
+	}
 	
 	
 	/**

@@ -924,7 +924,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	 * @param view
 	 */
 	public void toGroupDetails(View view) {
-		startActivityForResult((new Intent(this, GroupDetailsActivity.class).putExtra("groupId", toChatUsername)),
+		startActivityForResult((new Intent(this, GroupDetailsActivity.class).putExtra("hxgroupId", toChatUsername)),
 				REQUEST_CODE_GROUP_DETAIL);
 	}
 

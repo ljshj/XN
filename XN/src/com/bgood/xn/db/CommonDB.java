@@ -18,7 +18,7 @@ import com.bgood.xn.utils.LogUtils;
  * @time 2013-11-1 上午10:26:28
  */
 public abstract class CommonDB extends SQLiteOpenHelper {
-	public static final String QUERY_WHERE_LIEK = " like ? ";  //like关键字
+	public static final String QUERY_WHERE_LIEK = " like '%?%' ";  //like关键字
 	public static final String QUERY_WHERE_OR= " or ";         //or关键字
 	public static final String QUERY_WHERE_AND = " and ";      //and关键字
 	public static final String QUERY_WHERE_PARAM = " = ? ";      //参数
@@ -528,6 +528,38 @@ public abstract class CommonDB extends SQLiteOpenHelper {
 				where+=" "+fields[i]+" = ? ";
 			}
 			c = db.query(table, coloumns, where, values, null, null,order);
+		}
+		if(c!=null)c.moveToFirst();
+		db.close();
+		return c;
+	}
+	
+	/**
+	 * 
+	 * 
+	 * 根据条件查询数据
+	 * @param table   表名
+	 * @param fields  条件字段
+	 * @param values  条件值
+	 * @param order 排序方式
+	 * 说明：fields 的长度必须大于或等于likes的长度，且关键字的位置必须对应
+	 * @return
+	 */
+	public Cursor queryAndAllAndLike(String table,String[] fields,String[] values,String[] likes,String order){
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor c = null;
+		if(fields==null || fields.length==0){
+			c = db.query(table, null, null, null, null, null, null);
+		}else{
+			String where = "";
+			for(int i=0;i<fields.length;i++){
+				if(i>0) 
+				{
+					where+=QUERY_WHERE_AND;
+				}
+				where+=" "+fields[i]+ (fields[i].equals(likes[i]) ? QUERY_WHERE_LIEK:QUERY_WHERE_PARAM);
+			}
+			c = db.query(table, null, where, values, null, null,order);
 		}
 		if(c!=null)c.moveToFirst();
 		db.close();

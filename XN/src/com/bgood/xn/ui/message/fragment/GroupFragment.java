@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -33,6 +34,7 @@ import com.bgood.xn.bean.GroupBean;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseShowDataFragment;
 import com.bgood.xn.view.BToast;
+import com.bgood.xn.view.LoadingProgress;
 import com.bgood.xn.view.xlistview.XListView;
 import com.easemob.chat.activity.ChatActivity;
 
@@ -128,8 +130,32 @@ public class GroupFragment extends BaseShowDataFragment {
 			BToast.show(mActivity, "请输入关键字");
 			return;
 		}else{
-			searchGroup(mKeyWord);
+			searchGroupLocal(mKeyWord);
 		}
+	}
+	
+	/**获取群数据，如固定群，临时群，群成员列表*/
+	private void searchGroupLocal(final String keyWord){
+		new AsyncTask<Void, Void, List<GroupBean>>(){
+			
+			@Override
+			protected void onPreExecute() {
+				super.onPreExecute();
+				LoadingProgress.getInstance().show(mActivity);
+			}
+			@Override
+			protected List<GroupBean> doInBackground(Void... arg0) {
+				return GroupBean.queryGroupBeanByGroupName(dbHelper, 0, keyWord);
+			}
+			@Override
+			protected void onPostExecute(List<GroupBean> groups) {
+				super.onPostExecute(groups);
+				LoadingProgress.getInstance().dismiss();
+				m_groupList.clear();
+				m_groupList.addAll(groups);
+				groupAdapter.notifyDataSetChanged();
+			}
+		}.execute();
 	}
 	
 	@Override
@@ -186,7 +212,5 @@ public class GroupFragment extends BaseShowDataFragment {
 		}
 		groupAdapter.notifyDataSetChanged();
 	}
-	
-	
 	
 }

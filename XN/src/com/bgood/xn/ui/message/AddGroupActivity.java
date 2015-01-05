@@ -8,6 +8,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -96,16 +98,24 @@ public class AddGroupActivity extends BaseShowDataActivity implements IXListView
 		m_memberXLv.setXListViewListener(this);
 		mGroupAdapter = new GroupAdapter(mGroupList, mActivity);
 		m_memberXLv.setAdapter(mGroupAdapter);
+		m_memberXLv.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapter, View v, int position,long arg3) {
+				
+				GroupBean bean = (GroupBean) adapter.getAdapter().getItem(position);
+				Intent intent = new Intent(mActivity,GroupCardActivity.class);
+				intent.putExtra(GroupBean.BEAN_GROUP, bean);
+				startActivity(intent);
+			}
+		});
 	}
 	
 	private void doSearch() {
 		mKeyWord = etContent.getText().toString().trim();
-		if(TextUtils.isEmpty(mKeyWord)){
-			BToast.show(mActivity, "请输入关键字");
-			return;
-		}else{
-			doRequest();
-		}
+		isRefreshAction = true;
+		m_start = 0;
+		doRequest();
 	}
 	
 	private void doRequest(){

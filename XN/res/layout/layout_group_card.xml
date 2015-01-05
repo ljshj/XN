@@ -43,20 +43,6 @@
         android:background="@drawable/button_bg"
         android:orientation="vertical" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/img_user_center_bg"
-            android:gravity="center_vertical" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="9dp"
-                android:text="群主"
-                android:textColor="#8F8F8F"
-                android:textSize="16sp" />
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,6 +72,8 @@
     
      <Button android:id="@+id/btn_add_to_group"
                 android:text="加入该群"
-                style="@style/common_commit_btn"/>
+                style="@style/common_commit_btn"
+                android:onClick="addToGroup"
+                />
 
 </LinearLayout>

@@ -7,34 +7,36 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
+import com.bgood.xn.bean.GroupBean;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
-import com.easemob.chat.EMGroup;
-import com.easemob.chat.EMGroupInfo;
 import com.easemob.chat.EMGroupManager;
 import com.easemob.exceptions.EaseMobException;
 
+
+/**
+ *群名片，加群之前的时候查看群名片 
+ */
 public class GroupCardActivity extends BaseActivity {
 	private Button btn_add_group;
 	private TextView tv_name;
 	private TextView tv_introduction;
-	private EMGroup group;
-	private String groupid;
+	private GroupBean group = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_group_card);
 		(new TitleBar(mActivity)).initTitleBar("群名片");
-		tv_name = (TextView) findViewById(R.id.name);
+		group = (GroupBean) getIntent().getSerializableExtra(GroupBean.BEAN_GROUP);
 		btn_add_group = (Button) findViewById(R.id.btn_add_to_group);
+		
+		tv_name = (TextView) findViewById(R.id.name);
+		tv_name.setText(group.name);
+		
 		tv_introduction = (TextView) findViewById(R.id.tv_introduction);
-
-		EMGroupInfo groupInfo = (EMGroupInfo) getIntent().getSerializableExtra("groupinfo");
-		String groupname = groupInfo.getGroupName();
-		groupid = groupInfo.getGroupId();
-		tv_name.setText(groupname);
+		tv_introduction.setText(group.intro);
 	}
 	
 	//加入群聊
@@ -47,19 +49,19 @@ public class GroupCardActivity extends BaseActivity {
 			public void run() {
 				try {
 					//如果是membersOnly的群，需要申请加入，不能直接join
-					if(group.isMembersOnly()){
-						EMGroupManager.getInstance().applyJoinToGroup(groupid, "求加入");
-					}else{
-						EMGroupManager.getInstance().joinGroup(groupid);
-					}
+//					if(group.isMembersOnly()){
+//						EMGroupManager.getInstance().applyJoinToGroup(groupid, "求加入");
+//					}else{
+						EMGroupManager.getInstance().joinGroup(group.hxgroupid);
+//					}
 					runOnUiThread(new Runnable() {
 						public void run() {
 							pd.dismiss();
-							if(group.isMembersOnly()){
+//							if(group.isMembersOnly()){
 								BToast.show(mActivity, "发送请求成功，等待群主同意");
-							}else{
-								BToast.show(mActivity, "加入群聊成功");
-							}
+//							}else{
+//								BToast.show(mActivity, "加入群聊成功");
+//							}
 							btn_add_group.setEnabled(false);
 						}
 					});
