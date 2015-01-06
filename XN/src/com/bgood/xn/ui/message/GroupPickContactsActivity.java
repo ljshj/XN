@@ -58,16 +58,16 @@ public class GroupPickContactsActivity extends BaseActivity {
 		
 		Map<String, FriendBean> friendMapByName = BGApp.getInstance().getFriendMapByName();
 		
-		for(Map.Entry<String, FriendBean> entry:friendMapByName.entrySet()){    
-		     alluserList.add(entry.getValue());
+		for(Map.Entry<String, FriendBean> entry:friendMapByName.entrySet()){
+			
+			String key = entry.getKey();
+			if (!key.equals(Constant.NEW_FRIENDS_USERNAME) && !key.equals(Constant.GROUP_USERNAME)){
+				alluserList.add(entry.getValue());
+			}
 		}   
 		
 		
 		
-		for (FriendBean user : alluserList) {
-			if (!user.name.equals(Constant.NEW_FRIENDS_USERNAME) & !user.name.equals(Constant.GROUP_USERNAME))
-				alluserList.add(user);
-		}
 		// 对list进行排序
 		Collections.sort(alluserList, new Comparator<FriendBean>() {
 			@Override

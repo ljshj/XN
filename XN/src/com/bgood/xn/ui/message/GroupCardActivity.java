@@ -48,20 +48,11 @@ public class GroupCardActivity extends BaseActivity {
 		new Thread(new Runnable() {
 			public void run() {
 				try {
-					//如果是membersOnly的群，需要申请加入，不能直接join
-//					if(group.isMembersOnly()){
-//						EMGroupManager.getInstance().applyJoinToGroup(groupid, "求加入");
-//					}else{
-						EMGroupManager.getInstance().joinGroup(group.hxgroupid);
-//					}
+					EMGroupManager.getInstance().applyJoinToGroup(group.hxgroupid, "求加入");
 					runOnUiThread(new Runnable() {
 						public void run() {
 							pd.dismiss();
-//							if(group.isMembersOnly()){
-								BToast.show(mActivity, "发送请求成功，等待群主同意");
-//							}else{
-//								BToast.show(mActivity, "加入群聊成功");
-//							}
+							BToast.show(mActivity, "发送请求成功，等待群主同意");
 							btn_add_group.setEnabled(false);
 						}
 					});

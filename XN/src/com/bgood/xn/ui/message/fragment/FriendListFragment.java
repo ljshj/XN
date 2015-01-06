@@ -276,7 +276,9 @@ public class FriendListFragment extends BaseFragment implements TaskListenerWith
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				switch (bNetWork.getMessageType()) {
 				case 850008:
+					FriendBean.deleteFriendBean(dbHelper, mActionFriendBean.userid);
 					BGApp.getInstance().getFriendMapById().remove(mActionFriendBean);
+					BGApp.getInstance().getFriendMapByName().remove(mActionFriendBean);
 					adapter.remove(mActionFriendBean);
 					adapter.notifyDataSetChanged();
 					break;

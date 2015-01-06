@@ -2,14 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    
+     >
 
     <include layout="@layout/title_bar"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f2f0eb" >
+        android:background="@color/common_page_bg"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,7 +46,9 @@
 		    <TextView 
 		        android:id="@+id/tv_group_intro"
 		        style="@style/group_edit_tag"
-		        android:layout_height="100dp"/>
+		        android:layout_height="50dp"
+		        android:padding="5dp"
+		        />
 		    
 		     <TextView
 		  		style="@style/group_text_tag"
@@ -52,7 +57,8 @@
 		    <TextView 
 		        android:id="@+id/tv_group_notice"
 		        style="@style/group_edit_tag"
-		        android:layout_height="100dp"/>
+		         android:layout_height="50dp"
+		        android:padding="5dp"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -88,41 +94,7 @@
                     android:background="#E6E6E6" />
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/rl_switch_block_groupmsg"
-                android:layout_width="match_parent"
-                android:layout_height="50dip"
-                android:background="@drawable/btn_bottom_selector"
-                android:padding="10dip" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:paddingLeft="10dip"
-                    android:text="屏蔽群消息"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:typeface="serif" />
-
-                <ImageView
-                    android:id="@+id/iv_switch_block_groupmsg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/open_icon"
-                    android:visibility="invisible" />
-
-                <ImageView
-                    android:id="@+id/iv_switch_unblock_groupmsg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/close_icon"
-                    android:visibility="visible" />
-            </RelativeLayout>
+            
             
             <TextView
                 android:layout_width="match_parent"
