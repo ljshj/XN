@@ -41,6 +41,7 @@ import com.bgood.xn.adapter.KBaseAdapter;
 import com.bgood.xn.bean.FriendBean;
 import com.bgood.xn.bean.FriendGroupBean;
 import com.bgood.xn.bean.GroupBean;
+import com.bgood.xn.bean.GroupMemberBean;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
@@ -50,6 +51,7 @@ import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.IMRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.ui.message.fragment.GroupFragment;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
 import com.easemob.chat.EMChatManager;
@@ -94,6 +96,9 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	
 	/**当前用户的身份*/
 	private String type = "";  
+	
+	/**要操作的FriendBean*/
+	private FriendBean actionFriendBean = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -130,7 +135,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			exitBtn.setVisibility(View.GONE);
 			deleteBtn.setVisibility(View.VISIBLE);
 		}else{
-			exitBtn.setVisibility(View.GONE);
+			exitBtn.setVisibility(View.VISIBLE);
 			deleteBtn.setVisibility(View.GONE);
 		}
 		
@@ -226,63 +231,16 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 
 	/**
 	 * 退出群组
-	 * 
-	 * @param groupId
 	 */
 	private void exitGrop() {
 		IMRequest.getInstance().requestGroupQuit(GroupDetailsActivity.this, mActivity, BGApp.mUserId, group.roomid);
-//		new Thread(new Runnable() {
-//			public void run() {
-//				try {
-//					EMGroupManager.getInstance().exitFromGroup(hxgroupId);
-//					runOnUiThread(new Runnable() {
-//						public void run() {
-//							progressDialog.dismiss();
-//							setResult(RESULT_OK);
-//							finish();
-//							ChatActivity.activityInstance.finish();
-//						}
-//					});
-//				} catch (final Exception e) {
-//					runOnUiThread(new Runnable() {
-//						public void run() {
-//							progressDialog.dismiss();
-//						}
-//					});
-//				}
-//			}
-//		}).start();
 	}
 
 	/**
 	 * 解散群组
 	 */
 	private void deleteGrop() {
-		
 		IMRequest.getInstance().requestGroupDisMiss(GroupDetailsActivity.this, mActivity, group.roomid);
-		
-//		new Thread(new Runnable() {
-//			public void run() {
-//				try {
-//					EMGroupManager.getInstance().exitAndDeleteGroup(hxgroupId);
-//					runOnUiThread(new Runnable() {
-//						public void run() {
-//							progressDialog.dismiss();
-//							setResult(RESULT_OK);
-//							finish();
-//							ChatActivity.activityInstance.finish();
-//						}
-//					});
-//				} catch (final Exception e) {
-//					runOnUiThread(new Runnable() {
-//						public void run() {
-//							progressDialog.dismiss();
-//							BToast.show(mActivity, "解散群聊失败");
-//						}
-//					});
-//				}
-//			}
-//		}).start();
 	}
 
 	/**
@@ -353,11 +311,6 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		public GridAdapter(List<?> mList, Activity mActivity) {
 			super(mList, mActivity);
 		}
-		
-//		@Override
-//		public int getCount() {
-//			return mList.size()+2;   //添加添加与删除按钮
-//		}
 		
 		@Override
 		public int getCount() {
@@ -453,8 +406,9 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 					@Override
 					public void onClick(View v) {
 						if (isInDeleteMode) {
+							actionFriendBean = friendBean;
 							// 如果是删除自己，return
-							if (EMChatManager.getInstance().getCurrentUser().equals("bg"+friendBean.userid)) {
+							if (EMChatManager.getInstance().getCurrentUser().equals("bg"+actionFriendBean.userid)) {
 								BToast.show(mActivity, "不能删除自己");
 								return;
 							}
@@ -462,10 +416,10 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 								BToast.show(mActivity, R.string.network_unavailable);
 								return;
 							}
-							deleteMembersFromGroup("bg"+friendBean.userid);
+							deleteMembersFromGroup();
 						} else {
 							 //正常情况下点击user，可以进入用户详情或者聊天页面等等
-							 startActivity(new Intent(GroupDetailsActivity.this,ChatActivity.class).putExtra("userId",friendBean.userid));
+							 startActivity(new Intent(GroupDetailsActivity.this,ChatActivity.class).putExtra("userId",actionFriendBean.userid));
 
 						}
 					}});
@@ -478,8 +432,8 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	 * 删除群成员
 	 * @param username
 	 */
-	protected void deleteMembersFromGroup(final String userId) {
-		IMRequest.getInstance().requestGroupMemberRemove(GroupDetailsActivity.this, GroupDetailsActivity.this, userId, group.roomid);
+	protected void deleteMembersFromGroup() {
+		IMRequest.getInstance().requestGroupMemberRemove(GroupDetailsActivity.this, GroupDetailsActivity.this, actionFriendBean.userid, group.roomid);
 }
 	
 
@@ -507,32 +461,47 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			String json = bNetWork.getStrJson();
-			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
-			switch (bNetWork.getMessageType()) {
-			case 850013: //获取群成员列表	
-				FriendGroupBean fgb = JSON.parseObject(json, FriendGroupBean.class);
-				friends.addAll(fgb.items);
-				for(FriendBean f: friends){
-					if(BGApp.mUserId.equals(f.userid)){
-						type = f.type;
+				switch (bNetWork.getMessageType()) {
+				case 850013: //获取群成员列表	
+						if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
+							FriendGroupBean fgb = JSON.parseObject(json,FriendGroupBean.class);
+								friends.addAll(fgb.items);
+								for (FriendBean f : friends) {
+									if (BGApp.mUserId.equals(f.userid)) {
+										type = f.type;
+									}
+								}
+							sortMemberByType();
+							initView();
+						}
+					break;
+				case 850018: //退出群 和解散群共用
+				case 850016: // 解散群聊
+						if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
+							progressDialog.dismiss();
+							BGApp.getInstance().deleteGroup(dbHelper, group);
+							MessageActivity.instance.dealIMFriendAndGroup();	//刷新一下数据
+							GroupFragment.instance.refresh();
+							setResult(RESULT_OK);
+							finish();
+							ChatActivity.activityInstance.finish();
+						} else {
+							progressDialog.dismiss();
+							BToast.show(mActivity, "解散群聊失败");
+						}
+						break;
+				case 850024://删除群成员
+					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+						adapter.isInDeleteMode = false;
+						adapter.notifyDataSetChanged();
 					}
+					GroupMemberBean.deleteGroupMemberBean(dbHelper, group.roomid, actionFriendBean.userid);
+				break;
+				default:
+					break;
+				
 				}
-				sortMemberByType();
-				initView();
-				break;
-			case 850024://删除群成员
-				
-				
-				
-				adapter.isInDeleteMode = false;
-				adapter.notifyDataSetChanged();
-				break;
-
-			default:
-				break;
-			
-			}
-		}
+		
 	}	
 }
 	

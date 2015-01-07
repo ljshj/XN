@@ -29,8 +29,10 @@ public class InviteMessage {
 	
 	//未验证，已同意等状态
 	private InviteMesageStatus status;
-	//群id
+	
 	private String groupId;
+	//群id
+	private String hxgroupId;
 	//群名称
 	private String groupName;
 	
@@ -114,6 +116,14 @@ public class InviteMessage {
 
 	public void setGroupId(String groupId) {
 		this.groupId = groupId;
+	}
+
+	public String getHxgroupId() {
+		return hxgroupId;
+	}
+
+	public void setHxgroupId(String hxgroupId) {
+		this.hxgroupId = hxgroupId;
 	}
 
 	public String getGroupName() {

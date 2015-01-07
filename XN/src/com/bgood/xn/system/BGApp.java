@@ -15,8 +15,10 @@ import android.content.IntentFilter;
 
 import com.bgood.xn.bean.FriendBean;
 import com.bgood.xn.bean.GroupBean;
+import com.bgood.xn.bean.GroupMemberBean;
 import com.bgood.xn.bean.MemberLoginBean;
 import com.bgood.xn.bean.UserInfoBean;
+import com.bgood.xn.db.DBHelper;
 import com.bgood.xn.utils.LogUtils;
 import com.easemob.EMCallBack;
 import com.easemob.chat.ChatHXSDKHelper;
@@ -243,5 +245,36 @@ public class BGApp extends Application {
 	/**是否登录聊天服务器*/
 	public boolean isLogin(){
 		return hxSDKHelper.isLogined();
+	}
+	
+	
+	
+	
+	
+	/************************************************************************************************************/
+	
+	
+	/**
+	 * 
+	 * @param 退群，解散群，被移出群的操作
+	 */
+	public void deleteGroup(DBHelper dbHelper,GroupBean group){
+		
+		GroupBean.deleteGroupBean(dbHelper, group.roomid);	//从数据库删除群组
+		GroupMemberBean.deleteGroupMemberBean(dbHelper, group.roomid); //删除数据库对应群组的成员
+		
+//		GroupBean groupBean = BGApp.getInstance().getGroupMap().get(group.hxgroupid);
+//		
+//		boolean has = BGApp.getInstance().getGroupMap().containsValue(groupBean);
+		
+//		BGApp.getInstance().getGroupMap().remove(group);
+//		
+//		
+//		
+//		List<FriendBean> listFriendsByHxGroupId = BGApp.getInstance().getGroupMemberAndHxId().get(group.hxgroupid);
+//		BGApp.getInstance().getGroupMemberAndHxId().remove(listFriendsByHxGroupId);
+//		
+//		List<FriendBean> listFriendByGroupId = BGApp.getInstance().getGroupMemberBean().get(group.roomid);
+//		BGApp.getInstance().getGroupMemberBean().remove(listFriendByGroupId);
 	}
 }

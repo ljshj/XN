@@ -13,7 +13,10 @@
  */
 package com.easemob.chat.adapter;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -22,9 +25,9 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,8 +35,26 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
+import com.bgood.xn.bean.FriendBean;
+import com.bgood.xn.bean.FriendGroupBean;
+import com.bgood.xn.bean.GroupBean;
+import com.bgood.xn.bean.GroupMemberBean;
 import com.bgood.xn.bean.UserInfoBean;
+import com.bgood.xn.db.DBHelper;
+import com.bgood.xn.network.BaseNetWork;
+import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
+import com.bgood.xn.network.http.HttpRequestInfo;
+import com.bgood.xn.network.http.HttpResponseInfo;
+import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
+import com.bgood.xn.network.request.IMRequest;
+import com.bgood.xn.network.request.UserCenterRequest;
+import com.bgood.xn.system.BGApp;
+import com.bgood.xn.ui.message.MessageActivity;
+import com.bgood.xn.ui.message.fragment.FriendListFragment;
+import com.bgood.xn.view.BToast;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.db.InviteMessgeDao;
@@ -44,13 +65,14 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
-public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
+public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> implements TaskListenerWithState {
 
 	private Context context;
 	private InviteMessgeDao messgeDao;
-	
+	private DBHelper dbHelper;
 	public ImageLoader mImageLoader;
 	public DisplayImageOptions options;
+	private InviteMessage actionInviteMessage;
 
 	public NewFriendsMsgAdapter(Context context, int textViewResourceId, List<InviteMessage> objects) {
 		super(context, textViewResourceId, objects);
@@ -65,6 +87,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 		.build();
 		mImageLoader = ImageLoader.getInstance();
 		mImageLoader.init(ImageLoaderConfiguration.createDefault(context));
+		dbHelper = new DBHelper(context);
 	}
 
 	@Override
@@ -87,6 +110,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 		}
 
 		final InviteMessage msg = getItem(position);
+		actionInviteMessage = msg;
 		mImageLoader.displayImage(msg.getUserPhotoUrl(),holder.avator, options, new SimpleImageLoadingListener() {
 			@Override
 			public void onLoadingComplete() {
@@ -189,9 +213,19 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 				// 调用sdk的同意方法
 				try {
 					if(msg.getGroupId() == null) //同意好友请求
+					{
 						EMChatManager.getInstance().acceptInvitation(msg.getFrom());
+						
+						IMRequest.getInstance().requestFriendADD(NewFriendsMsgAdapter.this, context, BGApp.mUserId, new String[]{msg.getFrom().substring(2)});
+					}
 					else //同意加群申请
-						EMGroupManager.getInstance().acceptApplication(msg.getFrom(), msg.getGroupId());
+					{
+						EMGroupManager.getInstance().acceptApplication(msg.getFrom(), msg.getHxgroupId());
+						
+						/**向这个群添加成员*/
+						IMRequest.getInstance().requestGroupMemberJoinOrInvite(NewFriendsMsgAdapter.this, context, msg.getFrom().substring(2), msg.getGroupId());
+						
+					}
 					((Activity) context).runOnUiThread(new Runnable() {
 
 						@Override
@@ -290,4 +324,83 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 		// TextView time;
 	}
 
+	@Override
+	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
+		if (info.getState() == HttpTaskState.STATE_OK) {
+			BaseNetWork bNetWork = info.getmBaseNetWork();
+			String json = bNetWork.getStrJson();
+			switch (bNetWork.getMessageType()) {
+			case 820001:
+				if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
+				/**获取用户资料*/
+				UserInfoBean user = JSON.parseObject(json, UserInfoBean.class);
+				FriendBean fb = FriendBean.copyUserInfo(user);
+				GroupMemberBean.insertFriendBean(dbHelper, actionInviteMessage.getHxgroupId(),actionInviteMessage.getGroupId(),fb);
+				
+				//dealIMFriendAndGroup();
+				
+				//向内存中插入变更的数据
+				List<FriendBean> list = new ArrayList<FriendBean>();
+				list.add(fb);
+				BGApp.getInstance().getGroupMemberBean().put(actionInviteMessage.getGroupId(), list);		
+				BGApp.getInstance().getGroupMemberAndHxId().put(actionInviteMessage.getHxgroupId(), list);	
+				MessageActivity.instance.dealIMFriendAndGroup();
+				}else{
+					
+				}
+				break;
+			case 850012: // 获取群资料
+					if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
+						GroupBean group = JSON.parseObject(json, GroupBean.class);
+						GroupBean.insertGroupBean(dbHelper, group);
+						BGApp.getInstance().getGroupMap().put(group.hxgroupid, group);
+						/**获取接受者的资料*/
+						UserCenterRequest.getInstance().requestPersonInfo(NewFriendsMsgAdapter.this, context, actionInviteMessage.getFrom().substring(2),false);
+						
+					} else {
+	
+					}
+				break;
+			case 850025:	//加群成功,后再获取当前用户的信息，插入到用户群里面去
+				if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
+					
+					IMRequest.getInstance().requestGroupInfo(NewFriendsMsgAdapter.this, context, "0", actionInviteMessage.getHxgroupId(),false);	//获取该群的资料
+					
+				} else {
+					BToast.show(context, "同意请求失败");
+				}
+				break;
+			case 850027:
+				if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
+					/**添加好友成功后*/
+					FriendGroupBean fgb = JSON.parseObject(json, FriendGroupBean.class);
+					FriendBean.storeFriendBean(dbHelper, fgb.items);
+					
+					/**更新缓存里的好友列表*/
+					List<FriendBean> listFriends = fgb.items;
+					if(null == listFriends){
+						return;
+					}
+					for (FriendBean friendBean : listFriends) {
+						FriendBean.setUserHearder(friendBean.name, friendBean);
+						BGApp.getInstance().getFriendMapById().put(friendBean.userid, friendBean);
+						BGApp.getInstance().getFriendMapByName().put(friendBean.name, friendBean);
+						
+						
+					}
+//					BGApp.getInstance().setFriendMapById(userAndIdMap);
+//					BGApp.getInstance().setFriendMapByName(userAndNameMap);
+					
+				} else {
+					BToast.show(context, "同意请求失败");
+				}
+				
+			break;
+
+				default:
+					break;
+				
+			}
+		}
+	}
 }

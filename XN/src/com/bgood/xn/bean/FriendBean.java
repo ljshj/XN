@@ -9,9 +9,12 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.bgood.xn.db.DBHelper;
 import com.bgood.xn.utils.LogUtils;
+import com.easemob.chat.Constant;
+import com.easemob.util.HanziToPinyin;
 
 /**
  * @todo:好友类
@@ -268,40 +271,36 @@ public class FriendBean implements Parcelable {
 		parcel.writeString(nick);
 		
 	}
+	
+	/**
+	 * 设置hearder属性，方便通讯中对联系人按header分类显示，以及通过右侧ABCD...字母栏快速定位联系人
+	 * @param username
+	 * @param user
+	 */
+	public static void setUserHearder(String name, FriendBean friend) {
+		String headerName = null;
+		if (!TextUtils.isEmpty(friend.getNick())) {
+			headerName = friend.getNick();
+		} else {
+			headerName = friend.getName();
+		}
+		
+		if(headerName== null)
+		{
+			return;
+		}
+		
+		
+		if (Constant.NEW_FRIENDS_USERNAME.equals(name)) {
+			friend.setHeader("");
+		} else if (Character.isDigit(headerName.charAt(0))) {
+			friend.setHeader("#");
+		} else {
+			friend.setHeader(HanziToPinyin.getInstance().get(headerName.substring(0, 1)).get(0).target.substring(0, 1).toUpperCase());
+			char header = friend.getHeader().toLowerCase().charAt(0);
+			if (header < 'a' || header > 'z') {
+				friend.setHeader("#");
+			}
+		}
+	}
 }
-
-//
-//public static final Parcelable.Creator<Book> CREATOR = new Creator<Book>() {  
-//    public Book createFromParcel(Parcel source) {  
-//        Book mBook = new Book();  
-//        mBook.bookName = source.readString();  
-//        mBook.author = source.readString();  
-//        mBook.publishTime = source.readInt();  
-//        return mBook;  
-//    }  
-//    public Book[] newArray(int size) {  
-//        return new Book[size];  
-//    }  
-//};  
-//  
-//public int describeContents() {  
-//    return 0;  
-//}  
-//public void writeToParcel(Parcel parcel, int flags) {  
-//    parcel.writeString(bookName);  
-//    parcel.writeString(author);  
-//    parcel.writeInt(publishTime);  
-//}  
-//}  
-
-
-
-
-
-
-
-
-
-
-
-

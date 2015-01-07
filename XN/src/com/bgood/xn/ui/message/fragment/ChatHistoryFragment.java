@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -86,6 +87,23 @@ public class ChatHistoryFragment extends BaseFragment {
 				
 		groups = EMGroupManager.getInstance().getAllGroups();
 
+		
+//		listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//	            @Override
+//	            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//	            	new AlertDialog.Builder(getActivity())
+//	            	.setTitle("删除联系人")
+//	            	.setPositiveButton("确定", null)
+//	            	.setNegativeButton("取消", null)
+//	            	.show();
+//	                
+//	                
+//	                return true;
+//	            }
+//	        });
+
+		
 		
 		listView.setOnItemClickListener(new OnItemClickListener() {
 

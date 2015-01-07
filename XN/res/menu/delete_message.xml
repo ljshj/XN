@@ -2,6 +2,8 @@
 
     <item
         android:id="@+id/delete_message"
-        android:title="@string/delete_message"/>
+        android:title="@string/delete_message"
+        android:icon="@drawable/icon_app"
+        />
 	
 </menu>

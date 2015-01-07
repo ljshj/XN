@@ -56,6 +56,7 @@ import com.bgood.xn.bean.GroupBean;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.message.GroupDetailsActivity;
 import com.bgood.xn.utils.LogUtils;
+import com.bgood.xn.view.BToast;
 import com.easemob.EMError;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContactManager;

@@ -21,8 +21,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -39,21 +42,19 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.FriendBean;
-import com.bgood.xn.bean.response.FriendAndGroupResponse;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
-import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.http.HttpRequestInfo;
 import com.bgood.xn.network.http.HttpResponseInfo;
+import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.IMRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseFragment;
+import com.bgood.xn.ui.message.MessageActivity;
 import com.bgood.xn.view.BToast;
 import com.easemob.chat.Constant;
 import com.easemob.chat.EMContactManager;
@@ -61,8 +62,6 @@ import com.easemob.chat.activity.ChatActivity;
 import com.easemob.chat.activity.NewFriendsMsgActivity;
 import com.easemob.chat.adapter.ContactAdapter;
 import com.easemob.chat.db.InviteMessgeDao;
-import com.easemob.chat.db.UserDao;
-import com.easemob.chat.domain.User;
 import com.easemob.chat.widget.Sidebar;
 import com.easemob.exceptions.EaseMobException;
 
@@ -90,6 +89,7 @@ public class FriendListFragment extends BaseFragment implements TaskListenerWith
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		setHasOptionsMenu(true);
 		//防止被T后，没点确定按钮然后按了home键，长期在后台又进app导致的crash
 		if(savedInstanceState != null && savedInstanceState.getBoolean("isConflict", false))
 		    return;
@@ -135,18 +135,47 @@ public class FriendListFragment extends BaseFragment implements TaskListenerWith
 				return false;
 			}
 		});
-		registerForContextMenu(listView);
+		
+		listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapter, View view, int position, long id) {
+
+            	final FriendBean friendBean = (FriendBean) adapter.getAdapter().getItem(position);
+            	
+            	AlertDialog dialog = new AlertDialog.Builder(getActivity())
+            	.setTitle("删除联系人")
+            	.setCancelable(true)
+            	.setPositiveButton("确定", new OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						mActionFriendBean = friendBean;
+						// 删除此联系人
+						deleteContact(mActionFriendBean);
+						
+					}
+				})
+            	.setNegativeButton("取消", null)
+            	.show();
+                
+                
+                return true;
+            }
+        });
+		//registerForContextMenu(listView);
 
 	}
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
 		// 长按前两个不弹menu
 		if (((AdapterContextMenuInfo) menuInfo).position > 1) {
 			getActivity().getMenuInflater().inflate(R.menu.context_contact_list, menu);
 		}
+		super.onCreateContextMenu(menu, v, menuInfo);
 	}
+	
+
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
@@ -273,14 +302,26 @@ public class FriendListFragment extends BaseFragment implements TaskListenerWith
 	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
-			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				switch (bNetWork.getMessageType()) {
 				case 850008:
-					FriendBean.deleteFriendBean(dbHelper, mActionFriendBean.userid);
-					BGApp.getInstance().getFriendMapById().remove(mActionFriendBean);
-					BGApp.getInstance().getFriendMapByName().remove(mActionFriendBean);
-					adapter.remove(mActionFriendBean);
-					adapter.notifyDataSetChanged();
+						if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+							
+							// 删除相关的邀请消息
+							InviteMessgeDao dao = new InviteMessgeDao(getActivity());
+							dao.deleteMessage("bg"+mActionFriendBean.userid);
+							
+							FriendBean.deleteFriendBean(dbHelper, mActionFriendBean.userid);
+							
+//							MessageActivity.instance.dealIMFriendAndGroup();
+							BGApp.getInstance().getFriendMapById().remove(mActionFriendBean);
+							BGApp.getInstance().getFriendMapByName().remove(mActionFriendBean);
+							
+							adapter.remove(mActionFriendBean);
+							adapter.notifyDataSetChanged();
+							
+						}else{
+							
+						}
 					break;
 				case 850027:
 					break;
@@ -289,6 +330,5 @@ public class FriendListFragment extends BaseFragment implements TaskListenerWith
 					break;
 				}
 			}
-		}
 	}
 }

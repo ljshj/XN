@@ -157,7 +157,7 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 	 * @params:
 	 */
 	private void doChat() {
-		if(BGApp.getInstance().getUserName().equals(user.username)){
+		if(BGApp.mUserId.equals(userId)){
 			BToast.show(mActivity, "不能与自己聊天");
 			return;
 		}else if(!BGApp.getInstance().getFriendMapById().containsKey(userId)){
@@ -179,7 +179,7 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 	 * @params:
 	 */
 	public void addContact(){
-		if(BGApp.getInstance().getUserName().equals(user.username)){
+		if(BGApp.mUserId.equals(userId)){
 			BToast.show(mActivity, "不能添加自己");
 			return;
 		}else if(BGApp.getInstance().getFriendMapById().containsKey(userId)){
