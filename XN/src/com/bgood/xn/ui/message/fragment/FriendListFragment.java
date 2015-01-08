@@ -313,8 +313,33 @@ public class FriendListFragment extends BaseFragment implements TaskListenerWith
 							FriendBean.deleteFriendBean(dbHelper, mActionFriendBean.userid);
 							
 //							MessageActivity.instance.dealIMFriendAndGroup();
-							BGApp.getInstance().getFriendMapById().remove(mActionFriendBean);
-							BGApp.getInstance().getFriendMapByName().remove(mActionFriendBean);
+//							BGApp.getInstance().getFriendMapById().remove(mActionFriendBean);
+//							BGApp.getInstance().getFriendMapByName().remove(mActionFriendBean);
+							
+							
+							
+							
+							FriendBean fb = BGApp.getInstance().getFriendMapById().get(mActionFriendBean.userid);
+							
+							Iterator<?> iterFriendMapById = BGApp.getInstance().getFriendMapById().entrySet().iterator();
+							while (iterFriendMapById.hasNext()) {
+								Entry<?, ?> object = (Entry<?, ?>) iterFriendMapById.next();
+								if(object.getKey().equals(fb.userid)){
+									iterFriendMapById.remove();
+									break;
+								}
+							}
+							
+							Iterator<?> iterFriendMapByName = BGApp.getInstance().getFriendMapByName().entrySet().iterator();
+							while (iterFriendMapByName.hasNext()) {
+								Entry<?, ?> object = (Entry<?, ?>) iterFriendMapByName.next();
+								if(object.getKey().equals(fb.name)){
+									iterFriendMapByName.remove();
+									break;
+								}
+							}
+							
+							
 							
 							adapter.remove(mActionFriendBean);
 							adapter.notifyDataSetChanged();

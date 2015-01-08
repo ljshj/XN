@@ -16,6 +16,7 @@ import com.bgood.xn.network.http.HttpRequestInfo;
 import com.bgood.xn.network.http.HttpResponseInfo;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.IMRequest;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.message.fragment.GroupFragment;
 import com.bgood.xn.view.BToast;
@@ -77,7 +78,7 @@ public class CreateGroupActivity extends BaseActivity implements TaskListenerWit
 				GroupBean group = JSON.parseObject(json, GroupBean.class);
 				GroupBean.insertGroupBean(dbHelper,group);
 				BToast.show(mActivity, "群创建成功");
-				MessageActivity.instance.dealIMFriendAndGroup();	//刷新一下数据
+				BGApp.getInstance().getGroupMap().put(group.hxgroupid, group);
 				GroupFragment.instance.refresh();	//刷新一下数据
 				finish();
 			}

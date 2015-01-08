@@ -42,6 +42,7 @@ import com.bgood.xn.bean.FriendBean;
 import com.bgood.xn.bean.FriendGroupBean;
 import com.bgood.xn.bean.GroupBean;
 import com.bgood.xn.bean.GroupMemberBean;
+import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
@@ -52,6 +53,7 @@ import com.bgood.xn.network.request.IMRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.message.fragment.GroupFragment;
+import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
 import com.easemob.chat.EMChatManager;
@@ -405,8 +407,8 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				button.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
+						actionFriendBean = friendBean;
 						if (isInDeleteMode) {
-							actionFriendBean = friendBean;
 							// 如果是删除自己，return
 							if (EMChatManager.getInstance().getCurrentUser().equals("bg"+actionFriendBean.userid)) {
 								BToast.show(mActivity, "不能删除自己");
@@ -418,8 +420,8 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 							}
 							deleteMembersFromGroup();
 						} else {
-							 //正常情况下点击user，可以进入用户详情或者聊天页面等等
-							 startActivity(new Intent(GroupDetailsActivity.this,ChatActivity.class).putExtra("userId",actionFriendBean.userid));
+							 //正常情况下点击user，可以进入用户详情
+							 startActivity(new Intent(GroupDetailsActivity.this,NameCardActivity.class).putExtra(UserInfoBean.KEY_USER_ID,actionFriendBean.userid));
 
 						}
 					}});
@@ -480,10 +482,9 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 						if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
 							progressDialog.dismiss();
 							BGApp.getInstance().deleteGroup(dbHelper, group);
-							MessageActivity.instance.dealIMFriendAndGroup();	//刷新一下数据
-							GroupFragment.instance.refresh();
 							setResult(RESULT_OK);
 							finish();
+							GroupFragment.instance.refresh();
 							ChatActivity.activityInstance.finish();
 						} else {
 							progressDialog.dismiss();
@@ -492,6 +493,8 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 						break;
 				case 850024://删除群成员
 					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+						
+						friends.remove(actionFriendBean);
 						adapter.isInDeleteMode = false;
 						adapter.notifyDataSetChanged();
 					}

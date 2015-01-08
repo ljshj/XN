@@ -1,8 +1,10 @@
 package com.bgood.xn.system;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Stack;
 
 import android.annotation.SuppressLint;
@@ -192,8 +194,7 @@ public class BGApp extends Application {
 		return groupMemberAndHxId;
 	}
 
-	public void setGroupMemberAndHxId(
-			Map<String, List<FriendBean>> groupMemberAndHxId) {
+	public void setGroupMemberAndHxId(Map<String, List<FriendBean>> groupMemberAndHxId) {
 		this.groupMemberAndHxId = groupMemberAndHxId;
 	}
 
@@ -263,18 +264,40 @@ public class BGApp extends Application {
 		GroupBean.deleteGroupBean(dbHelper, group.roomid);	//从数据库删除群组
 		GroupMemberBean.deleteGroupMemberBean(dbHelper, group.roomid); //删除数据库对应群组的成员
 		
-//		GroupBean groupBean = BGApp.getInstance().getGroupMap().get(group.hxgroupid);
-//		
-//		boolean has = BGApp.getInstance().getGroupMap().containsValue(groupBean);
+	//	BGApp.getInstance().getGroupMap().remove(group);
 		
-//		BGApp.getInstance().getGroupMap().remove(group);
-//		
-//		
-//		
+		Iterator<?> iterGroup = BGApp.getInstance().getGroupMap().entrySet().iterator();
+		while (iterGroup.hasNext()) {
+			Entry<?, ?> entry = (Entry<?, ?>) iterGroup.next();
+			if(entry.getValue() == group){
+				iterGroup.remove();
+				break;
+			}
+		}
+		
+		
+		Iterator<?> iterFriendsByHxGroupId = BGApp.getInstance().getGroupMemberAndHxId().entrySet().iterator();
+		while (iterFriendsByHxGroupId.hasNext()) {
+			Entry<?, ?> entry = (Entry<?, ?>) iterFriendsByHxGroupId.next();
+			if(entry.getKey().equals(group.hxgroupid)){
+				iterFriendsByHxGroupId.remove();
+				break;
+			}
+		}
+		
 //		List<FriendBean> listFriendsByHxGroupId = BGApp.getInstance().getGroupMemberAndHxId().get(group.hxgroupid);
 //		BGApp.getInstance().getGroupMemberAndHxId().remove(listFriendsByHxGroupId);
-//		
+		
 //		List<FriendBean> listFriendByGroupId = BGApp.getInstance().getGroupMemberBean().get(group.roomid);
 //		BGApp.getInstance().getGroupMemberBean().remove(listFriendByGroupId);
+		
+		Iterator<?> iterFriendByGroupId = BGApp.getInstance().getGroupMemberBean().entrySet().iterator();
+		while (iterFriendByGroupId.hasNext()) {
+			Entry<?, ?> entry = (Entry<?, ?>) iterFriendByGroupId.next();
+			if(entry.getKey().equals(group.hxgroupid)){
+				iterFriendByGroupId.remove();
+				break;
+			}
+		}
 	}
 }

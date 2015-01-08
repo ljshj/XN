@@ -73,7 +73,7 @@ public class FriendBean implements Parcelable {
 		FriendBean fb = new FriendBean();
 		fb.userid = user.userid;
 		fb.type = "0";
-		fb.name = user.username;
+		fb.name = TextUtils.isEmpty(user.nickn)?user.username:user.nickn;
 		fb.sex = String.valueOf(user.sex);
 		fb.level = String.valueOf(user.level);
 		fb.photo = user.photo;

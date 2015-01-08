@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -122,7 +123,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> implements
 		
 		
 		if (msg != null) {
-			if(msg.getGroupId() != null){ // 显示群聊提示
+			if(msg.getHxgroupId() != null){ // 显示群聊提示
 				holder.groupContainer.setVisibility(View.VISIBLE);
 				holder.groupname.setText(msg.getGroupName());
 			} else{
@@ -212,7 +213,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> implements
 			public void run() {
 				// 调用sdk的同意方法
 				try {
-					if(msg.getGroupId() == null) //同意好友请求
+					if(msg.getHxgroupId() == null) //同意好友请求
 					{
 						EMChatManager.getInstance().acceptInvitation(msg.getFrom());
 						
@@ -221,13 +222,8 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> implements
 					else //同意加群申请
 					{
 						EMGroupManager.getInstance().acceptApplication(msg.getFrom(), msg.getHxgroupId());
-						
-						/**向这个群添加成员*/
-						IMRequest.getInstance().requestGroupMemberJoinOrInvite(NewFriendsMsgAdapter.this, context, msg.getFrom().substring(2), msg.getGroupId());
-						
 					}
 					((Activity) context).runOnUiThread(new Runnable() {
-
 						@Override
 						public void run() {
 							pd.dismiss();
@@ -240,6 +236,10 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> implements
 							button.setBackgroundDrawable(null);
 							button.setEnabled(false);
 
+							if(null!=msg.getHxgroupId()){
+								/**向这个群添加成员*/
+								IMRequest.getInstance().requestGroupMemberJoinOrInvite(NewFriendsMsgAdapter.this, context, msg.getFrom().substring(2), msg.getGroupId());
+							}
 						}
 					});
 				} catch (final Exception e) {
@@ -275,7 +275,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> implements
 			public void run() {
 				// 调用sdk的拒绝方法
 				try {
-					if(msg.getGroupId() == null) //拒绝好友请求
+					if(msg.getHxgroupId() == null) //拒绝好友请求
 						EMChatManager.getInstance().refuseInvitation(msg.getFrom());
 					else //同意加群申请
 					{
@@ -332,25 +332,23 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> implements
 			switch (bNetWork.getMessageType()) {
 			case 820001:
 				if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
-				/**获取用户资料*/
-				UserInfoBean user = JSON.parseObject(json, UserInfoBean.class);
-				FriendBean fb = FriendBean.copyUserInfo(user);
-				GroupMemberBean.insertFriendBean(dbHelper, actionInviteMessage.getHxgroupId(),actionInviteMessage.getGroupId(),fb);
-				
-				//dealIMFriendAndGroup();
-				
-				//向内存中插入变更的数据
-				List<FriendBean> list = new ArrayList<FriendBean>();
-				list.add(fb);
-				BGApp.getInstance().getGroupMemberBean().put(actionInviteMessage.getGroupId(), list);		
-				BGApp.getInstance().getGroupMemberAndHxId().put(actionInviteMessage.getHxgroupId(), list);	
-				MessageActivity.instance.dealIMFriendAndGroup();
+					/**获取用户资料*/
+					UserInfoBean user = JSON.parseObject(json, UserInfoBean.class);
+					FriendBean fb = FriendBean.copyUserInfo(user);
+					GroupMemberBean.insertFriendBean(dbHelper, actionInviteMessage.getHxgroupId(),actionInviteMessage.getGroupId(),fb);
+					
+					//向内存中插入变更的数据
+					List<FriendBean> list = new ArrayList<FriendBean>();
+					list.add(fb);
+					BGApp.getInstance().getGroupMemberBean().put(actionInviteMessage.getGroupId(), list);		
+					BGApp.getInstance().getGroupMemberAndHxId().put(actionInviteMessage.getHxgroupId(), list);	
 				}else{
 					
 				}
 				break;
 			case 850012: // 获取群资料
 					if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
+						//把这个群插入到本地的数据库中
 						GroupBean group = JSON.parseObject(json, GroupBean.class);
 						GroupBean.insertGroupBean(dbHelper, group);
 						BGApp.getInstance().getGroupMap().put(group.hxgroupid, group);
@@ -361,16 +359,16 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> implements
 	
 					}
 				break;
-			case 850025:	//加群成功,后再获取当前用户的信息，插入到用户群里面去
+			case 850025:	//加群成功
 				if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
-					
+					//加群成功后，再获取这个群的资料
 					IMRequest.getInstance().requestGroupInfo(NewFriendsMsgAdapter.this, context, "0", actionInviteMessage.getHxgroupId(),false);	//获取该群的资料
 					
 				} else {
 					BToast.show(context, "同意请求失败");
 				}
 				break;
-			case 850027:
+			case 850027://添加好友的接口，返回的好友数据
 				if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
 					/**添加好友成功后*/
 					FriendGroupBean fgb = JSON.parseObject(json, FriendGroupBean.class);
@@ -385,11 +383,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> implements
 						FriendBean.setUserHearder(friendBean.name, friendBean);
 						BGApp.getInstance().getFriendMapById().put(friendBean.userid, friendBean);
 						BGApp.getInstance().getFriendMapByName().put(friendBean.name, friendBean);
-						
-						
 					}
-//					BGApp.getInstance().setFriendMapById(userAndIdMap);
-//					BGApp.getInstance().setFriendMapByName(userAndNameMap);
 					
 				} else {
 					BToast.show(context, "同意请求失败");

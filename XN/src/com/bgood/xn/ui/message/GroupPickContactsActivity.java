@@ -116,7 +116,6 @@ public class GroupPickContactsActivity extends BaseActivity {
 				members.add(friend);
 			}
 		}
-
 		return members;
 	}
 
@@ -154,11 +153,11 @@ public class GroupPickContactsActivity extends BaseActivity {
 									isChecked = true;
 									checkBox.setChecked(true);
 							}
-							isCheckedArray[position] = isChecked;
+							isCheckedArray[position - 1] = isChecked;
 							//如果是单选模式
 							if (isSignleChecked && isChecked) {
 								for (int i = 0; i < isCheckedArray.length; i++) {
-									if (i != position) {
+									if (i != position - 1) {
 										isCheckedArray[i] = false;
 									}
 								}
@@ -170,9 +169,9 @@ public class GroupPickContactsActivity extends BaseActivity {
 					// 群组中原来的成员一直设为选中状态
 					if (exitingMembers.contains(friend)) {
 							checkBox.setChecked(true);
-							isCheckedArray[position] = true;
+							isCheckedArray[position - 1] = true;
 					} else {
-						checkBox.setChecked(isCheckedArray[position]);
+						checkBox.setChecked(isCheckedArray[position - 1]);
 					}
 				}
 			}

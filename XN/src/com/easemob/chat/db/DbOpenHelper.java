@@ -35,6 +35,7 @@ public class DbOpenHelper extends SQLiteOpenHelper{
 			+ InviteMessgeDao.COLUMN_NAME_FROM + " TEXT, "
 			+ InviteMessgeDao.COLUMN_NAME_NICK + " TEXT, "
 			+ InviteMessgeDao.COLUMN_NAME_PHOTO + " TEXT, "
+			+ InviteMessgeDao.COLUMN_NAME_GROUP_HXID + " TEXT, "
 			+ InviteMessgeDao.COLUMN_NAME_GROUP_ID + " TEXT, "
 			+ InviteMessgeDao.COLUMN_NAME_GROUP_Name + " TEXT, "
 			+ InviteMessgeDao.COLUMN_NAME_REASON + " TEXT, "
