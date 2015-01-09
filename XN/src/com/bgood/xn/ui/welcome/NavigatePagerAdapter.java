@@ -48,7 +48,7 @@ public class NavigatePagerAdapter extends PagerAdapter {
 		final FrameLayout imageLayout = (FrameLayout) inflater.inflate(R.layout.item_naviagte_pager_image, null);
 		final ImageView imageView = (ImageView) imageLayout.findViewById(R.id.image);
 		final ImageButton start_btn = (ImageButton)imageLayout.findViewById(R.id.start_btn);
-		if(position == 3){
+		if(position == 2){
 			start_btn.setVisibility(View.VISIBLE);
 			start_btn.setOnClickListener(mOnClickListener);
 		}

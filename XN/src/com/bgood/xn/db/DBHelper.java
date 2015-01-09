@@ -20,6 +20,9 @@ public class DBHelper extends CommonDB {
 	/** 群成员表 */
 	public final static String TB_GROUP_MEMBER = "tab_group_member";
 	
+	/**当前用户**/
+	public final static String CLOUMN_CURRENT_USER_ID = "cloumn_current_user_id";//当前用户ID
+	
 	public DBHelper(Context context) {
 		super(context,DATABASE_NAME,DATABASE_VERSION);
 	}
@@ -67,6 +70,7 @@ public class DBHelper extends CommonDB {
               buffer.append("create table ")
 			        .append(TB_FRIEND).append(" (")
 			        .append(FD_ID).append(" ").append("integer primary key autoincrement").append(",")
+			        .append(CLOUMN_CURRENT_USER_ID).append(" ").append("varchar").append(",")
 			        .append(F_USERID).append(" ").append("varchar").append(",")
 			        .append(F_TYPE).append(" ").append("varchar").append(",")
 			        .append(F_NAME).append(" ").append("varchar").append(",")
@@ -112,6 +116,7 @@ public class DBHelper extends CommonDB {
               buffer.append("create table ")
 			        .append(TB_GROUP).append(" (")
 			        .append(FD_ID).append(" ").append("integer primary key autoincrement").append(",")
+			        .append(CLOUMN_CURRENT_USER_ID).append(" ").append("varchar").append(",")
 			        .append(G_HX_GROUPID).append(" ").append("varchar").append(",")
 			        .append(G_ROOMID).append(" ").append("varchar").append(",")
 			        .append(G_NAME).append(" ").append("varchar").append(",")
@@ -161,6 +166,7 @@ public class DBHelper extends CommonDB {
               buffer.append("create table ")
 			        .append(TB_GROUP_MEMBER).append(" (")
 			        .append(FD_ID).append(" ").append("integer primary key autoincrement").append(",")
+			        .append(CLOUMN_CURRENT_USER_ID).append(" ").append("varchar").append(",")
 			        .append(GM_HX_GROUPID).append(" ").append("varchar").append(",")
 			        .append(GM_GROUPID).append(" ").append("varchar").append(",")
 			        .append(GM_USERID).append(" ").append("varchar").append(",")

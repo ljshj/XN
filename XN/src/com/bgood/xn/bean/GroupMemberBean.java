@@ -9,6 +9,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.bgood.xn.db.DBHelper;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.utils.LogUtils;
 
 /**
@@ -30,7 +31,7 @@ public class GroupMemberBean {
 	 */
 	public static Map<String,List<FriendBean>> queryGroupMembersAndGroupId(DBHelper mDBHelper){
 		   LogUtils.i("------from database----");
-	       Cursor c = mDBHelper.queryAll(DBHelper.TB_GROUP_MEMBER);
+	       Cursor c = mDBHelper.queryAndAll(DBHelper.TB_GROUP_MEMBER,DBHelper.CLOUMN_CURRENT_USER_ID,BGApp.mUserId);
 	       Map<String,List<FriendBean>> mapGroup = new HashMap<String,List<FriendBean>>();
 	       List<FriendBean> listFriends = new ArrayList<FriendBean>();
 	       do {
@@ -82,7 +83,7 @@ public class GroupMemberBean {
 	 */
 	public static Map<String,List<FriendBean>> queryGroupMembersAndHXGroupId(DBHelper mDBHelper){
 		   LogUtils.i("------from database----");
-	       Cursor c = mDBHelper.queryAll(DBHelper.TB_GROUP_MEMBER);
+	       Cursor c = mDBHelper.queryAndAll(DBHelper.TB_GROUP_MEMBER,DBHelper.CLOUMN_CURRENT_USER_ID,BGApp.mUserId);
 	       Map<String,List<FriendBean>> mapGroup = new HashMap<String,List<FriendBean>>();
 	       List<FriendBean> listFriends = new ArrayList<FriendBean>();
 	       do {
@@ -136,6 +137,7 @@ public class GroupMemberBean {
 			ArrayList<ContentValues> list = new ArrayList<ContentValues>();
 			for(FriendBean f:lists){
 				ContentValues values = new ContentValues();
+				values.put(DBHelper.CLOUMN_CURRENT_USER_ID, BGApp.mUserId);
 				values.put(DBHelper.GroupMember.GM_HX_GROUPID, hxGroupId);
 				values.put(DBHelper.GroupMember.GM_GROUPID, groupId);
 				values.put(DBHelper.GroupMember.GM_USERID, f.userid);
@@ -162,6 +164,7 @@ public class GroupMemberBean {
 	 */
 	public static void insertFriendBean(DBHelper dbHelper,String hxGroupId,String groupId,FriendBean f) {
 		ContentValues values = new ContentValues();
+		values.put(DBHelper.CLOUMN_CURRENT_USER_ID, BGApp.mUserId);
 		values.put(DBHelper.GroupMember.GM_HX_GROUPID, hxGroupId);
 		values.put(DBHelper.GroupMember.GM_GROUPID, groupId);
 		values.put(DBHelper.GroupMember.GM_USERID, f.userid);
@@ -185,7 +188,7 @@ public class GroupMemberBean {
 	 * @params:@param FriendBean
 	 */
 	public static void deleteGroupMemberBean(DBHelper dbHelper,String groupId) {
-		int count = dbHelper.deleteAll(DBHelper.TB_GROUP_MEMBER, new String[]{DBHelper.GroupMember.GM_GROUPID}, new String[]{groupId});
+		int count = dbHelper.deleteAll(DBHelper.TB_GROUP_MEMBER, new String[]{DBHelper.CLOUMN_CURRENT_USER_ID,DBHelper.GroupMember.GM_GROUPID}, new String[]{BGApp.mUserId,groupId});
 		LogUtils.i("--删除-----"+count+"个群成员");
 	}
 	
@@ -198,7 +201,7 @@ public class GroupMemberBean {
 	 * @params:@param FriendBean
 	 */
 	public static void deleteGroupMemberBean(DBHelper dbHelper,String groupId,String userid) {
-		int count = dbHelper.deleteAll(DBHelper.TB_GROUP_MEMBER, new String[]{DBHelper.GroupMember.GM_GROUPID,DBHelper.GroupMember.GM_USERID}, new String[]{groupId,userid});
+		int count = dbHelper.deleteAll(DBHelper.TB_GROUP_MEMBER, new String[]{DBHelper.CLOUMN_CURRENT_USER_ID,DBHelper.GroupMember.GM_GROUPID,DBHelper.GroupMember.GM_USERID}, new String[]{BGApp.mUserId,groupId,userid});
 		LogUtils.i("--删除-----"+count+"个群成员");
 	}
 }

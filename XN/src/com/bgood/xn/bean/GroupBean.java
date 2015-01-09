@@ -10,6 +10,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.bgood.xn.db.DBHelper;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.utils.LogUtils;
 /**
  * @todo:群组实体类
@@ -45,7 +46,7 @@ public class GroupBean implements Serializable
 	 */
 	public static List<GroupBean> queryGroupBeanByGroupName(DBHelper mDBHelper,int type,String groupName){
 		   LogUtils.i("------from database----");
-	       Cursor c = mDBHelper.queryAndAllAndLike(DBHelper.TB_GROUP, new String[]{DBHelper.Group.G_GROUPTYPE,DBHelper.Group.G_NAME}, new String[]{String.valueOf(type),groupName},new String[]{"",DBHelper.Group.G_NAME},null);
+	       Cursor c = mDBHelper.queryAndAllAndLike(DBHelper.TB_GROUP, new String[]{DBHelper.CLOUMN_CURRENT_USER_ID,DBHelper.Group.G_GROUPTYPE,DBHelper.Group.G_NAME}, new String[]{String.valueOf(type),groupName},new String[]{BGApp.mUserId,"",DBHelper.Group.G_NAME},null);
 	       List<GroupBean> map = new ArrayList<GroupBean>();
 	       c.moveToFirst();
 	       do {
@@ -86,7 +87,7 @@ public class GroupBean implements Serializable
 	 */
 	public static Map<String,GroupBean> queryGroupBeanByType(DBHelper mDBHelper,int type){
 		   LogUtils.i("------from database----");
-	       Cursor c = mDBHelper.queryAndAll(DBHelper.TB_GROUP, DBHelper.Group.G_GROUPTYPE, String.valueOf(type));
+	       Cursor c = mDBHelper.queryAndAll(DBHelper.TB_GROUP, new String[]{DBHelper.CLOUMN_CURRENT_USER_ID,DBHelper.Group.G_GROUPTYPE}, new String[]{BGApp.mUserId,String.valueOf(type)});
 	       Map<String,GroupBean> map = new HashMap<String,GroupBean>();
 	       c.moveToFirst();
 	       do {
@@ -131,6 +132,7 @@ public class GroupBean implements Serializable
 			for(GroupBean g:listGroup){
 			
 				ContentValues values = new ContentValues();
+				values.put(DBHelper.CLOUMN_CURRENT_USER_ID, BGApp.mUserId);
 				values.put(DBHelper.Group.G_HX_GROUPID, g.hxgroupid);
 				values.put(DBHelper.Group.G_ROOMID, g.roomid);
 				values.put(DBHelper.Group.G_PHOTO, g.photo);
@@ -155,6 +157,7 @@ public class GroupBean implements Serializable
 	 */
 	public static void insertGroupBean(DBHelper dbHelper,GroupBean g) {
 		ContentValues values = new ContentValues();
+		values.put(DBHelper.CLOUMN_CURRENT_USER_ID, BGApp.mUserId);
 		values.put(DBHelper.Group.G_HX_GROUPID, g.hxgroupid);
 		values.put(DBHelper.Group.G_ROOMID, g.roomid);
 		values.put(DBHelper.Group.G_PHOTO, g.photo);
@@ -176,7 +179,7 @@ public class GroupBean implements Serializable
 	 * @params:@param groupBean
 	 */
 	public static void deleteGroupBean(DBHelper dbHelper,String groupId) {
-		int count = dbHelper.deleteAll(DBHelper.TB_GROUP, DBHelper.Group.G_ROOMID, groupId);
+		int count = dbHelper.deleteAll(DBHelper.TB_GROUP, new String[]{DBHelper.CLOUMN_CURRENT_USER_ID,DBHelper.Group.G_ROOMID}, new String[]{BGApp.mUserId,groupId});
 		LogUtils.i("-------------删除数据------------"+count);
 	}
 }

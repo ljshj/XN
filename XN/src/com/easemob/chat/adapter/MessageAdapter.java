@@ -16,6 +16,7 @@ package com.easemob.chat.adapter;
 import java.io.File;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -28,11 +29,14 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.text.Spannable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -43,6 +47,8 @@ import android.widget.TextView.BufferType;
 import android.widget.Toast;
 
 import com.bgood.xn.R;
+import com.bgood.xn.bean.FriendBean;
+import com.bgood.xn.system.BGApp;
 import com.easemob.EMCallBack;
 import com.easemob.chat.Constant;
 import com.easemob.chat.EMChatManager;
@@ -75,6 +81,10 @@ import com.easemob.util.EMLog;
 import com.easemob.util.FileUtils;
 import com.easemob.util.LatLng;
 import com.easemob.util.TextFormater;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 public class MessageAdapter extends BaseAdapter{
 
@@ -109,6 +119,8 @@ public class MessageAdapter extends BaseAdapter{
 	private Context context;
 
 	private Map<String, Timer> timers = new Hashtable<String, Timer>();
+	public ImageLoader mImageLoader;
+	public DisplayImageOptions options;
 
 	public MessageAdapter(Context context, String username, int chatType) {
 		this.username = username;
@@ -116,6 +128,17 @@ public class MessageAdapter extends BaseAdapter{
 		inflater = LayoutInflater.from(context);
 		activity = (Activity) context;
 		this.conversation = EMChatManager.getInstance().getConversation(username);
+		
+		
+		options = new DisplayImageOptions.Builder()
+		.showStubImage(R.drawable.icon_default)
+		.showImageForEmptyUri(R.drawable.icon_default)
+		.cacheInMemory()
+		.cacheOnDisc()
+		.build();
+		mImageLoader = ImageLoader.getInstance();
+		mImageLoader.init(ImageLoaderConfiguration.createDefault(context));
+		
 	}
 
 	// public void setUser(String user) {
@@ -303,10 +326,78 @@ public class MessageAdapter extends BaseAdapter{
 			holder = (ViewHolder) convertView.getTag();
 		}
 
+		/******************************************群聊*********************************************/
 		// 群聊时，显示接收的消息的发送人的名称
-		if (chatType == ChatType.GroupChat && message.direct == EMMessage.Direct.RECEIVE)
-			// demo用username代替nick
-			holder.tv_userId.setText(message.getFrom());
+		if (chatType == ChatType.GroupChat){
+			List<FriendBean> listFriendBean = BGApp.getInstance().getGroupMemberAndHxId().get(message.getTo());
+			
+			FriendBean friendBean = null;
+			for(FriendBean bean:listFriendBean){
+				if(bean.userid.equals(message.getFrom().substring(2))){
+					friendBean = bean;
+					break;
+				}
+			}
+			
+			if(message.direct == EMMessage.Direct.RECEIVE ){
+				// demo用username代替nick
+				if(null!=friendBean){
+					/**如果是收到的消息，则展示对方的名字，否则不展示*/
+					holder.tv_userId.setText(friendBean.name);
+					mImageLoader.displayImage(friendBean.photo,holder.head_iv, options, new SimpleImageLoadingListener() {
+						@Override
+						public void onLoadingComplete() {
+							Animation anim = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+							holder.head_iv.setAnimation(anim);
+							anim.start();
+						}
+					});
+					
+				}else{
+					/**如果是收到的消息，则展示对方的名字，否则不展示*/
+					holder.tv_userId.setText(message.getFrom());
+				}
+			}else{
+				mImageLoader.displayImage(BGApp.mUserBean.photo,holder.head_iv, options, new SimpleImageLoadingListener() {
+					@Override
+					public void onLoadingComplete() {
+						Animation anim = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+						holder.head_iv.setAnimation(anim);
+						anim.start();
+					}
+				});
+			}
+		}else{ /**如果是单聊的情况*/
+			
+			FriendBean toBean = BGApp.getInstance().getFriendMapById().get(message.getFrom().substring(2));
+			
+			
+			if(message.direct == EMMessage.Direct.RECEIVE ){
+				// demo用username代替nick
+				if(null!=toBean){
+					mImageLoader.displayImage(toBean.photo,holder.head_iv, options, new SimpleImageLoadingListener() {
+						@Override
+						public void onLoadingComplete() {
+							Animation anim = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+							holder.head_iv.setAnimation(anim);
+							anim.start();
+						}
+					});
+				}
+				
+			}else{
+				mImageLoader.displayImage(BGApp.mUserBean.photo,holder.head_iv, options, new SimpleImageLoadingListener() {
+					@Override
+					public void onLoadingComplete() {
+						Animation anim = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+						holder.head_iv.setAnimation(anim);
+						anim.start();
+					}
+				});
+			}
+			
+
+		}
 
 		// 如果是发送的消息并且不是群聊消息，显示已读textview
 		if (message.direct == EMMessage.Direct.SEND && chatType != ChatType.GroupChat) {

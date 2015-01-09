@@ -321,6 +321,11 @@ public class FriendListFragment extends BaseFragment implements TaskListenerWith
 							
 							FriendBean fb = BGApp.getInstance().getFriendMapById().get(mActionFriendBean.userid);
 							
+							if(null == fb){
+								return;
+							}
+							
+							
 							Iterator<?> iterFriendMapById = BGApp.getInstance().getFriendMapById().entrySet().iterator();
 							while (iterFriendMapById.hasNext()) {
 								Entry<?, ?> object = (Entry<?, ?>) iterFriendMapById.next();

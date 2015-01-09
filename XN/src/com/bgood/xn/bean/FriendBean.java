@@ -12,6 +12,7 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 
 import com.bgood.xn.db.DBHelper;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.utils.LogUtils;
 import com.easemob.chat.Constant;
 import com.easemob.util.HanziToPinyin;
@@ -91,7 +92,7 @@ public class FriendBean implements Parcelable {
 	 */
 	public static List<FriendBean> queryFriendBean(DBHelper mDBHelper){
 		   LogUtils.i("------from database----");
-	       Cursor c = mDBHelper.queryAll(DBHelper.TB_FRIEND);
+	       Cursor c = mDBHelper.queryAndAll(DBHelper.TB_FRIEND,DBHelper.CLOUMN_CURRENT_USER_ID,BGApp.mUserId);
 	       List<FriendBean>list = new ArrayList<FriendBean>();
 	       do {
 	    	   if(c!=null&&c.getCount()>0){
@@ -131,7 +132,7 @@ public class FriendBean implements Parcelable {
 	 */
 	public static Map<String,FriendBean> queryFriendBeanAndID(DBHelper mDBHelper){
 		   LogUtils.i("------from database----");
-	       Cursor c = mDBHelper.queryAll(DBHelper.TB_FRIEND);
+		   Cursor c = mDBHelper.queryAndAll(DBHelper.TB_FRIEND,DBHelper.CLOUMN_CURRENT_USER_ID,BGApp.mUserId);
 	       Map<String,FriendBean>list = new HashMap<String,FriendBean>();
 	       do {
 	    	   if(c!=null&&c.getCount()>0){
@@ -176,6 +177,7 @@ public class FriendBean implements Parcelable {
 			ArrayList<ContentValues> list = new ArrayList<ContentValues>();
 			for(FriendBean f:listFriend){
 				ContentValues values = new ContentValues();
+				values.put(DBHelper.CLOUMN_CURRENT_USER_ID, BGApp.mUserId);
 				values.put(DBHelper.Friend.F_USERID, f.userid);
 				values.put(DBHelper.Friend.F_TYPE, f.type);
 				values.put(DBHelper.Friend.F_SIGNATURE, f.signature);
@@ -200,6 +202,7 @@ public class FriendBean implements Parcelable {
 	 */
 	public static void insertFriendBean(DBHelper dbHelper,FriendBean f) {
 		ContentValues values = new ContentValues();
+		values.put(DBHelper.CLOUMN_CURRENT_USER_ID, BGApp.mUserId);
 		values.put(DBHelper.Friend.F_USERID, f.userid);
 		values.put(DBHelper.Friend.F_TYPE, f.type);
 		values.put(DBHelper.Friend.F_SIGNATURE, f.signature);
@@ -221,7 +224,7 @@ public class FriendBean implements Parcelable {
 	 * @params:@param FriendBean
 	 */
 	public static void deleteFriendBean(DBHelper dbHelper,String userid) {
-		int count = dbHelper.deleteAll(DBHelper.TB_FRIEND, DBHelper.Friend.F_USERID, userid);
+		int count = dbHelper.deleteAll(DBHelper.TB_FRIEND, new String[]{DBHelper.CLOUMN_CURRENT_USER_ID,DBHelper.Friend.F_USERID},new String[]{BGApp.mUserId,userid});
 		LogUtils.i("-------------删除数据------------"+count);
 	}
 

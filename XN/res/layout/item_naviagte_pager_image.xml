@@ -15,10 +15,11 @@
         android:id="@+id/start_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|bottom|right"
-        android:layout_marginBottom="104dp"
+        android:layout_gravity="center_horizontal|bottom"
         android:contentDescription="@null"
         android:background="@drawable/touch_drawable"
-        android:visibility="gone" />
+        android:layout_marginBottom="170dp"
+        android:visibility="gone"
+         />
 
 </FrameLayout>
