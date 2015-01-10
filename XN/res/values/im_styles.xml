@@ -180,4 +180,16 @@
         <item name="android:activityCloseExitAnimation">@anim/slide_out_to_right</item>
         <item name="android:activityCloseEnterAnimation">@anim/slide_in_from_left</item>
     </style>
+    
+     <!-- 警告按钮 -->
+     <style name="btn_alert">
+         <item name="android:layout_width">match_parent</item>
+         <item name="android:layout_height">wrap_content</item>
+         <item name="android:background">@drawable/btn_style_alert_dialog_special</item>
+         <item name="android:textColor">@color/white</item>
+         <item name="android:textSize">18sp</item>
+         <item name="android:padding">5dp</item>
+         <item name="android:layout_marginTop">10dp</item>
+     </style>
+     
 </resources>

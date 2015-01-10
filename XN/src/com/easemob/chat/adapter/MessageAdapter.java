@@ -48,7 +48,9 @@ import android.widget.Toast;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.FriendBean;
+import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.easemob.EMCallBack;
 import com.easemob.chat.Constant;
 import com.easemob.chat.EMChatManager;
@@ -497,15 +499,23 @@ public class MessageAdapter extends BaseAdapter{
 
 		} else {
 			// 长按头像，移入黑名单
+			holder.head_iv.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					Intent intent = new Intent(activity,NameCardActivity.class);
+					intent.putExtra(UserInfoBean.KEY_USER_ID, message.getFrom().substring(2));
+					activity.startActivity(intent);					
+				}
+			});
+			
 			holder.head_iv.setOnLongClickListener(new OnLongClickListener() {
-
 				@Override
 				public boolean onLongClick(View v) {
-					Intent intent = new Intent(activity, AlertDialog.class);
-					intent.putExtra("msg", "移入到黑名单？");
-					intent.putExtra("cancel", true);
-					intent.putExtra("position", position);
-					activity.startActivityForResult(intent, ChatActivity.REQUEST_CODE_ADD_TO_BLACKLIST);
+				Intent intent = new Intent(activity, AlertDialog.class);
+				intent.putExtra("msg", "移入到黑名单？");
+				intent.putExtra("cancel", true);
+				intent.putExtra("position", position);
+				activity.startActivityForResult(intent, ChatActivity.REQUEST_CODE_ADD_TO_BLACKLIST);
 					return true;
 				}
 			});

@@ -39,7 +39,6 @@ public class KBaseAdapter extends BaseAdapter {
 		options = new DisplayImageOptions.Builder()
 		.showStubImage(R.drawable.icon_default)
 		.showImageForEmptyUri(R.drawable.icon_default)
-		.cacheInMemory()
 		.cacheOnDisc()
 		.build();
 		mImageLoader = ImageLoader.getInstance();

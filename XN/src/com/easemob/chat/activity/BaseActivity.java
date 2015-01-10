@@ -14,6 +14,8 @@
 
 package com.easemob.chat.activity;
 
+import java.util.List;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -21,10 +23,14 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
+import com.bgood.xn.bean.FriendBean;
+import com.bgood.xn.bean.GroupBean;
 import com.bgood.xn.db.DBHelper;
 import com.bgood.xn.db.PreferenceUtil;
+import com.bgood.xn.system.BGApp;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
+import com.easemob.chat.EMMessage.ChatType;
 import com.easemob.chat.EMMessage.Type;
 import com.easemob.chat.NotificationCompat;
 import com.easemob.chat.utils.CommonUtils;
@@ -80,8 +86,39 @@ public class BaseActivity extends FragmentActivity {
         String ticker = CommonUtils.getMessageDigest(message, this);
         if(message.getType() == Type.TXT)
             ticker = ticker.replaceAll("\\[.{2,3}\\]", "[表情]");
+//        //设置状态栏提示
+//        mBuilder.setTicker(message.getFrom()+": " + ticker);
+        
+        
+        
+        
+        
+        
+        String msgFrom = message.getFrom();
+        ChatType chatType = message.getChatType();
+			if (chatType == ChatType.Chat) { // 单聊信息
+				FriendBean bean = BGApp.getInstance().getFriendMapById().get(message.getFrom().substring(2));
+				msgFrom = (null == bean) ? msgFrom : bean.name;
+				
+			} else { // 群聊信息
+				List<FriendBean> friends = BGApp.getInstance().getGroupMemberAndHxId().get(message.getTo());
+				if (null != friends) {
+					for (FriendBean friendBean : friends) {
+						if (null != friendBean&& friendBean.userid.equals(message.getFrom().substring(2))) {
+							msgFrom = friendBean.name;
+							break;
+						}
+					}
+				}
+				GroupBean group = BGApp.getInstance().getGroupMap().get(message.getTo());
+				if(null!=group){
+					msgFrom+="("+group.name+")";
+				}
+			}
         //设置状态栏提示
-        mBuilder.setTicker(message.getFrom()+": " + ticker);
+        mBuilder.setTicker(msgFrom+": " + ticker);
+        
+        
 
         Notification notification = mBuilder.build();
         notificationManager.notify(notifiId, notification);

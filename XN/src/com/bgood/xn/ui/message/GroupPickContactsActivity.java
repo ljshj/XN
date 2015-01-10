@@ -111,7 +111,7 @@ public class GroupPickContactsActivity extends BaseActivity {
 		ArrayList<FriendBean> members = new ArrayList<FriendBean>();
 		int length = contactAdapter.isCheckedArray.length;
 		for (int i = 0; i < length; i++) {
-			FriendBean friend = contactAdapter.getItem(i);
+			FriendBean friend = contactAdapter.getItem(i+1);
 			if (contactAdapter.isCheckedArray[i] && !exitingMembers.contains(friend)) {
 				members.add(friend);
 			}

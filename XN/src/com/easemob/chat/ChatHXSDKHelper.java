@@ -13,11 +13,14 @@
  */
 package com.easemob.chat;
 
+import java.util.List;
 import java.util.Map;
 
 import android.content.Intent;
-import android.content.IntentFilter;
 
+import com.bgood.xn.bean.FriendBean;
+import com.bgood.xn.bean.GroupBean;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.MainActivity;
 import com.easemob.EMCallBack;
 import com.easemob.applib.controller.HXSDKHelper;
@@ -60,7 +63,30 @@ public class ChatHXSDKHelper extends HXSDKHelper{
               String ticker = CommonUtils.getMessageDigest(message, appContext);
               if(message.getType() == Type.TXT)
                   ticker = ticker.replaceAll("\\[.{2,3}\\]", "[表情]");
-              return message.getFrom() + ": " + ticker;
+              
+              String msgFrom = message.getFrom();
+              ChatType chatType = message.getChatType();
+				if (chatType == ChatType.Chat) { // 单聊信息
+					FriendBean bean = BGApp.getInstance().getFriendMapById().get(message.getFrom().substring(2));
+					msgFrom = (null == bean) ? msgFrom : bean.name;
+					
+				} else { // 群聊信息
+					List<FriendBean> friends = BGApp.getInstance().getGroupMemberAndHxId().get(message.getTo());
+					if (null != friends) {
+						for (FriendBean friendBean : friends) {
+							if (null != friendBean&& friendBean.userid.equals(message.getFrom().substring(2))) {
+								msgFrom = friendBean.name;
+								break;
+							}
+						}
+					}
+					GroupBean group = BGApp.getInstance().getGroupMap().get(message.getTo());
+					if(null!=group){
+						msgFrom+="("+group.name+")";
+					}
+				}
+              return msgFrom + ": " + ticker;
+              
           }
 
           @Override
@@ -92,7 +118,7 @@ public class ChatHXSDKHelper extends HXSDKHelper{
                 Intent intent = new Intent(appContext, ChatActivity.class);
                 ChatType chatType = message.getChatType();
                 if (chatType == ChatType.Chat) { // 单聊信息
-                    intent.putExtra("userId", message.getFrom());
+                    intent.putExtra("userId", message.getFrom().substring(2));
                     intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
                 } else { // 群聊信息
                             // message.getTo()为群聊id

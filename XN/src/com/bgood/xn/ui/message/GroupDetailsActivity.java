@@ -88,13 +88,15 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	private int referenceHeight;
 	private ProgressDialog progressDialog;
 	private List<FriendBean> friends = new ArrayList<FriendBean>();
+	
+	/**添加群成员*/
+	private List<FriendBean> addFriends = new ArrayList<FriendBean>();
 
 	public static GroupDetailsActivity instance;
 
 	// 清空所有聊天记录
-	private RelativeLayout clearAllHistory;
 	
-	private TextView tvNotice,tvGroupInfo;
+	private TextView tvGroupName,tvNotice,tvGroupInfo;
 	
 	/**当前用户的身份*/
 	private String type = "";  
@@ -119,13 +121,16 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	private void initView() {
 		userGridview = (ExpandGridView) findViewById(R.id.gridview);
 		
+		tvGroupName = (TextView) findViewById(R.id.tv_group_name);
+		tvGroupName.setText(group.name);
+		
 		tvGroupInfo = (TextView) findViewById(R.id.tv_group_intro);
 		tvGroupInfo.setText(group.intro);
 		
 		tvNotice = (TextView) findViewById(R.id.tv_group_notice);
 		tvNotice.setText(group.notice);
 		
-		clearAllHistory = (RelativeLayout) findViewById(R.id.clear_all_history);
+		findViewById(R.id.clear_all_history).setOnClickListener(this);
 		exitBtn = (Button) findViewById(R.id.btn_exit_grp);
 		deleteBtn = (Button) findViewById(R.id.btn_exitdel_grp);
 
@@ -165,7 +170,6 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			}
 		});
 
-		clearAllHistory.setOnClickListener(this);
 	}
 
 	@Override
@@ -179,9 +183,9 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			}
 			switch (requestCode) {
 			case REQUEST_CODE_ADD_USER:// 添加群成员
-				final ArrayList<FriendBean> friends = data.getParcelableArrayListExtra("newmembers");
+				addFriends = data.getParcelableArrayListExtra("newmembers");
 				progressDialog.show();
-				addMembersToGroup(friends);
+				addMembersToGroup();
 				break;
 			case REQUEST_CODE_EXIT: // 退出群
 				progressDialog.setMessage("正在退出群聊...");
@@ -250,17 +254,19 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	 * 
 	 * @param newmembers
 	 */
-	private void addMembersToGroup(final List<FriendBean> listFriends) {
+	private void addMembersToGroup() {
 		new Thread(new Runnable() {
 
 			public void run() {
 				try {
 					
-					String[] newmembers = new String[listFriends.size()];
+					String[] newmembers = new String[addFriends.size()];
+					final String[] invites = new String[addFriends.size()];
 					
-					for (int i = 0; i < listFriends.size(); i++) {
-						FriendBean friend = listFriends.get(i);
+					for (int i = 0; i < addFriends.size(); i++) {
+						FriendBean friend = addFriends.get(i);
 						newmembers[i] = "bg"+friend.userid;
+						invites[i] = friend.userid;
 					}
 					
 					// 创建者调用add方法
@@ -270,9 +276,12 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 						// 一般成员调用invite方法
 						EMGroupManager.getInstance().inviteUser(group.hxgroupid, newmembers, null);
 					}
+					
+					
 					runOnUiThread(new Runnable() {
 						public void run() {
-							friends.addAll(listFriends);
+							IMRequest.getInstance().requestGroupMemberJoinOrInvite(GroupDetailsActivity.this, mActivity, invites[0], group.roomid);
+							friends.addAll(addFriends);
 							adapter.notifyDataSetChanged();
 							progressDialog.dismiss();
 						}
@@ -332,15 +341,15 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				// 设置成删除按钮
 				button.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.smiley_minus_btn, 0, 0);
 				if (type.equals("0")) {	//普通成员
-					convertView.setVisibility(View.INVISIBLE);
+					convertView.setVisibility(View.GONE);
 				} else { // 显示删除按钮 非0 则是管理员，或群主
 					if (isInDeleteMode) {
 						// 正处于删除模式下，隐藏删除按钮
-						convertView.setVisibility(View.INVISIBLE);
+						convertView.setVisibility(View.GONE);
 					} else {
 						// 正常模式
 						convertView.setVisibility(View.VISIBLE);
-						convertView.findViewById(R.id.badge_delete).setVisibility(View.INVISIBLE);
+						convertView.findViewById(R.id.badge_delete).setVisibility(View.GONE);
 					}
 					button.setOnClickListener(new OnClickListener() {
 						@Override
@@ -353,28 +362,23 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			} else if (position == getCount()- 2) { // 添加群组成员按钮
 				button.setText("");
 				button.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.smiley_add_btn, 0, 0);
-				
-				if (type.equals("0")) {//0表示是普通成员，
-					// if current user is not group admin, hide add/remove btn
-					convertView.setVisibility(View.INVISIBLE);
-				} else {//非零表示是管理员或者创建者
 					// 正处于删除模式下,隐藏添加按钮
 					if (isInDeleteMode) {
-						convertView.setVisibility(View.INVISIBLE);
+						convertView.setVisibility(View.GONE);
 					} else {
 						convertView.setVisibility(View.VISIBLE);
-						convertView.findViewById(R.id.badge_delete).setVisibility(View.INVISIBLE);
+						convertView.findViewById(R.id.badge_delete).setVisibility(View.GONE);
 					}
 					button.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
+							addFriends = new ArrayList<FriendBean>();
 							// 进入选人页面
 							startActivityForResult(
 									(new Intent(GroupDetailsActivity.this, GroupPickContactsActivity.class).putExtra("hxgroupId", group.hxgroupid)),
 									REQUEST_CODE_ADD_USER);
 						}
 					});
-				}
 			} else { // 普通item，显示群组成员
 				
 				final FriendBean friendBean = (FriendBean) mList.get(position);
@@ -400,7 +404,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 					// 如果是删除模式下，显示减人图标
 					convertView.findViewById(R.id.badge_delete).setVisibility(View.VISIBLE);
 				} else {
-					convertView.findViewById(R.id.badge_delete).setVisibility(View.INVISIBLE);
+					convertView.findViewById(R.id.badge_delete).setVisibility(View.GONE);
 				}
 				
 				
@@ -475,6 +479,13 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 								}
 							sortMemberByType();
 							initView();
+							//每次同步一下数据
+							GroupMemberBean.deleteGroupMemberBean(dbHelper, group.roomid);
+							GroupMemberBean.storeGroupMemberBean(dbHelper, group.hxgroupid, group.roomid, friends);
+							BGApp.getInstance().getGroupMemberAndHxId().get(group.hxgroupid).clear();
+							BGApp.getInstance().getGroupMemberAndHxId().get(group.hxgroupid).addAll(addFriends);
+							BGApp.getInstance().getGroupMemberBean().get(group.roomid).clear();
+							BGApp.getInstance().getGroupMemberBean().get(group.roomid).addAll(addFriends);
 						}
 					break;
 				case 850018: //退出群 和解散群共用
@@ -500,6 +511,13 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 					}
 					GroupMemberBean.deleteGroupMemberBean(dbHelper, group.roomid, actionFriendBean.userid);
 				break;
+				case 850025:	//添加或邀请群成员
+					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+						BGApp.getInstance().getGroupMemberAndHxId().get(group.hxgroupid).addAll(addFriends);
+						BGApp.getInstance().getGroupMemberBean().get(group.roomid).addAll(addFriends);
+						GroupMemberBean.storeGroupMemberBean(dbHelper, group.hxgroupid, group.roomid, addFriends);
+					}
+					break;
 				default:
 					break;
 				

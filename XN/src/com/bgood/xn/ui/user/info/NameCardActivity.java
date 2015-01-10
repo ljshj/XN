@@ -195,7 +195,7 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 					
 					try {
 						//demo写死了个reason，实际应该让用户手动填入
-						EMContactManager.getInstance().addContact("bg"+userId, "bg"+BGApp.mUserId+"加个好友呗");
+						EMContactManager.getInstance().addContact("bg"+userId, "加个好友呗");
 						LogUtils.print("------------------编号是-----------------------"+"bg"+userId);
 						runOnUiThread(new Runnable() {
 							public void run() {

@@ -147,8 +147,6 @@ public class ContactAdapter extends ArrayAdapter<FriendBean>  implements Section
 				return null;
 			}
 			
-			
-			
 			mImageLoader.displayImage(user.photo,avatar, options, new SimpleImageLoadingListener() {
 				@Override
 				public void onLoadingComplete() {
