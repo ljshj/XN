@@ -8,15 +8,32 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.widget.ImageView;
+
+import com.bgood.xn.R;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
- * @todo:TODO
+ * @todo:图片辅助类
  * @date:2014-10-27 下午4:41:33
  * @author:hg_liuzl@163.com
  */
 public class ImgUtils {
 
-	
+	/**设置图片*/
+    public static void setPhoto(final String imgUrl,final ImageView iv){
+	    DisplayImageOptions options;
+		options = new DisplayImageOptions.Builder()
+		.showImageOnFail(R.drawable.icon_default)
+		.showImageOnLoading(R.drawable.icon_default)
+		.showImageForEmptyUri(R.drawable.icon_default)
+		.cacheInMemory(true)
+		.cacheOnDisk(true)
+		.bitmapConfig(Bitmap.Config.RGB_565)  
+		.build();
+		 ImageLoader.getInstance().displayImage(imgUrl,iv, options);
+    }
 	
 	/**
 	 * 

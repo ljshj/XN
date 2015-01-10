@@ -3,13 +3,12 @@ package com.bgood.xn.ui.user.product;
 import java.util.List;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -31,9 +30,9 @@ import com.bgood.xn.bean.response.ProductResponse;
 import com.bgood.xn.db.PreferenceUtil;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpRequestInfo;
 import com.bgood.xn.network.http.HttpResponseInfo;
-import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.ProductRequest;
 import com.bgood.xn.system.BGApp;
@@ -45,8 +44,6 @@ import com.bgood.xn.view.slidingmenu.lib.SlidingMenu.OnOpenedListener;
 import com.bgood.xn.view.xlistview.XListView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 /**
  * 
@@ -428,26 +425,19 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 	private void setData(ShowcaseBean showcaseDTO)
 	{
 			setCredibility(!TextUtils.isEmpty(showcaseDTO.credit)?Integer.parseInt(showcaseDTO.credit):0);
-			
-			ImageLoader mImageLoader;
-			DisplayImageOptions options;
+	        DisplayImageOptions options;
 			options = new DisplayImageOptions.Builder()
-			.showStubImage(R.drawable.icon_default)
+			.showImageOnFail(R.drawable.icon_default)
+			.showImageOnLoading(R.drawable.icon_default)
 			.showImageForEmptyUri(R.drawable.icon_default)
-			.cacheInMemory()
-			.cacheOnDisc()
+			.cacheInMemory(true)
+			.cacheOnDisk(true)
+			.bitmapConfig(Bitmap.Config.RGB_565)  
 			.build();
-			mImageLoader = ImageLoader.getInstance();
-			mImageLoader.init(ImageLoaderConfiguration.createDefault(this));
 			
-	        mImageLoader.displayImage(showcaseDTO.logo,m_showcaseIconImgV, options, new SimpleImageLoadingListener() {
-				@Override
-				public void onLoadingComplete() {
-					Animation anim = AnimationUtils.loadAnimation(ShowcaseActivity.this, R.anim.fade_in);
-					m_showcaseIconImgV.setAnimation(anim);
-					anim.start();
-				}
-			});
+			 ImageLoader.getInstance().displayImage(showcaseDTO.logo,m_showcaseIconImgV, options);
+	        
+	        
 			
 			m_recommendTv.setText("("+(showcaseDTO.recommend_list == null?"0":String.valueOf(showcaseDTO.recommend_list.size()))+")");
 			

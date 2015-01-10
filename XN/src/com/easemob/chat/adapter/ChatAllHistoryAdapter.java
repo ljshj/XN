@@ -16,14 +16,12 @@ package com.easemob.chat.adapter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.ImageView;
@@ -47,8 +45,6 @@ import com.easemob.chat.utils.SmileUtils;
 import com.easemob.util.DateUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 /**
  * 显示所有聊天记录adpater
@@ -73,13 +69,13 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 		inflater = LayoutInflater.from(context);
 		
 		options = new DisplayImageOptions.Builder()
-		.showStubImage(R.drawable.icon_default)
+		.showImageOnFail(R.drawable.icon_default)
+		.showImageOnLoading(R.drawable.icon_default)
 		.showImageForEmptyUri(R.drawable.icon_default)
-		.cacheInMemory()
-		.cacheOnDisc()
+		.cacheInMemory(true)
+		.cacheOnDisk(true)
+		.bitmapConfig(Bitmap.Config.RGB_565)  
 		.build();
-		mImageLoader = ImageLoader.getInstance();
-		mImageLoader.init(ImageLoaderConfiguration.createDefault(context));
 	}
 
 	ViewHolder holder;
@@ -132,20 +128,10 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 			if(null == group){
 				return null;
 			}
-				
-			
-			mImageLoader.displayImage(group.photo,holder.avatar, options, new SimpleImageLoadingListener() {
-				@Override
-				public void onLoadingComplete() {
-					Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.fade_in);
-					holder.avatar.setAnimation(anim);
-					anim.start();
-				}
-			});
-			
 			
 			// 群聊消息，显示群聊头像
 			holder.avatar.setImageResource(R.drawable.group_icon);
+			//ImageLoader.getInstance().displayImage(group.photo,holder.avatar, options);
 			//Map<String, GroupBean> mapGroups = BGApp.getInstance().getGroupMap().get(arg0);;
 			holder.name.setText(group.name);
 		} else {
@@ -156,15 +142,7 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 				return null;
 			}
 			
-			mImageLoader.displayImage(fb.photo,holder.avatar, options, new SimpleImageLoadingListener() {
-				@Override
-				public void onLoadingComplete() {
-					Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.fade_in);
-					holder.avatar.setAnimation(anim);
-					anim.start();
-				}
-			});
-			
+			ImageLoader.getInstance().displayImage(fb.photo,holder.avatar, options);
 			
 			// 本地或者服务器获取用户详情，以用来显示头像和nick
 //			holder.avatar.setImageResource(R.drawable.default_avatar);

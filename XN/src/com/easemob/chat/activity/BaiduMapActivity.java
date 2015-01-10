@@ -23,7 +23,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -45,6 +45,8 @@ import com.baidu.mapapi.map.OverlayItem;
 import com.baidu.mapapi.utils.CoordinateConvert;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.bgood.xn.R;
+import com.bgood.xn.R.color;
+import com.bgood.xn.widget.TitleBar;
 import com.easemob.util.EMLog;
 
 public class BaiduMapActivity extends BaseActivity {
@@ -62,7 +64,7 @@ public class BaiduMapActivity extends BaseActivity {
 	public MyLocationListenner myListener = new MyLocationListenner();
 	public NotifyLister mNotifyer = null;
 
-	Button sendButton = null;
+	//Button sendButton = null;
 
 	EditText indexText = null;
 	int index = 0;
@@ -79,6 +81,8 @@ public class BaiduMapActivity extends BaseActivity {
 	public BMapManager mBMapManager = null;
 	public static final String strKey = "3AB1810EBAAE0175EB41A744CF3B2D6497407B87";
 
+	public TitleBar titleBar;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -88,9 +92,20 @@ public class BaiduMapActivity extends BaseActivity {
 			initEngineManager(this.getApplicationContext());
 		}
 		setContentView(R.layout.activity_baidumap);
+		
+		titleBar = new TitleBar(this);
+		titleBar.initAllBar("位置信息", "发送");
+		titleBar.rightBtn.setEnabled(false);
+		titleBar.rightBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				sendLocation();
+			}
+		});
+		
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		mMapController = mMapView.getController();
-		sendButton = (Button) findViewById(R.id.btn_location_send);
 		initMapView();
 
 		mMapView.getController().setZoom(17);
@@ -108,8 +123,7 @@ public class BaiduMapActivity extends BaseActivity {
 	}
 
 	private void showMap(double latitude, double longtitude, String address) {
-		sendButton.setVisibility(View.GONE);
-
+		titleBar.rightBtn.setVisibility(View.GONE);
 		GeoPoint point1 = new GeoPoint((int) (latitude * 1e6), (int) (longtitude * 1e6));
 		point1 = CoordinateConvert.fromGcjToBaidu(point1);
 		mMapController.setCenter(point1);
@@ -261,7 +275,7 @@ public class BaiduMapActivity extends BaseActivity {
 			}
 			Log.d("map", "On location change received:" + location);
 			Log.d("map", "addr:" + location.getAddrStr());
-			sendButton.setEnabled(true);
+			titleBar.rightBtn.setEnabled(true);
 			if (progressDialog != null) {
 				progressDialog.dismiss();
 			}
@@ -312,7 +326,7 @@ public class BaiduMapActivity extends BaseActivity {
 		finish();
 	}
 
-	public void sendLocation(View view) {
+	private void sendLocation() {
 		Intent intent = this.getIntent();
 		intent.putExtra("latitude", lastLocation.getLatitude());
 		intent.putExtra("longitude", lastLocation.getLongitude());

@@ -16,8 +16,6 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -27,9 +25,9 @@ import com.bgood.xn.R;
 import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpRequestInfo;
 import com.bgood.xn.network.http.HttpResponseInfo;
-import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.FileRequest;
 import com.bgood.xn.network.request.UserCenterRequest;
@@ -45,15 +43,12 @@ import com.bgood.xn.ui.user.info.NameActivity;
 import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.ui.user.info.PrivinceActivity;
 import com.bgood.xn.ui.user.info.SexActivity;
-import com.bgood.xn.ui.user.info.SignatureActivity;
 import com.bgood.xn.utils.pic.CropImageActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.dialog.BottomDialog;
 import com.bgood.xn.widget.TitleBar;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 
 /**
@@ -167,25 +162,16 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
     
     
     private void setPhoto(UserInfoBean userDTO){
-    	ImageLoader mImageLoader;
-		DisplayImageOptions options;
+        DisplayImageOptions options;
 		options = new DisplayImageOptions.Builder()
-		.showStubImage(R.drawable.icon_default)
+		.showImageOnFail(R.drawable.icon_default)
+		.showImageOnLoading(R.drawable.icon_default)
 		.showImageForEmptyUri(R.drawable.icon_default)
-		.cacheInMemory()
-		.cacheOnDisc()
+		.cacheInMemory(true)
+		.cacheOnDisk(true)
+		.bitmapConfig(Bitmap.Config.RGB_565)  
 		.build();
-		mImageLoader = ImageLoader.getInstance();
-		mImageLoader.init(ImageLoaderConfiguration.createDefault(mActivity));
-		
-        mImageLoader.displayImage(userDTO.photo,m_iconImgV, options, new SimpleImageLoadingListener() {
-			@Override
-			public void onLoadingComplete() {
-				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
-				m_iconImgV.setAnimation(anim);
-				anim.start();
-			}
-		});
+		 ImageLoader.getInstance().displayImage(userDTO.photo,m_iconImgV, options);
     }
     
     /**

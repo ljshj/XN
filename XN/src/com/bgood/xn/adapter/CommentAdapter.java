@@ -5,15 +5,13 @@ import java.util.List;
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.CommentBean;
 import com.bgood.xn.utils.ToolUtils;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * @todo:微墙评论适配器
@@ -47,15 +45,8 @@ public class CommentAdapter extends KBaseAdapter
         
        final CommentBean wComment = (CommentBean) mList.get(position);
         
-        mImageLoader.displayImage(wComment.photo,holder.ivComment, options, new SimpleImageLoadingListener() {
-			@Override
-			public void onLoadingComplete() {
-				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
-				holder.ivComment.setAnimation(anim);
-				anim.start();
-			}
-		});
-        
+       ImageLoader.getInstance().displayImage(wComment.photo,holder.ivComment, options);
+       
         holder.tvCommentAuthor.setText(wComment.name);
         holder.tvCommentTime.setText(ToolUtils.getFormatDate(wComment.commenttime));
         holder.tvCommentContent.setText(wComment.content);

@@ -29,14 +29,11 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.text.Spannable;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -85,8 +82,6 @@ import com.easemob.util.LatLng;
 import com.easemob.util.TextFormater;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 public class MessageAdapter extends BaseAdapter{
 
@@ -121,7 +116,6 @@ public class MessageAdapter extends BaseAdapter{
 	private Context context;
 
 	private Map<String, Timer> timers = new Hashtable<String, Timer>();
-	public ImageLoader mImageLoader;
 	public DisplayImageOptions options;
 
 	public MessageAdapter(Context context, String username, int chatType) {
@@ -131,15 +125,14 @@ public class MessageAdapter extends BaseAdapter{
 		activity = (Activity) context;
 		this.conversation = EMChatManager.getInstance().getConversation(username);
 		
-		
 		options = new DisplayImageOptions.Builder()
-		.showStubImage(R.drawable.icon_default)
+		.showImageOnFail(R.drawable.icon_default)
+		.showImageOnLoading(R.drawable.icon_default)
 		.showImageForEmptyUri(R.drawable.icon_default)
-		.cacheInMemory()
-		.cacheOnDisc()
+		.cacheInMemory(true)
+		.cacheOnDisk(true)
+		.bitmapConfig(Bitmap.Config.RGB_565)  
 		.build();
-		mImageLoader = ImageLoader.getInstance();
-		mImageLoader.init(ImageLoaderConfiguration.createDefault(context));
 		
 	}
 
@@ -335,7 +328,7 @@ public class MessageAdapter extends BaseAdapter{
 			
 			FriendBean friendBean = null;
 			for(FriendBean bean:listFriendBean){
-				if(bean.userid.equals(message.getFrom().substring(2))){
+				if(null!=bean && bean.userid.equals(message.getFrom().substring(2))){
 					friendBean = bean;
 					break;
 				}
@@ -346,28 +339,14 @@ public class MessageAdapter extends BaseAdapter{
 				if(null!=friendBean){
 					/**如果是收到的消息，则展示对方的名字，否则不展示*/
 					holder.tv_userId.setText(friendBean.name);
-					mImageLoader.displayImage(friendBean.photo,holder.head_iv, options, new SimpleImageLoadingListener() {
-						@Override
-						public void onLoadingComplete() {
-							Animation anim = AnimationUtils.loadAnimation(context, R.anim.fade_in);
-							holder.head_iv.setAnimation(anim);
-							anim.start();
-						}
-					});
+					ImageLoader.getInstance().displayImage(friendBean.photo,holder.head_iv, options);
 					
 				}else{
 					/**如果是收到的消息，则展示对方的名字，否则不展示*/
 					holder.tv_userId.setText(message.getFrom());
 				}
 			}else{
-				mImageLoader.displayImage(BGApp.mUserBean.photo,holder.head_iv, options, new SimpleImageLoadingListener() {
-					@Override
-					public void onLoadingComplete() {
-						Animation anim = AnimationUtils.loadAnimation(context, R.anim.fade_in);
-						holder.head_iv.setAnimation(anim);
-						anim.start();
-					}
-				});
+				ImageLoader.getInstance().displayImage(BGApp.mUserBean.photo,holder.head_iv, options);
 			}
 		}else{ /**如果是单聊的情况*/
 			
@@ -377,28 +356,12 @@ public class MessageAdapter extends BaseAdapter{
 			if(message.direct == EMMessage.Direct.RECEIVE ){
 				// demo用username代替nick
 				if(null!=toBean){
-					mImageLoader.displayImage(toBean.photo,holder.head_iv, options, new SimpleImageLoadingListener() {
-						@Override
-						public void onLoadingComplete() {
-							Animation anim = AnimationUtils.loadAnimation(context, R.anim.fade_in);
-							holder.head_iv.setAnimation(anim);
-							anim.start();
-						}
-					});
+					ImageLoader.getInstance().displayImage(toBean.photo,holder.head_iv, options);
 				}
 				
 			}else{
-				mImageLoader.displayImage(BGApp.mUserBean.photo,holder.head_iv, options, new SimpleImageLoadingListener() {
-					@Override
-					public void onLoadingComplete() {
-						Animation anim = AnimationUtils.loadAnimation(context, R.anim.fade_in);
-						holder.head_iv.setAnimation(anim);
-						anim.start();
-					}
-				});
+				ImageLoader.getInstance().displayImage(BGApp.mUserBean.photo,holder.head_iv, options);
 			}
-			
-
 		}
 
 		// 如果是发送的消息并且不是群聊消息，显示已读textview

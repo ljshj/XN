@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.GroupBean;
+import com.nostra13.universalimageloader.core.ImageLoader;
 /**
  * 
  * @todo:群组
@@ -41,8 +42,9 @@ public class GroupAdapter extends KBaseAdapter {
 			return null;
 		}
 		
-		mImageLoader.displayImage(group.photo, holder.icon, options);
+		// ImageLoader.getInstance().displayImage(group.photo, holder.icon, options);
 		
+		holder.icon.setImageResource(R.drawable.group_icon);
 		holder.name.setText(group.name);
 
 	    if("0".equals(group.grouptype)){	//固定群

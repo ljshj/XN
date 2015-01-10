@@ -5,14 +5,12 @@ import java.util.List;
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.ProductBean;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * 橱窗中产品所有页面的适配器
@@ -42,19 +40,9 @@ public class ProductListAdapter extends KBaseAdapter
             holder = (ViewHolder)convertView.getTag();
         }
 		
-		ProductBean productDTO = (ProductBean) mList.get(position);
-		
+		final ProductBean productDTO = (ProductBean) mList.get(position);
 	
-		mImageLoader.displayImage(productDTO.img_thum,holder.iconImgV, options, new SimpleImageLoadingListener() {
-			@Override
-			public void onLoadingComplete() {
-				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
-				holder.iconImgV.setAnimation(anim);
-				anim.start();
-			}
-		});
-		
-		
+		 ImageLoader.getInstance().displayImage(productDTO.img_thum,holder.iconImgV, options);
 		
 		holder.nameTv.setText(productDTO.product_name);
 		holder.priceTv.setText(productDTO.getPrice());

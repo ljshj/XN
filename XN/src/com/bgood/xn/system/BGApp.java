@@ -10,10 +10,7 @@ import java.util.Stack;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 
 import com.bgood.xn.bean.FriendBean;
 import com.bgood.xn.bean.GroupBean;
@@ -21,14 +18,11 @@ import com.bgood.xn.bean.GroupMemberBean;
 import com.bgood.xn.bean.MemberLoginBean;
 import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.db.DBHelper;
-import com.bgood.xn.utils.LogUtils;
 import com.easemob.EMCallBack;
 import com.easemob.chat.ChatHXSDKHelper;
-import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMMessage;
-import com.easemob.chat.EMMessage.ChatType;
-import com.easemob.chat.activity.ChatActivity;
 import com.iflytek.cloud.SpeechUtility;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class BGApp extends Application {
 	
@@ -104,6 +98,12 @@ public class BGApp extends Application {
          * }
          */
         hxSDKHelper.onInit(applicationContext);
+        
+        /**图片加载*/
+      //创建默认的ImageLoader配置参数
+  		ImageLoaderConfiguration configuration = new ImageLoaderConfiguration.Builder(this)
+  		.build();
+  		ImageLoader.getInstance().init(configuration);  
 	}
 	
 	

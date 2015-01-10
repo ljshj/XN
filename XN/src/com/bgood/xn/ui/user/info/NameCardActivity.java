@@ -2,14 +2,12 @@ package com.bgood.xn.ui.user.info;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
@@ -20,7 +18,6 @@ import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpRequestInfo;
 import com.bgood.xn.network.http.HttpResponseInfo;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
-import com.bgood.xn.network.request.IMRequest;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
@@ -34,8 +31,6 @@ import com.easemob.chat.EMContactManager;
 import com.easemob.chat.activity.ChatActivity;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 /***
  * 
@@ -228,25 +223,17 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
      */
     private void setData(UserInfoBean userDTO)
     {
-		ImageLoader mImageLoader;
 		DisplayImageOptions options;
 		options = new DisplayImageOptions.Builder()
-		.showStubImage(R.drawable.icon_default)
+		.showImageOnFail(R.drawable.icon_default)
+		.showImageOnLoading(R.drawable.icon_default)
 		.showImageForEmptyUri(R.drawable.icon_default)
-		.cacheInMemory()
-		.cacheOnDisc()
+		.cacheInMemory(true)
+		.cacheOnDisk(true)
+		.bitmapConfig(Bitmap.Config.RGB_565)  
 		.build();
-		mImageLoader = ImageLoader.getInstance();
-		mImageLoader.init(ImageLoaderConfiguration.createDefault(mActivity));
 		
-        mImageLoader.displayImage(userDTO.photo,m_userIconImgV, options, new SimpleImageLoadingListener() {
-			@Override
-			public void onLoadingComplete() {
-				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
-				m_userIconImgV.setAnimation(anim);
-				anim.start();
-			}
-		});
+		 ImageLoader.getInstance().displayImage(userDTO.photo,m_userIconImgV, options);
         
         // 昵称
         m_userNicteTv.setText(userDTO.nickn);

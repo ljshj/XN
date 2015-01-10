@@ -6,16 +6,12 @@ import android.app.Activity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
-import com.bgood.xn.R.color;
 import com.bgood.xn.bean.AttentionBean;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * 我的关注适配器
@@ -49,16 +45,7 @@ public class AttentionAdapter extends KBaseAdapter
         }
         
         final AttentionBean mAttentionBean = (AttentionBean) mList.get(position);
-        
-        mImageLoader.displayImage(mAttentionBean.img,holder.userIconImgV, options, new SimpleImageLoadingListener() {
-			@Override
-			public void onLoadingComplete() {
-				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
-				holder.userIconImgV.setAnimation(anim);
-				anim.start();
-			}
-		});
-        
+        ImageLoader.getInstance().displayImage(mAttentionBean.img, holder.userIconImgV, options);
         
         holder.userIconImgV.setOnClickListener(mListener);
 		holder.userIconImgV.setTag(mAttentionBean);

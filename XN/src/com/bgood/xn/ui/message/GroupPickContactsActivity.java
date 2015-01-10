@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
@@ -21,6 +22,7 @@ import android.widget.ListView;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.FriendBean;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.widget.TitleBar;
 import com.easemob.chat.Constant;
 import com.easemob.chat.activity.BaseActivity;
 import com.easemob.chat.adapter.ContactAdapter;
@@ -39,10 +41,22 @@ public class GroupPickContactsActivity extends BaseActivity {
 	/** group中一开始就有的成员 */
 	private List<FriendBean> exitingMembers;
 
+	private TitleBar titleBar;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_group_pick_contacts);
+		
+		titleBar = new TitleBar(this);
+		titleBar.initAllBar("选择联系人", "确定");
+		titleBar.rightBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				save();
+			}
+		});
+		
 		String hxgroupId = getIntent().getStringExtra("hxgroupId");
 		if (hxgroupId == null) {// 创建群组
 			isCreatingNewGroup = true;
@@ -97,7 +111,7 @@ public class GroupPickContactsActivity extends BaseActivity {
 	 * 
 	 * @param v
 	 */
-	public void save(View v) {
+	private void save() {
 		setResult(RESULT_OK, new Intent().putParcelableArrayListExtra("newmembers", getToBeAddMembers()));
 		finish();
 	}

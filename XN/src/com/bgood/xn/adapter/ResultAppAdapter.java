@@ -6,15 +6,13 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.AppBean;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
+import com.nostra13.universalimageloader.core.ImageLoader;
 /**
  * 本地应用程序适配器
  */
@@ -45,17 +43,10 @@ public class ResultAppAdapter extends KBaseAdapter
             holder = (ViewHolder) convertView.getTag();
         }
         
-        AppBean appDTO = (AppBean) mList.get(position);
+        final AppBean appDTO = (AppBean) mList.get(position);
 
+        ImageLoader.getInstance().displayImage(appDTO.img_thum,holder.iconImgV, options);
         
-        mImageLoader.displayImage(appDTO.img_thum,holder.iconImgV, options, new SimpleImageLoadingListener() {
-			@Override
-			public void onLoadingComplete() {
-				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
-				holder.iconImgV.setAnimation(anim);
-				anim.start();
-			}
-		});
         
         
         holder.nameTv.setText(appDTO.title);

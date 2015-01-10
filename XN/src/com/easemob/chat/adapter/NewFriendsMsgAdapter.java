@@ -14,21 +14,17 @@
 package com.easemob.chat.adapter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
-import android.os.Looper;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -53,8 +49,6 @@ import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.IMRequest;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.system.BGApp;
-import com.bgood.xn.ui.message.MessageActivity;
-import com.bgood.xn.ui.message.fragment.FriendListFragment;
 import com.bgood.xn.view.BToast;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
@@ -63,32 +57,27 @@ import com.easemob.chat.domain.InviteMessage;
 import com.easemob.chat.domain.InviteMessage.InviteMesageStatus;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> implements TaskListenerWithState {
 
 	private Context context;
 	private InviteMessgeDao messgeDao;
 	private DBHelper dbHelper;
-	public ImageLoader mImageLoader;
-	public DisplayImageOptions options;
+	private DisplayImageOptions options;
 	private InviteMessage actionInviteMessage;
 
 	public NewFriendsMsgAdapter(Context context, int textViewResourceId, List<InviteMessage> objects) {
 		super(context, textViewResourceId, objects);
 		this.context = context;
 		messgeDao = new InviteMessgeDao(context);
-		
 		options = new DisplayImageOptions.Builder()
-		.showStubImage(R.drawable.icon_default)
+		.showImageOnFail(R.drawable.icon_default)
+		.showImageOnLoading(R.drawable.icon_default)
 		.showImageForEmptyUri(R.drawable.icon_default)
-		.cacheInMemory()
-		.cacheOnDisc()
+		.cacheInMemory(true)
+		.cacheOnDisk(true)
+		.bitmapConfig(Bitmap.Config.RGB_565)  
 		.build();
-		mImageLoader = ImageLoader.getInstance();
-		mImageLoader.init(ImageLoaderConfiguration.createDefault(context));
-		dbHelper = new DBHelper(context);
 	}
 
 	@Override
@@ -112,14 +101,8 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> implements
 
 		final InviteMessage msg = getItem(position);
 		actionInviteMessage = msg;
-		mImageLoader.displayImage(msg.getUserPhotoUrl(),holder.avator, options, new SimpleImageLoadingListener() {
-			@Override
-			public void onLoadingComplete() {
-				Animation anim = AnimationUtils.loadAnimation(context, R.anim.fade_in);
-				holder.avator.setAnimation(anim);
-				anim.start();
-			}
-		});
+	
+		ImageLoader.getInstance().displayImage(msg.getUserPhotoUrl(),holder.avator, options);
 		
 		
 		if (msg != null) {

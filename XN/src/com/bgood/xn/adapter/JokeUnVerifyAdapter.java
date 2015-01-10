@@ -5,8 +5,6 @@ import java.util.List;
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,8 +15,6 @@ import com.bgood.xn.bean.JokeBean;
 import com.bgood.xn.utils.ToolUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 /**
  * @todo:未审核的幽默秀
@@ -32,14 +28,6 @@ public class JokeUnVerifyAdapter extends KBaseAdapter {
 
 	public JokeUnVerifyAdapter(List<?> mList, Activity mActivity) {
 		super(mList, mActivity);
-		options = new DisplayImageOptions.Builder()
-		.showStubImage(R.drawable.icon_default)
-		.showImageForEmptyUri(R.drawable.icon_default)
-		.cacheInMemory()
-		.cacheOnDisc()
-		.build();
-		mImageLoader = ImageLoader.getInstance();
-		mImageLoader.init(ImageLoaderConfiguration.createDefault(mActivity));
 	}
 
 	@Override
@@ -64,14 +52,7 @@ public class JokeUnVerifyAdapter extends KBaseAdapter {
 		
 		final JokeBean jokeBean = (JokeBean) mList.get(position);
 		
-		mImageLoader.displayImage(jokeBean.photo,holder.ivAuthorImg, options, new SimpleImageLoadingListener() {
-			@Override
-			public void onLoadingComplete() {
-				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
-				holder.ivAuthorImg.setAnimation(anim);
-				anim.start();
-			}
-		});
+		mImageLoader.displayImage(jokeBean.photo,holder.ivAuthorImg, options);
 		
 		
 		holder.tvAuthorName.setText(jokeBean.username);

@@ -5,7 +5,7 @@
     android:background="#eee"
     android:orientation="vertical" >
     
-    <RelativeLayout
+<!--     <RelativeLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
@@ -38,7 +38,8 @@
             android:textColor="#fff"
             android:textSize="17sp" />
 
-    </RelativeLayout>
+    </RelativeLayout> -->
+    <include layout="@layout/title_bar"/>
     
     <com.baidu.mapapi.map.MapView android:id="@+id/bmapView"
 	    android:layout_width="fill_parent" android:layout_height="fill_parent" 

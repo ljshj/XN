@@ -3,6 +3,7 @@ package com.bgood.xn.utils;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
@@ -18,8 +19,6 @@ import com.bgood.xn.view.photoview.PhotoView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 public class FDSPagerAdapter extends PagerAdapter implements OnPageChangeListener
 {
@@ -42,38 +41,38 @@ public class FDSPagerAdapter extends PagerAdapter implements OnPageChangeListene
 		PhotoView imageView = (PhotoView) view.findViewById(R.id.image);
 		final ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progress);
 		container.addView(view);
-		DisplayImageOptions imageOptions =
-				new DisplayImageOptions.Builder()
-				.showImageForEmptyUri(R.drawable.loading_pictrue_item)
-				.cacheInMemory()
-				.imageScaleType(ImageScaleType.EXACT)
-				.cacheOnDisc()
-				.build();
+		DisplayImageOptions options = new DisplayImageOptions.Builder()
+		.showImageOnFail(R.drawable.icon_default)
+		.showImageOnLoading(R.drawable.icon_default)
+		.showImageForEmptyUri(R.drawable.icon_default)
+		.cacheInMemory(true)
+		.cacheOnDisk(true)
+		.bitmapConfig(Bitmap.Config.RGB_565)  
+		.build();
 
-		ImageLoader.getInstance().displayImage(m_list.get(position).img, imageView, imageOptions, new ImageLoadingListener()
-		{
+		ImageLoader.getInstance().displayImage(m_list.get(position).img, imageView, options, new com.nostra13.universalimageloader.core.listener.ImageLoadingListener() {
+			
 			@Override
-			public void onLoadingStarted() {
-				progressBar.setVisibility(View.VISIBLE);
+			public void onLoadingStarted(String arg0, View arg1) {
+				progressBar.setVisibility(View.VISIBLE);	
 			}
-
+			
 			@Override
-			public void onLoadingFailed(FailReason failReason) {
-				progressBar.setVisibility(View.GONE);
-				
+			public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
+				progressBar.setVisibility(View.GONE);				
 			}
-
+			
 			@Override
-			public void onLoadingComplete() {
-				progressBar.setVisibility(View.GONE);
-				
+			public void onLoadingComplete(String arg0, View arg1, Bitmap arg2) {
+				progressBar.setVisibility(View.GONE);				
 			}
-
+			
 			@Override
-			public void onLoadingCancelled() {
-				progressBar.setVisibility(View.GONE);
+			public void onLoadingCancelled(String arg0, View arg1) {
+				progressBar.setVisibility(View.GONE);				
 			}
 		});
+		
 		return view;
 	}
 

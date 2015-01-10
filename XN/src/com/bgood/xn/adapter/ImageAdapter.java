@@ -12,14 +12,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.ImageBean;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
+import com.nostra13.universalimageloader.core.ImageLoader;
 /***
  * @todo:图片适配器
  * @date:2014-11-10 下午6:00:55
@@ -108,15 +106,7 @@ public class ImageAdapter extends KBaseAdapter {
 	
 	/**图片的url方式展示图片*/
 	private void imgType(int position,ImageBean bean,final ImageView ivImg){
-		
-		mImageLoader.displayImage(bean.img_thum,ivImg, options, new SimpleImageLoadingListener() {
-			@Override
-			public void onLoadingComplete() {
-				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
-				ivImg.setAnimation(anim);
-				anim.start();
-			}
-		});
+		 ImageLoader.getInstance().displayImage(bean.img_thum, ivImg, options);
 	}
 
 	class Holder {

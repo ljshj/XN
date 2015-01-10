@@ -5,14 +5,12 @@ import java.util.List;
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.WeiQiangBean;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 
 public class ResultWeiQiangAdapter extends KBaseAdapter
@@ -45,15 +43,8 @@ public class ResultWeiQiangAdapter extends KBaseAdapter
         }
         
        final WeiQiangBean weiqiangDTO = (WeiQiangBean) mList.get(position);
-        
-        mImageLoader.displayImage(weiqiangDTO.photo,holder.iconImgV, options, new SimpleImageLoadingListener() {
-			@Override
-			public void onLoadingComplete() {
-				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
-				holder.iconImgV.setAnimation(anim);
-				anim.start();
-			}
-		});
+       
+       ImageLoader.getInstance().displayImage(weiqiangDTO.photo,holder.iconImgV, options);
         
         holder.infoTv.setText(weiqiangDTO.content);
         holder.sendUserTv.setText(weiqiangDTO.name);

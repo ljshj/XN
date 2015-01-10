@@ -7,8 +7,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,12 +18,9 @@ import com.bgood.xn.bean.CommentBean;
 import com.bgood.xn.bean.ImageBean;
 import com.bgood.xn.bean.SimpleUserBean;
 import com.bgood.xn.bean.WeiqiangCorattionBean;
-import com.bgood.xn.system.BGApp;
 import com.bgood.xn.utils.ToolUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 /**
  * 
  * @todo:微墙中与我相关的适配类
@@ -39,14 +34,6 @@ public class WeiqiangCorrelationAdapter extends KBaseAdapter
 
 	public WeiqiangCorrelationAdapter(List<?> mList, Activity mActivity,OnClickListener listener) {
 		super(mList, mActivity, listener);
-		options = new DisplayImageOptions.Builder()
-		.showStubImage(R.drawable.icon_default)
-		.showImageForEmptyUri(R.drawable.icon_default)
-		.cacheInMemory()
-		.cacheOnDisc()
-		.build();
-		mImageLoader = ImageLoader.getInstance();
-		mImageLoader.init(ImageLoaderConfiguration.createDefault(mActivity));
 	}
 
 	@Override
@@ -87,15 +74,8 @@ public class WeiqiangCorrelationAdapter extends KBaseAdapter
 		
 		final WeiqiangCorattionBean wcb = (WeiqiangCorattionBean) mList.get(position);
 		
-		mImageLoader.displayImage(wcb.photo,holder.ivAuthorImg, options, new SimpleImageLoadingListener() {
-			@Override
-			public void onLoadingComplete() {
-				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
-				holder.ivAuthorImg.setAnimation(anim);
-				anim.start();
-			}
-		});
-		
+		 mImageLoader.displayImage(wcb.photo,holder.ivAuthorImg, options);
+				
 		holder.ivAuthorImg.setOnClickListener(mListener);
 		holder.ivAuthorImg.setTag(wcb);
 		

@@ -1,11 +1,10 @@
 package com.bgood.xn.adapter;
 import java.util.List;
+
 import android.app.Activity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -14,7 +13,7 @@ import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.ProductBean;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  *     
@@ -60,14 +59,8 @@ public class ProductEditAdapter extends KBaseAdapter
 		
 		final ProductBean productDTO = (ProductBean) mList.get(position);
 
-		mImageLoader.displayImage(productDTO.img_thum,holder.iconImgV, options, new SimpleImageLoadingListener() {
-			@Override
-			public void onLoadingComplete() {
-				Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.fade_in);
-				holder.iconImgV.setAnimation(anim);
-				anim.start();
-			}
-		});
+		 ImageLoader.getInstance().displayImage(productDTO.img_thum,holder.iconImgV, options);
+		
 		holder.nameTv.setText(productDTO.product_name);
 		holder.priceTv.setText(productDTO.getPrice());
 		holder.deleteTv.setOnClickListener(mListener);

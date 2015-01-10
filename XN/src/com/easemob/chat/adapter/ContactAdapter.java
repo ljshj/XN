@@ -18,17 +18,15 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -40,12 +38,9 @@ import android.widget.TextView;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.FriendBean;
 import com.easemob.chat.Constant;
-import com.easemob.chat.domain.User;
 import com.easemob.chat.widget.Sidebar;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 /**
  * 简单的好友Adapter实现
@@ -60,7 +55,6 @@ public class ContactAdapter extends ArrayAdapter<FriendBean>  implements Section
 	private SparseIntArray sectionOfPosition;
 	private Sidebar sidebar;
 	private int res;
-	private ImageLoader mImageLoader;
 	private DisplayImageOptions options;
 	private Context mContext;
 
@@ -72,13 +66,13 @@ public class ContactAdapter extends ArrayAdapter<FriendBean>  implements Section
 		layoutInflater = LayoutInflater.from(context);
 		
 		options = new DisplayImageOptions.Builder()
-		.showStubImage(R.drawable.icon_default)
+		.showImageOnFail(R.drawable.icon_default)
+		.showImageOnLoading(R.drawable.icon_default)
 		.showImageForEmptyUri(R.drawable.icon_default)
-		.cacheInMemory()
-		.cacheOnDisc()
+		.cacheInMemory(true)
+		.cacheOnDisk(true)
+		.bitmapConfig(Bitmap.Config.RGB_565)  
 		.build();
-		mImageLoader = ImageLoader.getInstance();
-		mImageLoader.init(ImageLoaderConfiguration.createDefault(mContext));
 	}
 	
 	@Override
@@ -147,15 +141,7 @@ public class ContactAdapter extends ArrayAdapter<FriendBean>  implements Section
 				return null;
 			}
 			
-			mImageLoader.displayImage(user.photo,avatar, options, new SimpleImageLoadingListener() {
-				@Override
-				public void onLoadingComplete() {
-					Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.fade_in);
-					avatar.setAnimation(anim);
-					anim.start();
-				}
-			});
-			
+			ImageLoader.getInstance().displayImage(user.photo,avatar, options);
 			
 			//设置nick，demo里不涉及到完整user，用username代替nick显示
 			String username = user.getName();
