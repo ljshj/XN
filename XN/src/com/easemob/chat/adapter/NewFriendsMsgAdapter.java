@@ -69,6 +69,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> implements
 	public NewFriendsMsgAdapter(Context context, int textViewResourceId, List<InviteMessage> objects) {
 		super(context, textViewResourceId, objects);
 		this.context = context;
+		this.dbHelper = new DBHelper(context);
 		messgeDao = new InviteMessgeDao(context);
 		options = new DisplayImageOptions.Builder()
 		.showImageOnFail(R.drawable.icon_default)
@@ -221,7 +222,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> implements
 
 							if(null!=msg.getHxgroupId()){
 								/**向这个群添加成员*/
-								IMRequest.getInstance().requestGroupMemberJoinOrInvite(NewFriendsMsgAdapter.this, context, msg.getFrom().substring(2), msg.getGroupId());
+								IMRequest.getInstance().requestGroupMemberJoinOrInvite(NewFriendsMsgAdapter.this, context, new String[]{msg.getFrom().substring(2)}, msg.getGroupId());
 							}
 						}
 					});
@@ -344,13 +345,16 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> implements
 				break;
 			case 850025:	//加群成功
 				if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
-					//加群成功后，再获取这个群的资料
-					IMRequest.getInstance().requestGroupInfo(NewFriendsMsgAdapter.this, context, "0", actionInviteMessage.getHxgroupId(),false);	//获取该群的资料
-					
+					/**获取申请者的资料*/
+					UserCenterRequest.getInstance().requestPersonInfo(NewFriendsMsgAdapter.this, context, actionInviteMessage.getFrom().substring(2),false);
+
+//					//加群成功后，再获取这个群的资料
+//					IMRequest.getInstance().requestGroupInfo(NewFriendsMsgAdapter.this, context, "0", actionInviteMessage.getHxgroupId(),false);	//获取该群的资料
 				} else {
 					BToast.show(context, "同意请求失败");
 				}
 				break;
+				
 			case 850027://添加好友的接口，返回的好友数据
 				if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
 					/**添加好友成功后*/

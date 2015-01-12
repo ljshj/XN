@@ -178,6 +178,26 @@ public class HomeRequest  extends BaseNetWork {
 			setMessageType(40007);
 			new HttpRequestAsyncTask(false,ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		}
+		
+		/**
+		 * 
+		 * @todo:搜索交流厅
+		 * @date:2014-10-20 下午5:59:13
+		 * @author:hg_liuzl@163.com
+		 */
+		 public void requestSearchComminucation(TaskListenerWithState mHttpTaskListener,Context context,String keyword){
+		 	setMessageType(40009);
+			JSONObject body = new JSONObject();
+			try {
+				body.put("keyword", keyword);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			setBody(body);
+			new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+		 }
+		 
+		 
 }
 
 ///**

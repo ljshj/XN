@@ -381,11 +381,16 @@ public class IMRequest extends BaseNetWork {
 	 * @params:@param userid
 	 * @params:@param groupid
 	 */
-	public void requestGroupMemberJoinOrInvite(TaskListenerWithState mHttpTaskListener,Context context,String userid,String groupid) {
+	public void requestGroupMemberJoinOrInvite(TaskListenerWithState mHttpTaskListener,Context context,String[] userid,String groupid) {
 		setMessageType(50025);
 		JSONObject body = new JSONObject();
 		try {
-			body.put("userid", userid);
+			
+			JSONArray array = new JSONArray();
+			for(String uid:userid){
+				array.put(uid);
+			}
+			body.put("userid", array);
 			body.put("groupid", groupid);
 			body.put("type", 0);
 			body.put("agr", "true");
@@ -395,6 +400,38 @@ public class IMRequest extends BaseNetWork {
 		setBody(body);
 		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 	}
+	
+	/**
+	 * 
+	 * @todo:添加交流厅成员
+	 * @date:2015-1-2 下午4:34:01
+	 * @author:hg_liuzl@163.com
+	 * @params:@param mHttpTaskListener
+	 * @params:@param context
+	 * @params:@param userid
+	 * @params:@param groupid
+	 */
+	public void requestCommunicationMemberJoinOrInvite(TaskListenerWithState mHttpTaskListener,Context context,String[] userid,String groupid) {
+		setMessageType(50025);
+		JSONObject body = new JSONObject();
+		try {
+			
+			JSONArray array = new JSONArray();
+			for(String uid:userid){
+				array.put(uid);
+			}
+			body.put("userid", array);
+			body.put("groupid", groupid);
+			body.put("agr", "true");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		setBody(body);
+		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+	}
+	
+	
+	
 	
 ////	移除群成员
 //	public void requestGroupMemberRemove(TaskListenerWithState mHttpTaskListener,Context context,String sendername,String sender,String userid,String vertify) {

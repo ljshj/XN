@@ -1,5 +1,8 @@
 package com.bgood.xn.ui.message;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,7 +11,9 @@ import android.widget.EditText;
 
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
+import com.bgood.xn.bean.FriendBean;
 import com.bgood.xn.bean.GroupBean;
+import com.bgood.xn.bean.GroupMemberBean;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
@@ -77,9 +82,17 @@ public class CreateGroupActivity extends BaseActivity implements TaskListenerWit
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				GroupBean group = JSON.parseObject(json, GroupBean.class);
 				GroupBean.insertGroupBean(dbHelper,group);
-				BToast.show(mActivity, "群创建成功");
 				BGApp.getInstance().getGroupMap().put(group.hxgroupid, group);
+				FriendBean fb = FriendBean.copyUserInfo(BGApp.mUserBean);
+				GroupMemberBean.insertFriendBean(dbHelper, group.hxgroupid,group.roomid,fb);
+				//向内存中插入变更的数据
+				List<FriendBean> list = new ArrayList<FriendBean>();
+				list.add(fb);
+				BGApp.getInstance().getGroupMemberBean().put(group.roomid, list);		
+				BGApp.getInstance().getGroupMemberAndHxId().put(group.hxgroupid, list);	
+				
 				GroupFragment.instance.refresh();	//刷新一下数据
+				BToast.show(mActivity, "群创建成功");
 				finish();
 			}
 		}

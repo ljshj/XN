@@ -38,16 +38,9 @@
 
                 <TextView
                     android:id="@+id/result_member_item_tv_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:ellipsize="marquee"
-                    android:focusableInTouchMode="true"
-                    android:marqueeRepeatLimit="1"
-                    android:singleLine="true"
                     android:text="追求永恒"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/weiqiang_comment" />
+                    android:focusableInTouchMode="true"
+                   style="@style/text_search_title" />
 
                 <ImageView
                     android:id="@+id/result_member_item_imgv_sex"

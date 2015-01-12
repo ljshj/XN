@@ -67,11 +67,11 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * 
- * @todo:群详情
+ * @todo:交流厅详情
  * @date:2014-12-19 上午11:34:40
  * @author:hg_liuzl@163.com
  */
-public class GroupDetailsActivity extends BaseActivity implements OnClickListener,TaskListenerWithState 
+public class CommunicateDetailActivity extends BaseActivity implements OnClickListener,TaskListenerWithState 
 {
 	private static final int REQUEST_CODE_ADD_USER = 0;
 	private static final int REQUEST_CODE_EXIT = 1;
@@ -93,7 +93,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	/**添加群成员*/
 	private List<FriendBean> addFriends = new ArrayList<FriendBean>();
 
-	public static GroupDetailsActivity instance;
+	public static CommunicateDetailActivity instance;
 
 	// 清空所有聊天记录
 	
@@ -109,13 +109,13 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		instance = this;
-		setContentView(R.layout.activity_group_details);
+		setContentView(R.layout.activity_communicate_details);
 		(new TitleBar(mActivity)).initTitleBar("群详情");
 		// 获取传过来的groupid
 		hxgroupId = getIntent().getStringExtra("hxgroupId");
 		group = BGApp.getInstance().getGroupMap().get(hxgroupId);
 		/**获取群成员*/
-		IMRequest.getInstance().requestGroupMembers(GroupDetailsActivity.this, this,group.roomid,true);
+		IMRequest.getInstance().requestGroupMembers(CommunicateDetailActivity.this, this,group.roomid,true);
 	}
 	
 	@SuppressLint("ClickableViewAccessibility")
@@ -178,7 +178,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == RESULT_OK) {
 			if (progressDialog == null) {
-				progressDialog = new ProgressDialog(GroupDetailsActivity.this);
+				progressDialog = new ProgressDialog(CommunicateDetailActivity.this);
 				progressDialog.setMessage("正在添加...");
 				progressDialog.setCanceledOnTouchOutside(false);
 			}
@@ -240,14 +240,14 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	 * 退出群组
 	 */
 	private void exitGrop() {
-		IMRequest.getInstance().requestGroupQuit(GroupDetailsActivity.this, mActivity, BGApp.mUserId, group.roomid);
+		IMRequest.getInstance().requestGroupQuit(CommunicateDetailActivity.this, mActivity, BGApp.mUserId, group.roomid);
 	}
 
 	/**
 	 * 解散群组
 	 */
 	private void deleteGrop() {
-		IMRequest.getInstance().requestGroupDisMiss(GroupDetailsActivity.this, mActivity, group.roomid);
+		IMRequest.getInstance().requestGroupDisMiss(CommunicateDetailActivity.this, mActivity, group.roomid);
 	}
 
 	/**
@@ -281,7 +281,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 					
 					runOnUiThread(new Runnable() {
 						public void run() {
-							IMRequest.getInstance().requestGroupMemberJoinOrInvite(GroupDetailsActivity.this, mActivity, invites, group.roomid);
+							IMRequest.getInstance().requestGroupMemberJoinOrInvite(CommunicateDetailActivity.this, mActivity, invites, group.roomid);
 							friends.addAll(addFriends);
 							adapter.notifyDataSetChanged();
 							progressDialog.dismiss();
@@ -303,7 +303,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.clear_all_history: // 清空聊天记录
-			Intent intent = new Intent(GroupDetailsActivity.this, AlertDialog.class);
+			Intent intent = new Intent(CommunicateDetailActivity.this, AlertDialog.class);
 			intent.putExtra("cancel", true);
 			intent.putExtra("titleIsCancel", true);
 			intent.putExtra("msg", "确定清空此群的聊天记录吗？");
@@ -376,7 +376,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 							addFriends = new ArrayList<FriendBean>();
 							// 进入选人页面
 							startActivityForResult(
-									(new Intent(GroupDetailsActivity.this, GroupPickContactsActivity.class).putExtra("hxgroupId", group.hxgroupid)),
+									(new Intent(CommunicateDetailActivity.this, GroupPickContactsActivity.class).putExtra("hxgroupId", group.hxgroupid)),
 									REQUEST_CODE_ADD_USER);
 						}
 					});
@@ -426,7 +426,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 							deleteMembersFromGroup();
 						} else {
 							 //正常情况下点击user，可以进入用户详情
-							 startActivity(new Intent(GroupDetailsActivity.this,NameCardActivity.class).putExtra(UserInfoBean.KEY_USER_ID,actionFriendBean.userid));
+							 startActivity(new Intent(CommunicateDetailActivity.this,NameCardActivity.class).putExtra(UserInfoBean.KEY_USER_ID,actionFriendBean.userid));
 
 						}
 					}});
@@ -440,7 +440,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	 * @param username
 	 */
 	protected void deleteMembersFromGroup() {
-		IMRequest.getInstance().requestGroupMemberRemove(GroupDetailsActivity.this, GroupDetailsActivity.this, actionFriendBean.userid, group.roomid);
+		IMRequest.getInstance().requestGroupMemberRemove(CommunicateDetailActivity.this, CommunicateDetailActivity.this, actionFriendBean.userid, group.roomid);
 }
 	
 

@@ -21,6 +21,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -47,6 +48,7 @@ import com.bgood.xn.network.http.HttpResponseInfo;
 import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.HomeRequest;
+import com.bgood.xn.network.request.IMRequest;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.ui.user.product.ProductDetailActivity;
@@ -102,6 +104,10 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 	private int m_weiqiangStart = 0;
 	private int m_cabinetStart = 0;
 	
+	private LinearLayout ll_communcation;
+	private TextView tvCommTitle,tvCommSize;
+	private ImageView ivComm;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -114,6 +120,8 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		findView();
 		setListeners();
 		HomeRequest.getInstance().requestSearch(this, this, search_type, m_msg, 114.1917953491211f, 22.636533737182617f, m_start, m_start + PAGE_SIZE_ADD);
+		HomeRequest.getInstance().requestSearchComminucation(this, this,m_msg);
+	
 	}
 	/**
 	 * 控件初始化方法
@@ -135,7 +143,11 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 			}
 		});
 		
-		
+		ll_communcation = (LinearLayout) findViewById(R.id.ll_communcation);
+		ll_communcation.setVisibility(View.GONE);
+		tvCommTitle = (TextView) findViewById(R.id.tv_comm_name);
+		tvCommSize = (TextView) findViewById(R.id.tv_comm_size);
+		findViewById(R.id.btn_communcation_join).setOnClickListener(this);
 		
 		m_serachBtn = (Button) findViewById(R.id.search_result_btn_search);
 		
@@ -469,6 +481,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 			switch (bNetWork.getMessageType()) {
 			case 840001://搜索结果
 				SearchResultBean resultBean = JSON.parseObject(strJson, SearchResultBean.class);
+				//resultBean.hall;
 				setDataAdapter(m_memberXLv, m_memberAdapter, m_memberList, resultBean.members, m_memberStart);
 				setDataAdapter(m_weiQiangXLv, m_weiqiangAdapter, m_weiQiangList, resultBean.weiqiang, m_weiqiangStart);
 				setDataAdapter(m_showcaseXLv, m_showcaseAdapter, m_showcaseList, resultBean.cabinet, m_cabinetStart);
@@ -538,7 +551,8 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		        m_memberList.clear();
 		        m_weiQiangList.clear();
 		        m_showcaseList.clear();
-				HomeRequest.getInstance().requestSearch(this, this, search_type, m_msg, 114.1917953491211f, 22.636533737182617f, m_start, m_start + PAGE_SIZE_ADD);
+		        HomeRequest.getInstance().requestSearch(this, this, search_type, m_msg, 114.1917953491211f, 22.636533737182617f, m_start, m_start + PAGE_SIZE_ADD);
+		        HomeRequest.getInstance().requestSearchComminucation(this, this,m_msg);
 		    }else{
 		    		BToast.show(mActivity, "请输入搜索内容");
 		        return;

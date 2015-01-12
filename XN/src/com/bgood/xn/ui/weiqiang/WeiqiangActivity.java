@@ -239,11 +239,11 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 		{
 		case R.id.layout_weiqiang_type_left_select:
 			vp_weiqiang_type_select.setCurrentItem(0);
-			checkType(0);
+			//checkType(0);
 			break;
 		case R.id.layout_weiqiang_type_right_select:
 			vp_weiqiang_type_select.setCurrentItem(1);
-			checkType(1);
+			//checkType(1);
 			break;
 		case R.id.weiqiang_main_b_more_operate:
 			if (popupWindow_more != null && popupWindow_more.isShowing())

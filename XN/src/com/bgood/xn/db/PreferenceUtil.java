@@ -17,6 +17,17 @@ public class PreferenceUtil {
 		editor = sp.edit();
 	}
 	
+	/**设置热词**/
+	public void setHotWords(String hotWords){
+		editor.putString("hotWords", hotWords);
+		editor.commit();
+	}
+	
+	/**获取热词**/
+	public String getHotWords(){
+		return sp.getString("hotWords", "");
+	}
+	
 	/**存文件服务器**/
 	public void setFileServerUrl(String fileServer){
 		editor.putString("file_server", fileServer);

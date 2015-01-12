@@ -269,9 +269,11 @@ public class BGApp extends Application {
 		Iterator<?> iterGroup = BGApp.getInstance().getGroupMap().entrySet().iterator();
 		while (iterGroup.hasNext()) {
 			Entry<?, ?> entry = (Entry<?, ?>) iterGroup.next();
-			if(entry.getValue() == group){
-				iterGroup.remove();
-				break;
+			if (null != entry) {
+				if (entry.getValue() == group) {
+					iterGroup.remove();
+					break;
+				}
 			}
 		}
 		
@@ -279,9 +281,11 @@ public class BGApp extends Application {
 		Iterator<?> iterFriendsByHxGroupId = BGApp.getInstance().getGroupMemberAndHxId().entrySet().iterator();
 		while (iterFriendsByHxGroupId.hasNext()) {
 			Entry<?, ?> entry = (Entry<?, ?>) iterFriendsByHxGroupId.next();
-			if(entry.getKey().equals(group.hxgroupid)){
-				iterFriendsByHxGroupId.remove();
-				break;
+			if (entry != null) {
+				if (entry.getKey().equals(group.hxgroupid)) {
+					iterFriendsByHxGroupId.remove();
+					break;
+				}
 			}
 		}
 		
