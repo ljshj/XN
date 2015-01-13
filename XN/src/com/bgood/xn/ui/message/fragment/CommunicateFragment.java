@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -15,18 +16,22 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.GroupAdapter;
 import com.bgood.xn.bean.GroupBean;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.system.Const;
 import com.bgood.xn.ui.base.BaseShowDataFragment;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
+import com.easemob.chat.activity.ChatActivity;
 /**
  * @todo:交流厅
  * @date:2014-12-12 上午10:01:05
@@ -41,9 +46,10 @@ public class CommunicateFragment extends BaseShowDataFragment {
 	private String mKeyWord = "";
 	private GroupAdapter groupAdapter;
 	private View layout;
-	
+	public static CommunicateFragment instance = null;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+		instance = this;
 		layout =  inflater.inflate(R.layout.fragment_group_list, container, false);
 		initView();
 		doGetGroupData();
@@ -78,6 +84,24 @@ public class CommunicateFragment extends BaseShowDataFragment {
 		m_groupXLv.setPullRefreshEnable(false);
 		groupAdapter = new GroupAdapter(m_groupList, getActivity());
 		m_groupXLv.setAdapter(groupAdapter);
+		
+		m_groupXLv.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+				
+				final GroupBean groupBean = (GroupBean) adapter.getAdapter().getItem(position);
+				//进入群聊
+				Intent intent = new Intent(mActivity, ChatActivity.class);
+				// it is group chat
+				intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+				intent.putExtra(Const.CHAT_HXGROUPID, groupBean.hxgroupid);
+				intent.putExtra(Const.CHAT_GROUPTYPE, groupBean.grouptype);
+				startActivityForResult(intent, 0);
+			}
+
+		});
+		
 	}
 	
 	private void doSearch() {
@@ -123,7 +147,7 @@ public class CommunicateFragment extends BaseShowDataFragment {
 		m_groupMap.clear();
 		m_groupList.clear();
 
-		m_groupMap = BGApp.getInstance().getTempMap();
+		m_groupMap = BGApp.getInstance().getGroupTempMap();
 		
 		Iterator<Entry<String, GroupBean>> iter = m_groupMap.entrySet().iterator();
 		while (iter.hasNext()) {

@@ -59,7 +59,7 @@ public class BGApp extends Application {
 	private Map<String, GroupBean> groupMap = new HashMap<String, GroupBean>();
 	
 	/**存放临时群列表   （群hxGroupID, 群实体类）*/
-	private Map<String, GroupBean> tempMap = new HashMap<String, GroupBean>();
+	private Map<String, GroupBean> groupTempMap = new HashMap<String, GroupBean>();
 	
 	/**存放群Id,和群成员**/
 	private Map<String,List<FriendBean>> groupMemberBean = new HashMap<String,List<FriendBean>>();
@@ -174,12 +174,12 @@ public class BGApp extends Application {
 		this.groupMap = groupMap;
 	}
 
-	public Map<String, GroupBean> getTempMap() {
-		return tempMap;
+	public Map<String, GroupBean> getGroupTempMap() {
+		return groupTempMap;
 	}
 
-	public void setTempMap(Map<String, GroupBean> tempMap) {
-		this.tempMap = tempMap;
+	public void setGroupTempMap(Map<String, GroupBean> groupTempMap) {
+		this.groupTempMap = groupTempMap;
 	}
 
 	public Map<String, List<FriendBean>> getGroupMemberBean() {

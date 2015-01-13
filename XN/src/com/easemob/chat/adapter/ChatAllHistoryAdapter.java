@@ -124,7 +124,13 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 		}
 		if (isGroup) {
 			
-			final GroupBean group = BGApp.getInstance().getGroupMap().get(username);//这里获取到的是环信id
+			 GroupBean group = BGApp.getInstance().getGroupMap().get(username);//这里获取到的是环信id
+			
+			 if(null == group){	//先从固定群判断一下是否有这个群，如果没有，则判断一下临时群组
+				 
+				 group = BGApp.getInstance().getGroupTempMap().get(username);
+			 }
+			
 			if(null == group){
 				return null;
 			}

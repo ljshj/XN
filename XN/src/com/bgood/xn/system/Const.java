@@ -15,8 +15,6 @@ public class Const {
 	public static final String BASE_BEGIN = Environment.getExternalStorageDirectory().getAbsolutePath() + "/xuanneng/";
 	public static final String BASE_END = ".jpg";
 	public static final String CID_IMG_STRING_PATH = BASE_BEGIN + System.currentTimeMillis() + BASE_END;
-	
-
 		
 	// 默认timeout 时间 60s
 	public final static int SOCKET_TIMOUT = 60 * 1000;
@@ -30,4 +28,13 @@ public class Const {
 	public final static int SOCKET_HEART_SECOND =3 ;
 	
 	public final static String BC = "BC";
+	
+	
+	/****************************************************聊天模块*******************************************************/
+	
+	/**环信群组ID*/
+	public static final String CHAT_HXGROUPID = "hxgroupId";
+	/**群组类型，固定群 = 0 临时群=1**/
+	public static final String CHAT_GROUPTYPE ="groupType";
+	
 }

@@ -105,6 +105,7 @@ public class GroupFragment extends BaseShowDataFragment {
 				// it is group chat
 				intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
 				intent.putExtra("groupId", groupBean.hxgroupid);
+				intent.putExtra("groupType", groupBean.grouptype);
 				startActivityForResult(intent, 0);
 			}
 

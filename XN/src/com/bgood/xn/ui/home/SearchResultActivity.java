@@ -36,11 +36,17 @@ import com.bgood.xn.adapter.ResultMemberAdapter;
 import com.bgood.xn.adapter.ResultShowcaseAdapter;
 import com.bgood.xn.adapter.ResultWeiQiangAdapter;
 import com.bgood.xn.bean.CabinetResultBean;
+import com.bgood.xn.bean.FriendBean;
+import com.bgood.xn.bean.FriendGroupBean;
+import com.bgood.xn.bean.GroupBean;
+import com.bgood.xn.bean.GroupMemberBean;
 import com.bgood.xn.bean.MemberResultBean;
 import com.bgood.xn.bean.ProductBean;
 import com.bgood.xn.bean.SearchResultBean;
 import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.bean.WeiQiangBean;
+import com.bgood.xn.bean.response.GroupBeanResponse;
+import com.bgood.xn.db.DBHelper.Group;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.http.HttpRequestInfo;
@@ -49,14 +55,18 @@ import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.HomeRequest;
 import com.bgood.xn.network.request.IMRequest;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.ui.message.fragment.CommunicateFragment;
 import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.ui.user.product.ProductDetailActivity;
 import com.bgood.xn.ui.weiqiang.WeiqiangDetailActivity;
+import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.TitleBar;
+import com.easemob.chat.activity.ChatActivity;
 
 /**
  * 搜索结果页面
@@ -106,7 +116,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 	
 	private LinearLayout ll_communcation;
 	private TextView tvCommTitle,tvCommSize;
-	private ImageView ivComm;
+	private GroupBean mGroupBean;
 	
 	
 	@Override
@@ -120,7 +130,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		findView();
 		setListeners();
 		HomeRequest.getInstance().requestSearch(this, this, search_type, m_msg, 114.1917953491211f, 22.636533737182617f, m_start, m_start + PAGE_SIZE_ADD);
-		HomeRequest.getInstance().requestSearchComminucation(this, this,m_msg);
+		HomeRequest.getInstance().requestSearchComminucation(this, this,m_msg,false);
 	
 	}
 	/**
@@ -473,30 +483,65 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			String strJson = bNetWork.getStrJson();
-			stopLoad(m_memberXLv);
-			stopLoad(m_weiQiangXLv);
-			stopLoad(m_showcaseXLv);
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 			try {
 			switch (bNetWork.getMessageType()) {
 			case 840001://搜索结果
+				stopLoad(m_memberXLv);
+				stopLoad(m_weiQiangXLv);
+				stopLoad(m_showcaseXLv);
 				SearchResultBean resultBean = JSON.parseObject(strJson, SearchResultBean.class);
-				//resultBean.hall;
 				setDataAdapter(m_memberXLv, m_memberAdapter, m_memberList, resultBean.members, m_memberStart);
 				setDataAdapter(m_weiQiangXLv, m_weiqiangAdapter, m_weiQiangList, resultBean.weiqiang, m_weiqiangStart);
 				setDataAdapter(m_showcaseXLv, m_showcaseAdapter, m_showcaseList, resultBean.cabinet, m_cabinetStart);
 				break;
 			case 840002:	//会员分页请求
+				stopLoad(m_memberXLv);
 				ArrayList<MemberResultBean> listMember = (ArrayList<MemberResultBean>) JSON.parseArray(strJson, MemberResultBean.class);
 				setDataAdapter(m_memberXLv, m_memberAdapter, m_memberList, listMember, m_memberStart);
 				break;
 			case 840003:	//微墙请求
+				stopLoad(m_weiQiangXLv);
 				ArrayList<WeiQiangBean> listWeiqiang = (ArrayList<WeiQiangBean>) JSON.parseArray(strJson, WeiQiangBean.class);
 				setDataAdapter(m_weiQiangXLv, m_weiqiangAdapter, m_weiQiangList, listWeiqiang, m_weiqiangStart);
 				break;
 			case 840004:	//橱窗请求
+				stopLoad(m_showcaseXLv);
 				ArrayList<CabinetResultBean> listCabinet = (ArrayList<CabinetResultBean>) JSON.parseArray(strJson, CabinetResultBean.class);
 				setDataAdapter(m_showcaseXLv, m_showcaseAdapter, m_showcaseList, listCabinet, m_cabinetStart);
+				break;
+			case 840009://搜索到的好友
+				GroupBeanResponse reponse = JSON.parseObject(strJson, GroupBeanResponse.class);
+				if(null!=reponse && null!=reponse.items.get(0)){
+					mGroupBean = reponse.items.get(0);
+					ll_communcation.setVisibility(View.VISIBLE);
+					tvCommSize.setText(getString(R.string.search_result_comm_size, mGroupBean.membercount));
+					tvCommTitle.setText(mGroupBean.name);
+				}
+				break;
+				
+			case 850013:	//获取交流厅的成员
+				
+				List<FriendBean> friends = new ArrayList<FriendBean>();
+				FriendGroupBean fgb = JSON.parseObject(strJson,FriendGroupBean.class);
+				friends.addAll(fgb.items);
+				
+				GroupBean.insertGroupBean(dbHelper, mGroupBean);	//存放交流厅数据
+				BGApp.getInstance().getGroupTempMap().put(mGroupBean.hxgroupid, mGroupBean);	//放入内存中
+				
+			    GroupMemberBean.storeGroupMemberBean(dbHelper, mGroupBean.hxgroupid, mGroupBean.roomid, friends); //存成员到数据库中
+			    
+			    BGApp.getInstance().getGroupMemberAndHxId().put(mGroupBean.hxgroupid, friends);   //放成员到缓存中
+			    BGApp.getInstance().getGroupMemberBean().put(mGroupBean.roomid, friends);
+				
+			    if(null!=CommunicateFragment.instance){
+			    	CommunicateFragment.instance.refresh();
+			    }
+			    inToChat();
+				break;
+			case 850025:	//加入交流厅
+				//如果已经成功加入这个交流厅了，则需要获取该交流厅的成员
+				IMRequest.getInstance().requestGroupMembers(SearchResultActivity.this, mActivity, mGroupBean.roomid, true);
 				break;
 			default:
 
@@ -534,9 +579,38 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		case R.id.search_result_btn_search:
 			doSearch();
 			break;
-
+		case R.id.btn_communcation_join:
+			requestJoinCommuncation();
+			break;
 		default:
 			break;
+		}
+	}
+	
+	/**
+	 * 进入聊天
+	 */
+	private void inToChat() {
+		//进入群聊
+		Intent intent = new Intent(mActivity, ChatActivity.class);
+		// it is group chat
+		intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+		intent.putExtra("groupId", mGroupBean.hxgroupid);
+		intent.putExtra("groupType", mGroupBean.grouptype);
+		startActivity(intent);
+	}
+	
+	/**
+	 * 进入交流厅
+	 */
+	private void requestJoinCommuncation() {
+		judgeLogin();
+		
+		if(BGApp.getInstance().getGroupTempMap().containsKey(mGroupBean.hxgroupid)){	//如果已经是这个交流厅的成员，则可以直接进入
+			inToChat();
+		}else{
+			IMRequest.getInstance().requestGroupMemberJoinOrInvite(SearchResultActivity.this, mActivity, new String[]{BGApp.mUserId}, mGroupBean.roomid);
+			GroupBean.insertGroupBean(dbHelper, mGroupBean);
 		}
 	}
 	
@@ -552,7 +626,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		        m_weiQiangList.clear();
 		        m_showcaseList.clear();
 		        HomeRequest.getInstance().requestSearch(this, this, search_type, m_msg, 114.1917953491211f, 22.636533737182617f, m_start, m_start + PAGE_SIZE_ADD);
-		        HomeRequest.getInstance().requestSearchComminucation(this, this,m_msg);
+		        HomeRequest.getInstance().requestSearchComminucation(this, this,m_msg,false);
 		    }else{
 		    		BToast.show(mActivity, "请输入搜索内容");
 		        return;

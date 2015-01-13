@@ -185,7 +185,7 @@ public class HomeRequest  extends BaseNetWork {
 		 * @date:2014-10-20 下午5:59:13
 		 * @author:hg_liuzl@163.com
 		 */
-		 public void requestSearchComminucation(TaskListenerWithState mHttpTaskListener,Context context,String keyword){
+		 public void requestSearchComminucation(TaskListenerWithState mHttpTaskListener,Context context,String keyword,boolean showDialog){
 		 	setMessageType(40009);
 			JSONObject body = new JSONObject();
 			try {
@@ -194,7 +194,7 @@ public class HomeRequest  extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			new HttpRequestAsyncTask(showDialog,ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		 }
 		 
 		 

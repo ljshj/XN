@@ -51,6 +51,7 @@ import com.bgood.xn.network.http.HttpResponseInfo;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.IMRequest;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.system.Const;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.message.fragment.GroupFragment;
 import com.bgood.xn.ui.user.info.NameCardActivity;
@@ -111,9 +112,15 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		instance = this;
 		setContentView(R.layout.activity_group_details);
 		(new TitleBar(mActivity)).initTitleBar("群详情");
-		// 获取传过来的groupid
-		hxgroupId = getIntent().getStringExtra("hxgroupId");
-		group = BGApp.getInstance().getGroupMap().get(hxgroupId);
+		
+		hxgroupId = getIntent().getStringExtra(Const.CHAT_HXGROUPID);
+		String hxgroupType = getIntent().getStringExtra(Const.CHAT_GROUPTYPE);
+		if("0".equals(hxgroupType)){
+			group = BGApp.getInstance().getGroupMap().get(hxgroupId);
+		}else{
+			group = BGApp.getInstance().getGroupTempMap().get(hxgroupId);
+		}
+		
 		/**获取群成员*/
 		IMRequest.getInstance().requestGroupMembers(GroupDetailsActivity.this, this,group.roomid,true);
 	}

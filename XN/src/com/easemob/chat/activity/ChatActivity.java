@@ -54,14 +54,14 @@ import com.bgood.xn.R;
 import com.bgood.xn.bean.FriendBean;
 import com.bgood.xn.bean.GroupBean;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.system.Const;
+import com.bgood.xn.ui.message.CommunicateDetailActivity;
 import com.bgood.xn.ui.message.GroupDetailsActivity;
 import com.bgood.xn.utils.LogUtils;
-import com.bgood.xn.view.BToast;
 import com.easemob.EMError;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContactManager;
 import com.easemob.chat.EMConversation;
-import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.EMMessage.ChatType;
@@ -320,7 +320,13 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 			findViewById(R.id.container_remove).setVisibility(View.GONE);
 			findViewById(R.id.container_voice_call).setVisibility(View.GONE);
 			toChatUsername = getIntent().getStringExtra("groupId");
+			String type = getIntent().getStringExtra("groupType");
 			group = BGApp.getInstance().getGroupMap().get(toChatUsername);
+			if(type.equals("1")){//如果是零时群，
+				group =BGApp.getInstance().getGroupTempMap().get(toChatUsername);
+			}else{//否则认为是固定群
+				group =BGApp.getInstance().getGroupMap().get(toChatUsername);
+			}
  			((TextView) findViewById(R.id.name)).setText(group.name);
 		}
 		conversation = EMChatManager.getInstance().getConversation(toChatUsername);
@@ -925,8 +931,10 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	 * @param view
 	 */
 	public void toGroupDetails(View view) {
-		startActivityForResult((new Intent(this, GroupDetailsActivity.class).putExtra("hxgroupId", toChatUsername)),
-				REQUEST_CODE_GROUP_DETAIL);
+		Intent intent = new Intent(this, group.grouptype.equals("0")?GroupDetailsActivity.class:CommunicateDetailActivity.class);
+		intent.putExtra(Const.CHAT_HXGROUPID, toChatUsername);
+		intent.putExtra(Const.CHAT_GROUPTYPE, group.grouptype);
+		startActivityForResult(intent,REQUEST_CODE_GROUP_DETAIL);
 	}
 
 	/**

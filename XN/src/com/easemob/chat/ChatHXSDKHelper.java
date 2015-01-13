@@ -123,6 +123,14 @@ public class ChatHXSDKHelper extends HXSDKHelper{
                 } else { // 群聊信息
                             // message.getTo()为群聊id
                     intent.putExtra("groupId", message.getTo());
+                    
+                    
+                    if(BGApp.getInstance().getGroupTempMap().containsKey(message.getTo())){	//如果环信消息来自临时组，则认为是临时会话，否则认为来自固定群
+                    	intent.putExtra("groupType", "1");
+                    }else{
+                    	intent.putExtra("groupType", "0");
+                    }
+                    
                     intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
                 }
                 return intent;

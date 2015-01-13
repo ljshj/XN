@@ -34,6 +34,9 @@ public class GroupBean implements Serializable
 	public String photo;
 	public String notice;
 	public String grouptype = "0";//群类型 0，固定群；1，临时群
+	public int membercount;
+	
+
 	
 	
 	

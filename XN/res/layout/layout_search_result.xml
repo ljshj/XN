@@ -97,20 +97,24 @@
 		        <RelativeLayout 
 		            android:layout_width="match_parent"
 		            android:layout_height="wrap_content"
+		            android:padding="7dp"
 		            >
 		            
 			        <ImageView 
 			            android:id="@+id/iv_communcation"
-			            android:layout_width="100dp"
-			            android:layout_height="100dp"
+			            android:layout_width="55dp"
+			            android:layout_height="55dp"
 			            android:scaleType="fitXY"
+			            android:background="@drawable/icon_comm_bg"
 			            />
 			        
 			        <TextView 
 			            android:id="@+id/tv_comm_name"
 			            style="@style/text_search_title"
+			            android:layout_toRightOf="@id/iv_communcation"
 			            android:layout_alignTop="@id/iv_communcation"
-			            android:paddingTop="10dp"
+			            android:layout_marginTop="5dp"
+			            android:layout_marginLeft="10dp"
 			            />
 			        
 			         <TextView 
@@ -118,14 +122,24 @@
 			            style="@style/text_search_text"
 			            android:layout_below="@id/tv_comm_name"
 			            android:layout_alignBottom="@id/iv_communcation"
-			            android:paddingBottom="10dp"
+			            android:layout_alignLeft="@id/tv_comm_name"
+			            android:layout_marginBottom="5dp"
 			            />
 			         
 			         <Button 
 		             	android:id="@+id/btn_communcation_join"
-		            	android:text="进入交流厅"
+		            	android:text="马上聊天"
                			style="@style/common_commit_btn"
+               			android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:paddingRight="5dp"
+						android:paddingLeft="5dp"
+						android:layout_centerVertical="true"
+			         	android:layout_alignParentRight="true"
+			         	android:layout_marginRight="10dp"
+			         	android:textSize="14sp"
 			             />
+			         
 			         
 		        </RelativeLayout>
     	    
@@ -152,34 +166,22 @@
 
 	        <RadioButton
 	            android:id="@+id/radio_01"
-	            android:textColor="@color/color_sex_radiobutton"
-	            android:layout_width="0dp"
-	            android:layout_weight="1"
-	            android:layout_height="wrap_content"
-	            android:button="@null"
-	            android:gravity="center"
 	            android:checked="true"
-	            android:text="会员" />
+	            android:text="会员" 
+	            style="@style/text_item_select"
+	            />
 
 	        <RadioButton
 	            android:id="@+id/radio_02"
-	            android:textColor="@color/color_sex_radiobutton"
-	            android:layout_width="0dp"
-	            android:layout_weight="1"
-	            android:layout_height="wrap_content"
-	            android:button="@null"
-	            android:gravity="center"
-	            android:text="微墙" />
+	            android:text="微墙"
+	           style="@style/text_item_select"
+	             />
 
 	        <RadioButton
 	            android:id="@+id/radio_03"
-	            android:textColor="@color/color_sex_radiobutton"
-	            android:layout_width="0dp"
-	            android:layout_weight="1"
-	            android:layout_height="wrap_content"
-	            android:button="@null"
-	            android:gravity="center"
-	            android:text="橱窗" />
+	            android:text="橱窗"
+	            style="@style/text_item_select"
+	             />
 	      
 	    </RadioGroup>
 	    <LinearLayout 
