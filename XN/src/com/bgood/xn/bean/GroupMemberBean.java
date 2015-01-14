@@ -22,57 +22,57 @@ public class GroupMemberBean {
 	public String groupid;
 	public List<FriendBean> list;
 	
-	/**
-	 * @todo:从数据库查询群组
-	 * @date:2014-12-22 上午10:25:18
-	 * @author:hg_liuzl@163.com
-	 * @params:@param mDBHelper
-	 * @params:@return
-	 */
-	public static Map<String,List<FriendBean>> queryGroupMembersAndGroupId(DBHelper mDBHelper){
-		   LogUtils.i("------from database----");
-	       Cursor c = mDBHelper.queryAndAll(DBHelper.TB_GROUP_MEMBER,DBHelper.CLOUMN_CURRENT_USER_ID,BGApp.mUserId);
-	       Map<String,List<FriendBean>> mapGroup = new HashMap<String,List<FriendBean>>();
-	       List<FriendBean> listFriends = new ArrayList<FriendBean>();
-	       do {
-	    	   if(c!=null&&c.getCount()>0){
-	    		   
-	    		   String hxGroupId = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_HX_GROUPID));
-	    		   	   String groupId = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_GROUPID));
-		    		   String userId = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_USERID));
-		    		   String type = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_TYPE));
-		    		   String singture = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_SIGNATURE));
-		    		   String sex = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_SEX));
-		    		   String photo = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_PHOTO));
-		    		   String name = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_NAME));
-		    		   String level = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_LEVEL));
-
-			           FriendBean friend = new FriendBean();
-			           friend.hxgroupid = hxGroupId;
-			           friend.groupid = groupId;
-			           friend.userid = userId;
-			           friend.type = type;
-			           friend.signature = singture;
-			           friend.sex = sex;
-			           friend.photo = photo;
-			           friend.name = name;
-			           friend.level = level;
-			           listFriends.add(friend);
-	           }
-		} while (c.moveToNext());
-	       
-	       if(null!=c)
-				c.close();
-	       
-	       List<FriendBean> list = new ArrayList<FriendBean>();
-	       for(FriendBean fb:listFriends){
-    	   	   list.clear();
-    		   list.add(fb);
-    		   mapGroup.put(fb.groupid, list);
-	       }
-	       
-	     return mapGroup;
-	}
+//	/**
+//	 * @todo:从数据库查询群组
+//	 * @date:2014-12-22 上午10:25:18
+//	 * @author:hg_liuzl@163.com
+//	 * @params:@param mDBHelper
+//	 * @params:@return
+//	 */
+//	public static Map<String,List<FriendBean>> queryGroupMembersAndGroupId(DBHelper mDBHelper){
+//		   LogUtils.i("------from database----");
+//	       Cursor c = mDBHelper.queryAndAll(DBHelper.TB_GROUP_MEMBER,DBHelper.CLOUMN_CURRENT_USER_ID,BGApp.mUserId);
+//	       Map<String,List<FriendBean>> mapGroup = new HashMap<String,List<FriendBean>>();
+//	       List<FriendBean> listFriends = new ArrayList<FriendBean>();
+//	       do {
+//	    	   if(c!=null&&c.getCount()>0){
+//	    		   
+//	    		   String hxGroupId = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_HX_GROUPID));
+//	    		   	   String groupId = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_GROUPID));
+//		    		   String userId = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_USERID));
+//		    		   String type = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_TYPE));
+//		    		   String singture = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_SIGNATURE));
+//		    		   String sex = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_SEX));
+//		    		   String photo = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_PHOTO));
+//		    		   String name = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_NAME));
+//		    		   String level = c.getString(c.getColumnIndex(DBHelper.GroupMember.GM_LEVEL));
+//
+//			           FriendBean friend = new FriendBean();
+//			           friend.hxgroupid = hxGroupId;
+//			           friend.groupid = groupId;
+//			           friend.userid = userId;
+//			           friend.type = type;
+//			           friend.signature = singture;
+//			           friend.sex = sex;
+//			           friend.photo = photo;
+//			           friend.name = name;
+//			           friend.level = level;
+//			           listFriends.add(friend);
+//	           }
+//		} while (c.moveToNext());
+//	       
+//	       if(null!=c)
+//				c.close();
+//	       
+//	       List<FriendBean> list = new ArrayList<FriendBean>();
+//	       for(FriendBean fb:listFriends){
+//    	   	   list.clear();
+//    		   list.add(fb);
+//    		   mapGroup.put(fb.groupid, list);
+//	       }
+//	       
+//	     return mapGroup;
+//	}
 	
 	/**
 	 * @todo:从数据库查询群组
@@ -116,13 +116,20 @@ public class GroupMemberBean {
 	       if(null!=c)
 				c.close();
 	       
-	       List<FriendBean> list = new ArrayList<FriendBean>();
-	       for(FriendBean fb:listFriends){
-    	   	   list.clear();
-    		   list.add(fb);
-    		   mapGroup.put(fb.hxgroupid, list);
-	       }
 	       
+	       List<FriendBean> currentList = null;
+	       for (FriendBean friendBean : listFriends) {
+	    	   if(mapGroup.containsKey(friendBean.hxgroupid)){
+	    		   currentList = mapGroup.get(friendBean.hxgroupid);
+	    		   if(!currentList.contains(friendBean)){
+	    			   currentList.add(friendBean);
+	    		   }
+	    	   }else{
+	    		   currentList = new ArrayList<FriendBean>();
+	    		   currentList.add(friendBean);
+	    	   }
+	    	   mapGroup.put(friendBean.hxgroupid, currentList);
+	       	}
 	     return mapGroup;
 	}
 	

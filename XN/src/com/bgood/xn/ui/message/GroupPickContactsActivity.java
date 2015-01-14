@@ -70,7 +70,7 @@ public class GroupPickContactsActivity extends BaseActivity {
 		// 获取好友列表
 		final List<FriendBean> alluserList = new ArrayList<FriendBean>();
 		
-		Map<String, FriendBean> friendMapByName = BGApp.getInstance().getFriendMapByName();
+		Map<String, FriendBean> friendMapByName = BGApp.getInstance().getFriendMapById();
 		
 		for(Map.Entry<String, FriendBean> entry:friendMapByName.entrySet()){
 			

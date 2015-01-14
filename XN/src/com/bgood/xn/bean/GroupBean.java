@@ -88,9 +88,9 @@ public class GroupBean implements Serializable
 	 * @params:@param mDBHelper
 	 * @params:@return
 	 */
-	public static Map<String,GroupBean> queryGroupBeanByType(DBHelper mDBHelper,int type){
+	public static Map<String,GroupBean> queryGroupBeanByType(DBHelper mDBHelper){
 		   LogUtils.i("------from database----");
-	       Cursor c = mDBHelper.queryAndAll(DBHelper.TB_GROUP, new String[]{DBHelper.CLOUMN_CURRENT_USER_ID,DBHelper.Group.G_GROUPTYPE}, new String[]{BGApp.mUserId,String.valueOf(type)});
+	       Cursor c = mDBHelper.queryAndAll(DBHelper.TB_GROUP, new String[]{DBHelper.CLOUMN_CURRENT_USER_ID}, new String[]{BGApp.mUserId});
 	       Map<String,GroupBean> map = new HashMap<String,GroupBean>();
 	       c.moveToFirst();
 	       do {

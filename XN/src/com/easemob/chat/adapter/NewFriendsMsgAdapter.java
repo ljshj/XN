@@ -321,11 +321,9 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> implements
 					FriendBean fb = FriendBean.copyUserInfo(user);
 					GroupMemberBean.insertFriendBean(dbHelper, actionInviteMessage.getHxgroupId(),actionInviteMessage.getGroupId(),fb);
 					
-					//向内存中插入变更的数据
-					List<FriendBean> list = new ArrayList<FriendBean>();
-					list.add(fb);
-					BGApp.getInstance().getGroupMemberBean().put(actionInviteMessage.getGroupId(), list);		
-					BGApp.getInstance().getGroupMemberAndHxId().put(actionInviteMessage.getHxgroupId(), list);	
+					List<FriendBean> storeList = BGApp.getInstance().getGroupMemberAndHxId().get(actionInviteMessage.getHxgroupId());
+					storeList.add(fb);
+					BGApp.getInstance().getGroupMemberAndHxId().put(actionInviteMessage.getHxgroupId(), storeList);	
 				}else{
 					
 				}
@@ -335,7 +333,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> implements
 						//把这个群插入到本地的数据库中
 						GroupBean group = JSON.parseObject(json, GroupBean.class);
 						GroupBean.insertGroupBean(dbHelper, group);
-						BGApp.getInstance().getGroupMap().put(group.hxgroupid, group);
+						BGApp.getInstance().getGroupAndHxId().put(group.hxgroupid, group);
 						/**获取接受者的资料*/
 						UserCenterRequest.getInstance().requestPersonInfo(NewFriendsMsgAdapter.this, context, actionInviteMessage.getFrom().substring(2),false);
 						
@@ -369,7 +367,6 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> implements
 					for (FriendBean friendBean : listFriends) {
 						FriendBean.setUserHearder(friendBean.name, friendBean);
 						BGApp.getInstance().getFriendMapById().put(friendBean.userid, friendBean);
-						BGApp.getInstance().getFriendMapByName().put(friendBean.name, friendBean);
 					}
 					
 				} else {

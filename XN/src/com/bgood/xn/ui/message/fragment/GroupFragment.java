@@ -32,6 +32,7 @@ import com.bgood.xn.R;
 import com.bgood.xn.adapter.GroupAdapter;
 import com.bgood.xn.bean.GroupBean;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.system.Const;
 import com.bgood.xn.ui.base.BaseShowDataFragment;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.LoadingProgress;
@@ -92,7 +93,7 @@ public class GroupFragment extends BaseShowDataFragment {
 		m_groupXLv.setPullRefreshEnable(false);
 		groupAdapter = new GroupAdapter(m_groupList, getActivity());
 		m_groupXLv.setAdapter(groupAdapter);
-		
+		m_groupXLv.setFooterDividersEnabled(false);
 		
 		m_groupXLv.setOnItemClickListener(new OnItemClickListener() {
 
@@ -104,8 +105,8 @@ public class GroupFragment extends BaseShowDataFragment {
 				Intent intent = new Intent(mActivity, ChatActivity.class);
 				// it is group chat
 				intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
-				intent.putExtra("groupId", groupBean.hxgroupid);
-				intent.putExtra("groupType", groupBean.grouptype);
+				intent.putExtra(Const.CHAT_HXGROUPID, groupBean.hxgroupid);
+				intent.putExtra(Const.CHAT_GROUPTYPE, groupBean.grouptype);
 				startActivityForResult(intent, 0);
 			}
 
@@ -131,33 +132,33 @@ public class GroupFragment extends BaseShowDataFragment {
 			BToast.show(mActivity, "请输入关键字");
 			return;
 		}else{
-			searchGroupLocal(mKeyWord);
+			searchGroup(mKeyWord);
 		}
 	}
 	
-	/**获取群数据，如固定群，临时群，群成员列表*/
-	private void searchGroupLocal(final String keyWord){
-		new AsyncTask<Void, Void, List<GroupBean>>(){
-			
-			@Override
-			protected void onPreExecute() {
-				super.onPreExecute();
-				LoadingProgress.getInstance().show(mActivity);
-			}
-			@Override
-			protected List<GroupBean> doInBackground(Void... arg0) {
-				return GroupBean.queryGroupBeanByGroupName(dbHelper, 0, keyWord);
-			}
-			@Override
-			protected void onPostExecute(List<GroupBean> groups) {
-				super.onPostExecute(groups);
-				LoadingProgress.getInstance().dismiss();
-				m_groupList.clear();
-				m_groupList.addAll(groups);
-				groupAdapter.notifyDataSetChanged();
-			}
-		}.execute();
-	}
+//	/**获取群数据，如固定群，临时群，群成员列表*/
+//	private void searchGroupLocal(final String keyWord){
+//		new AsyncTask<Void, Void, List<GroupBean>>(){
+//			
+//			@Override
+//			protected void onPreExecute() {
+//				super.onPreExecute();
+//				LoadingProgress.getInstance().show(mActivity);
+//			}
+//			@Override
+//			protected List<GroupBean> doInBackground(Void... arg0) {
+//				return GroupBean.queryGroupBeanByGroupName(dbHelper, 0, keyWord);
+//			}
+//			@Override
+//			protected void onPostExecute(List<GroupBean> groups) {
+//				super.onPostExecute(groups);
+//				LoadingProgress.getInstance().dismiss();
+//				m_groupList.clear();
+//				m_groupList.addAll(groups);
+//				groupAdapter.notifyDataSetChanged();
+//			}
+//		}.execute();
+//	}
 	
 	@Override
 	public void onHiddenChanged(boolean hidden) {
@@ -191,13 +192,13 @@ public class GroupFragment extends BaseShowDataFragment {
 	private void doGetGroupData(){
 		m_groupMap.clear();
 		m_groupList.clear();
-
-		m_groupMap.putAll(BGApp.getInstance().getGroupMap());
+		Map<String,GroupBean> allGroup = BGApp.getInstance().getGroupAndHxId();
 		
-		Iterator<Entry<String, GroupBean>> iter = m_groupMap.entrySet().iterator();
-		while (iter.hasNext()) {
-			Entry<String, GroupBean> entry = (Entry<String, GroupBean>) iter.next();
-			m_groupList.add(entry.getValue());
+		for(GroupBean group:allGroup.values()){
+			if("0".equals(group.grouptype)){
+				m_groupList.add(group);
+				m_groupMap.put(group.name, group);
+			}
 		}
 		groupAdapter.notifyDataSetChanged();		
 	}

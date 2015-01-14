@@ -113,23 +113,16 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 		// 获取用户username或者群组groupid
 		String username = conversation.getUserName();
 		List<EMGroup> groups = EMGroupManager.getInstance().getAllGroups();
-		EMContact contact = null;
 		boolean isGroup = false;
 		for (EMGroup group : groups) {
 			if (group.getGroupId().equals(username)) {
 				isGroup = true;
-				contact = group;
 				break;
 			}
 		}
 		if (isGroup) {
 			
-			 GroupBean group = BGApp.getInstance().getGroupMap().get(username);//这里获取到的是环信id
-			
-			 if(null == group){	//先从固定群判断一下是否有这个群，如果没有，则判断一下临时群组
-				 
-				 group = BGApp.getInstance().getGroupTempMap().get(username);
-			 }
+			 GroupBean group = BGApp.getInstance().getGroupAndHxId().get(username);//这里获取到的是环信id
 			
 			if(null == group){
 				return null;

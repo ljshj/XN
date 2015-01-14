@@ -81,14 +81,18 @@ public class CreateGroupActivity extends BaseActivity implements TaskListenerWit
 			String json = bNetWork.getStrJson();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				GroupBean group = JSON.parseObject(json, GroupBean.class);
+				
+				//插入群到数据库中
 				GroupBean.insertGroupBean(dbHelper,group);
-				BGApp.getInstance().getGroupMap().put(group.hxgroupid, group);
+				BGApp.getInstance().getGroupAndHxId().put(group.hxgroupid, group);
+				
+				//插入群成员到数据库中
 				FriendBean fb = FriendBean.copyUserInfo(BGApp.mUserBean);
 				GroupMemberBean.insertFriendBean(dbHelper, group.hxgroupid,group.roomid,fb);
+				
 				//向内存中插入变更的数据
 				List<FriendBean> list = new ArrayList<FriendBean>();
 				list.add(fb);
-				BGApp.getInstance().getGroupMemberBean().put(group.roomid, list);		
 				BGApp.getInstance().getGroupMemberAndHxId().put(group.hxgroupid, list);	
 				
 				GroupFragment.instance.refresh();	//刷新一下数据

@@ -110,7 +110,7 @@ public class BaseActivity extends FragmentActivity {
 						}
 					}
 				}
-				GroupBean group = BGApp.getInstance().getGroupMap().get(message.getTo());
+				GroupBean group = BGApp.getInstance().getGroupAndHxId().get(message.getTo());
 				if(null!=group){
 					msgFrom+="("+group.name+")";
 				}

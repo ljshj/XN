@@ -319,14 +319,8 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 			findViewById(R.id.container_to_group).setVisibility(View.VISIBLE);
 			findViewById(R.id.container_remove).setVisibility(View.GONE);
 			findViewById(R.id.container_voice_call).setVisibility(View.GONE);
-			toChatUsername = getIntent().getStringExtra("groupId");
-			String type = getIntent().getStringExtra("groupType");
-			group = BGApp.getInstance().getGroupMap().get(toChatUsername);
-			if(type.equals("1")){//如果是零时群，
-				group =BGApp.getInstance().getGroupTempMap().get(toChatUsername);
-			}else{//否则认为是固定群
-				group =BGApp.getInstance().getGroupMap().get(toChatUsername);
-			}
+			toChatUsername = getIntent().getStringExtra(Const.CHAT_HXGROUPID);
+			group =BGApp.getInstance().getGroupAndHxId().get(toChatUsername);
  			((TextView) findViewById(R.id.name)).setText(group.name);
 		}
 		conversation = EMChatManager.getInstance().getConversation(toChatUsername);
@@ -933,7 +927,6 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	public void toGroupDetails(View view) {
 		Intent intent = new Intent(this, group.grouptype.equals("0")?GroupDetailsActivity.class:CommunicateDetailActivity.class);
 		intent.putExtra(Const.CHAT_HXGROUPID, toChatUsername);
-		intent.putExtra(Const.CHAT_GROUPTYPE, group.grouptype);
 		startActivityForResult(intent,REQUEST_CODE_GROUP_DETAIL);
 	}
 
@@ -1451,7 +1444,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	}
 
 	public String getToChatUserId() {
-		return mUserId;
+		return toChatUsername;
 	}
 
 }

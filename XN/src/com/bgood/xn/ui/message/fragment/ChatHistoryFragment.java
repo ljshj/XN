@@ -35,9 +35,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bgood.xn.R;
+import com.bgood.xn.bean.GroupBean;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.system.Const;
 import com.bgood.xn.ui.base.BaseFragment;
 import com.bgood.xn.ui.message.MessageActivity;
+import com.bgood.xn.view.BToast;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContact;
 import com.easemob.chat.EMConversation;
@@ -111,9 +114,9 @@ public class ChatHistoryFragment extends BaseFragment {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				EMConversation conversation = adapter.getItem(position);
 				String username = conversation.getUserName();
-				if (username.equals(BGApp.getInstance().getUserName()))
-					Toast.makeText(getActivity(), "不能和自己聊天", 0).show();
-				else {
+				if (username.equals(BGApp.getInstance().getUserName())){
+					BToast.show(mActivity, "不能和自己聊天");
+				}else {
 					// 进入聊天页面
 					Intent intent = new Intent(getActivity(), ChatActivity.class);
 					EMContact emContact = null;
@@ -125,9 +128,11 @@ public class ChatHistoryFragment extends BaseFragment {
 						}
 					}
 					if (emContact != null && emContact instanceof EMGroup) {
+						
+						EMGroup emGroup = (EMGroup) emContact;
 						// it is group chat
 						intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
-						intent.putExtra("groupId", ((EMGroup) emContact).getGroupId());
+						intent.putExtra(Const.CHAT_HXGROUPID, emGroup.getGroupId()); //这里的username 表示
 					} else {
 						// it is single chat
 						intent.putExtra("userId", username.substring(2)); //去掉bg 就是这个用户的userId

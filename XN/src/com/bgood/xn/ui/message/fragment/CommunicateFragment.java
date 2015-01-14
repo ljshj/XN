@@ -84,7 +84,7 @@ public class CommunicateFragment extends BaseShowDataFragment {
 		m_groupXLv.setPullRefreshEnable(false);
 		groupAdapter = new GroupAdapter(m_groupList, getActivity());
 		m_groupXLv.setAdapter(groupAdapter);
-		
+		m_groupXLv.setFooterDividersEnabled(false);
 		m_groupXLv.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -146,13 +146,13 @@ public class CommunicateFragment extends BaseShowDataFragment {
 	private void doGetGroupData(){
 		m_groupMap.clear();
 		m_groupList.clear();
-
-		m_groupMap = BGApp.getInstance().getGroupTempMap();
+		Map<String,GroupBean> allGroup = BGApp.getInstance().getGroupAndHxId();
 		
-		Iterator<Entry<String, GroupBean>> iter = m_groupMap.entrySet().iterator();
-		while (iter.hasNext()) {
-			Entry<String, GroupBean> entry = (Entry<String, GroupBean>) iter.next();
-			m_groupList.add(entry.getValue());
+		for(GroupBean group:allGroup.values()){
+			if("1".equals(group.grouptype)){
+				m_groupList.add(group);
+				m_groupMap.put(group.name, group);
+			}
 		}
 		groupAdapter.notifyDataSetChanged();		
 	}

@@ -21,6 +21,7 @@ import android.content.Intent;
 import com.bgood.xn.bean.FriendBean;
 import com.bgood.xn.bean.GroupBean;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.system.Const;
 import com.bgood.xn.ui.MainActivity;
 import com.easemob.EMCallBack;
 import com.easemob.applib.controller.HXSDKHelper;
@@ -80,7 +81,7 @@ public class ChatHXSDKHelper extends HXSDKHelper{
 							}
 						}
 					}
-					GroupBean group = BGApp.getInstance().getGroupMap().get(message.getTo());
+					GroupBean group = BGApp.getInstance().getGroupAndHxId().get(message.getTo());
 					if(null!=group){
 						msgFrom+="("+group.name+")";
 					}
@@ -122,15 +123,7 @@ public class ChatHXSDKHelper extends HXSDKHelper{
                     intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
                 } else { // 群聊信息
                             // message.getTo()为群聊id
-                    intent.putExtra("groupId", message.getTo());
-                    
-                    
-                    if(BGApp.getInstance().getGroupTempMap().containsKey(message.getTo())){	//如果环信消息来自临时组，则认为是临时会话，否则认为来自固定群
-                    	intent.putExtra("groupType", "1");
-                    }else{
-                    	intent.putExtra("groupType", "0");
-                    }
-                    
+                    intent.putExtra(Const.CHAT_HXGROUPID, message.getTo());
                     intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
                 }
                 return intent;

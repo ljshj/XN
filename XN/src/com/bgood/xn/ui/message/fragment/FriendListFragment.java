@@ -16,6 +16,7 @@ package com.bgood.xn.ui.message.fragment;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +46,7 @@ import android.widget.ListView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.FriendBean;
+import com.bgood.xn.bean.GroupBean;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
@@ -57,6 +59,7 @@ import com.bgood.xn.ui.base.BaseFragment;
 import com.bgood.xn.ui.message.MessageActivity;
 import com.bgood.xn.view.BToast;
 import com.easemob.chat.Constant;
+import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContactManager;
 import com.easemob.chat.activity.ChatActivity;
 import com.easemob.chat.activity.NewFriendsMsgActivity;
@@ -113,7 +116,7 @@ public class FriendListFragment extends BaseFragment implements TaskListenerWith
 				String username = adapter.getItem(position).getName();
 				if (Constant.NEW_FRIENDS_USERNAME.equals(username)) {
 					// 进入申请与通知页面
-					FriendBean user = BGApp.getInstance().getFriendMapByName().get(Constant.NEW_FRIENDS_USERNAME);
+					FriendBean user = BGApp.getInstance().getFriendMapById().get(Constant.NEW_FRIENDS_USERNAME);
 					user.setUnreadMsgCount(0);
 					startActivity(new Intent(getActivity(), NewFriendsMsgActivity.class));
 				}else {
@@ -277,25 +280,22 @@ public class FriendListFragment extends BaseFragment implements TaskListenerWith
 	 */
 	private void getContactList() {
 		contactList.clear();
-		//获取本地好友列表
-		Map<String, FriendBean> users = BGApp.getInstance().getFriendMapByName();
-		Iterator<Entry<String, FriendBean>> iterator = users.entrySet().iterator();
-		while (iterator.hasNext()) {
-			Entry<String, FriendBean> entry = iterator.next();
-			if (!entry.getKey().equals(Constant.NEW_FRIENDS_USERNAME) && !entry.getKey().equals(Constant.GROUP_USERNAME)
-					&& !blackList.contains(entry.getKey()))
-				contactList.add(entry.getValue());
+		Map<String,FriendBean> allUsers = BGApp.getInstance().getFriendMapById();	//获取缓存中的好友
+		for(FriendBean friend:allUsers.values()){
+			if (!friend.name.equals(Constant.NEW_FRIENDS_USERNAME) && !blackList.contains(friend.name)){
+				FriendBean.setUserHearder(friend.name, friend);
+				contactList.add(friend);
+			}
 		}
 		// 排序
 		Collections.sort(contactList, new Comparator<FriendBean>() {
-
 			@Override
 			public int compare(FriendBean lhs, FriendBean rhs) {
 				return lhs.getName().compareTo(rhs.getName());
 			}
 		});
 		// 把"申请与通知"添加到首位
-		contactList.add(0, users.get(Constant.NEW_FRIENDS_USERNAME));
+		contactList.add(0, allUsers.get(Constant.NEW_FRIENDS_USERNAME));
 	}
 
 	@Override
@@ -306,18 +306,13 @@ public class FriendListFragment extends BaseFragment implements TaskListenerWith
 				case 850008:
 						if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 							
+							EMChatManager.getInstance().deleteConversation("bg"+mActionFriendBean.userid);
+							
 							// 删除相关的邀请消息
 							InviteMessgeDao dao = new InviteMessgeDao(getActivity());
 							dao.deleteMessage("bg"+mActionFriendBean.userid);
 							
 							FriendBean.deleteFriendBean(dbHelper, mActionFriendBean.userid);
-							
-//							MessageActivity.instance.dealIMFriendAndGroup();
-//							BGApp.getInstance().getFriendMapById().remove(mActionFriendBean);
-//							BGApp.getInstance().getFriendMapByName().remove(mActionFriendBean);
-							
-							
-							
 							
 							FriendBean fb = BGApp.getInstance().getFriendMapById().get(mActionFriendBean.userid);
 							
@@ -334,17 +329,6 @@ public class FriendListFragment extends BaseFragment implements TaskListenerWith
 									break;
 								}
 							}
-							
-							Iterator<?> iterFriendMapByName = BGApp.getInstance().getFriendMapByName().entrySet().iterator();
-							while (iterFriendMapByName.hasNext()) {
-								Entry<?, ?> object = (Entry<?, ?>) iterFriendMapByName.next();
-								if(object.getKey().equals(fb.name)){
-									iterFriendMapByName.remove();
-									break;
-								}
-							}
-							
-							
 							
 							adapter.remove(mActionFriendBean);
 							adapter.notifyDataSetChanged();

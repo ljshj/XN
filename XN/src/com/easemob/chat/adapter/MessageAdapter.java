@@ -326,6 +326,9 @@ public class MessageAdapter extends BaseAdapter{
 		if (chatType == ChatType.GroupChat){
 			List<FriendBean> listFriendBean = BGApp.getInstance().getGroupMemberAndHxId().get(message.getTo());
 			
+			if(null == listFriendBean || listFriendBean.size()==0){
+				return null;
+			}
 			FriendBean friendBean = null;
 			for(FriendBean bean:listFriendBean){
 				if(null!=bean && bean.userid.equals(message.getFrom().substring(2))){

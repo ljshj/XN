@@ -114,13 +114,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		(new TitleBar(mActivity)).initTitleBar("群详情");
 		
 		hxgroupId = getIntent().getStringExtra(Const.CHAT_HXGROUPID);
-		String hxgroupType = getIntent().getStringExtra(Const.CHAT_GROUPTYPE);
-		if("0".equals(hxgroupType)){
-			group = BGApp.getInstance().getGroupMap().get(hxgroupId);
-		}else{
-			group = BGApp.getInstance().getGroupTempMap().get(hxgroupId);
-		}
-		
+		group = BGApp.getInstance().getGroupAndHxId().get(hxgroupId);
 		/**获取群成员*/
 		IMRequest.getInstance().requestGroupMembers(GroupDetailsActivity.this, this,group.roomid,true);
 	}
@@ -490,10 +484,11 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 							//每次同步一下数据
 							GroupMemberBean.deleteGroupMemberBean(dbHelper, group.roomid);
 							GroupMemberBean.storeGroupMemberBean(dbHelper, group.hxgroupid, group.roomid, friends);
-							BGApp.getInstance().getGroupMemberAndHxId().get(group.hxgroupid).clear();
-							BGApp.getInstance().getGroupMemberAndHxId().get(group.hxgroupid).addAll(addFriends);
-							BGApp.getInstance().getGroupMemberBean().get(group.roomid).clear();
-							BGApp.getInstance().getGroupMemberBean().get(group.roomid).addAll(addFriends);
+							
+							List<FriendBean> storeFriend = BGApp.getInstance().getGroupMemberAndHxId().get(group.hxgroupid);
+							storeFriend.addAll(addFriends);
+							BGApp.getInstance().getGroupMemberAndHxId().put(group.hxgroupid, storeFriend);
+							
 						}
 					break;
 				case 850018: //退出群 和解散群共用
@@ -521,8 +516,10 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				break;
 				case 850025:	//添加或邀请群成员
 					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
-						BGApp.getInstance().getGroupMemberAndHxId().get(group.hxgroupid).addAll(addFriends);
-						BGApp.getInstance().getGroupMemberBean().get(group.roomid).addAll(addFriends);
+						
+						List<FriendBean> storeFriend = BGApp.getInstance().getGroupMemberAndHxId().get(group.hxgroupid);
+						storeFriend.addAll(addFriends);
+						BGApp.getInstance().getGroupMemberAndHxId().put(group.hxgroupid, storeFriend);
 						GroupMemberBean.storeGroupMemberBean(dbHelper, group.hxgroupid, group.roomid, addFriends);
 					}
 					break;

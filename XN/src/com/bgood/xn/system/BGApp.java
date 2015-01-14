@@ -48,23 +48,14 @@ public class BGApp extends Application {
 	 */
 	public static String currentUserNick = "";
 	public static ChatHXSDKHelper hxSDKHelper = new ChatHXSDKHelper();
-	
-	/**存放好友列表 （好友名字,好友实体类）*/
-	private Map<String, FriendBean> friendMapByName = new HashMap<String, FriendBean>();
-	
-	/**存放好友列表 （好友ID,好友实体类）*/
+
+	/**存放好友列表 （环信好友ID,好友实体类）*/
 	private Map<String, FriendBean> friendMapById = new HashMap<String, FriendBean>();
 	
-	/**存放固定群列表   （群 hxGroupID, 群实体类）*/
-	private Map<String, GroupBean> groupMap = new HashMap<String, GroupBean>();
+	/**存放环信群组ID和群组**/
+	private Map<String,GroupBean> groupAndHxId = new HashMap<String,GroupBean>();
 	
-	/**存放临时群列表   （群hxGroupID, 群实体类）*/
-	private Map<String, GroupBean> groupTempMap = new HashMap<String, GroupBean>();
-	
-	/**存放群Id,和群成员**/
-	private Map<String,List<FriendBean>> groupMemberBean = new HashMap<String,List<FriendBean>>();
-	
-	/**存放环信Id,和群成员**/
+	/**存放环信群组Id,和群成员**/
 	private Map<String,List<FriendBean>> groupMemberAndHxId = new HashMap<String,List<FriendBean>>();
 	
 
@@ -150,14 +141,6 @@ public class BGApp extends Application {
 		return instance;
 	}
 
-	public Map<String, FriendBean> getFriendMapByName() {
-		return friendMapByName;
-	}
-
-	public void setFriendMapByName(Map<String, FriendBean> friendMapByName) {
-		this.friendMapByName = friendMapByName;
-	}
-
 	public Map<String, FriendBean> getFriendMapById() {
 		return friendMapById;
 	}
@@ -166,30 +149,15 @@ public class BGApp extends Application {
 		this.friendMapById = friendMapById;
 	}
 
-	public Map<String, GroupBean> getGroupMap() {
-		return groupMap;
-	}
-
-	public void setGroupMap(Map<String, GroupBean> groupMap) {
-		this.groupMap = groupMap;
-	}
-
-	public Map<String, GroupBean> getGroupTempMap() {
-		return groupTempMap;
-	}
-
-	public void setGroupTempMap(Map<String, GroupBean> groupTempMap) {
-		this.groupTempMap = groupTempMap;
-	}
-
-	public Map<String, List<FriendBean>> getGroupMemberBean() {
-		return groupMemberBean;
-	}
-
-	public void setGroupMemberBean(Map<String, List<FriendBean>> groupMemberBean) {
-		this.groupMemberBean = groupMemberBean;
-	}
 	
+	public Map<String, GroupBean> getGroupAndHxId() {
+		return groupAndHxId;
+	}
+
+	public void setGroupAndHxId(Map<String, GroupBean> groupAndHxId) {
+		this.groupAndHxId = groupAndHxId;
+	}
+
 	public Map<String, List<FriendBean>> getGroupMemberAndHxId() {
 		return groupMemberAndHxId;
 	}
@@ -264,9 +232,9 @@ public class BGApp extends Application {
 		GroupBean.deleteGroupBean(dbHelper, group.roomid);	//从数据库删除群组
 		GroupMemberBean.deleteGroupMemberBean(dbHelper, group.roomid); //删除数据库对应群组的成员
 		
-	//	BGApp.getInstance().getGroupMap().remove(group);
 		
-		Iterator<?> iterGroup = BGApp.getInstance().getGroupMap().entrySet().iterator();
+		//删除群组
+		Iterator<?> iterGroup = BGApp.getInstance().getGroupAndHxId().entrySet().iterator();
 		while (iterGroup.hasNext()) {
 			Entry<?, ?> entry = (Entry<?, ?>) iterGroup.next();
 			if (null != entry) {
@@ -277,7 +245,7 @@ public class BGApp extends Application {
 			}
 		}
 		
-		
+		//删除群成员
 		Iterator<?> iterFriendsByHxGroupId = BGApp.getInstance().getGroupMemberAndHxId().entrySet().iterator();
 		while (iterFriendsByHxGroupId.hasNext()) {
 			Entry<?, ?> entry = (Entry<?, ?>) iterFriendsByHxGroupId.next();
@@ -286,21 +254,6 @@ public class BGApp extends Application {
 					iterFriendsByHxGroupId.remove();
 					break;
 				}
-			}
-		}
-		
-//		List<FriendBean> listFriendsByHxGroupId = BGApp.getInstance().getGroupMemberAndHxId().get(group.hxgroupid);
-//		BGApp.getInstance().getGroupMemberAndHxId().remove(listFriendsByHxGroupId);
-		
-//		List<FriendBean> listFriendByGroupId = BGApp.getInstance().getGroupMemberBean().get(group.roomid);
-//		BGApp.getInstance().getGroupMemberBean().remove(listFriendByGroupId);
-		
-		Iterator<?> iterFriendByGroupId = BGApp.getInstance().getGroupMemberBean().entrySet().iterator();
-		while (iterFriendByGroupId.hasNext()) {
-			Entry<?, ?> entry = (Entry<?, ?>) iterFriendByGroupId.next();
-			if(entry.getKey().equals(group.hxgroupid)){
-				iterFriendByGroupId.remove();
-				break;
 			}
 		}
 	}

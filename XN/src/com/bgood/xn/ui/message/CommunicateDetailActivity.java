@@ -32,7 +32,6 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -58,7 +57,6 @@ import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
 import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.activity.AlertDialog;
 import com.easemob.chat.activity.ChatActivity;
 import com.easemob.chat.activity.ExitGroupDialog;
@@ -99,10 +97,7 @@ public class CommunicateDetailActivity extends BaseActivity implements OnClickLi
 
 	// 清空所有聊天记录
 	
-	private TextView tvGroupName,tvNotice,tvGroupInfo;
-	
-	/**当前用户的身份*/
-	private String type = "";  
+	private TextView tvGroupName;
 	
 	/**要操作的FriendBean*/
 	private FriendBean actionFriendBean = null;
@@ -112,14 +107,9 @@ public class CommunicateDetailActivity extends BaseActivity implements OnClickLi
 		super.onCreate(savedInstanceState);
 		instance = this;
 		setContentView(R.layout.activity_communicate_details);
-		(new TitleBar(mActivity)).initTitleBar("群详情");
+		(new TitleBar(mActivity)).initTitleBar("交流厅详情");
 		hxgroupId = getIntent().getStringExtra(Const.CHAT_HXGROUPID);
-		String hxgroupType = getIntent().getStringExtra(Const.CHAT_GROUPTYPE);
-		if("0".equals(hxgroupType)){
-			group = BGApp.getInstance().getGroupMap().get(hxgroupId);
-		}else{
-			group = BGApp.getInstance().getGroupTempMap().get(hxgroupId);
-		}
+		group = BGApp.getInstance().getGroupAndHxId().get(hxgroupId);
 		/**获取群成员*/
 		IMRequest.getInstance().requestGroupMembers(CommunicateDetailActivity.this, this,group.roomid,true);
 	}
@@ -128,14 +118,8 @@ public class CommunicateDetailActivity extends BaseActivity implements OnClickLi
 	private void initView() {
 		userGridview = (ExpandGridView) findViewById(R.id.gridview);
 		
-		tvGroupName = (TextView) findViewById(R.id.tv_group_name);
+		tvGroupName = (TextView) findViewById(R.id.tv_communcation_name);
 		tvGroupName.setText(group.name);
-		
-		tvGroupInfo = (TextView) findViewById(R.id.tv_group_intro);
-		tvGroupInfo.setText(group.intro);
-		
-		tvNotice = (TextView) findViewById(R.id.tv_group_notice);
-		tvNotice.setText(group.notice);
 		
 		findViewById(R.id.clear_all_history).setOnClickListener(this);
 		exitBtn = (Button) findViewById(R.id.btn_exit_grp);
@@ -144,16 +128,6 @@ public class CommunicateDetailActivity extends BaseActivity implements OnClickLi
 		Drawable referenceDrawable = getResources().getDrawable(R.drawable.smiley_add_btn);
 		referenceWidth = referenceDrawable.getIntrinsicWidth();
 		referenceHeight = referenceDrawable.getIntrinsicHeight();
-		// 如果自己是群主，显示解散按钮
-		if (type.equals("2")) {
-			exitBtn.setVisibility(View.GONE);
-			deleteBtn.setVisibility(View.VISIBLE);
-		}else{
-			exitBtn.setVisibility(View.VISIBLE);
-			deleteBtn.setVisibility(View.GONE);
-		}
-		
-		
 		adapter = new GridAdapter(friends,this);
 		userGridview.setAdapter(adapter);
 
@@ -276,15 +250,6 @@ public class CommunicateDetailActivity extends BaseActivity implements OnClickLi
 						invites[i] = friend.userid;
 					}
 					
-					// 创建者调用add方法
-					if (!type.equals("0")) {	//非普通成员
-						EMGroupManager.getInstance().addUsersToGroup(group.hxgroupid, newmembers);
-					} else {
-						// 一般成员调用invite方法
-						EMGroupManager.getInstance().inviteUser(group.hxgroupid, newmembers, null);
-					}
-					
-					
 					runOnUiThread(new Runnable() {
 						public void run() {
 							IMRequest.getInstance().requestGroupMemberJoinOrInvite(CommunicateDetailActivity.this, mActivity, invites, group.roomid);
@@ -332,7 +297,7 @@ public class CommunicateDetailActivity extends BaseActivity implements OnClickLi
 		
 		@Override
 		public int getCount() {
-			return super.getCount()+2;
+			return super.getCount();
 		}
 
 
@@ -342,51 +307,6 @@ public class CommunicateDetailActivity extends BaseActivity implements OnClickLi
 				convertView = LayoutInflater.from(mActivity).inflate(R.layout.grid,null);
 			}
 			final Button button = (Button) convertView.findViewById(R.id.button_avatar);
-			// 最后一个item，减人按钮
-			if (position == getCount()- 1) {
-				button.setText("");
-				// 设置成删除按钮
-				button.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.smiley_minus_btn, 0, 0);
-				if (type.equals("0")) {	//普通成员
-					convertView.setVisibility(View.GONE);
-				} else { // 显示删除按钮 非0 则是管理员，或群主
-					if (isInDeleteMode) {
-						// 正处于删除模式下，隐藏删除按钮
-						convertView.setVisibility(View.GONE);
-					} else {
-						// 正常模式
-						convertView.setVisibility(View.VISIBLE);
-						convertView.findViewById(R.id.badge_delete).setVisibility(View.GONE);
-					}
-					button.setOnClickListener(new OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							isInDeleteMode = true;
-							notifyDataSetChanged();
-						}
-					});
-				}
-			} else if (position == getCount()- 2) { // 添加群组成员按钮
-				button.setText("");
-				button.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.smiley_add_btn, 0, 0);
-					// 正处于删除模式下,隐藏添加按钮
-					if (isInDeleteMode) {
-						convertView.setVisibility(View.GONE);
-					} else {
-						convertView.setVisibility(View.VISIBLE);
-						convertView.findViewById(R.id.badge_delete).setVisibility(View.GONE);
-					}
-					button.setOnClickListener(new OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							addFriends = new ArrayList<FriendBean>();
-							// 进入选人页面
-							startActivityForResult(
-									(new Intent(CommunicateDetailActivity.this, GroupPickContactsActivity.class).putExtra("hxgroupId", group.hxgroupid)),
-									REQUEST_CODE_ADD_USER);
-						}
-					});
-			} else { // 普通item，显示群组成员
 				
 				final FriendBean friendBean = (FriendBean) mList.get(position);
 				if(null == friendBean){
@@ -436,7 +356,6 @@ public class CommunicateDetailActivity extends BaseActivity implements OnClickLi
 
 						}
 					}});
-			}
 			return convertView;
 		}
 	}
@@ -478,21 +397,14 @@ public class CommunicateDetailActivity extends BaseActivity implements OnClickLi
 				case 850013: //获取群成员列表	
 						if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
 							FriendGroupBean fgb = JSON.parseObject(json,FriendGroupBean.class);
-								friends.addAll(fgb.items);
-								for (FriendBean f : friends) {
-									if (BGApp.mUserId.equals(f.userid)) {
-										type = f.type;
-									}
-								}
-							sortMemberByType();
+							friends.addAll(fgb.items);
 							initView();
 							//每次同步一下数据
 							GroupMemberBean.deleteGroupMemberBean(dbHelper, group.roomid);
 							GroupMemberBean.storeGroupMemberBean(dbHelper, group.hxgroupid, group.roomid, friends);
-							BGApp.getInstance().getGroupMemberAndHxId().get(group.hxgroupid).clear();
-							BGApp.getInstance().getGroupMemberAndHxId().get(group.hxgroupid).addAll(addFriends);
-							BGApp.getInstance().getGroupMemberBean().get(group.roomid).clear();
-							BGApp.getInstance().getGroupMemberBean().get(group.roomid).addAll(addFriends);
+							List<FriendBean> storeFriend = BGApp.getInstance().getGroupMemberAndHxId().get(group.hxgroupid);
+							storeFriend.addAll(addFriends);
+							BGApp.getInstance().getGroupMemberAndHxId().put(group.hxgroupid, storeFriend);
 						}
 					break;
 				case 850018: //退出群 和解散群共用
@@ -521,7 +433,6 @@ public class CommunicateDetailActivity extends BaseActivity implements OnClickLi
 				case 850025:	//添加或邀请群成员
 					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 						BGApp.getInstance().getGroupMemberAndHxId().get(group.hxgroupid).addAll(addFriends);
-						BGApp.getInstance().getGroupMemberBean().get(group.roomid).addAll(addFriends);
 						GroupMemberBean.storeGroupMemberBean(dbHelper, group.hxgroupid, group.roomid, addFriends);
 					}
 					break;

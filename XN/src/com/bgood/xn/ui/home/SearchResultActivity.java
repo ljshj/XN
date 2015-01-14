@@ -56,6 +56,7 @@ import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.HomeRequest;
 import com.bgood.xn.network.request.IMRequest;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.system.Const;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.message.fragment.CommunicateFragment;
 import com.bgood.xn.ui.user.info.NameCardActivity;
@@ -527,12 +528,11 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 				friends.addAll(fgb.items);
 				
 				GroupBean.insertGroupBean(dbHelper, mGroupBean);	//存放交流厅数据
-				BGApp.getInstance().getGroupTempMap().put(mGroupBean.hxgroupid, mGroupBean);	//放入内存中
+				BGApp.getInstance().getGroupAndHxId().put(mGroupBean.hxgroupid, mGroupBean);	//放入内存中
 				
 			    GroupMemberBean.storeGroupMemberBean(dbHelper, mGroupBean.hxgroupid, mGroupBean.roomid, friends); //存成员到数据库中
 			    
 			    BGApp.getInstance().getGroupMemberAndHxId().put(mGroupBean.hxgroupid, friends);   //放成员到缓存中
-			    BGApp.getInstance().getGroupMemberBean().put(mGroupBean.roomid, friends);
 				
 			    if(null!=CommunicateFragment.instance){
 			    	CommunicateFragment.instance.refresh();
@@ -595,8 +595,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		Intent intent = new Intent(mActivity, ChatActivity.class);
 		// it is group chat
 		intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
-		intent.putExtra("groupId", mGroupBean.hxgroupid);
-		intent.putExtra("groupType", mGroupBean.grouptype);
+		intent.putExtra(Const.CHAT_HXGROUPID, mGroupBean.hxgroupid);
 		startActivity(intent);
 	}
 	
@@ -606,11 +605,10 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 	private void requestJoinCommuncation() {
 		judgeLogin();
 		
-		if(BGApp.getInstance().getGroupTempMap().containsKey(mGroupBean.hxgroupid)){	//如果已经是这个交流厅的成员，则可以直接进入
+		if(BGApp.getInstance().getGroupAndHxId().containsKey(mGroupBean.hxgroupid)){	//如果已经是这个交流厅的成员，则可以直接进入
 			inToChat();
 		}else{
 			IMRequest.getInstance().requestGroupMemberJoinOrInvite(SearchResultActivity.this, mActivity, new String[]{BGApp.mUserId}, mGroupBean.roomid);
-			GroupBean.insertGroupBean(dbHelper, mGroupBean);
 		}
 	}
 	
