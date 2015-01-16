@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
+import com.bgood.xn.R;
 import com.bgood.xn.bean.FriendBean;
 import com.bgood.xn.bean.GroupBean;
 import com.bgood.xn.bean.GroupMemberBean;
@@ -21,6 +22,7 @@ import com.bgood.xn.db.DBHelper;
 import com.easemob.EMCallBack;
 import com.easemob.chat.ChatHXSDKHelper;
 import com.iflytek.cloud.SpeechUtility;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
@@ -91,10 +93,29 @@ public class BGApp extends Application {
         hxSDKHelper.onInit(applicationContext);
         
         /**图片加载*/
-      //创建默认的ImageLoader配置参数
-  		ImageLoaderConfiguration configuration = new ImageLoaderConfiguration.Builder(this)
-  		.build();
-  		ImageLoader.getInstance().init(configuration);  
+        initImgDisPlay();
+	}
+	
+	/**
+	 * 展示图片
+	 */
+	private void initImgDisPlay() {
+
+		DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder() //
+		.showImageForEmptyUri(R.drawable.icon_default) //
+		.showImageOnFail(R.drawable.icon_default) //
+		.cacheInMemory(true) //
+		.cacheOnDisk(true) //
+		.build();//
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration//
+		.Builder(getApplicationContext())//
+		.defaultDisplayImageOptions(defaultOptions)//
+		.diskCacheFileCount(1000)
+		.diskCacheSize(50*1024*1024)
+		.build();//
+		ImageLoader.getInstance().init(config);
+		
+		
 	}
 	
 	

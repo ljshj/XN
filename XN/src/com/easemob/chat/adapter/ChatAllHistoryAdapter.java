@@ -43,7 +43,6 @@ import com.easemob.chat.ImageMessageBody;
 import com.easemob.chat.TextMessageBody;
 import com.easemob.chat.utils.SmileUtils;
 import com.easemob.util.DateUtils;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
@@ -57,7 +56,6 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 	private List<EMConversation> conversationList;
 	private List<EMConversation> copyConversationList;
 	private ConversationFilter conversationFilter;
-	public DisplayImageOptions options;
 	
 	public ChatAllHistoryAdapter(Context context, int textViewResourceId, List<EMConversation> objects) {
 		super(context, textViewResourceId, objects);
@@ -66,15 +64,6 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 		copyConversationList = new ArrayList<EMConversation>();
 		copyConversationList.addAll(objects);
 		inflater = LayoutInflater.from(context);
-		
-		options = new DisplayImageOptions.Builder()
-		.showImageOnFail(R.drawable.icon_default)
-		.showImageOnLoading(R.drawable.icon_default)
-		.showImageForEmptyUri(R.drawable.icon_default)
-		.cacheInMemory(true)
-		.cacheOnDisk(true)
-		.bitmapConfig(Bitmap.Config.RGB_565)  
-		.build();
 	}
 
 	ViewHolder holder;
@@ -140,7 +129,7 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 				return null;
 			}
 			
-			ImageLoader.getInstance().displayImage(fb.photo,holder.avatar, options);
+			ImageLoader.getInstance().displayImage(fb.photo,holder.avatar);
 			
 			// 本地或者服务器获取用户详情，以用来显示头像和nick
 //			holder.avatar.setImageResource(R.drawable.default_avatar);

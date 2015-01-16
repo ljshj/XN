@@ -39,7 +39,6 @@ import com.bgood.xn.R;
 import com.bgood.xn.bean.FriendBean;
 import com.easemob.chat.Constant;
 import com.easemob.chat.widget.Sidebar;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
@@ -55,7 +54,6 @@ public class ContactAdapter extends ArrayAdapter<FriendBean>  implements Section
 	private SparseIntArray sectionOfPosition;
 	private Sidebar sidebar;
 	private int res;
-	private DisplayImageOptions options;
 	private Context mContext;
 
 	public ContactAdapter(Context context, int resource, List<FriendBean> objects,Sidebar sidebar) {
@@ -64,15 +62,6 @@ public class ContactAdapter extends ArrayAdapter<FriendBean>  implements Section
 		this.sidebar=sidebar;
 		this.mContext = context;
 		layoutInflater = LayoutInflater.from(context);
-		
-		options = new DisplayImageOptions.Builder()
-		.showImageOnFail(R.drawable.icon_default)
-		.showImageOnLoading(R.drawable.icon_default)
-		.showImageForEmptyUri(R.drawable.icon_default)
-		.cacheInMemory(true)
-		.cacheOnDisk(true)
-		.bitmapConfig(Bitmap.Config.RGB_565)  
-		.build();
 	}
 	
 	@Override
@@ -141,7 +130,7 @@ public class ContactAdapter extends ArrayAdapter<FriendBean>  implements Section
 				return null;
 			}
 			
-			ImageLoader.getInstance().displayImage(user.photo,avatar, options);
+			ImageLoader.getInstance().displayImage(user.photo,avatar);
 			
 			//设置nick，demo里不涉及到完整user，用username代替nick显示
 			String username = user.getName();

@@ -67,9 +67,11 @@ public class ChatHistoryFragment extends BaseFragment {
 	private boolean hidden;
 	private List<EMGroup> groups;
 	private List<EMConversation> conversationList;
+	public static ChatHistoryFragment instance;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		instance = this;
 		return inflater.inflate(R.layout.fragment_conversation_history, container, false);
 	}
 
@@ -249,21 +251,21 @@ public class ChatHistoryFragment extends BaseFragment {
 			refresh();
 		}
 	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		if (!hidden && ! ((MessageActivity)getActivity()).isConflict) {
-			refresh();
-		}
-	}
-
-	@Override
-    public void onSaveInstanceState(Bundle outState) {
-        if(((MessageActivity)getActivity()).isConflict)
-            outState.putBoolean("isConflict", true);
-        super.onSaveInstanceState(outState);
-        
-    }
+//
+//	@Override
+//	public void onResume() {
+//		super.onResume();
+//		if (!hidden && ! ((MessageActivity)getActivity()).isConflict) {
+//			refresh();
+//		}
+//	}
+//
+//	@Override
+//    public void onSaveInstanceState(Bundle outState) {
+//        if(((MessageActivity)getActivity()).isConflict)
+//            outState.putBoolean("isConflict", true);
+//        super.onSaveInstanceState(outState);
+//        
+//    }
 
 }

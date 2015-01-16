@@ -50,12 +50,12 @@
 	       style="@style/item_content"
 	       android:text="内容" />
     
-       <GridView 
+       <com.bgood.xn.view.NoScrollGridView 
 	       android:id="@+id/gv_show_img"
 	       android:layout_width="match_parent"
 	       android:layout_height="wrap_content"
-	       android:verticalSpacing="3dp"
-	       android:horizontalSpacing="3dp"
+	       android:verticalSpacing="2dp"
+	       android:horizontalSpacing="2dp"
 	       android:numColumns="4"
 	       />
 

@@ -80,9 +80,7 @@ import com.easemob.util.EMLog;
 import com.easemob.util.FileUtils;
 import com.easemob.util.LatLng;
 import com.easemob.util.TextFormater;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-
 public class MessageAdapter extends BaseAdapter{
 
 	private final static String TAG = "msg";
@@ -116,7 +114,6 @@ public class MessageAdapter extends BaseAdapter{
 	private Context context;
 
 	private Map<String, Timer> timers = new Hashtable<String, Timer>();
-	public DisplayImageOptions options;
 
 	public MessageAdapter(Context context, String username, int chatType) {
 		this.username = username;
@@ -124,16 +121,6 @@ public class MessageAdapter extends BaseAdapter{
 		inflater = LayoutInflater.from(context);
 		activity = (Activity) context;
 		this.conversation = EMChatManager.getInstance().getConversation(username);
-		
-		options = new DisplayImageOptions.Builder()
-		.showImageOnFail(R.drawable.icon_default)
-		.showImageOnLoading(R.drawable.icon_default)
-		.showImageForEmptyUri(R.drawable.icon_default)
-		.cacheInMemory(true)
-		.cacheOnDisk(true)
-		.bitmapConfig(Bitmap.Config.RGB_565)  
-		.build();
-		
 	}
 
 	// public void setUser(String user) {
@@ -342,14 +329,14 @@ public class MessageAdapter extends BaseAdapter{
 				if(null!=friendBean){
 					/**如果是收到的消息，则展示对方的名字，否则不展示*/
 					holder.tv_userId.setText(friendBean.name);
-					ImageLoader.getInstance().displayImage(friendBean.photo,holder.head_iv, options);
+					ImageLoader.getInstance().displayImage(friendBean.photo,holder.head_iv);
 					
 				}else{
 					/**如果是收到的消息，则展示对方的名字，否则不展示*/
 					holder.tv_userId.setText(message.getFrom());
 				}
 			}else{
-				ImageLoader.getInstance().displayImage(BGApp.mUserBean.photo,holder.head_iv, options);
+				ImageLoader.getInstance().displayImage(BGApp.mUserBean.photo,holder.head_iv);
 			}
 		}else{ /**如果是单聊的情况*/
 			
@@ -359,11 +346,11 @@ public class MessageAdapter extends BaseAdapter{
 			if(message.direct == EMMessage.Direct.RECEIVE ){
 				// demo用username代替nick
 				if(null!=toBean){
-					ImageLoader.getInstance().displayImage(toBean.photo,holder.head_iv, options);
+					ImageLoader.getInstance().displayImage(toBean.photo,holder.head_iv);
 				}
 				
 			}else{
-				ImageLoader.getInstance().displayImage(BGApp.mUserBean.photo,holder.head_iv, options);
+				ImageLoader.getInstance().displayImage(BGApp.mUserBean.photo,holder.head_iv);
 			}
 		}
 

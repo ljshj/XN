@@ -55,7 +55,6 @@ import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.db.InviteMessgeDao;
 import com.easemob.chat.domain.InviteMessage;
 import com.easemob.chat.domain.InviteMessage.InviteMesageStatus;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> implements TaskListenerWithState {
@@ -63,7 +62,6 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> implements
 	private Context context;
 	private InviteMessgeDao messgeDao;
 	private DBHelper dbHelper;
-	private DisplayImageOptions options;
 	private InviteMessage actionInviteMessage;
 
 	public NewFriendsMsgAdapter(Context context, int textViewResourceId, List<InviteMessage> objects) {
@@ -71,14 +69,6 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> implements
 		this.context = context;
 		this.dbHelper = new DBHelper(context);
 		messgeDao = new InviteMessgeDao(context);
-		options = new DisplayImageOptions.Builder()
-		.showImageOnFail(R.drawable.icon_default)
-		.showImageOnLoading(R.drawable.icon_default)
-		.showImageForEmptyUri(R.drawable.icon_default)
-		.cacheInMemory(true)
-		.cacheOnDisk(true)
-		.bitmapConfig(Bitmap.Config.RGB_565)  
-		.build();
 	}
 
 	@Override
@@ -103,7 +93,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> implements
 		final InviteMessage msg = getItem(position);
 		actionInviteMessage = msg;
 	
-		ImageLoader.getInstance().displayImage(msg.getUserPhotoUrl(),holder.avator, options);
+		ImageLoader.getInstance().displayImage(msg.getUserPhotoUrl(),holder.avator);
 		
 		
 		if (msg != null) {
