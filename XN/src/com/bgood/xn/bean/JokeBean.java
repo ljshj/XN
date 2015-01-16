@@ -53,4 +53,27 @@ public class JokeBean implements Serializable {
 	public enum JokeActionType{		
 		RESPONSE,TRANSPOND
 	}
+	
+	
+	public static JokeBean copy(JokeCorattionBean bean){
+		JokeBean wbean = new JokeBean();
+		wbean.userid = bean.userid;
+		wbean.jokeid = bean.jokeid;
+		wbean.username = bean.name;
+		wbean.photo = bean.photo;
+		wbean.distance = bean.distance;
+		wbean.date_time = bean.date_time;
+		wbean.fromuserid = bean.fromuserid;
+		wbean.fromname = bean.fromname;
+		wbean.content =bean.content;
+		wbean.like_count = bean.like_count;
+		wbean.comment_count = bean.comment_count;
+		wbean.forward_count = bean.forward_count;
+		wbean.share_count =bean.share_count;
+		wbean.type = bean.type;
+		wbean.imgs = bean.imgs;
+		//wbean.Comments;
+		return wbean;
+	}
+	
 }

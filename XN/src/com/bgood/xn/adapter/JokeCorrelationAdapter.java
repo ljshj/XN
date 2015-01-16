@@ -16,19 +16,20 @@ import android.widget.TextView;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.CommentBean;
 import com.bgood.xn.bean.ImageBean;
+import com.bgood.xn.bean.JokeCorattionBean;
 import com.bgood.xn.bean.SimpleUserBean;
 import com.bgood.xn.bean.WeiqiangCorattionBean;
 import com.bgood.xn.utils.ToolUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 /**
  * 
- * @todo:微墙中与我相关的适配类
+ * @todo:幽默秀中与我相关的适配类
  * @date:2014-10-22 上午9:41:14
  * @author:hg_liuzl@163.com
  */
-public class WeiqiangCorrelationAdapter extends KBaseAdapter 
+public class JokeCorrelationAdapter extends KBaseAdapter 
 {
-	public WeiqiangCorrelationAdapter(List<?> mList, Activity mActivity,OnClickListener listener) {
+	public JokeCorrelationAdapter(List<?> mList, Activity mActivity,OnClickListener listener) {
 		super(mList, mActivity, listener);
 	}
 
@@ -68,7 +69,7 @@ public class WeiqiangCorrelationAdapter extends KBaseAdapter
 			holder = (Holder) convertView.getTag();
 		}
 		
-		final WeiqiangCorattionBean wcb = (WeiqiangCorattionBean) mList.get(position);
+		final JokeCorattionBean wcb = (JokeCorattionBean) mList.get(position);
 		
 		ImageLoader.getInstance().displayImage(wcb.photo,holder.ivAuthorImg, options);
 				
@@ -127,7 +128,7 @@ public class WeiqiangCorrelationAdapter extends KBaseAdapter
 	
 	/**设置下面的数据*/
 	
-	private void setCountAndListener(TextView tv,String count,OnClickListener listener,WeiqiangCorattionBean bean){
+	private void setCountAndListener(TextView tv,String count,OnClickListener listener,JokeCorattionBean bean){
 		tv.setText(count);
 		tv.setOnClickListener(mListener);
 		tv.setTag(bean);

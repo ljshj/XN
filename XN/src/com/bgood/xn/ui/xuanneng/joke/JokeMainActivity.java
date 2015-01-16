@@ -1,11 +1,17 @@
 package com.bgood.xn.ui.xuanneng.joke;
 
+import android.annotation.SuppressLint;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.RadioGroup;
+import android.widget.PopupWindow.OnDismissListener;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost;
 
@@ -20,14 +26,17 @@ public class JokeMainActivity extends TabActivity implements OnCheckedChangeList
 {
 	private TabHost tabHost;
 	private RadioGroup radioGroup;
-
+	private Button joke_main_b_more_operate;
+	private PopupWindow popupWindow_more;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_xuanneng_humor);
 		initViews();
-		findViewById(R.id.xuanneng_b_response).setOnClickListener(this);
+		joke_main_b_more_operate = (Button) findViewById(R.id.joke_main_b_more_operate);
+		joke_main_b_more_operate.setOnClickListener(this);
 		findViewById(R.id.return_btn).setOnClickListener(this);
 	}
 	/**
@@ -77,14 +86,58 @@ public class JokeMainActivity extends TabActivity implements OnCheckedChangeList
 	{
 		switch (v.getId())
 		{
-		case R.id.xuanneng_b_response:
+		case R.id.joke_main_b_more_operate:	//展开笑话
+			if (popupWindow_more != null && popupWindow_more.isShowing()){
+				dissmissPopupMore();
+			} else{
+				showPopupMore();
+			}
+			break;
+		case R.id.tv_joke_publish:	//投稿
+			dissmissPopupMore();
 			Intent intent = new Intent(this, JokePublishActivity.class);
 			startActivity(intent);
+			break;
+		case R.id.tv_joke_mention:
+			dissmissPopupMore();
+			Intent intent2 = new Intent(this, JokeMentionActivity.class);
+			startActivity(intent2);
 			break;
 		case R.id.return_btn:
 			onBackPressed();
 			break;
 		}
 	}
+	
+	
+	@SuppressLint("InflateParams")
+	private void showPopupMore()
+	{
+		joke_main_b_more_operate.setBackgroundResource(R.drawable.img_weiqiang_more_operate_show);
+		if (popupWindow_more == null)
+		{
+			View contentView = LayoutInflater.from(this).inflate(R.layout.popup_joke_main_more_operate, null);
+			contentView.findViewById(R.id.tv_joke_publish).setOnClickListener(this);
+			contentView.findViewById(R.id.tv_joke_mention).setOnClickListener(this);
+			popupWindow_more = new PopupWindow(contentView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			popupWindow_more.setFocusable(true);
+			popupWindow_more.setOnDismissListener(new OnDismissListener()
+			{
+				@Override
+				public void onDismiss()
+				{
+					joke_main_b_more_operate.setBackgroundResource(R.drawable.img_weiqiang_more_operate_normal);
+				}
+			});
+			popupWindow_more.setOutsideTouchable(true);
+			popupWindow_more.setBackgroundDrawable(getResources().getDrawable(R.drawable.img_weiqiang_more_operate_popup_bg));
+		}
+		popupWindow_more.showAsDropDown(joke_main_b_more_operate);
+	}
 
+	private void dissmissPopupMore()
+	{
+		if (popupWindow_more != null && popupWindow_more.isShowing())
+			popupWindow_more.dismiss();
+	}
 }

@@ -1,4 +1,5 @@
-package com.bgood.xn.ui.weiqiang;
+package com.bgood.xn.ui.xuanneng.joke;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,30 +13,30 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
-import com.bgood.xn.adapter.WeiqiangCorrelationAdapter;
-import com.bgood.xn.bean.WeiQiangBean;
-import com.bgood.xn.bean.WeiqiangCorattionBean;
-import com.bgood.xn.bean.response.WeiqiangCorattionResponse;
+import com.bgood.xn.adapter.JokeCorrelationAdapter;
+import com.bgood.xn.bean.JokeBean;
+import com.bgood.xn.bean.JokeCorattionBean;
+import com.bgood.xn.bean.response.JokeCorattionResponse;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpRequestInfo;
 import com.bgood.xn.network.http.HttpResponseInfo;
-import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
-import com.bgood.xn.network.request.WeiqiangRequest;
+import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.ui.base.BaseShowDataActivity;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.TitleBar;
 
 /**
- * @todo: 与我相关的微墙
+ * @todo: 与我相关的幽默秀
  * @date:2014-10-28 上午9:52:12
  * @author:hg_liuzl@163.com
  */
-public class WeiqiangMentionActivity extends BaseShowDataActivity implements TaskListenerWithState,OnClickListener,OnItemClickListener,IXListViewListener {
-	private List<WeiqiangCorattionBean> corationBeans = new ArrayList<WeiqiangCorattionBean>();
-	private WeiqiangCorrelationAdapter adapter;
+public class JokeMentionActivity extends BaseShowDataActivity implements TaskListenerWithState,OnClickListener,OnItemClickListener,IXListViewListener {
+	private List<JokeCorattionBean> corationBeans = new ArrayList<JokeCorattionBean>();
+	private JokeCorrelationAdapter adapter;
 	
 	private XListView m_mentionXLv;
 	@Override
@@ -48,11 +49,10 @@ public class WeiqiangMentionActivity extends BaseShowDataActivity implements Tas
 		m_mentionXLv.setPullRefreshEnable(true);
 		m_mentionXLv.setXListViewListener(this);
 		m_mentionXLv.setOnItemClickListener(this);
-		adapter = new WeiqiangCorrelationAdapter(corationBeans, mActivity,this);
+		adapter = new JokeCorrelationAdapter(corationBeans, mActivity,this);
 		m_mentionXLv.setAdapter(adapter);
 		doRequest();
 	}
-
 
 	@Override
 	public void onClick(View v) {
@@ -66,7 +66,7 @@ public class WeiqiangMentionActivity extends BaseShowDataActivity implements Tas
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			String strJson = bNetWork.getStrJson();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
-				WeiqiangCorattionResponse response = JSON.parseObject(strJson, WeiqiangCorattionResponse.class);
+				JokeCorattionResponse response = JSON.parseObject(strJson, JokeCorattionResponse.class);
 				setDataAdapter(m_mentionXLv, adapter, corationBeans, response.merelated,isRefreshAction);
 			}
 		}
@@ -74,10 +74,10 @@ public class WeiqiangMentionActivity extends BaseShowDataActivity implements Tas
 
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View v, int location, long arg3) {
-		final WeiqiangCorattionBean bean = (WeiqiangCorattionBean) adapter.getAdapter().getItem(location);
-		Intent intent = new Intent(WeiqiangMentionActivity.this,WeiqiangDetailActivity.class);
-		WeiQiangBean wqBean = WeiQiangBean.copy(bean);
-		intent.putExtra(WeiQiangBean.KEY_WEIQIANG_BEAN, wqBean);
+		final JokeCorattionBean bean = (JokeCorattionBean) adapter.getAdapter().getItem(location);
+		Intent intent = new Intent(JokeMentionActivity.this,JokeDetailActivity.class);
+		JokeBean jokeBean = JokeBean.copy(bean);
+		intent.putExtra(JokeBean.JOKE_BEAN, jokeBean);
 		startActivity(intent);
 	}
 
@@ -96,6 +96,6 @@ public class WeiqiangMentionActivity extends BaseShowDataActivity implements Tas
 	}
 	
 	private void doRequest(){
-		WeiqiangRequest.getInstance().requestWeiqiangWithMe(this, mActivity, m_start_page, m_start_page+PAGE_SIZE_ADD);
+		XuannengRequest.getInstance().requestXuanWithMe(this, mActivity, m_start_page, m_start_page+PAGE_SIZE_ADD);
 	}
 }

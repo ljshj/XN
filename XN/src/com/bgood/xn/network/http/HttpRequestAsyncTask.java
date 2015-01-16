@@ -64,7 +64,7 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 				b.setSessionID(SystemConfig.SessionID);
 				
 			}else if(type == ServerType.FileServer){
-				serverUrl = null!=SystemConfig.FILE_SERVER ? SystemConfig.FILE_SERVER:pUtil.getFileServerUrl()+"/Upload.ashx"+b.getConnUrl();	//注意这里是文件类型
+				serverUrl = (null!=SystemConfig.FILE_SERVER ? SystemConfig.FILE_SERVER:pUtil.getFileServerUrl())+"/Upload.ashx"+b.getConnUrl();	//注意这里是文件类型
 				b.setSessionID(SystemConfig.SessionID);
 				
 			}else{

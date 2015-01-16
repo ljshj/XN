@@ -17,6 +17,7 @@ import android.widget.ImageView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.ImageBean;
+import com.bgood.xn.utils.ImgUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 /***
  * @todo:图片适配器
@@ -52,10 +53,8 @@ public class ImageAdapter extends KBaseAdapter {
 		final Object object = mList.get(position);
 		
 		if(object instanceof ImageBean){
-			
 			ImageBean bean = (ImageBean) object;
 			imgType(position,bean,holder.imageImgV);
-			
 		}else{
 			File file = (File) object;
 			fileType(position,file, holder.deleteImgV, holder.imageImgV);
@@ -68,28 +67,29 @@ public class ImageAdapter extends KBaseAdapter {
 		ivDelete.setOnClickListener(mListener);
 		ivDelete.setTag(position);
 		if (file != null && file.exists()) {
-			FileInputStream fis = null;
-			BufferedInputStream bis = null;
-			try {
-				fis = new FileInputStream(file);
-				bis = new BufferedInputStream(fis);
-				Bitmap bitmap = BitmapFactory.decodeStream(bis);
-				ivImg.setImageBitmap(bitmap);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}finally{
-				try {
-				if(bis!=null){
-						bis.close();
-					}
-				if(fis!=null){
-					fis.close();
-				}
-				
-				} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
+//			FileInputStream fis = null;
+//			BufferedInputStream bis = null;
+//			try {
+//				fis = new FileInputStream(file);
+//				bis = new BufferedInputStream(fis);
+//				Bitmap bitmap = BitmapFactory.decodeStream(bis);
+//				ivImg.setImageBitmap(bitmap);
+//			} catch (FileNotFoundException e) {
+//				e.printStackTrace();
+//			}finally{
+//				try {
+//				if(bis!=null){
+//						bis.close();
+//					}
+//				if(fis!=null){
+//					fis.close();
+//				}
+//				
+//				} catch (IOException e) {
+//						e.printStackTrace();
+//					}
+//				}
+			ivImg.setImageBitmap(ImgUtils.compressImageFromFile(file.getAbsolutePath()));
 			ivDelete.setVisibility(View.VISIBLE);
 		} 
 		else

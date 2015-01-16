@@ -22,10 +22,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  * @author:hg_liuzl@163.com
  */
 public class JokeUnVerifyAdapter extends KBaseAdapter {
-
-	private ImageLoader mImageLoader;
-	private DisplayImageOptions options;
-
 	public JokeUnVerifyAdapter(List<?> mList, Activity mActivity) {
 		super(mList, mActivity);
 	}
@@ -52,7 +48,7 @@ public class JokeUnVerifyAdapter extends KBaseAdapter {
 		
 		final JokeBean jokeBean = (JokeBean) mList.get(position);
 		
-		mImageLoader.displayImage(jokeBean.photo,holder.ivAuthorImg, options);
+		ImageLoader.getInstance().displayImage(jokeBean.photo,holder.ivAuthorImg, options);
 		
 		
 		holder.tvAuthorName.setText(jokeBean.username);

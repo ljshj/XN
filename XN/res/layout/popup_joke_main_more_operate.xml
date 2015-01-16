@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:divider="@drawable/img_common_h_divider"
+    android:orientation="vertical"
+    android:showDividers="middle" >
+
+        <TextView
+            android:id="@+id/tv_joke_publish"
+            android:drawableLeft="@drawable/img_award_bg"
+            android:text="投稿"
+            style="@style/pop_text"
+            />
+
+<!--         <TextView
+            android:id="@+id/tv_weiqiang_me"
+            android:drawableLeft="@drawable/img_weiqiang_my_weiqiang_indicator"
+            android:text="我的微墙"
+            style="@style/pop_text"/> -->
+        
+          <TextView
+            android:id="@+id/tv_joke_mention"
+            android:drawableLeft="@drawable/img_mention_bg"
+            android:text="提到我的"
+            style="@style/pop_text"/>
+
+</LinearLayout>

@@ -13,7 +13,6 @@
     
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>  
-    <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     
     <!-- 检测网络状态 -->
@@ -447,6 +446,11 @@
         
        <activity
             android:name="com.bgood.xn.ui.xuanneng.joke.JokeDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+       <activity
+            android:name="com.bgood.xn.ui.xuanneng.joke.JokeMentionActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>

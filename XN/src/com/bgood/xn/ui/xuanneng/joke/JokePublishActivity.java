@@ -35,6 +35,7 @@ import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.system.Const;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.LoadingProgress;
 import com.bgood.xn.view.dialog.BottomDialog;
@@ -62,8 +63,6 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 	private ImageAdapter adapter;
 	private EditText comment_content;
     
-    private double m_longitude = 0;    // 经度
-    private double m_latitude = 0;     // 纬度
     
     private String m_content = null;
     
@@ -84,7 +83,7 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 		setContentView(R.layout.layout_weiqiang_publish);
 		
 		mJokeBean = (JokeBean) getIntent().getSerializableExtra(JokeBean.JOKE_BEAN);
-		(new TitleBar(mActivity)).initTitleBar(null!=mJokeBean ? "有奖投稿":"修改投搞");
+		(new TitleBar(mActivity)).initTitleBar(null==mJokeBean ? "有奖投稿":"修改投搞");
 		files.add(null);
 		initViews();
 		setData();
@@ -152,42 +151,6 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 		dialog.setvChild(v);
 		dialog.show();
 	}    
-    
-	/**
-	 * 
-	 * @todo 照相
-	 * @author liuzenglong163@gmail.com
-	 */
-	private void doTakeCamera() {
-		String status = Environment.getExternalStorageState();
-		if (status.equals(Environment.MEDIA_MOUNTED)) {
-			try {
-				Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-				tempFile = new File(Const.CID_IMG_STRING_PATH);
-				Uri u = Uri.fromFile(tempFile);
-				intent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
-				intent.putExtra(MediaStore.EXTRA_OUTPUT, u);
-				startActivityForResult(intent, FLAG_CHOOSE_FROM_CAMERA);
-			} catch (ActivityNotFoundException e) {
-			}
-		} else {
-			BToast.show(mActivity, "没有SD卡");
-		}
-	}
-    
-	/**
-	 * 
-	 * @todo 从相册选择照片
-	 * @author liuzenglong163@gmail.com
-	 */
-	private void doSelectPhoto() {
-		Intent intent = new Intent();
-		intent.setAction(Intent.ACTION_PICK);
-		intent.setType("image/*");
-		startActivityForResult(intent, FLAG_CHOOSE_FROM_IMGS);
-	}
-	
-	
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -290,11 +253,11 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 			break;
 		case R.id.btn_take_photo:
 			dialog.dismiss();
-			doTakeCamera();
+			tempFile = ImgUtils.takePicture(mActivity, tempFile, FLAG_CHOOSE_FROM_CAMERA);
 			break;
 		case R.id.btn_select_photo:
 			dialog.dismiss();
-			doSelectPhoto();
+			ImgUtils.selectPicture(mActivity, FLAG_CHOOSE_FROM_IMGS);
 			break;
 		case R.id.btn_cancel:
 			dialog.dismiss();

@@ -57,7 +57,6 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 	private List<EMConversation> conversationList;
 	private List<EMConversation> copyConversationList;
 	private ConversationFilter conversationFilter;
-	public ImageLoader mImageLoader;
 	public DisplayImageOptions options;
 	
 	public ChatAllHistoryAdapter(Context context, int textViewResourceId, List<EMConversation> objects) {

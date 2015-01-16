@@ -17,11 +17,13 @@
                 android:id="@+id/return_btn"
                 style="@style/common_btn_back_style" />
 
-            <Button
-                android:id="@+id/xuanneng_b_response"
-                style="@style/common_btn_title_right_style"
-                android:text="有奖投稿"
-                android:textSize="14dp" />
+             <Button
+	            android:id="@+id/joke_main_b_more_operate"
+	            style="@style/common_btn_title_right_style"
+	            android:layout_width="25dp"
+	            android:layout_height="25dp"
+	            android:layout_marginRight="10dp"
+	            android:background="@drawable/img_weiqiang_more_operate_normal" />
 
             <RadioGroup
                 android:id="@+id/xuanneng_humor_rg_tab"
