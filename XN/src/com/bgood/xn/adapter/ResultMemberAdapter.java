@@ -54,7 +54,7 @@ public class ResultMemberAdapter extends KBaseAdapter
         
        final MemberResultBean member = (MemberResultBean) mList.get(position);
         
-       ImageLoader.getInstance().displayImage(member.img,holder.iconImgV, options);
+       ImageLoader.getInstance().displayImage(member.img,holder.iconImgV);
         
         holder.nameTv.setText(member.name);
         

@@ -44,7 +44,7 @@ public class ResultWeiQiangAdapter extends KBaseAdapter
         
        final WeiQiangBean weiqiangDTO = (WeiQiangBean) mList.get(position);
        
-       ImageLoader.getInstance().displayImage(weiqiangDTO.photo,holder.iconImgV, options);
+       ImageLoader.getInstance().displayImage(weiqiangDTO.photo,holder.iconImgV);
         
         holder.infoTv.setText(weiqiangDTO.content);
         holder.sendUserTv.setText(weiqiangDTO.name);

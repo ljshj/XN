@@ -231,7 +231,6 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 	@Override
 	public void onClick(View v)
 	{
-		
 		judgeLogin();
 		Intent intent = null;
 		WeiQiangBean wqb = null;
@@ -239,11 +238,9 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 		{
 		case R.id.layout_weiqiang_type_left_select:
 			vp_weiqiang_type_select.setCurrentItem(0);
-			//checkType(0);
 			break;
 		case R.id.layout_weiqiang_type_right_select:
 			vp_weiqiang_type_select.setCurrentItem(1);
-			//checkType(1);
 			break;
 		case R.id.weiqiang_main_b_more_operate:
 			if (popupWindow_more != null && popupWindow_more.isShowing())
@@ -275,9 +272,11 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 			mActionWeiqiang = wqb;
 			if(m_type == WeiQiangBean.WEIQIANG_ALL){
 				mActionWeiqiang.like_count = String.valueOf(Integer.valueOf(mActionWeiqiang.like_count)+1);
+				m_allFriendsXLv.setSelection(m_allFriendsList.indexOf(wqb));
 				m_allFriendsAdapter.notifyDataSetChanged();
 			}else{
 				mActionWeiqiang.like_count = String.valueOf(Integer.valueOf(mActionWeiqiang.like_count)+1);
+				m_followFriendsXLv.setSelection(m_allFriendsList.indexOf(wqb));
 				m_followFriendsAdapter.notifyDataSetChanged();
 			}
 			WeiqiangRequest.getInstance().requestWeiqiangZan(this, mActivity, wqb.weiboid);

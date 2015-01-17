@@ -45,7 +45,7 @@ public class CommentAdapter extends KBaseAdapter
         
        final CommentBean wComment = (CommentBean) mList.get(position);
         
-       ImageLoader.getInstance().displayImage(wComment.photo,holder.ivComment, options);
+       ImageLoader.getInstance().displayImage(wComment.photo,holder.ivComment);
        
         holder.tvCommentAuthor.setText(wComment.name);
         holder.tvCommentTime.setText(ToolUtils.getFormatDate(wComment.commenttime));

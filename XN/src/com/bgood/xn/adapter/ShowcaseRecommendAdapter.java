@@ -48,7 +48,7 @@ public class ShowcaseRecommendAdapter extends KBaseAdapter
 		final ProductBean productDTO = (ProductBean) mList.get(position);
 		holder.timeTv.setText(ToolUtils.getFormatDate(productDTO.date_time));
 		
-		 ImageLoader.getInstance().displayImage(productDTO.img_thum,holder.iconImgV, options);
+		 ImageLoader.getInstance().displayImage(productDTO.img_thum,holder.iconImgV);
 		
 		holder.nameTv.setText(productDTO.product_name);
 		holder.priceTv.setText(productDTO.getPrice());

@@ -40,10 +40,10 @@ public class HomeRequest  extends BaseNetWork {
 	 	setMessageType(40001);
 		JSONObject body = new JSONObject();
 		try {
+//			body.put("longitude", longitude);
+//			body.put("latitude", latitude);
 			body.put("type", type);
 			body.put("keyword", keyword);
-			body.put("longitude", longitude);
-			body.put("latitude", latitude);
 			body.put("start", start);
 			body.put("end", end);
 		} catch (JSONException e) {

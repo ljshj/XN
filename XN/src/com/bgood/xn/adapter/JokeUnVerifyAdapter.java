@@ -48,7 +48,7 @@ public class JokeUnVerifyAdapter extends KBaseAdapter {
 		
 		final JokeBean jokeBean = (JokeBean) mList.get(position);
 		
-		ImageLoader.getInstance().displayImage(jokeBean.photo,holder.ivAuthorImg, options);
+		ImageLoader.getInstance().displayImage(jokeBean.photo,holder.ivAuthorImg);
 		
 		
 		holder.tvAuthorName.setText(jokeBean.username);

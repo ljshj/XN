@@ -130,9 +130,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		m_msg = getIntent().getStringExtra("msg");
 		findView();
 		setListeners();
-		HomeRequest.getInstance().requestSearch(this, this, search_type, m_msg, 114.1917953491211f, 22.636533737182617f, m_start, m_start + PAGE_SIZE_ADD);
-		HomeRequest.getInstance().requestSearchComminucation(this, this,m_msg,false);
-	
+		doSearch();
 	}
 	/**
 	 * 控件初始化方法
@@ -539,7 +537,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 			    }
 			    inToChat();
 				break;
-			case 850025:	//加入交流厅
+			case 850030:	//加入交流厅
 				//如果已经成功加入这个交流厅了，则需要获取该交流厅的成员
 				IMRequest.getInstance().requestGroupMembers(SearchResultActivity.this, mActivity, mGroupBean.roomid, true);
 				break;
@@ -608,7 +606,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		if(BGApp.getInstance().getGroupAndHxId().containsKey(mGroupBean.hxgroupid)){	//如果已经是这个交流厅的成员，则可以直接进入
 			inToChat();
 		}else{
-			IMRequest.getInstance().requestGroupMemberJoinOrInvite(SearchResultActivity.this, mActivity, new String[]{BGApp.mUserId}, mGroupBean.roomid);
+			IMRequest.getInstance().requestCommunicationMemberJoinOrInvite(SearchResultActivity.this, mActivity, new String[]{BGApp.mUserId}, mGroupBean.roomid);
 		}
 	}
 	

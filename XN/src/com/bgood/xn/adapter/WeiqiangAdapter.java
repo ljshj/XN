@@ -69,7 +69,7 @@ public class WeiqiangAdapter extends KBaseAdapter
 		
 		final WeiQiangBean weiqiangBean = (WeiQiangBean) mList.get(position);
 		
-		ImageLoader.getInstance().displayImage(weiqiangBean.photo,holder.ivAuthorImg, options);
+		ImageLoader.getInstance().displayImage(weiqiangBean.photo,holder.ivAuthorImg);
 		
 		holder.ivAuthorImg.setOnClickListener(mListener);
 		holder.ivAuthorImg.setTag(weiqiangBean);

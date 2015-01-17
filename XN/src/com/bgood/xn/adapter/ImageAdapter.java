@@ -106,7 +106,7 @@ public class ImageAdapter extends KBaseAdapter {
 	
 	/**图片的url方式展示图片*/
 	private void imgType(int position,ImageBean bean,final ImageView ivImg){
-		 ImageLoader.getInstance().displayImage(bean.img_thum, ivImg, options);
+		 ImageLoader.getInstance().displayImage(bean.img_thum, ivImg);
 	}
 
 	class Holder {

@@ -48,7 +48,7 @@ public class ResultShowcaseAdapter extends KBaseAdapter
         
         final CabinetResultBean cabinetDTO = (CabinetResultBean) mList.get(position);
         
-        ImageLoader.getInstance().displayImage(cabinetDTO.img,holder.iconImgV, options);
+        ImageLoader.getInstance().displayImage(cabinetDTO.img,holder.iconImgV);
         
         holder.nameTv.setText(cabinetDTO.title);
         holder.priceTv.setText(cabinetDTO.getPrice());

@@ -42,7 +42,7 @@ public class ProductListAdapter extends KBaseAdapter
 		
 		final ProductBean productDTO = (ProductBean) mList.get(position);
 	
-		 ImageLoader.getInstance().displayImage(productDTO.img_thum,holder.iconImgV, options);
+		 ImageLoader.getInstance().displayImage(productDTO.img_thum,holder.iconImgV);
 		
 		holder.nameTv.setText(productDTO.product_name);
 		holder.priceTv.setText(productDTO.getPrice());

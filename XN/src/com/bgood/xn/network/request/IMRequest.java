@@ -412,7 +412,7 @@ public class IMRequest extends BaseNetWork {
 	 * @params:@param groupid
 	 */
 	public void requestCommunicationMemberJoinOrInvite(TaskListenerWithState mHttpTaskListener,Context context,String[] userid,String groupid) {
-		setMessageType(50025);
+		setMessageType(50030);
 		JSONObject body = new JSONObject();
 		try {
 			

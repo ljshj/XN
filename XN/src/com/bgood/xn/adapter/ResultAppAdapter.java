@@ -45,7 +45,7 @@ public class ResultAppAdapter extends KBaseAdapter
         
         final AppBean appDTO = (AppBean) mList.get(position);
 
-        ImageLoader.getInstance().displayImage(appDTO.img_thum,holder.iconImgV, options);
+        ImageLoader.getInstance().displayImage(appDTO.img_thum,holder.iconImgV);
         
         
         

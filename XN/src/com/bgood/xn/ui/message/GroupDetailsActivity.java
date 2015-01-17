@@ -395,7 +395,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				convertView.setVisibility(View.VISIBLE);
 				button.setVisibility(View.VISIBLE);
 				
-				ImageLoader.getInstance().displayImage(friendBean.photo,iv, options, null);
+				ImageLoader.getInstance().displayImage(friendBean.photo,iv,options);
 				
 				//Drawable avatar = getResources().getDrawable(R.drawable.default_avatar);
 				Drawable avatar = iv.getDrawable();

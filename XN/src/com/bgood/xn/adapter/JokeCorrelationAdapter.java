@@ -71,7 +71,7 @@ public class JokeCorrelationAdapter extends KBaseAdapter
 		
 		final JokeCorattionBean wcb = (JokeCorattionBean) mList.get(position);
 		
-		ImageLoader.getInstance().displayImage(wcb.photo,holder.ivAuthorImg, options);
+		ImageLoader.getInstance().displayImage(wcb.photo,holder.ivAuthorImg);
 				
 		holder.ivAuthorImg.setOnClickListener(mListener);
 		holder.ivAuthorImg.setTag(wcb);
