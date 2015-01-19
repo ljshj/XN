@@ -22,6 +22,7 @@ import com.bgood.xn.R;
 import com.bgood.xn.bean.ImageBean;
 import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.utils.ToolUtils;
+import com.bgood.xn.view.ActionView;
 import com.bgood.xn.view.NoScrollGridView;
 import com.bgood.xn.view.photoview.ImagePagerActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -57,10 +58,10 @@ public class WeiqiangAdapter extends KBaseAdapter
 			holder.tvContent = (TextView) convertView.findViewById(R.id.tv_content);
 			holder.oldgridView = (NoScrollGridView) convertView.findViewById(R.id.gv_old_show_img);
 			
-			holder.tvZanCount = (TextView) convertView.findViewById(R.id.tv_zan_count);
-			holder.tvReplyCount = (TextView) convertView.findViewById(R.id.tv_comment_count);
-			holder.tvTranspontCount = (TextView) convertView.findViewById(R.id.tv_transpont_count);
-			holder.tvShareCount = (TextView) convertView.findViewById(R.id.tv_share_count);
+			holder.avZan = (ActionView) convertView.findViewById(R.id.av_zan);
+			holder.avReply = (ActionView) convertView.findViewById(R.id.av_reply);
+			holder.avTranspnt = (ActionView) convertView.findViewById(R.id.av_transpont);
+			holder.avShare = (ActionView) convertView.findViewById(R.id.av_share);
 			convertView.setTag(holder);
 		} else
 		{
@@ -87,11 +88,11 @@ public class WeiqiangAdapter extends KBaseAdapter
 			holder.tvOldAuthorName.setOnClickListener(mListener);
 			holder.tvOldAuthorName.setTag(weiqiangBean);
 			holder.tvContent.setText(weiqiangBean.content);
-			holder.tvComments.setText(weiqiangBean.Comments);
+			holder.tvComments.setText(weiqiangBean.comments);
 			showImgs(weiqiangBean.imgs,holder.oldgridView);
 			holder.gridView.setVisibility(View.GONE);
 			holder.tvContent.setVisibility(TextUtils.isEmpty(weiqiangBean.content)?View.GONE:View.VISIBLE);
-			holder.tvComments.setVisibility(TextUtils.isEmpty(weiqiangBean.Comments)?View.GONE:View.VISIBLE);
+			holder.tvComments.setVisibility(TextUtils.isEmpty(weiqiangBean.comments)?View.GONE:View.VISIBLE);
 		}else{
 			holder.llTransArea.setVisibility(View.GONE);
 			holder.tvComments.setText(weiqiangBean.content);
@@ -100,21 +101,21 @@ public class WeiqiangAdapter extends KBaseAdapter
 			showImgs(weiqiangBean.imgs,holder.gridView);
 		}
 		
-		holder.tvZanCount.setText(weiqiangBean.like_count);
-		holder.tvZanCount.setOnClickListener(mListener);
-		holder.tvZanCount.setTag(weiqiangBean);
+		holder.avZan.setCount(weiqiangBean.like_count);
+		holder.avZan.setOnClickListener(mListener);
+		holder.avZan.setTag(weiqiangBean);
 		
-		holder.tvReplyCount.setText(weiqiangBean.comment_count);
-		holder.tvReplyCount.setOnClickListener(mListener);
-		holder.tvReplyCount.setTag(weiqiangBean);
+		holder.avReply.setCount(weiqiangBean.comment_count);
+		holder.avReply.setOnClickListener(mListener);
+		holder.avReply.setTag(weiqiangBean);
 		
-		holder.tvTranspontCount.setText(weiqiangBean.forward_count);
-		holder.tvTranspontCount.setOnClickListener(mListener);
-		holder.tvTranspontCount.setTag(weiqiangBean);
+		holder.avTranspnt.setCount(weiqiangBean.forward_count);
+		holder.avTranspnt.setOnClickListener(mListener);
+		holder.avTranspnt.setTag(weiqiangBean);
 		
-		holder.tvShareCount.setText(weiqiangBean.share_count);
-		holder.tvShareCount.setOnClickListener(mListener);
-		holder.tvShareCount.setTag(weiqiangBean);
+		holder.avShare.setCount(weiqiangBean.share_count);
+		holder.avShare.setOnClickListener(mListener);
+		holder.avShare.setTag(weiqiangBean);
 		
 		
 		return convertView;
@@ -132,10 +133,7 @@ public class WeiqiangAdapter extends KBaseAdapter
 		public TextView tvContent;
 		public NoScrollGridView gridView,oldgridView;
 		
-		public TextView tvZanCount;
-		public TextView tvReplyCount;
-		public TextView tvTranspontCount;
-		public TextView tvShareCount;
+		public ActionView avZan,avReply,avTranspnt,avShare;
 	}
 	
 	

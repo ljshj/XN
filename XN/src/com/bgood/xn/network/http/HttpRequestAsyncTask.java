@@ -129,7 +129,7 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 		
 		switch (response.getState()) {
 		case STATE_ERROR_SERVER:
-			Toast.makeText(context, "服务器地址错误", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "服务器发生故障", Toast.LENGTH_SHORT).show();
 			break;
 		case STATE_NO_NETWORK_CONNECT:
 			Toast.makeText(context, "没有网络，请检查您的网络连接", Toast.LENGTH_SHORT).show();

@@ -1,95 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-     >
+    android:orientation="vertical">
      
-    	 <include layout="@layout/title_bar"/>
- 			<com.bgood.xn.view.xlistview.XListView
-                android:id="@+id/weiqiang_detail_xlv"
-                style="@style/common_listview"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:dividerHeight="1px"
-                >
-            </com.bgood.xn.view.xlistview.XListView>
-
-<!--                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal"
-                     >
-
-                    <EditText
-                        android:id="@+id/weiqiang_detail_et_reply_content"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="5dp"
-                        android:background="@drawable/img_comment_content" />
-
-                    <Button
-                        android:id="@+id/weiqiang_detail_btn_reply_send"
-                        android:layout_width="45dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="5dp"
-                        android:background="@drawable/img_chat_send" />
-            </LinearLayout> -->
-            
-                
-                 <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/img_weiqiang_more_bg"
-            android:divider="@drawable/img_common_ll_divider"
-            android:dividerPadding="5dp"
-            android:orientation="horizontal"
-            android:showDividers="middle" >
-            
-	            <LinearLayout 
-	               style="@style/action_layout"
-	                >
-			    <TextView
-                   android:id="@+id/tv_zan_count"
-                   android:text="(1)"
-                   android:drawableLeft="@drawable/img_common_zan"
-                   style="@style/action_text"/>
-			    </LinearLayout>
-
-	             <LinearLayout 
-	               style="@style/action_layout"
-	                >
-                <TextView
-                    android:id="@+id/tv_comment_count"
-                    android:text="(1)"
-                    android:drawableStart="@drawable/img_weiqiang_reply_indicator"
-                    style="@style/action_text"/>
-                </LinearLayout>
-
-	             <LinearLayout 
-	               style="@style/action_layout"
-	                >
-                <TextView
-                    android:id="@+id/tv_transpont_count"
-                    android:text="(1)"
-                    android:drawableLeft="@drawable/img_weiqiang_send_indicator"
-                    style="@style/action_text"/>
-				</LinearLayout>
-				
-				 <LinearLayout 
-	                style="@style/action_layout"
-	                >
-                <TextView
-                    android:id="@+id/tv_share_count"
-                    android:text="(1)"
-                    android:drawableLeft="@drawable/img_weiqiang_share_indicator"
-                    style="@style/action_text"/>
-                </LinearLayout>
-                
-        </LinearLayout>
-
-           
-
+   <include layout="@layout/title_bar"/>
+   <include layout="@layout/listview_space_bar"/>
+   <!-- <include layout="@layout/action_bar"/> -->
 </LinearLayout>

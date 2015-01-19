@@ -84,7 +84,6 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 	
     private JokeBean mActionJoke = null;
     private JokeActionType type;
-    private String mRefreshTime;
     
     private boolean isRefreshAction = true;	//是否是刷新操作
 	
@@ -289,6 +288,7 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			String strJson = bNetWork.getStrJson();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+				if(bNetWork.getMessageType()==870002){}
 				JokeResponse response = JSON.parseObject(strJson, JokeResponse.class);
 				switch (REQUEST_FLAG) {
 				case CHOOSE_DAY:
@@ -362,26 +362,27 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 		JokeBean jBean = null;
 		switch (v.getId())
 		{
-		case R.id.tv_zan_count:	//赞
+		case R.id.av_zan:	//赞
 			jBean = (JokeBean) v.getTag();
 			mActionJoke = jBean;
 			WeiqiangRequest.getInstance().requestWeiqiangZan(this, mActivity, jBean.jokeid);
 			break;
-		case R.id.tv_comment_count:	//评论
+		case R.id.av_reply:	//评论
 			jBean = (JokeBean) v.getTag();
 			mActionJoke = jBean;
 			type = JokeActionType.RESPONSE;
 			createSendDialog();
 			break;
-		case R.id.tv_transpont_count:	//转发
+		case R.id.av_transpont:	//转发
 			jBean = (JokeBean) v.getTag();
 			mActionJoke = jBean;
 			type = JokeActionType.TRANSPOND;
 			createSendDialog();
 			break;
-		case R.id.tv_share_count:	//分享
+		case R.id.av_share:	//分享
 			jBean = (JokeBean) v.getTag();
-			share.doShare();
+			share.setShareContent(jBean.content, jBean.imgs.size() > 0 ? jBean.imgs.get(0).img:null);
+			XuannengRequest.getInstance().requestXuanShare(this, this, jBean.jokeid);
 			break;
 		}
 	}
@@ -416,26 +417,15 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 					return;
 				}else{
 					etcontent.setText("");
-//					if(type == JokeActionType.TRANSPOND){
-//						if(m_type == WEIQIANG_ALL){
-//							mActionWeiqiang.forward_count = String.valueOf(Integer.valueOf(mActionWeiqiang.forward_count)+1);
-//							m_allFriendsAdapter.notifyDataSetChanged();
-//						}else{
-//							mActionWeiqiang.forward_count = String.valueOf(Integer.valueOf(mActionWeiqiang.forward_count)+1);
-//							m_followFriendsAdapter.notifyDataSetChanged();
-//						}
-//						WeiqiangRequest.getInstance().requestWeiqiangTranspond(WeiqiangFragment.this, mActivity, mActionWeiqiang.weiboid,content);
-//					}else{
-//						if(m_type == WEIQIANG_ALL){
-//							mActionWeiqiang.comment_count = String.valueOf(Integer.valueOf(mActionWeiqiang.comment_count)+1);
-//							m_allFriendsAdapter.notifyDataSetChanged();
-//						}else{
-//							mActionWeiqiang.comment_count = String.valueOf(Integer.valueOf(mActionWeiqiang.comment_count)+1);
-//							m_followFriendsAdapter.notifyDataSetChanged();
-//						}
-//						WeiqiangRequest.getInstance().requestWeiqiangReply(WeiqiangFragment.this, mActivity, mActionWeiqiang.weiboid,content);
-//					}
-					
+					if(type == JokeActionType.TRANSPOND){
+						mActionJoke.forward_count = String.valueOf(Integer.valueOf(mActionJoke.forward_count)+1);
+						adapterDay.notifyDataSetChanged();
+						WeiqiangRequest.getInstance().requestWeiqiangTranspond(JokeRankActivity.this, mActivity, mActionJoke.jokeid,content);
+					}else{
+						mActionJoke.comment_count = String.valueOf(Integer.valueOf(mActionJoke.comment_count)+1);
+						adapterDay.notifyDataSetChanged();
+					    WeiqiangRequest.getInstance().requestWeiqiangReply(JokeRankActivity.this, mActivity, mActionJoke.jokeid,content);
+					}
 				}
 			}
 		});
@@ -452,5 +442,4 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 		dialog.setCancelable(true);
 		dialog.showDialog(vSend);
 	}
-	
 }

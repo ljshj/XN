@@ -78,25 +78,25 @@ public class JokePersonActivity extends BaseActivity implements OnItemClickListe
 	public void onClick(View v) {
 		JokeBean joke = null;
 		switch (v.getId()) {
-		case R.id.tv_zan_count:	//赞
+		case R.id.av_zan:	//赞
 			joke = (JokeBean) v.getTag();
 			mActionjoke = joke;
 			mActionjoke.like_count = String.valueOf(Integer.valueOf(mActionjoke.like_count)+1);
 			jokeAdapter.notifyDataSetChanged();
 			XuannengRequest.getInstance().requestXuanZan(this, mActivity, joke.jokeid);
 			break;
-		case R.id.tv_comment_count:	//评论
+		case R.id.av_reply:	//评论
 			joke = (JokeBean) v.getTag();
 			BToast.show(mActivity, "评论"+joke.jokeid);
 			break;
-		case R.id.tv_transpont_count:	//转发
+		case R.id.av_transpont:	//转发
 			joke = (JokeBean) v.getTag();
 				mActionjoke.forward_count = String.valueOf(Integer.valueOf(mActionjoke.forward_count)+1);
 				jokeAdapter.notifyDataSetChanged();
 			
 			XuannengRequest.getInstance().requestXuanComment(this, mActivity, joke.jokeid,"");;
 			break;
-		case R.id.tv_share_count:	//分享
+		case R.id.av_share:	//分享
 			joke = (JokeBean) v.getTag();
 			break;
 		default:

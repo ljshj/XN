@@ -16,9 +16,11 @@ import android.widget.TextView;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.CommentBean;
 import com.bgood.xn.bean.ImageBean;
+import com.bgood.xn.bean.JokeCorattionBean;
 import com.bgood.xn.bean.SimpleUserBean;
 import com.bgood.xn.bean.WeiqiangCorattionBean;
 import com.bgood.xn.utils.ToolUtils;
+import com.bgood.xn.view.ActionView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 /**
  * 
@@ -52,10 +54,10 @@ public class WeiqiangCorrelationAdapter extends KBaseAdapter
 			holder.tvContent = (TextView) convertView.findViewById(R.id.tv_content);
 			holder.oldgridView = (GridView) convertView.findViewById(R.id.gv_old_show_img);
 			
-			holder.tvZanCount = (TextView) convertView.findViewById(R.id.tv_zan_count);
-			holder.tvReplyCount = (TextView) convertView.findViewById(R.id.tv_comment_count);
-			holder.tvTranspontCount = (TextView) convertView.findViewById(R.id.tv_transpont_count);
-			holder.tvShareCount = (TextView) convertView.findViewById(R.id.tv_share_count);
+			holder.avZan = (ActionView) convertView.findViewById(R.id.av_zan);
+			holder.avReply = (ActionView) convertView.findViewById(R.id.av_reply);
+			holder.avTranspnt = (ActionView) convertView.findViewById(R.id.av_transpont);
+			holder.avShare = (ActionView) convertView.findViewById(R.id.av_share);
 			
 			holder.tvLikeUser = (TextView) convertView.findViewById(R.id.tv_like);
 			
@@ -101,10 +103,10 @@ public class WeiqiangCorrelationAdapter extends KBaseAdapter
 			showImgs(wcb.imgs,holder.gridView);
 		}
 		
-//		setCountAndListener(holder.tvZanCount, wcb.like_count, mListener, wcb);
-//		setCountAndListener(holder.tvReplyCount, wcb.comment_count, mListener, wcb);
-//		setCountAndListener(holder.tvTranspontCount, wcb.forward_count, mListener, wcb);
-//		setCountAndListener(holder.tvShareCount, wcb.share_count, mListener, wcb);
+		setCountAndListener(holder.avZan, wcb.like_count, mListener, wcb);
+		setCountAndListener(holder.avReply, wcb.comment_count, mListener, wcb);
+		setCountAndListener(holder.avTranspnt, wcb.forward_count, mListener, wcb);
+		setCountAndListener(holder.avShare, wcb.share_count, mListener, wcb);
 		
 		setLikeUserNick(wcb.likeuserlist, holder.tvLikeUser);
 		
@@ -127,10 +129,10 @@ public class WeiqiangCorrelationAdapter extends KBaseAdapter
 	
 	/**设置下面的数据*/
 	
-	private void setCountAndListener(TextView tv,String count,OnClickListener listener,WeiqiangCorattionBean bean){
-		tv.setText(count);
-		tv.setOnClickListener(mListener);
-		tv.setTag(bean);
+	private void setCountAndListener(ActionView av,String count,OnClickListener listener,WeiqiangCorattionBean bean){
+		av.setCount(count);
+		av.setOnClickListener(mListener);
+		av.setTag(bean);
 	}
 	
 	
@@ -179,10 +181,7 @@ public class WeiqiangCorrelationAdapter extends KBaseAdapter
 		 TextView tvContent;
 		 GridView gridView,oldgridView;
 		
-		 TextView tvZanCount;
-		 TextView tvReplyCount;
-		 TextView tvTranspontCount;
-		 TextView tvShareCount;
+		 ActionView avZan,avReply,avTranspnt,avShare;
 		
 		 TextView tvLikeUser;
 		 ListView lvShowComment;

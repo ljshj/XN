@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -55,6 +56,8 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
     private TextView tvWeiqiang;
     private TextView tvXuanneg;
     private TextView tvChuchuang;
+    
+    private LinearLayout ll_action;
 	
     private ProgressDialog progressDialog;
 	
@@ -89,9 +92,12 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 	    m_icanTv = (TextView) findViewById(R.id.tv_ican);
 	    m_ineedTv = (TextView) findViewById(R.id.tv_iwant);
 		
-		findViewById(R.id.tv_add_attention).setOnClickListener(this);
-		findViewById(R.id.tv_add_friend).setOnClickListener(this);
-		findViewById(R.id.tv_call_message).setOnClickListener(this);
+	    ll_action = (LinearLayout) findViewById(R.id.ll_action);
+	    
+	    
+		findViewById(R.id.av_add_attention).setOnClickListener(this);
+		findViewById(R.id.av_add_friend).setOnClickListener(this);
+		findViewById(R.id.av_call_message).setOnClickListener(this);
 		
 		tvWeiqiang = (TextView) findViewById(R.id.tv_weiqiang);
 		tvWeiqiang.setOnClickListener(this);
@@ -110,17 +116,13 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 		Intent intent = null;
 		switch (v.getId()) {
 		 // 关注
-        case R.id.tv_add_attention:
-        	if(isSelf){
-        		BToast.show(mActivity, "不能关注自己");
-        	}else{
-        		UserCenterRequest.getInstance().requestAttention(NameCardActivity.this, mActivity,userId,BGApp.mUserId,String.valueOf(0));
-        	}
+        case R.id.av_add_attention:
+        	UserCenterRequest.getInstance().requestAttention(NameCardActivity.this, mActivity,userId,BGApp.mUserId,String.valueOf(0));
             break;
-		case R.id.tv_add_friend:
+		case R.id.av_add_friend:
 			addContact();
 			break;
-		case R.id.tv_call_message:
+		case R.id.av_call_message:
 			doChat();
 			break;
 		case R.id.tv_xuanneng:
@@ -152,10 +154,7 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 	 * @params:
 	 */
 	private void doChat() {
-		if(BGApp.mUserId.equals(userId)){
-			BToast.show(mActivity, "不能与自己聊天");
-			return;
-		}else if(!BGApp.getInstance().getFriendMapById().containsKey(userId)){
+		if(!BGApp.getInstance().getFriendMapById().containsKey(userId)){
 			BToast.show(mActivity, "请先成为好友再聊天");
 			return;
 		}else if(BGApp.getInstance().getFriendMapById().containsKey(userId)){
@@ -174,10 +173,7 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 	 * @params:
 	 */
 	public void addContact(){
-		if(BGApp.mUserId.equals(userId)){
-			BToast.show(mActivity, "不能添加自己");
-			return;
-		}else if(BGApp.getInstance().getFriendMapById().containsKey(userId)){
+		if(BGApp.getInstance().getFriendMapById().containsKey(userId)){
 			BToast.show(mActivity, "此用户已是你的好友");
 			return;
 		}else{
@@ -254,6 +250,8 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
         
         m_identityTv.setText(mActivity.getResources().getString(R.string.account_vip, userDTO.level));
         m_identityTv.setVisibility(userDTO.level < 1 ? View.GONE:View.VISIBLE);
+        
+        ll_action.setVisibility(isSelf?View.GONE:View.VISIBLE);
         
         m_userNumberTv.setText("能能号:"+userDTO.username);
         m_signName.setText(userDTO.signature);

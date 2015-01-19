@@ -107,32 +107,32 @@ public class JokeOrderActivity extends BaseActivity implements OnItemClickListen
 		JokeBean jBean = null;
 		switch (v.getId())
 		{
-		case R.id.tv_zan_count:	//赞
+		case R.id.av_zan:	//赞
 			jBean = (JokeBean) v.getTag();
 			mActionJoke = jBean;
 			mActionJoke.like_count = String.valueOf(Integer.valueOf(mActionJoke.like_count)+1);
 			adapter.notifyDataSetChanged();
 			XuannengRequest.getInstance().requestXuanZan(this, mActivity, jBean.jokeid);
 			break;
-		case R.id.tv_comment_count:	//评论
+		case R.id.av_reply:	//评论
 			jBean = (JokeBean) v.getTag();
 			mActionJoke = jBean;
 			type = JokeActionType.RESPONSE;
 			createSendDialog();
 			break;
-		case R.id.tv_transpont_count:	//转发
+		case R.id.av_transpont:	//转发
 			jBean = (JokeBean) v.getTag();
 			mActionJoke = jBean;
 			type = JokeActionType.TRANSPOND;
 			createSendDialog();
 			break;
-		case R.id.tv_share_count:	//分享
+		case R.id.av_share:	//分享
 			jBean = (JokeBean) v.getTag();
 			mActionJoke = jBean;
 			mActionJoke.share_count = String.valueOf(Integer.valueOf(mActionJoke.share_count)+1);
 			adapter.notifyDataSetChanged();
 			XuannengRequest.getInstance().requestXuanZan(this, mActivity, jBean.jokeid);
-			share.doShare();
+			share.setShareContent(jBean.content, jBean.imgs.size() > 0 ? jBean.imgs.get(0).img:null);
 			break;
 		}
 	}
@@ -241,18 +241,23 @@ public class JokeOrderActivity extends BaseActivity implements OnItemClickListen
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			String strJson = bNetWork.getStrJson();
-			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				switch (bNetWork.getMessageType()) {
 				case 870001:
+					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 					stopLoad(m_listXlv);
 					JokeResponse response = JSON.parseObject(strJson, JokeResponse.class);
 					setDataAdapter(m_listXlv, adapter, listJoke, response.jokes);
+					}
 					break;
 
 				default:
+					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+						BToast.show(mActivity, "操作成功");
+					}else{
+						BToast.show(mActivity, "操作失败");
+					}
 					break;
 				}
-			}
 		}
 	}
 

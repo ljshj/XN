@@ -2,6 +2,7 @@ package com.bgood.xn.utils;
 
 
 import android.app.Activity;
+import android.text.TextUtils;
 
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -42,6 +43,9 @@ public class ShareUtils {
 	public static final String QQ_APP_ID = "1103507475";
 	public static final String QQ_APP_KEY = "uQrjhyh93ifnPE0W";
 
+	public static final String LOGO_URL = "http://114.215.189.189/files/logo.png";
+	public static final String TARGET_URL = "http://www.umeng.com";
+	
     public final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 
     private Activity mActivity;
@@ -50,10 +54,10 @@ public class ShareUtils {
     	  // 配置需要分享的相关平台
         configPlatforms();
         // 设置分享的内容
-        setShareContent();
+      //  setShareContent();
     }
     
-    public void doShare(){
+    private void doShare(){
     	mController.getConfig().setPlatforms(
     			SHARE_MEDIA.WEIXIN,
     			SHARE_MEDIA.WEIXIN_CIRCLE,
@@ -85,7 +89,7 @@ public class ShareUtils {
     /**
      * 根据不同的平台设置不同的分享内容</br>
      */
-    private void setShareContent() {
+    public void setShareContent(String content,String imgUrl) {
 
         // 配置SSO
         mController.getConfig().setSsoHandler(new SinaSsoHandler());
@@ -93,55 +97,56 @@ public class ShareUtils {
 
         QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(mActivity,QQ_APP_ID, QQ_APP_KEY);
         qZoneSsoHandler.addToSocialSDK();
-        mController.setShareContent("友盟社会化组件（SDK）让移动应用快速整合社交分享功能");
+        mController.setShareContent(content);
 
        // UMImage localImage = new UMImage(mActivity, R.drawable.icon_app);
-        UMImage urlImage = new UMImage(mActivity,"http://im.kdweibo.com/xuntong/images/app/XT-10000.png");
+        UMImage urlImage = new UMImage(mActivity,TextUtils.isEmpty(imgUrl) ? LOGO_URL:imgUrl);
 
         WeiXinShareContent weixinContent = new WeiXinShareContent();
-        weixinContent.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能，微信");
-        weixinContent.setTitle("友盟社会化分享组件-微信");
-        weixinContent.setTargetUrl("http://www.umeng.com");
+        weixinContent.setShareContent(content);
+        weixinContent.setTitle("炫能，炫了更有可能!");
+        weixinContent.setTargetUrl(TARGET_URL);
         weixinContent.setShareMedia(urlImage);
         mController.setShareMedia(weixinContent);
 
         // 设置朋友圈分享的内容
         CircleShareContent circleMedia = new CircleShareContent();
-        circleMedia.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能，朋友圈");
-        circleMedia.setTitle("友盟社会化分享组件-朋友圈");
+        circleMedia.setShareContent(content);
+        circleMedia.setTitle("炫能，炫了更有可能!");
         circleMedia.setShareImage(urlImage);
-        circleMedia.setTargetUrl("http://www.umeng.com");
+        circleMedia.setTargetUrl(TARGET_URL);
         mController.setShareMedia(circleMedia);
 
-        UMImage qzoneImage = new UMImage(mActivity,"http://www.umeng.com/images/pic/social/integrated_3.png");
-        qzoneImage.setTargetUrl("http://www.umeng.com/images/pic/social/integrated_3.png");
+        UMImage qzoneImage = new UMImage(mActivity,TextUtils.isEmpty(imgUrl) ? LOGO_URL:imgUrl);
+        qzoneImage.setTargetUrl(LOGO_URL);
 
         // 设置QQ空间分享内容
         QZoneShareContent qzone = new QZoneShareContent();
-        qzone.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能 -- QZone");
-        qzone.setTargetUrl("http://www.umeng.com/social");
-        qzone.setTitle("QZone title");
+        qzone.setShareContent(content);
+        qzone.setTargetUrl(TARGET_URL);
+        qzone.setTitle("炫能，炫了更有可能!");
         qzone.setShareImage(urlImage);
         mController.setShareMedia(qzone);
 
 
         QQShareContent qqShareContent = new QQShareContent();
-        qqShareContent.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能 -- QQ");
-        qqShareContent.setTitle("hello, title");
+        qqShareContent.setShareContent(content);
+        qqShareContent.setTitle("炫能，炫了更有可能!");
         qqShareContent.setShareImage(urlImage);
-        qqShareContent.setTargetUrl("http://www.umeng.com/social");
+        qqShareContent.setTargetUrl(TARGET_URL);
         mController.setShareMedia(qqShareContent);
 
 
-        TencentWbShareContent tencent = new TencentWbShareContent();
-        tencent.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能，腾讯微博");
+        TencentWbShareContent tencent = new TencentWbShareContent(urlImage);
+        tencent.setShareContent(content);
         // 设置tencent分享内容
         mController.setShareMedia(tencent);
 
         SinaShareContent sinaContent = new SinaShareContent(urlImage);
-        sinaContent.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能，新浪微博");
+        sinaContent.setShareContent(content);
         mController.setShareMedia(sinaContent);
 
+        doShare();
     }
     
     /**QQ平台支持*/
@@ -150,7 +155,7 @@ public class ShareUtils {
 //        String appKey = "c7394704798a158208a74ab60104f0ba";
         // 添加QQ支持, 并且设置QQ分享内容的target url
         UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(mActivity,QQ_APP_ID, QQ_APP_KEY);
-        qqSsoHandler.setTargetUrl("http://www.umeng.com");
+        qqSsoHandler.setTargetUrl(TARGET_URL);
         qqSsoHandler.addToSocialSDK();
 
         // 添加QZone平台

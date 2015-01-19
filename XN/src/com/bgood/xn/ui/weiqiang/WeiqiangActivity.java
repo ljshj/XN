@@ -137,15 +137,15 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 		vp_weiqiang_type_select = (ViewPager) findViewById(R.id.vp_weiqiang_type_select);
 		checkType(0);
 		
-		m_followFriendsLayout = inflater.inflate(R.layout.item_weiqiang_xlistview, null);
-		m_allFriendsLayout = inflater.inflate(R.layout.item_weiqiang_xlistview, null);
+		m_followFriendsLayout = inflater.inflate(R.layout.listview_space_bar, null);
+		m_allFriendsLayout = inflater.inflate(R.layout.listview_space_bar, null);
 		m_pagerList = new ArrayList<View>();
 		m_pagerList.add(m_allFriendsLayout);
 		m_pagerList.add(m_followFriendsLayout);
 		
-		m_followFriendsXLv = (XListView) m_followFriendsLayout.findViewById(R.id.common_xlv);
+		m_followFriendsXLv = (XListView) m_followFriendsLayout.findViewById(R.id.xlv_sapce);
 		
-		m_allFriendsXLv = (XListView) m_allFriendsLayout.findViewById(R.id.common_xlv); 
+		m_allFriendsXLv = (XListView) m_allFriendsLayout.findViewById(R.id.xlv_sapce); 
 		
 		m_followFriendsAdapter = new WeiqiangAdapter(m_followFriendsList,mActivity,this);
 		m_followFriendsXLv.setAdapter(m_followFriendsAdapter);
@@ -267,7 +267,7 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 			intent = new Intent(mActivity, WeiqiangMentionActivity.class);
 			mActivity.startActivity(intent);
 			break;
-		case R.id.tv_zan_count:	//赞
+		case R.id.av_zan:	//赞
 			wqb = (WeiQiangBean) v.getTag();
 			mActionWeiqiang = wqb;
 			if(m_type == WeiQiangBean.WEIQIANG_ALL){
@@ -281,25 +281,24 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 			}
 			WeiqiangRequest.getInstance().requestWeiqiangZan(this, mActivity, wqb.weiboid);
 			break;
-		case R.id.tv_comment_count:	//评论
+		case R.id.av_reply:	//评论
 			wqb = (WeiQiangBean) v.getTag();
 			mActionWeiqiang = wqb;
 			type = WeiqiangActionType.RESPONSE;
-			
-			int position = m_allFriendsList.indexOf(wqb);
+//			selectPosition(wqb);
 			createSendDialog();
-			m_allFriendsXLv.setSelection(position);
-			
 			break;
-		case R.id.tv_transpont_count:	//转发
+		case R.id.av_transpont:	//转发
 			wqb = (WeiQiangBean) v.getTag();
 			mActionWeiqiang = wqb;
 			type = WeiqiangActionType.TRANSPOND;
+//			selectPosition(wqb);
 			createSendDialog();
 			break;
-		case R.id.tv_share_count:	//分享
+		case R.id.av_share:	//分享
 			wqb = (WeiQiangBean) v.getTag();
-			share.doShare();
+			share.setShareContent(wqb.content, wqb.imgs.size() > 0 ? wqb.imgs.get(0).img:null);
+			WeiqiangRequest.getInstance().requestWeiqiangShare(this, this, wqb.weiboid);
 			break;
 		case R.id.iv_img:
 		case R.id.tv_nick:
@@ -316,6 +315,12 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 			break;
 		}
 	}
+	
+	
+//	private void selectPosition(WeiQiangBean wqb) {
+//		int position = m_allFriendsList.indexOf(wqb);
+//		m_allFriendsXLv.setSelection(position);
+//	}
 	
 	/**
 	 * 

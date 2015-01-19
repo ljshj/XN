@@ -38,7 +38,7 @@ public class WeiQiangBean implements Serializable {
 	public String share_count;
 	public String type;
 	public List<ImageBean> imgs;
-	public String Comments;
+	public String comments;
 	
 	/**操作微墙
 	 * 转发，还是评论

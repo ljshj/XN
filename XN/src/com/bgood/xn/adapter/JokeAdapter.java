@@ -22,6 +22,7 @@ import com.bgood.xn.R;
 import com.bgood.xn.bean.ImageBean;
 import com.bgood.xn.bean.JokeBean;
 import com.bgood.xn.utils.ToolUtils;
+import com.bgood.xn.view.ActionView;
 import com.bgood.xn.view.photoview.ImagePagerActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 /**
@@ -57,10 +58,11 @@ public class JokeAdapter extends KBaseAdapter
 			holder.tvContent = (TextView) convertView.findViewById(R.id.tv_content);
 			holder.oldgridView = (GridView) convertView.findViewById(R.id.gv_old_show_img);
 			
-			holder.tvZanCount = (TextView) convertView.findViewById(R.id.tv_zan_count);
-			holder.tvReplyCount = (TextView) convertView.findViewById(R.id.tv_comment_count);
-			holder.tvTranspontCount = (TextView) convertView.findViewById(R.id.tv_transpont_count);
-			holder.tvShareCount = (TextView) convertView.findViewById(R.id.tv_share_count);
+			holder.avZan = (ActionView) convertView.findViewById(R.id.av_zan);
+			holder.avReply = (ActionView) convertView.findViewById(R.id.av_reply);
+			holder.avTranspnt = (ActionView) convertView.findViewById(R.id.av_transpont);
+			holder.avShare = (ActionView) convertView.findViewById(R.id.av_share);
+			
 			convertView.setTag(holder);
 		} else
 		{
@@ -92,21 +94,21 @@ public class JokeAdapter extends KBaseAdapter
 			showImgs(jokeBean.imgs,holder.gridView);
 		}
 		
-		holder.tvZanCount.setText(jokeBean.like_count);
-		holder.tvZanCount.setOnClickListener(mListener);
-		holder.tvZanCount.setTag(jokeBean);
+		holder.avZan.setCount(jokeBean.like_count);
+		holder.avZan.setOnClickListener(mListener);
+		holder.avZan.setTag(jokeBean);
 		
-		holder.tvReplyCount.setText(jokeBean.comment_count);
-		holder.tvReplyCount.setOnClickListener(mListener);
-		holder.tvReplyCount.setTag(jokeBean);
+		holder.avReply.setCount(jokeBean.comment_count);
+		holder.avReply.setOnClickListener(mListener);
+		holder.avReply.setTag(jokeBean);
 		
-		holder.tvTranspontCount.setText(jokeBean.forward_count);
-		holder.tvTranspontCount.setOnClickListener(mListener);
-		holder.tvTranspontCount.setTag(jokeBean);
+		holder.avTranspnt.setCount(jokeBean.forward_count);
+		holder.avTranspnt.setOnClickListener(mListener);
+		holder.avTranspnt.setTag(jokeBean);
 		
-		holder.tvShareCount.setText(jokeBean.share_count);
-		holder.tvShareCount.setOnClickListener(mListener);
-		holder.tvShareCount.setTag(jokeBean);
+		holder.avShare.setCount(jokeBean.share_count);
+		holder.avShare.setOnClickListener(mListener);
+		holder.avShare.setTag(jokeBean);
 		
 		
 		return convertView;
@@ -124,10 +126,7 @@ public class JokeAdapter extends KBaseAdapter
 		public TextView tvContent;
 		public GridView gridView,oldgridView;
 		
-		public TextView tvZanCount;
-		public TextView tvReplyCount;
-		public TextView tvTranspontCount;
-		public TextView tvShareCount;
+		public ActionView avZan,avReply,avTranspnt,avShare;
 	}
 	
 	/**处理九宫格图片**/

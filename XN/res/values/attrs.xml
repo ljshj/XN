@@ -76,6 +76,10 @@
            <item name="3">取消</item>
        </string-array>
        
-      
+            <!-- 操作的小控件 -->
+      <declare-styleable name="actionBar"> 
+        <attr name="img" format="reference"/> 
+        <attr name="text" format="reference"/> 
+    </declare-styleable> 
       
 </resources>

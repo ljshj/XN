@@ -84,20 +84,20 @@ public class WeiqiangPersonActivity extends BaseActivity implements OnItemClickL
 		WeiQiangBean wqb = (WeiQiangBean) v.getTag();
 		mActionWeiqiang = wqb;
 		switch (v.getId()) {
-		case R.id.tv_zan_count:	//赞
+		case R.id.av_zan:	//赞
 			mActionWeiqiang.like_count = String.valueOf(Integer.valueOf(mActionWeiqiang.like_count)+1);
 			weiqiangAdapter.notifyDataSetChanged();
 			WeiqiangRequest.getInstance().requestWeiqiangZan(this, mActivity, wqb.weiboid);
 			break;
-		case R.id.tv_comment_count:	//评论
+		case R.id.av_reply:	//评论
 			BToast.show(mActivity, "评论"+wqb.weiboid);
 			break;
-		case R.id.tv_transpont_count:	//转发
+		case R.id.av_transpont:	//转发
 			mActionWeiqiang.forward_count = String.valueOf(Integer.valueOf(mActionWeiqiang.forward_count)+1);
 			weiqiangAdapter.notifyDataSetChanged();
 			WeiqiangRequest.getInstance().requestWeiqiangTranspond(this, mActivity, wqb.weiboid,"");
 			break;
-		case R.id.tv_share_count:	//分享
+		case R.id.av_share:	//分享
 			break;
 		default:
 			break;

@@ -493,6 +493,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 				setDataAdapter(m_memberXLv, m_memberAdapter, m_memberList, resultBean.members, m_memberStart);
 				setDataAdapter(m_weiQiangXLv, m_weiqiangAdapter, m_weiQiangList, resultBean.weiqiang, m_weiqiangStart);
 				setDataAdapter(m_showcaseXLv, m_showcaseAdapter, m_showcaseList, resultBean.cabinet, m_cabinetStart);
+				HomeRequest.getInstance().requestSearchComminucation(this, this,m_msg,false);
 				break;
 			case 840002:	//会员分页请求
 				stopLoad(m_memberXLv);
@@ -622,7 +623,6 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		        m_weiQiangList.clear();
 		        m_showcaseList.clear();
 		        HomeRequest.getInstance().requestSearch(this, this, search_type, m_msg, 114.1917953491211f, 22.636533737182617f, m_start, m_start + PAGE_SIZE_ADD);
-		        HomeRequest.getInstance().requestSearchComminucation(this, this,m_msg,false);
 		    }else{
 		    		BToast.show(mActivity, "请输入搜索内容");
 		        return;

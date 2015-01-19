@@ -42,7 +42,9 @@ import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.utils.ImgUtils;
+import com.bgood.xn.utils.ShareUtils;
 import com.bgood.xn.utils.ToolUtils;
+import com.bgood.xn.view.ActionView;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.dialog.BGDialog;
 import com.bgood.xn.view.xlistview.XListView;
@@ -66,10 +68,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	public TextView tvComments;
 	public TextView tvContent;
 	public GridView gridView,oldGridview;
-	public TextView tvZanCount;
-	public TextView tvReplyCount;
-	public TextView tvTranspontCount;
-	public TextView tvShareCount;
+	public ActionView avZan,avReply,avTranspont,avShare;
 	
 	private CommentAdapter weiQiangCommentAdapter;
 	private List<CommentBean> weiqiangComments = new ArrayList<CommentBean>();
@@ -82,11 +81,13 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	private String weiqiangId;
 	
 	private WeiQiangBean weiqiangBean;
+	private ShareUtils share = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		share = new ShareUtils(mActivity);
 		setContentView(R.layout.layout_weiqiang_detail);
 		weiqiangBean = (WeiQiangBean) getIntent().getSerializableExtra(WeiQiangBean.KEY_WEIQIANG_BEAN);
 		weiqiangId = weiqiangBean.weiboid;
@@ -103,7 +104,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	 */
 	private void findView()
 	{
-		listview = (XListView) findViewById(R.id.weiqiang_detail_xlv);
+		listview = (XListView) findViewById(R.id.xlv_sapce);
 		listview.setPullLoadEnable(true);
 		listview.setPullRefreshEnable(false);
 		listview.setXListViewListener(this);
@@ -122,22 +123,18 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		llTransArea = (LinearLayout) head_weiqiang_detail.findViewById(R.id.ll_old_area);
 		oldGridview = (GridView) head_weiqiang_detail.findViewById(R.id.gv_old_show_img);
 		
-		LinearLayout ll_action = (LinearLayout) head_weiqiang_detail.findViewById(R.id.ll_action);
-		ll_action.setVisibility(View.GONE);
-		
-		
-		tvZanCount = (TextView) findViewById(R.id.tv_zan_count);
-		tvReplyCount = (TextView) findViewById(R.id.tv_comment_count);
-		tvTranspontCount = (TextView) findViewById(R.id.tv_transpont_count);
-		tvShareCount = (TextView) findViewById(R.id.tv_share_count);
+		avZan = (ActionView) head_weiqiang_detail.findViewById(R.id.av_zan);
+		avReply = (ActionView) head_weiqiang_detail.findViewById(R.id.av_reply);
+		avTranspont = (ActionView) head_weiqiang_detail.findViewById(R.id.av_transpont);
+		avShare = (ActionView) head_weiqiang_detail.findViewById(R.id.av_share);
 		
 		ivAuthorImg.setOnClickListener(this);
 		tvAuthorName.setOnClickListener(this);
 		tvOldAuthorName.setOnClickListener(this);
-		tvZanCount.setOnClickListener(this);
-		tvReplyCount.setOnClickListener(this);
-		tvTranspontCount.setOnClickListener(this);
-		tvShareCount.setOnClickListener(this);
+		avZan.setOnClickListener(this);
+		avReply.setOnClickListener(this);
+		avTranspont.setOnClickListener(this);
+		avShare.setOnClickListener(this);
 		
 		listview.addHeaderView(head_weiqiang_detail);
 		weiQiangCommentAdapter = new CommentAdapter(weiqiangComments,this);
@@ -173,7 +170,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 			llTransArea.setVisibility(View.VISIBLE);
 			tvOldAuthorName.setText(weiqiangBean.fromname);
 			tvContent.setText(weiqiangBean.content);
-			tvComments.setText(weiqiangBean.Comments);
+			tvComments.setText(weiqiangBean.comments);
 			showImgs(weiqiangBean.imgs,oldGridview);
 			
 		}else{
@@ -181,13 +178,13 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 			tvComments.setText(weiqiangBean.content);
 			showImgs(weiqiangBean.imgs,gridView);
 		}
-		tvZanCount.setText(weiqiangBean.like_count);
+		avZan.setCount(weiqiangBean.like_count);
     	
-		tvReplyCount.setText(weiqiangBean.comment_count);
+		avReply.setCount(weiqiangBean.comment_count);
     	
-		tvTranspontCount.setText(weiqiangBean.forward_count);
+		avTranspont.setCount(weiqiangBean.forward_count);
     	
-		tvShareCount.setText(weiqiangBean.share_count);
+		avShare.setCount(weiqiangBean.share_count);
 	}
 
 	/**处理九宫格图片**/
@@ -209,23 +206,25 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
         switch (v.getId())
         {
             // 赞
-            case R.id.tv_zan_count:
+            case R.id.av_zan:
             	weiqiangBean.like_count = String.valueOf(Integer.valueOf(weiqiangBean.like_count)+1);
-            	tvZanCount.setText(weiqiangBean.like_count);
+            	avZan.setCount(weiqiangBean.like_count);
                 zanWeiqiang();
                 break;
             // 评论
-            case R.id.tv_comment_count:
+            case R.id.av_reply:
             	type = WeiqiangActionType.RESPONSE;
                 createSendDialog("");
                 break;
             // 转发
-            case R.id.tv_transpont_count:
+            case R.id.av_transpont:
             	type = WeiqiangActionType.TRANSPOND;
             	createSendDialog("");
                 break;
             // 分享
-            case R.id.tv_share_count:
+            case R.id.av_share:
+    			share.setShareContent(weiqiangBean.content, weiqiangBean.imgs.size() > 0 ? weiqiangBean.imgs.get(0).img:null);
+    			WeiqiangRequest.getInstance().requestWeiqiangShare(this, mActivity, weiqiangBean.weiboid);
                 break;
             case R.id.iv_img:
     		case R.id.tv_nick:
@@ -325,7 +324,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 					etcontent.setText("");
 					if(type == WeiqiangActionType.TRANSPOND){
 						weiqiangBean.forward_count = String.valueOf(Integer.valueOf(weiqiangBean.forward_count)+1);
-							tvTranspontCount.setText(weiqiangBean.forward_count);
+							avTranspont.setCount(weiqiangBean.forward_count);
 							WeiqiangRequest.getInstance().requestWeiqiangTranspond(WeiqiangDetailActivity.this, mActivity, weiqiangId,mContent);
 					}else{
 						
@@ -339,7 +338,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 						weiQiangCommentAdapter.notifyDataSetChanged();
 						
 						weiqiangBean.comment_count = String.valueOf(Integer.valueOf(weiqiangBean.comment_count)+1);
-						tvReplyCount.setText(weiqiangBean.comment_count);
+						avReply.setCount(weiqiangBean.comment_count);
 						WeiqiangRequest.getInstance().requestWeiqiangReply(WeiqiangDetailActivity.this, mActivity, weiqiangId,content);
 					}
 				}
