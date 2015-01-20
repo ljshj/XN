@@ -88,7 +88,7 @@ public class GroupFragment extends BaseShowDataFragment {
 			}
 		});
 		
-		m_groupXLv = (XListView) layout.findViewById(R.id.common_xlv);
+		m_groupXLv = (XListView) layout.findViewById(R.id.xlv_spaceless);
 		m_groupXLv.setPullLoadEnable(false);
 		m_groupXLv.setPullRefreshEnable(false);
 		groupAdapter = new GroupAdapter(m_groupList, getActivity());

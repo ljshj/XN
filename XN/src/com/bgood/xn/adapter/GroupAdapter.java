@@ -44,7 +44,7 @@ public class GroupAdapter extends KBaseAdapter {
 		
 		// ImageLoader.getInstance().displayImage(group.photo, holder.icon, options);
 		
-		holder.icon.setImageResource(R.drawable.group_icon);
+		holder.icon.setImageResource(R.drawable.icon_group_bg);
 		holder.name.setText(group.name);
 
 	    if("0".equals(group.grouptype)){	//固定群

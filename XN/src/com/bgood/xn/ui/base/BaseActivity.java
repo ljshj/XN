@@ -29,7 +29,7 @@ public class BaseActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.mActivity = this;
-		BGApp.addActivity(this);
+		BGApp.getInstance().addActivity(this);
 		inflater = LayoutInflater.from(this);
 		im = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 		pUitl = new PreferenceUtil(this, PreferenceUtil.PREFERENCE_FILE);

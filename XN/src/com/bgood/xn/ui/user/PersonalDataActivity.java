@@ -368,6 +368,7 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
 				if(status.equalsIgnoreCase("true")){
 					mUserBean.photo = object.optString("smallurl");
 					BGApp.mUserBean = mUserBean;
+					ImgUtils.setPhoto(mUserBean.photo, m_iconImgV);
 					UserCenterRequest.getInstance().requestUpdatePerson(this, mActivity, "photo", mUserBean.photo);
 				}else{
 					BToast.show(mActivity, "图片上传失败");

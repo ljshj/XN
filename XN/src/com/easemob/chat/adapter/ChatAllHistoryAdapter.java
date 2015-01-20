@@ -117,7 +117,7 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 			}
 			
 			// 群聊消息，显示群聊头像
-			holder.avatar.setImageResource(R.drawable.group_icon);
+			holder.avatar.setImageResource(R.drawable.icon_group_bg);
 			//ImageLoader.getInstance().displayImage(group.photo,holder.avatar, options);
 			//Map<String, GroupBean> mapGroups = BGApp.getInstance().getGroupMap().get(arg0);;
 			holder.name.setText(group.name);

@@ -101,7 +101,7 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 	 */
 	private void findView()
 	{
-		listview = (XListView) findViewById(R.id.xlv_sapce);
+		listview = (XListView) findViewById(R.id.xlv_spaceless);
 		listview.setPullLoadEnable(true);
 		listview.setPullRefreshEnable(false);
 		listview.setXListViewListener(this);

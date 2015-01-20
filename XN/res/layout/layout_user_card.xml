@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:actionbar="http://schemas.android.com/apk/res/com.bgood.xn"
+ 			  xmlns:circleimg="http://schemas.android.com/apk/res/com.bgood.xn"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/common_page_bg"
@@ -43,17 +44,20 @@
                             android:id="@+id/user_center_rl_user_info"
                             android:layout_width="match_parent"
                             android:layout_height="88dp"
-                            android:background="@color/little_gray"
+                            android:background="@color/blue_little"
                             android:layout_gravity="center_vertical"
                             >
 
-                            <ImageView
-                                android:id="@+id/user_center_imgv_user_icon"
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:scaleType="fitXY"
-                                android:layout_margin="10dp"
-                                android:src="@drawable/icon_default" />
+                             <com.bgood.xn.view.RoundImageView
+                                    android:id="@+id/user_center_imgv_user_icon"
+						            android:layout_width="70dp"
+                                    android:layout_height="70dp"
+						            android:scaleType="centerCrop"
+						            circleimg:border_inside_color="@color/white"
+						            circleimg:border_outside_color="@color/white"
+						            circleimg:border_thickness="2px"
+                                    android:layout_margin="10dp"
+						            android:src="@drawable/icon_default" />
 
                                   <TextView
                                       android:id="@+id/user_center_tv_user_name"
@@ -62,6 +66,7 @@
                                       android:layout_toRightOf="@id/user_center_imgv_user_icon"
                                       android:layout_marginTop="25dp"
                                       android:drawablePadding="5dp"
+                                      android:textColor="@color/white"
                                       />
 
                                    <ImageView
@@ -87,6 +92,7 @@
                                         android:layout_alignLeft="@id/user_center_tv_user_name"
                                         android:layout_marginTop="10dp"
                                         android:text="能能"
+                                        android:textColor="@color/white"
                                         />
 
                         </RelativeLayout>
@@ -103,7 +109,6 @@
                            android:text="个性签名"
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
-                           android:textColor="@color/gray"
                            android:layout_marginLeft="20dp"
                            android:layout_marginRight="20dp"
                            />
@@ -113,8 +118,9 @@
                            android:layout_width="0dp"
                            android:layout_weight="1"
                            android:layout_height="wrap_content"
-                           android:textColor="@color/black"
+                           android:textColor="@color/gray"
                            android:text="我的中国心"
+                           android:layout_marginRight="10dp"
                            />
                         
                         

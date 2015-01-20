@@ -148,7 +148,7 @@ public class WeiqiangRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(false,ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		 }
 	 /**
 	  * 
@@ -168,7 +168,7 @@ public class WeiqiangRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(false,ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		 }
 	 /**
 	  * 
@@ -189,7 +189,7 @@ public class WeiqiangRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(false,ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		 }
 	 
 	 /**、
@@ -210,7 +210,7 @@ public class WeiqiangRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(false,ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		 }
 	 
 	 /**、

@@ -45,4 +45,8 @@ public class ActionView extends LinearLayout {
 	public void setCount(String count){
 		tvCount.setText(count);
 	}
+	
+	public void setText(String text){
+		tvCount.setText(text);
+	}
 }

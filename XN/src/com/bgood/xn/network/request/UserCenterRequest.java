@@ -83,7 +83,7 @@ public class UserCenterRequest extends BaseNetWork {
 		}
 	
 	 /**会员登录*/
-	 public void requestLogin(TaskListenerWithState mHttpTaskListener,Context context,String userid,String pwd){
+	 public void requestLogin(TaskListenerWithState mHttpTaskListener,Context context,String userid,String pwd,boolean showLoading){
 		 	setMessageType(10005);
 			JSONObject body = new JSONObject();
 			try {
@@ -93,7 +93,7 @@ public class UserCenterRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRequestAsyncTask(ServerType.LoginServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(showLoading,ServerType.LoginServer,this, mHttpTaskListener, context).execute();
 		}
 	 
 	 /**忘记密码时获取验证码*/

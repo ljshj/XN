@@ -54,11 +54,11 @@ public class ResultMemberAdapter extends KBaseAdapter
         
        final MemberResultBean member = (MemberResultBean) mList.get(position);
         
-       ImageLoader.getInstance().displayImage(member.img,holder.iconImgV);
+       ImageLoader.getInstance().displayImage(member.photo,holder.iconImgV);
         
         holder.nameTv.setText(member.name);
         
-        if (member.sex.contains("男"))
+        if (member.sex.equals("1"))
         {
             holder.sexImgV.setImageResource(R.drawable.img_common_sex_male);
         }

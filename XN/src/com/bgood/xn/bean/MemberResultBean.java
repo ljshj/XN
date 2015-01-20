@@ -7,7 +7,7 @@ package com.bgood.xn.bean;
 public class MemberResultBean {
 
 	public String userid;
-      public String img;
+      public String photo;
       public String name;
       public String sex;
       public String level;

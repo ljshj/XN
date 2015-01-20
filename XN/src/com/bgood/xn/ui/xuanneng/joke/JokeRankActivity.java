@@ -26,6 +26,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.JokeAdapter;
+import com.bgood.xn.adapter.KBaseAdapter;
 import com.bgood.xn.bean.JokeBean;
 import com.bgood.xn.bean.JokeBean.JokeActionType;
 import com.bgood.xn.bean.response.JokeResponse;
@@ -65,7 +66,7 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
     private RadioGroup radio_group;
 	
 	private JokeAdapter adapterDay,adapterWeek,adapterMonth,adapterYear;
-	
+	private KBaseAdapter currentAdapter;
 	
 	private XListView mXLDay,mXLWeek,mXLMonth,mXLYear;   // 会员
 	
@@ -287,30 +288,36 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			String strJson = bNetWork.getStrJson();
-			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
-				if(bNetWork.getMessageType()==870002){}
-				JokeResponse response = JSON.parseObject(strJson, JokeResponse.class);
-				switch (REQUEST_FLAG) {
-				case CHOOSE_DAY:
-					m_start_day+=PAGE_SIZE_ADD;
-					setDataAdapter(mXLDay, adapterDay, listDay, response.jokes,isRefreshAction);
-					break;
-				case CHOOSE_WEEK:
-					m_start_week+=PAGE_SIZE_ADD;
-					setDataAdapter(mXLWeek, adapterWeek, listWeek, response.jokes,isRefreshAction);
-					break;
-				case CHOOSE_MONTH:
-					m_start_month+=PAGE_SIZE_ADD;
-					setDataAdapter(mXLMonth, adapterMonth, listMonth, response.jokes,isRefreshAction);
-					break;
-				case CHOOSE_YEAR:
-					m_start_year+=PAGE_SIZE_ADD;
-					setDataAdapter(mXLYear, adapterYear, listYear, response.jokes,isRefreshAction);
-					break;
-				default:
-					break;
 			
-				}
+			switch (bNetWork.getMessageType()) {
+			case 870002:
+					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+						JokeResponse response = JSON.parseObject(strJson, JokeResponse.class);
+						switch (REQUEST_FLAG) {
+							case CHOOSE_DAY:
+								m_start_day+=PAGE_SIZE_ADD;
+								setDataAdapter(mXLDay, adapterDay, listDay, response.jokes,isRefreshAction);
+								break;
+							case CHOOSE_WEEK:
+								m_start_week+=PAGE_SIZE_ADD;
+								setDataAdapter(mXLWeek, adapterWeek, listWeek, response.jokes,isRefreshAction);
+								break;
+							case CHOOSE_MONTH:
+								m_start_month+=PAGE_SIZE_ADD;
+								setDataAdapter(mXLMonth, adapterMonth, listMonth, response.jokes,isRefreshAction);
+								break;
+							case CHOOSE_YEAR:
+								m_start_year+=PAGE_SIZE_ADD;
+								setDataAdapter(mXLYear, adapterYear, listYear, response.jokes,isRefreshAction);
+								break;
+							default:
+								break;
+							}
+					}
+				break;
+
+			default:
+				break;
 			}
 		}
 	}
@@ -365,7 +372,9 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 		case R.id.av_zan:	//赞
 			jBean = (JokeBean) v.getTag();
 			mActionJoke = jBean;
-			WeiqiangRequest.getInstance().requestWeiqiangZan(this, mActivity, jBean.jokeid);
+			mActionJoke.like_count = String.valueOf(Integer.valueOf(mActionJoke.like_count)+1);
+			actionAdapter();
+			XuannengRequest.getInstance().requestXuanZan(this, mActivity, jBean.jokeid);
 			break;
 		case R.id.av_reply:	//评论
 			jBean = (JokeBean) v.getTag();
@@ -382,11 +391,33 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 		case R.id.av_share:	//分享
 			jBean = (JokeBean) v.getTag();
 			share.setShareContent(jBean.content, jBean.imgs.size() > 0 ? jBean.imgs.get(0).img:null);
+			actionAdapter();
 			XuannengRequest.getInstance().requestXuanShare(this, this, jBean.jokeid);
 			break;
 		}
 	}
 	
+	/**
+	 * 根据当前选项卡来判断更新那个adapter
+	 */
+	private void actionAdapter() {
+		switch (REQUEST_FLAG) {
+		case CHOOSE_DAY:
+			adapterDay.notifyDataSetChanged();
+			break;
+		case CHOOSE_WEEK:
+			adapterWeek.notifyDataSetChanged();
+			break;
+		case CHOOSE_MONTH:
+			adapterMonth.notifyDataSetChanged();
+			break;
+		case CHOOSE_YEAR:
+			adapterYear.notifyDataSetChanged();
+			break;
+		default:
+			break;
+		}
+	}
 	
 	/**
 	 * 
@@ -419,12 +450,12 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 					etcontent.setText("");
 					if(type == JokeActionType.TRANSPOND){
 						mActionJoke.forward_count = String.valueOf(Integer.valueOf(mActionJoke.forward_count)+1);
-						adapterDay.notifyDataSetChanged();
-						WeiqiangRequest.getInstance().requestWeiqiangTranspond(JokeRankActivity.this, mActivity, mActionJoke.jokeid,content);
+						actionAdapter();
+						XuannengRequest.getInstance().requestXuanTransport(JokeRankActivity.this, mActivity, mActionJoke.jokeid,content);
 					}else{
 						mActionJoke.comment_count = String.valueOf(Integer.valueOf(mActionJoke.comment_count)+1);
-						adapterDay.notifyDataSetChanged();
-					    WeiqiangRequest.getInstance().requestWeiqiangReply(JokeRankActivity.this, mActivity, mActionJoke.jokeid,content);
+						actionAdapter();
+						XuannengRequest.getInstance().requestXuanComment(JokeRankActivity.this, mActivity, mActionJoke.jokeid,content);
 					}
 				}
 			}

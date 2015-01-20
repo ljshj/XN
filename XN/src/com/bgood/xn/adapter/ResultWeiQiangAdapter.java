@@ -12,12 +12,13 @@ import com.bgood.xn.R;
 import com.bgood.xn.bean.WeiQiangBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-
+/**
+ * 
+ * 查找到的微墙结果页
+ *
+ */
 public class ResultWeiQiangAdapter extends KBaseAdapter
 {
-
-    
-
     public ResultWeiQiangAdapter(List<?> mList, Activity mActivity) {
 		super(mList, mActivity);
 	}
@@ -34,7 +35,6 @@ public class ResultWeiQiangAdapter extends KBaseAdapter
             holder.iconImgV = (ImageView) convertView.findViewById(R.id.result_weiqiang_item_imgv_icon);
             holder.infoTv = (TextView) convertView.findViewById(R.id.result_weiqiang_item_tv_info);
             holder.sendUserTv = (TextView) convertView.findViewById(R.id.result_weiqiang_item_tv_send_user);
-            
             convertView.setTag(holder);
         }
         else

@@ -118,12 +118,12 @@ public class XuannengRequest extends BaseNetWork {
 			JSONObject body = new JSONObject();
 			try {
 				body.put("xnid", itemid);
-				body.put("comment", comment);
+				body.put("comments", comment);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(false,ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		 }
 	
 	 /**
@@ -144,7 +144,7 @@ public class XuannengRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(false,ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		 }
 	 /**
 		 * 
@@ -165,7 +165,7 @@ public class XuannengRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(false,ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		 }
 	 /**
 		 * 
@@ -185,7 +185,7 @@ public class XuannengRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 new HttpRequestAsyncTask(false,ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		 }
 	 
 	 /**

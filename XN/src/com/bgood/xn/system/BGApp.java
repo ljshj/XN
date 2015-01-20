@@ -126,7 +126,7 @@ public class BGApp extends Application {
      * @param Activity 需要加入的Activity
      * @return 
      */
-    public static void addActivity(Activity activity)
+    public void addActivity(Activity activity)
     {
         if (m_activityStack == null)
         {

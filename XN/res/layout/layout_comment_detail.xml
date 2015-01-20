@@ -15,26 +15,6 @@
             android:text="详情" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent" >
-
-        <ProgressBar
-            android:id="@+id/common_progress"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerInParent="true" />
-
-        <com.bgood.xn.view.xlistview.XListView
-            android:id="@+id/common_xlv"
-            style="@style/common_listview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/common_page_bg"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="10dp"
-            android:visibility="gone" >
-        </com.bgood.xn.view.xlistview.XListView>
-    </RelativeLayout>
+    <include layout="@layout/listview_bar"/>
 
 </LinearLayout>

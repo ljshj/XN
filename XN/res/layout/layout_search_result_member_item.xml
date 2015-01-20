@@ -15,6 +15,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginLeft="10dp"
+            android:scaleType="fitXY"
             android:src="@drawable/icon_default" />
 
         <View

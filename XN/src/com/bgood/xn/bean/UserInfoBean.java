@@ -97,5 +97,7 @@ public class UserInfoBean implements Serializable {
 	public String guanzhu;
 	public String fansnumber;
 	public String weiqiang;
+	public String isfriend = "";
+	public String isguanzhu = "";
 }
 

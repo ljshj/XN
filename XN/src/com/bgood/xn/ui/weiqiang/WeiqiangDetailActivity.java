@@ -104,7 +104,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	 */
 	private void findView()
 	{
-		listview = (XListView) findViewById(R.id.xlv_sapce);
+		listview = (XListView) findViewById(R.id.xlv_spaceless);
 		listview.setPullLoadEnable(true);
 		listview.setPullRefreshEnable(false);
 		listview.setXListViewListener(this);

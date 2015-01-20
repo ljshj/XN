@@ -26,7 +26,9 @@ import com.bgood.xn.ui.user.product.ShowcaseActivity;
 import com.bgood.xn.ui.weiqiang.WeiqiangPersonActivity;
 import com.bgood.xn.ui.xuanneng.XuanNengMainActivity;
 import com.bgood.xn.utils.LogUtils;
+import com.bgood.xn.view.ActionView;
 import com.bgood.xn.view.BToast;
+import com.bgood.xn.view.RoundImageView;
 import com.bgood.xn.widget.TitleBar;
 import com.easemob.chat.EMContactManager;
 import com.easemob.chat.activity.ChatActivity;
@@ -43,7 +45,7 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 {
 	private String userId;
 	private UserInfoBean user;
-    private ImageView m_userIconImgV = null;  // 用户头像
+    private RoundImageView m_userIconImgV = null;  // 用户头像
     private TextView m_userNicteTv = null;  // 用户昵称
     private TextView m_identityTv = null;  // 性别
     private ImageView m_sexImgV = null;  // 性别
@@ -52,6 +54,8 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
     private TextView m_ineedTv = null;  // 我想
     private TextView m_signName;	//个性签名
     private boolean isSelf = false;	//是否是自己本人
+    
+    private ActionView avFriend,avAttention;
     
     private TextView tvWeiqiang;
     private TextView tvXuanneg;
@@ -82,7 +86,7 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 	 */
 	private void findView()
 	{
-	    m_userIconImgV = (ImageView) findViewById(R.id.user_center_imgv_user_icon);
+	    m_userIconImgV = (RoundImageView) findViewById(R.id.user_center_imgv_user_icon);
 	    m_userNicteTv = (TextView) findViewById(R.id.user_center_tv_user_name);
 	    m_sexImgV = (ImageView) findViewById(R.id.iv_sex);
 	    m_identityTv = (TextView) findViewById(R.id.tv_identity);
@@ -95,8 +99,11 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 	    ll_action = (LinearLayout) findViewById(R.id.ll_action);
 	    
 	    
-		findViewById(R.id.av_add_attention).setOnClickListener(this);
-		findViewById(R.id.av_add_friend).setOnClickListener(this);
+	    avAttention = (ActionView) findViewById(R.id.av_add_attention);
+	    avAttention.setOnClickListener(this);
+	    
+	    avFriend = (ActionView) findViewById(R.id.av_add_friend);
+	    avFriend.setOnClickListener(this);
 		findViewById(R.id.av_call_message).setOnClickListener(this);
 		
 		tvWeiqiang = (TextView) findViewById(R.id.tv_weiqiang);
@@ -248,6 +255,16 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
             m_sexImgV.setVisibility(View.GONE);
         }
         
+        if(userDTO.isguanzhu.equals("true")){
+        	avAttention.setText("已经关注");
+        	avAttention.setEnabled(false);
+        }else{
+        	avAttention.setText("立即关注");
+        	avAttention.setEnabled(true);
+        }
+        
+        avFriend.setVisibility(userDTO.isfriend.equals("true")?View.GONE:View.VISIBLE);
+        
         m_identityTv.setText(mActivity.getResources().getString(R.string.account_vip, userDTO.level));
         m_identityTv.setVisibility(userDTO.level < 1 ? View.GONE:View.VISIBLE);
         
@@ -268,25 +285,23 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			String strJson = bNetWork.getStrJson();
-			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
-				switch (bNetWork.getMessageType()) {
-				case 820001:
+			switch (bNetWork.getMessageType()) {
+			case 820001:
+				if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
 					user = JSON.parseObject(strJson, UserInfoBean.class);
 					setData(user);
-					if(!isSelf){
-						(new TitleBar(mActivity)).initTitleBar(user.nickn+"的名片");
+					if (!isSelf) {
+						(new TitleBar(mActivity)).initTitleBar(user.nickn+ "的名片");
 					}
-				break;
-				case 820004:
-					BToast.show(mActivity, "关注成功");
-				break;
-//				case 850027:
-//					BToast.show(mActivity, "加好友请求已经成功，等待对应回应");
-//				break;
-
-				default:
-					break;
 				}
+				break;
+			case 820004:
+				if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
+					avAttention.setText("已关注");
+				}
+				break;
+			default:
+				break;
 			}
 		}
 	}

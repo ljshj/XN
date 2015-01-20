@@ -244,7 +244,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:focusable">false</item>
         <item name="android:textColor">@color/grey2</item>
-        <item name="android:textSize">8sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:gravity">center</item>
         <item name="android:drawablePadding">5dp</item>
     </style>

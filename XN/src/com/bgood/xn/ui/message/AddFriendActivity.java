@@ -84,7 +84,7 @@ public class AddFriendActivity extends BaseShowDataActivity implements IXListVie
 			}
 		});
 		
-		m_memberXLv = (XListView) findViewById(R.id.common_xlv);
+		m_memberXLv = (XListView) findViewById(R.id.xlv_spaceless);
 		m_memberXLv.setPullLoadEnable(true);
 		m_memberXLv.setPullRefreshEnable(false);
 		m_memberXLv.setXListViewListener(this);
