@@ -48,6 +48,7 @@ import com.bgood.xn.bean.FriendBean;
 import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.user.info.NameCardActivity;
+import com.bgood.xn.utils.ImgUtils;
 import com.easemob.EMCallBack;
 import com.easemob.chat.Constant;
 import com.easemob.chat.EMChatManager;
@@ -80,7 +81,6 @@ import com.easemob.util.EMLog;
 import com.easemob.util.FileUtils;
 import com.easemob.util.LatLng;
 import com.easemob.util.TextFormater;
-import com.nostra13.universalimageloader.core.ImageLoader;
 public class MessageAdapter extends BaseAdapter{
 
 	private final static String TAG = "msg";
@@ -329,14 +329,14 @@ public class MessageAdapter extends BaseAdapter{
 				if(null!=friendBean){
 					/**如果是收到的消息，则展示对方的名字，否则不展示*/
 					holder.tv_userId.setText(friendBean.name);
-					ImageLoader.getInstance().displayImage(friendBean.photo,holder.head_iv);
+					BGApp.getInstance().setImage(friendBean.photo,holder.head_iv);
 					
 				}else{
 					/**如果是收到的消息，则展示对方的名字，否则不展示*/
 					holder.tv_userId.setText(message.getFrom());
 				}
 			}else{
-				ImageLoader.getInstance().displayImage(BGApp.mUserBean.photo,holder.head_iv);
+				BGApp.getInstance().setImage(BGApp.mUserBean.photo,holder.head_iv);
 			}
 		}else{ /**如果是单聊的情况*/
 			
@@ -346,11 +346,11 @@ public class MessageAdapter extends BaseAdapter{
 			if(message.direct == EMMessage.Direct.RECEIVE ){
 				// demo用username代替nick
 				if(null!=toBean){
-					ImageLoader.getInstance().displayImage(toBean.photo,holder.head_iv);
+					BGApp.getInstance().setImage(toBean.photo,holder.head_iv);
 				}
 				
 			}else{
-				ImageLoader.getInstance().displayImage(BGApp.mUserBean.photo,holder.head_iv);
+				BGApp.getInstance().setImage(BGApp.mUserBean.photo,holder.head_iv);
 			}
 		}
 

@@ -110,17 +110,9 @@ public class ProductEditActivity extends BaseActivity implements OnClickListener
     	img = m_ProductBean.img;
     	img_thumb = m_ProductBean.img_thum;
     	m_recommend = m_ProductBean.brecom;
-        DisplayImageOptions options;
-		options = new DisplayImageOptions.Builder()
-		.showImageOnFail(R.drawable.icon_default)
-		.showImageOnLoading(R.drawable.icon_default)
-		.showImageForEmptyUri(R.drawable.icon_default)
-		.cacheInMemory(true)
-		.cacheOnDisk(true)
-		.bitmapConfig(Bitmap.Config.RGB_565)  
-		.build();
-		
-		 ImageLoader.getInstance().displayImage(m_ProductBean.img,m_photoImgV, options);
+   	    
+    	BGApp.getInstance().setImage(m_ProductBean.img, m_photoImgV);
+		 
         m_recommendCb.setChecked(m_recommend==1?true:false);
         m_productNameEt.setText(m_ProductBean.product_name);
         m_productPriceEt.setText(m_ProductBean.price);
@@ -224,8 +216,12 @@ public class ProductEditActivity extends BaseActivity implements OnClickListener
 	private void afterGetFile(String path) {
 		tempFile = new File(path);
 		tempFile = new File(path);
-		Bitmap mBitmapUploaded = BitmapFactory.decodeFile(path);
+		Bitmap mBitmapUploaded = ImgUtils.compressImageFromFile(path);
+		
 		m_photoImgV.setImageBitmap(mBitmapUploaded);
+		
+		ImgUtils.compressBmpToFile(mBitmapUploaded, tempFile);
+		
 		FileRequest.getInstance().requestUpLoadFile(this,mActivity,true,tempFile, String.valueOf(BGApp.mUserId), "userInfo", "png");
 	}
 

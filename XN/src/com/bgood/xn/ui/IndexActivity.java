@@ -85,6 +85,7 @@ public class IndexActivity extends BaseActivity implements TaskListenerWithState
 			JSONObject body = bNetWork.getBody();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				SystemConfig.BS_SERVER = body.optString("bserver");
+				SystemConfig.FILE_SERVER = body.optString("fserver");
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {

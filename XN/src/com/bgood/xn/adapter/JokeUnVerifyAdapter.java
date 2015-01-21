@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.ImageBean;
 import com.bgood.xn.bean.JokeBean;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.utils.ToolUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -48,7 +49,7 @@ public class JokeUnVerifyAdapter extends KBaseAdapter {
 		
 		final JokeBean jokeBean = (JokeBean) mList.get(position);
 		
-		ImageLoader.getInstance().displayImage(jokeBean.photo,holder.ivAuthorImg);
+		BGApp.getInstance().setImage(jokeBean.photo,holder.ivAuthorImg);
 		
 		
 		holder.tvAuthorName.setText(jokeBean.username);

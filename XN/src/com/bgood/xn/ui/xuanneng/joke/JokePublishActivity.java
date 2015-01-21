@@ -5,12 +5,11 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
@@ -22,18 +21,16 @@ import android.widget.GridView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.ImageAdapter;
-import com.bgood.xn.bean.ImageBean;
 import com.bgood.xn.bean.JokeBean;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpRequestInfo;
 import com.bgood.xn.network.http.HttpResponseInfo;
-import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.FileRequest;
 import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.system.BGApp;
-import com.bgood.xn.system.Const;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.view.BToast;
@@ -67,7 +64,8 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
     private String m_content = null;
     
     private List<File> files = new ArrayList<File>();	//文件集合
-    private List<ImageBean> listImg = new ArrayList<ImageBean>();
+    
+    private List<Bitmap> bitmaps = new ArrayList<Bitmap>(); //图片集合
     
     private String[] imgs;
     private String[] smallImgs;
@@ -85,6 +83,7 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 		mJokeBean = (JokeBean) getIntent().getSerializableExtra(JokeBean.JOKE_BEAN);
 		(new TitleBar(mActivity)).initTitleBar(null==mJokeBean ? "有奖投稿":"修改投搞");
 		files.add(null);
+		bitmaps.add(null);
 		initViews();
 		setData();
 	}
@@ -92,7 +91,7 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 	private void initViews()
 	{
 		gridview_images = (GridView) findViewById(R.id.gridview_images);
-		adapter = new ImageAdapter(files,this,this);
+		adapter = new ImageAdapter(bitmaps,this,this);
 		gridview_images.setAdapter(adapter);
 		gridview_images.setOnItemClickListener(this);
 		comment_content = (EditText) findViewById(R.id.comment_content);
@@ -113,16 +112,11 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	{
-		if(position == files.size()-1){
-			if(files.size() <= MAX_SIZE){
+		if(position == bitmaps.size()-1){
+			if(bitmaps.size() <= MAX_SIZE){
 				showPicDialog();
 			}
 		}
-		
-//		else{
-//			//查看图片
-//			WindowUtil.getInstance().dialogViewPagerShow(mActivity, listImg, position);
-//		}
 	}
 	
 	private void checkInfo()
@@ -192,8 +186,10 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 	 */
 	private void afterGetFile(String path) {
 		tempFile = new File(path);
+		Bitmap bitmap = ImgUtils.compressImageFromFile(path);
+		bitmaps.add(bitmaps.size()-1, bitmap);
+		ImgUtils.compressBmpToFile(bitmap, tempFile);	//图片压缩一下
 		files.add(files.size()-1,tempFile);
-		listImg.add(new ImageBean());
 		adapter.notifyDataSetChanged();
 	}
 
@@ -264,6 +260,7 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 			break;
 		case R.id.send_weiqiang_imgv_delete:
 			int position = (Integer) v.getTag();
+			bitmaps.remove(position);
 			files.remove(position);
 			adapter.notifyDataSetChanged();
 			break;

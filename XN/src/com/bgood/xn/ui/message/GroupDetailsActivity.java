@@ -32,7 +32,6 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -64,7 +63,6 @@ import com.easemob.chat.activity.ChatActivity;
 import com.easemob.chat.activity.ExitGroupDialog;
 import com.easemob.chat.widget.ExpandGridView;
 import com.easemob.util.NetUtils;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * 
@@ -395,7 +393,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				convertView.setVisibility(View.VISIBLE);
 				button.setVisibility(View.VISIBLE);
 				
-				ImageLoader.getInstance().displayImage(friendBean.photo,iv,options);
+				BGApp.getInstance().setImage(friendBean.photo,iv);
 				
 				//Drawable avatar = getResources().getDrawable(R.drawable.default_avatar);
 				Drawable avatar = iv.getDrawable();

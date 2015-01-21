@@ -20,7 +20,9 @@ import com.bgood.xn.network.http.HttpRequestInfo;
 import com.bgood.xn.network.http.HttpResponseInfo;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.ProductRequest;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -98,18 +100,7 @@ public class ProductDetailActivity extends BaseActivity implements OnClickListen
     
     private void setData(final ProductBean productBean)
     {
-        DisplayImageOptions options;
-		options = new DisplayImageOptions.Builder()
-		.showImageOnFail(R.drawable.icon_default)
-		.showImageOnLoading(R.drawable.icon_default)
-		.showImageForEmptyUri(R.drawable.icon_default)
-		.cacheInMemory(true)
-		.cacheOnDisk(true)
-		.bitmapConfig(Bitmap.Config.RGB_565)  
-		.build();
-		
-		 ImageLoader.getInstance().displayImage(productBean.img,m_iconImgV, options);
-        
+    	BGApp.getInstance().setImage(productBean.img, m_iconImgV);
     	m_productNameTv.setText(productBean.product_name);
     	m_priceTv.setText(productBean.getPrice());
     	m_productInfoTv.setText(productBean.intro);

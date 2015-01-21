@@ -14,4 +14,5 @@ public class GroupAddBean {
 	public String reason;
 	public String applyer;
 	
+	
 }

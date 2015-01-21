@@ -158,7 +158,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	
 	private void setData()
 	{
-        ImgUtils.setPhoto(weiqiangBean.photo,ivAuthorImg);
+		BGApp.getInstance().setImage(weiqiangBean.photo,ivAuthorImg);
 		
 		tvTime.setText(ToolUtils.getFormatDate(weiqiangBean.date_time));
 		

@@ -11,6 +11,10 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.FriendBean;
@@ -99,9 +103,9 @@ public class BGApp extends Application {
 	/**
 	 * 展示图片
 	 */
+	private DisplayImageOptions options = null;
 	private void initImgDisPlay() {
-
-		DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder() //
+		options = new DisplayImageOptions.Builder() //
 		.showImageForEmptyUri(R.drawable.icon_default) //
 		.showImageOnFail(R.drawable.icon_default) //
 		.cacheInMemory(true) //
@@ -109,13 +113,11 @@ public class BGApp extends Application {
 		.build();//
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration//
 		.Builder(getApplicationContext())//
-		.defaultDisplayImageOptions(defaultOptions)//
+		.defaultDisplayImageOptions(options)//
 		.diskCacheFileCount(1000)
 		.diskCacheSize(50*1024*1024)
 		.build();//
 		ImageLoader.getInstance().init(config);
-		
-		
 	}
 	
 	
@@ -278,4 +280,21 @@ public class BGApp extends Application {
 			}
 		}
 	}
+	
+
+	/**设置图片*/
+    public  void setImage(final String imgUrl,final ImageView iv){
+    	if(TextUtils.isEmpty(imgUrl)){
+    		iv.setVisibility(View.GONE);
+    		return;
+    	}
+    	
+    	String strImgUrl = imgUrl;
+    	
+    	if(!strImgUrl.contains("http")){
+    		strImgUrl = SystemConfig.FILE_SERVER+imgUrl;
+    	}
+    	
+	   ImageLoader.getInstance().displayImage(strImgUrl,iv, options);
+    }
 }

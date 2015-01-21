@@ -1,4 +1,7 @@
 package com.bgood.xn.bean;
+
+import com.bgood.xn.system.SystemConfig;
+
 /**
  * @todo:关注类，关注我的与我关注的
  * @date:2014-10-29 下午6:52:28
@@ -23,5 +26,9 @@ public class AttentionBean {
 	public int guanzhutype;
 	public String ican;
 	public String ineed;
+	
+	public String getImg() {
+		return SystemConfig.FILE_SERVER + img;
+	}
 }
 

@@ -2,6 +2,8 @@ package com.bgood.xn.bean;
 
 import java.io.Serializable;
 
+import com.bgood.xn.system.SystemConfig;
+
 /**
  * 图片类
  */
@@ -30,5 +32,4 @@ public class ImageBean implements Serializable
 		this.img = img;
 		this.img_thum = img_thum;
 	}
-	
 }

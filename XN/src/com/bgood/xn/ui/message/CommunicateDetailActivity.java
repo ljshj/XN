@@ -320,7 +320,7 @@ public class CommunicateDetailActivity extends BaseActivity implements OnClickLi
 				convertView.setVisibility(View.VISIBLE);
 				button.setVisibility(View.VISIBLE);
 				
-				ImageLoader.getInstance().displayImage(friendBean.photo,iv,options);
+				BGApp.getInstance().setImage(friendBean.photo,iv);
 				
 				//Drawable avatar = getResources().getDrawable(R.drawable.default_avatar);
 				Drawable avatar = iv.getDrawable();

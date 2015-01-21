@@ -151,7 +151,7 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 	
 	private void setData(JokeBean jBean)
 	{
-        ImgUtils.setPhoto(jBean.photo,ivAuthorImg);
+		BGApp.getInstance().setImage(jBean.photo,ivAuthorImg);
 		
 		tvTime.setText(ToolUtils.getFormatDate(jBean.date_time));
 		

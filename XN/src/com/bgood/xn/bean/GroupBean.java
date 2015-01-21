@@ -11,6 +11,7 @@ import android.database.Cursor;
 
 import com.bgood.xn.db.DBHelper;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.system.SystemConfig;
 import com.bgood.xn.utils.LogUtils;
 /**
  * @todo:群组实体类
@@ -37,7 +38,9 @@ public class GroupBean implements Serializable
 	public int membercount;
 	
 
-	
+	public String getPhoto() {
+		return SystemConfig.FILE_SERVER + photo;
+	}
 	
 	
 	/**

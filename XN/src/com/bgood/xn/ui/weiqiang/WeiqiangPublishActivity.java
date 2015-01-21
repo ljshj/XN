@@ -10,6 +10,8 @@ import org.json.JSONObject;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -71,7 +73,7 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
     private String m_content = null;
     
     private List<File> files = new ArrayList<File>();	//文件集合
-    private List<ImageBean> listImg = new ArrayList<ImageBean>();
+    private List<Bitmap> bitmaps = new ArrayList<Bitmap>(); //图片集合
     
     private String[] imgs;
     private String[] smallImgs;
@@ -86,13 +88,14 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 		setContentView(R.layout.layout_weiqiang_publish);
 		(new TitleBar(mActivity)).initTitleBar("发微墙");
 		files.add(null);
+		bitmaps.add(null);
 		initViews();
 	}
 
 	private void initViews()
 	{
 		gridview_images = (GridView) findViewById(R.id.gridview_images);
-		adapter = new ImageAdapter(files,this,this);
+		adapter = new ImageAdapter(bitmaps,this,this);
 		gridview_images.setAdapter(adapter);
 		gridview_images.setOnItemClickListener(this);
 		comment_content = (EditText) findViewById(R.id.comment_content);
@@ -103,8 +106,8 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	{
-		if(position == files.size()-1){
-			if(files.size() <= MAX_SIZE){
+		if(position == bitmaps.size()-1){
+			if(bitmaps.size() <= MAX_SIZE){
 				showPicDialog();
 			}
 		}
@@ -181,10 +184,11 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 	 * @params:@param path
 	 */
 	private void afterGetFile(String path) {
-		//filePath.add(path);
 		tempFile = new File(path);
+		Bitmap bitmap = ImgUtils.compressImageFromFile(path);
+		bitmaps.add(bitmaps.size()-1, bitmap);
+		ImgUtils.compressBmpToFile(bitmap, tempFile);	//图片压缩一下
 		files.add(files.size()-1,tempFile);
-		listImg.add(new ImageBean());
 		adapter.notifyDataSetChanged();
 	}
 
@@ -210,6 +214,7 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 					imgs[uploadCount] = object.optString("url");
 					uploadCount++;
 					if(uploadCount < files.size()){	//上传图片
+						ImgUtils.compressBmpToFile(BitmapFactory.decodeFile(files.get(uploadCount).getAbsolutePath()), files.get(uploadCount));
 						FileRequest.getInstance().requestUpLoadFile(this,mActivity,false,files.get(uploadCount), String.valueOf(BGApp.mUserId), "webo", "jpg");
 					}else{	//图片上传完毕
 						checkInfo();
@@ -237,6 +242,8 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 				imgs = new String[files.size()];
 				smallImgs = new String[files.size()];
 				LoadingProgress.getInstance().show(mActivity, "正在发送微墙");
+				ImgUtils.compressBmpToFile(BitmapFactory.decodeFile(files.get(uploadCount).getAbsolutePath()), files.get(uploadCount));
+
 				FileRequest.getInstance().requestUpLoadFile(this,mActivity,false,files.get(uploadCount), String.valueOf(BGApp.mUserId), "webo", "jpg");
 			}else{
 				checkInfo();
@@ -255,6 +262,7 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 			break;
 		case R.id.send_weiqiang_imgv_delete:
 			int position = (Integer) v.getTag();
+			bitmaps.remove(position);
 			files.remove(position);
 			adapter.notifyDataSetChanged();
 			break;

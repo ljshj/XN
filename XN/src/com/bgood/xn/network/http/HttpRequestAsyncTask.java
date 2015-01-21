@@ -64,13 +64,19 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 				b.setSessionID(SystemConfig.SessionID);
 				
 			}else if(type == ServerType.FileServer){
-				serverUrl = (null!=SystemConfig.FILE_SERVER ? SystemConfig.FILE_SERVER:pUtil.getFileServerUrl())+"/Upload.ashx"+b.getConnUrl();	//注意这里是文件类型
+				serverUrl = (null!=SystemConfig.FILE_SERVER ? SystemConfig.FILE_SERVER:pUtil.getFileServerUrl())+"Upload.ashx"+b.getConnUrl();	//注意这里是文件类型
 				b.setSessionID(SystemConfig.SessionID);
 				
 			}else{
 				serverUrl = SystemConfig.HttpServer;
 			}
-			mRequest.setRequesUrl("http://"+serverUrl);
+			
+			if(!serverUrl.contains("http://")){
+				mRequest.setRequesUrl("http://"+serverUrl);
+			}else{
+				mRequest.setRequesUrl(serverUrl);
+			}
+			
 			this.mListenerWithState=listner;
 	}
 	
@@ -84,8 +90,6 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 			
 				if(type == ServerType.FileServer){	//如果是上传文件，请注意一下。
 					return new HttpResponseInfo(HttpManager.getHttpRequest(mRequest,bNetWork),	HttpTaskState.STATE_OK);		
-				}else if(type == ServerType.IMServer){
-					//return new HttpResponseInfo(HttpManager.getHttpRequest(mRequest,bNetWork),	HttpTaskState.STATE_OK);		
 				}else{
 					return new HttpResponseInfo(HttpManager.postHttpRequest(mRequest,bNetWork),	HttpTaskState.STATE_OK);		
 				}

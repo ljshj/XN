@@ -2,6 +2,8 @@ package com.bgood.xn.bean;
 
 import java.io.Serializable;
 
+import com.bgood.xn.system.SystemConfig;
+
 
 /**
  * @todo:用户资料实体类
@@ -99,5 +101,9 @@ public class UserInfoBean implements Serializable {
 	public String weiqiang;
 	public String isfriend = "";
 	public String isguanzhu = "";
+	
+	public String getPhoto() {
+		return SystemConfig.FILE_SERVER + photo;
+	}
 }
 

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.ImageBean;
+import com.bgood.xn.system.BGApp;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -21,14 +22,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 public class NoScrollGridAdapter extends KBaseAdapter {
 	/** 图片Url集合 */
 	private ArrayList<String> imageSmallUrls = new ArrayList<String>();
-	private DisplayImageOptions options;
 	public NoScrollGridAdapter(List<ImageBean> mList, Activity mActivity) {
 		super(mList, mActivity);
-		options = new DisplayImageOptions.Builder()
-		.cacheInMemory(true)//
-		.cacheOnDisk(true)//
-		.bitmapConfig(Config.RGB_565)//
-		.build();
 		for(ImageBean img:mList){
 			imageSmallUrls.add(img.img_thum);
 		}
@@ -38,7 +33,7 @@ public class NoScrollGridAdapter extends KBaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		convertView = mInflater.inflate(R.layout.item_gridview, null);
 		ImageView imageView = (ImageView) convertView.findViewById(R.id.iv_image);
-		ImageLoader.getInstance().displayImage(imageSmallUrls.get(position), imageView, options);
+		BGApp.getInstance().setImage(imageSmallUrls.get(position), imageView);
 		return convertView;
 	}
 

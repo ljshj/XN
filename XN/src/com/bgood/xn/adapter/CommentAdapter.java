@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.CommentBean;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.utils.ToolUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -45,7 +46,7 @@ public class CommentAdapter extends KBaseAdapter
         
        final CommentBean wComment = (CommentBean) mList.get(position);
         
-       ImageLoader.getInstance().displayImage(wComment.photo,holder.ivComment);
+       BGApp.getInstance().setImage(wComment.photo,holder.ivComment);
        
         holder.tvCommentAuthor.setText(wComment.name);
         holder.tvCommentTime.setText(ToolUtils.getFormatDate(wComment.commenttime));

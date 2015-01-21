@@ -33,6 +33,7 @@ import com.bgood.xn.R;
 import com.bgood.xn.bean.FriendBean;
 import com.bgood.xn.bean.GroupBean;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.utils.ImgUtils;
 import com.easemob.chat.Constant;
 import com.easemob.chat.EMContact;
 import com.easemob.chat.EMConversation;
@@ -118,8 +119,6 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 			
 			// 群聊消息，显示群聊头像
 			holder.avatar.setImageResource(R.drawable.icon_group_bg);
-			//ImageLoader.getInstance().displayImage(group.photo,holder.avatar, options);
-			//Map<String, GroupBean> mapGroups = BGApp.getInstance().getGroupMap().get(arg0);;
 			holder.name.setText(group.name);
 		} else {
 			
@@ -129,8 +128,7 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 				return null;
 			}
 			
-			ImageLoader.getInstance().displayImage(fb.photo,holder.avatar);
-			
+			BGApp.getInstance().setImage(fb.photo, holder.avatar);
 			// 本地或者服务器获取用户详情，以用来显示头像和nick
 //			holder.avatar.setImageResource(R.drawable.default_avatar);
 //			if (username.equals(Constant.GROUP_USERNAME)) {

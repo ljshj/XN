@@ -1,15 +1,9 @@
 package com.bgood.xn.adapter;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -17,8 +11,7 @@ import android.widget.ImageView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.ImageBean;
-import com.bgood.xn.utils.ImgUtils;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.bgood.xn.system.BGApp;
 /***
  * @todo:图片适配器
  * @date:2014-11-10 下午6:00:55
@@ -56,40 +49,18 @@ public class ImageAdapter extends KBaseAdapter {
 			ImageBean bean = (ImageBean) object;
 			imgType(position,bean,holder.imageImgV);
 		}else{
-			File file = (File) object;
-			fileType(position,file, holder.deleteImgV, holder.imageImgV);
+			Bitmap bitmap = (Bitmap) object;
+			bitmapType(position,bitmap, holder.deleteImgV, holder.imageImgV);
 		}
 		return convertView;
 	}
 	
 	/**文件方式展示图片*/
-	private void fileType(int position,File file,ImageView ivDelete,ImageView ivImg){
+	private void bitmapType(int position,Bitmap bitmap,ImageView ivDelete,ImageView ivImg){
 		ivDelete.setOnClickListener(mListener);
 		ivDelete.setTag(position);
-		if (file != null && file.exists()) {
-//			FileInputStream fis = null;
-//			BufferedInputStream bis = null;
-//			try {
-//				fis = new FileInputStream(file);
-//				bis = new BufferedInputStream(fis);
-//				Bitmap bitmap = BitmapFactory.decodeStream(bis);
-//				ivImg.setImageBitmap(bitmap);
-//			} catch (FileNotFoundException e) {
-//				e.printStackTrace();
-//			}finally{
-//				try {
-//				if(bis!=null){
-//						bis.close();
-//					}
-//				if(fis!=null){
-//					fis.close();
-//				}
-//				
-//				} catch (IOException e) {
-//						e.printStackTrace();
-//					}
-//				}
-			ivImg.setImageBitmap(ImgUtils.compressImageFromFile(file.getAbsolutePath()));
+		if (null!=bitmap) {
+			ivImg.setImageBitmap(bitmap);
 			ivDelete.setVisibility(View.VISIBLE);
 		} 
 		else
@@ -106,7 +77,7 @@ public class ImageAdapter extends KBaseAdapter {
 	
 	/**图片的url方式展示图片*/
 	private void imgType(int position,ImageBean bean,final ImageView ivImg){
-		 ImageLoader.getInstance().displayImage(bean.img_thum, ivImg);
+		BGApp.getInstance().setImage(bean.img_thum, ivImg);
 	}
 
 	class Holder {

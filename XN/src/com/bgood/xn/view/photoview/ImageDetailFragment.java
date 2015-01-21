@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bgood.xn.R;
+import com.bgood.xn.system.SystemConfig;
 import com.bgood.xn.view.photoview.PhotoViewAttacher.OnPhotoTapListener;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -63,7 +64,12 @@ public class ImageDetailFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		ImageLoader.getInstance().displayImage(mImageUrl, mImageView, new SimpleImageLoadingListener() {
+		String strImg = mImageUrl;
+		if(!strImg.contains("http")){
+			strImg = SystemConfig.FILE_SERVER + mImageUrl;
+		}
+		
+		ImageLoader.getInstance().displayImage(strImg, mImageView, new SimpleImageLoadingListener() {
 			@Override
 			public void onLoadingStarted(String imageUri, View view) {
 				progressBar.setVisibility(View.VISIBLE);

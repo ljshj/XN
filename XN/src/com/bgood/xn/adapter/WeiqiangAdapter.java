@@ -21,6 +21,8 @@ import android.widget.TextView;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.ImageBean;
 import com.bgood.xn.bean.WeiQiangBean;
+import com.bgood.xn.system.BGApp;
+import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.ActionView;
 import com.bgood.xn.view.NoScrollGridView;
@@ -70,7 +72,7 @@ public class WeiqiangAdapter extends KBaseAdapter
 		
 		final WeiQiangBean weiqiangBean = (WeiQiangBean) mList.get(position);
 		
-		ImageLoader.getInstance().displayImage(weiqiangBean.photo,holder.ivAuthorImg);
+		BGApp.getInstance().setImage(weiqiangBean.photo, holder.ivAuthorImg);
 		
 		holder.ivAuthorImg.setOnClickListener(mListener);
 		holder.ivAuthorImg.setTag(weiqiangBean);

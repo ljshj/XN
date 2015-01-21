@@ -1,4 +1,7 @@
 package com.bgood.xn.bean;
+
+import com.bgood.xn.system.SystemConfig;
+
 /**
  * @todo:橱窗实体类
  * @date:2014-10-21 下午3:29:47
@@ -12,5 +15,9 @@ public class CabinetResultBean {
 	
 	public String getPrice(){
 		return "¥"+price;
+	}
+	
+	public String getImg() {
+		return SystemConfig.FILE_SERVER + img;
 	}
 }

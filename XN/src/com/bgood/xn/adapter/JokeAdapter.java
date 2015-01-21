@@ -21,6 +21,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.ImageBean;
 import com.bgood.xn.bean.JokeBean;
+import com.bgood.xn.system.BGApp;
+import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.ActionView;
 import com.bgood.xn.view.photoview.ImagePagerActivity;
@@ -70,7 +72,8 @@ public class JokeAdapter extends KBaseAdapter
 		}
 		
 		final JokeBean jokeBean = (JokeBean) mList.get(position);
-		 ImageLoader.getInstance().displayImage(jokeBean.photo,holder.ivAuthorImg);
+		
+		BGApp.getInstance().setImage(jokeBean.getPhoto(),holder.ivAuthorImg);
 		
 		holder.tvAuthorName.setText(jokeBean.username);
 		

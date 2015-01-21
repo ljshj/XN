@@ -25,6 +25,7 @@ import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.user.product.ShowcaseActivity;
 import com.bgood.xn.ui.weiqiang.WeiqiangPersonActivity;
 import com.bgood.xn.ui.xuanneng.XuanNengMainActivity;
+import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.utils.LogUtils;
 import com.bgood.xn.view.ActionView;
 import com.bgood.xn.view.BToast;
@@ -226,18 +227,7 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
      */
     private void setData(UserInfoBean userDTO)
     {
-		DisplayImageOptions options;
-		options = new DisplayImageOptions.Builder()
-		.showImageOnFail(R.drawable.icon_default)
-		.showImageOnLoading(R.drawable.icon_default)
-		.showImageForEmptyUri(R.drawable.icon_default)
-		.cacheInMemory(true)
-		.cacheOnDisk(true)
-		.bitmapConfig(Bitmap.Config.RGB_565)  
-		.build();
-		
-		 ImageLoader.getInstance().displayImage(userDTO.photo,m_userIconImgV, options);
-        
+		BGApp.getInstance().setImage(userDTO.photo,m_userIconImgV);
         // 昵称
         m_userNicteTv.setText(userDTO.nickn);
         

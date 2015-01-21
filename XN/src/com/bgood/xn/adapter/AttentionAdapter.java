@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.AttentionBean;
+import com.bgood.xn.system.BGApp;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
@@ -45,7 +46,7 @@ public class AttentionAdapter extends KBaseAdapter
         }
         
         final AttentionBean mAttentionBean = (AttentionBean) mList.get(position);
-        ImageLoader.getInstance().displayImage(mAttentionBean.img, holder.userIconImgV);
+        BGApp.getInstance().setImage(mAttentionBean.img, holder.userIconImgV);
         
         holder.userIconImgV.setOnClickListener(mListener);
 		holder.userIconImgV.setTag(mAttentionBean);

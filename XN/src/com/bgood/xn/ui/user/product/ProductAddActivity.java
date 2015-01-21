@@ -191,8 +191,9 @@ public class ProductAddActivity extends BaseActivity implements OnClickListener,
 	 */
 	private void afterGetFile(String path) {
 		tempFile = new File(path);
-		Bitmap mBitmapUploaded = BitmapFactory.decodeFile(path);
+		Bitmap mBitmapUploaded = ImgUtils.compressImageFromFile(path);
 		m_photoImgV.setImageBitmap(mBitmapUploaded);
+		ImgUtils.compressBmpToFile(mBitmapUploaded, tempFile);
 		FileRequest.getInstance().requestUpLoadFile(this,mActivity,true,tempFile, String.valueOf(BGApp.mUserId), "shop", "png");
 	}
 
@@ -217,6 +218,7 @@ public class ProductAddActivity extends BaseActivity implements OnClickListener,
 					img = object.optString("url");
 					m_ProductBean.img_thum = img_thumb;
 					m_ProductBean.img = img;
+					BToast.show(mActivity, "图片上传成功");
 				}else{
 					BToast.show(mActivity, "图片上传失败");
 				}

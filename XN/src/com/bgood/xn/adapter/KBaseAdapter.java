@@ -1,13 +1,7 @@
 package com.bgood.xn.adapter;
 import java.util.List;
 
-import com.bgood.xn.R;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-
 import android.app.Activity;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,25 +21,12 @@ public class KBaseAdapter extends BaseAdapter {
 	public Activity mActivity;
 	public int mLayout;
 	public OnClickListener mListener;
-	public DisplayImageOptions options;
-
-	private void initImgHelp(){
-		options = new DisplayImageOptions.Builder()
-		.showImageOnFail(R.drawable.icon_default)
-		.showImageOnLoading(R.drawable.icon_default)
-		.showImageForEmptyUri(R.drawable.icon_default)
-		.cacheInMemory(true)
-		.cacheOnDisk(true)
-		.bitmapConfig(Bitmap.Config.RGB_565)  
-		.build();
-	}
 	
 	public KBaseAdapter(List<?> mList, Activity mActivity) {
 		super();
 		this.mList = mList;
 		this.mActivity = mActivity;
 		this.mInflater = LayoutInflater.from(mActivity);
-		initImgHelp();
 	}
 
 	public KBaseAdapter(List<?> mList,Activity mActivity,int resLayout) {
@@ -53,7 +34,6 @@ public class KBaseAdapter extends BaseAdapter {
 		this.mActivity = mActivity;
 		this.mInflater = LayoutInflater.from(mActivity);
 		this.mLayout = resLayout;
-		initImgHelp();
 	}
 	
 	public KBaseAdapter(List<?> mList,Activity mActivity,OnClickListener listener) {
@@ -61,7 +41,6 @@ public class KBaseAdapter extends BaseAdapter {
 		this.mActivity = mActivity;
 		this.mInflater = LayoutInflater.from(mActivity);
 		this.mListener = listener;
-		initImgHelp();
 	}
 	
 	public KBaseAdapter(List<?> mList,Activity mActivity,int resLayout,OnClickListener listener) {
@@ -70,7 +49,6 @@ public class KBaseAdapter extends BaseAdapter {
 		this.mInflater = LayoutInflater.from(mActivity);
 		this.mLayout = resLayout;
 		this.mListener = listener;
-		initImgHelp();
 	}
 
 	@Override

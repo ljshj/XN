@@ -49,6 +49,7 @@ import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.IMRequest;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.view.BToast;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
@@ -93,7 +94,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> implements
 		final InviteMessage msg = getItem(position);
 		actionInviteMessage = msg;
 	
-		ImageLoader.getInstance().displayImage(msg.getUserPhotoUrl(),holder.avator);
+		BGApp.getInstance().setImage(msg.getUserPhotoUrl(),holder.avator);
 		
 		
 		if (msg != null) {

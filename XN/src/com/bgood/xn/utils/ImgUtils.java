@@ -17,12 +17,16 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.system.Const;
+import com.bgood.xn.system.SystemConfig;
 import com.bgood.xn.view.BToast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -33,23 +37,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  * @author:hg_liuzl@163.com
  */
 public class ImgUtils {
-
-	/**设置图片*/
-    public static void setPhoto(final String imgUrl,final ImageView iv){
-	    DisplayImageOptions options;
-		options = new DisplayImageOptions.Builder()
-		.showImageOnFail(R.drawable.icon_default)
-		.showImageOnLoading(R.drawable.icon_default)
-		.showImageForEmptyUri(R.drawable.icon_default)
-		.cacheInMemory(true)
-		.cacheOnDisk(true)
-		.bitmapConfig(Bitmap.Config.RGB_565)  
-		.build();
-		 ImageLoader.getInstance().displayImage(imgUrl,iv, options);
-    }
-	
 	/**
-	 * 
 	 * @todo:绘制圆角图片
 	 * @date:2014-10-27 下午4:42:34
 	 * @author:hg_liuzl@163.com
@@ -145,7 +133,7 @@ public class ImgUtils {
 	}
 	
 	/**
-	 * 图片压缩成文件
+	 * 图片压缩成文件,且按质量压缩
 	 * @param bmp
 	 * @param file
 	 */
@@ -156,6 +144,10 @@ public class ImgUtils {
 		while (baos.toByteArray().length / 1024 > 100) {
 			baos.reset();
 			options -= 10;
+			if(options <= 0){
+				break;
+			}
+			
 			bmp.compress(Bitmap.CompressFormat.JPEG, options, baos);
 		}
 		try {
@@ -166,5 +158,24 @@ public class ImgUtils {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * 
+	 * @todo:按质量压缩
+	 * @date:2015-1-21 下午4:30:01
+	 * @author:hg_liuzl@163.com
+	 * @params:@return
+	 */
+	public static byte[] comPressBmpToByte(Bitmap bitmap) {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		int options = 90;
+		bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);
+		while (baos.toByteArray().length / 1024 > 100) {	//把图片压缩到100k以下
+			baos.reset();
+			options -= 10;
+			bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);
+		}
+		return baos.toByteArray();
 	}
 }

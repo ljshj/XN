@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.CabinetResultBean;
+import com.bgood.xn.system.BGApp;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
@@ -48,7 +49,7 @@ public class ResultShowcaseAdapter extends KBaseAdapter
         
         final CabinetResultBean cabinetDTO = (CabinetResultBean) mList.get(position);
         
-        ImageLoader.getInstance().displayImage(cabinetDTO.img,holder.iconImgV);
+        BGApp.getInstance().setImage(cabinetDTO.img,holder.iconImgV);
         
         holder.nameTv.setText(cabinetDTO.title);
         holder.priceTv.setText(cabinetDTO.getPrice());

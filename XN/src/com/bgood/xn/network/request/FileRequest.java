@@ -25,7 +25,6 @@ public class FileRequest extends BaseNetWork {
     
  /**
 	 * 
-	 * @todo: 获取笑话列表
 	 * @date:2014-10-20 下午6:21:41
 	 * @author:hg_liuzl@163.com
 	 * @params:@param mHttpTaskListener
@@ -38,5 +37,4 @@ public class FileRequest extends BaseNetWork {
 			setFile(files);
 			new HttpRequestAsyncTask(showDialog,ServerType.FileServer,this, mHttpTaskListener, context).execute();
 	 }
-	
 }

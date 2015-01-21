@@ -64,7 +64,6 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
 	private static final int FLAG_MODIFY_FINISH = FLAG_CHOOSE_FROM_CAMERA + 1;
 
 	private File tempFile = null; // 文件
-	private Bitmap mBitmapUploaded;
 	
     private RelativeLayout m_iconRl          = null; // 头像布局
     private ImageView      m_iconImgV        = null; // 头像
@@ -165,7 +164,7 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
      */
     private void setData(UserInfoBean userDTO)
     {
-    	ImgUtils.setPhoto(userDTO.photo, m_iconImgV);
+    	BGApp.getInstance().setImage(userDTO.photo, m_iconImgV);
         m_idTv.setText(userDTO.username);
         m_phoneTv.setText(userDTO.phonenumber);
         m_nameTv.setText(userDTO.nickn);
@@ -342,9 +341,9 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
 			if (data != null) {
 				final String path = data.getStringExtra("path");
 				tempFile = new File(path);
-				//mBitmapUploaded = BitmapFactory.decodeFile(path);
-				mBitmapUploaded = ImgUtils.compressImageFromFile(path);
+				Bitmap mBitmapUploaded = ImgUtils.compressImageFromFile(path);
 				m_iconImgV.setImageBitmap(mBitmapUploaded);
+				ImgUtils.compressBmpToFile(mBitmapUploaded, tempFile);
 				FileRequest.getInstance().requestUpLoadFile(PersonalDataActivity.this,mActivity,true,tempFile, String.valueOf(BGApp.mUserId), "userInfo", "png");
 			}
 		}
@@ -368,7 +367,7 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
 				if(status.equalsIgnoreCase("true")){
 					mUserBean.photo = object.optString("smallurl");
 					BGApp.mUserBean = mUserBean;
-					ImgUtils.setPhoto(mUserBean.photo, m_iconImgV);
+					BGApp.getInstance().setImage(mUserBean.photo, m_iconImgV);
 					UserCenterRequest.getInstance().requestUpdatePerson(this, mActivity, "photo", mUserBean.photo);
 				}else{
 					BToast.show(mActivity, "图片上传失败");

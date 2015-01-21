@@ -19,6 +19,7 @@ import com.bgood.xn.bean.ImageBean;
 import com.bgood.xn.bean.JokeCorattionBean;
 import com.bgood.xn.bean.SimpleUserBean;
 import com.bgood.xn.bean.WeiqiangCorattionBean;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.ActionView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -72,7 +73,7 @@ public class WeiqiangCorrelationAdapter extends KBaseAdapter
 		
 		final WeiqiangCorattionBean wcb = (WeiqiangCorattionBean) mList.get(position);
 		
-		ImageLoader.getInstance().displayImage(wcb.photo,holder.ivAuthorImg);
+		BGApp.getInstance().setImage(wcb.photo,holder.ivAuthorImg);
 				
 		holder.ivAuthorImg.setOnClickListener(mListener);
 		holder.ivAuthorImg.setTag(wcb);

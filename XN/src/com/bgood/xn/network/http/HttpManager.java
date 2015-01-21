@@ -154,6 +154,7 @@ public class HttpManager {
 		}
 		return mBNetWork;
 	}
+
 	/**
 	 * 把输入流转换成字节数数组
 	 * @return 字节数组

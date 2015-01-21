@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.MemberResultBean;
+import com.bgood.xn.system.BGApp;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 
@@ -54,7 +55,7 @@ public class ResultMemberAdapter extends KBaseAdapter
         
        final MemberResultBean member = (MemberResultBean) mList.get(position);
         
-       ImageLoader.getInstance().displayImage(member.photo,holder.iconImgV);
+       BGApp.getInstance().setImage(member.photo,holder.iconImgV);
         
         holder.nameTv.setText(member.name);
         

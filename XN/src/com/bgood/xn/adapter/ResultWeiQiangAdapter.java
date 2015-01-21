@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.WeiQiangBean;
+import com.bgood.xn.system.BGApp;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
@@ -44,7 +45,7 @@ public class ResultWeiQiangAdapter extends KBaseAdapter
         
        final WeiQiangBean weiqiangDTO = (WeiQiangBean) mList.get(position);
        
-       ImageLoader.getInstance().displayImage(weiqiangDTO.photo,holder.iconImgV);
+       BGApp.getInstance().setImage(weiqiangDTO.photo,holder.iconImgV);
         
         holder.infoTv.setText(weiqiangDTO.content);
         holder.sendUserTv.setText(weiqiangDTO.name);

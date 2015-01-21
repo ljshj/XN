@@ -2,6 +2,8 @@ package com.bgood.xn.bean;
 
 import java.util.List;
 
+import com.bgood.xn.system.SystemConfig;
+
 /**
  * 
  * @todo:橱窗实体类
@@ -17,4 +19,8 @@ public class ShowcaseBean
 	public String credit;                     // 信用值
 	public String product_count;              // 商品总数
 	public List<ProductBean> recommend_list;     // 商品列表
+	
+	public String getLogo() {
+		return SystemConfig.FILE_SERVER + logo;
+	}
 }

@@ -2,6 +2,8 @@ package com.bgood.xn.bean;
 
 import java.util.List;
 
+import com.bgood.xn.system.SystemConfig;
+
 
 /**
  * 幽默秀与我相关的实体类
@@ -28,4 +30,8 @@ public class JokeCorattionBean {
 		public String fromname;
 		public String opertime;
 		public String comments;
+		
+		public String getPhoto() {
+			return SystemConfig.FILE_SERVER + photo;
+		}
 }

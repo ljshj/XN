@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.AppBean;
+import com.bgood.xn.system.BGApp;
 import com.nostra13.universalimageloader.core.ImageLoader;
 /**
  * 本地应用程序适配器
@@ -45,7 +46,7 @@ public class ResultAppAdapter extends KBaseAdapter
         
         final AppBean appDTO = (AppBean) mList.get(position);
 
-        ImageLoader.getInstance().displayImage(appDTO.img_thum,holder.iconImgV);
+        BGApp.getInstance().setImage(appDTO.img_thum,holder.iconImgV);
         
         
         

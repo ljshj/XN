@@ -18,7 +18,6 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.SparseIntArray;
@@ -37,9 +36,10 @@ import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.FriendBean;
+import com.bgood.xn.system.BGApp;
+import com.bgood.xn.utils.ImgUtils;
 import com.easemob.chat.Constant;
 import com.easemob.chat.widget.Sidebar;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * 简单的好友Adapter实现
@@ -130,7 +130,7 @@ public class ContactAdapter extends ArrayAdapter<FriendBean>  implements Section
 				return null;
 			}
 			
-			ImageLoader.getInstance().displayImage(user.photo,avatar);
+			BGApp.getInstance().setImage(user.photo,avatar);
 			
 			//设置nick，demo里不涉及到完整user，用username代替nick显示
 			String username = user.getName();

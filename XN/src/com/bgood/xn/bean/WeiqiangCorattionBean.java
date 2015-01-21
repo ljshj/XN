@@ -2,6 +2,8 @@ package com.bgood.xn.bean;
 
 import java.util.List;
 
+import com.bgood.xn.system.SystemConfig;
+
 /**
  * @todo:微墙，与我相关的实体类
  * @date:2014-12-4 下午6:59:51
@@ -27,6 +29,12 @@ public class WeiqiangCorattionBean {
 	  public String opertime;
 	  public String date_time;
 	  public String comments;
+	  
+	public String getPhoto() {
+		return SystemConfig.FILE_SERVER + photo;
+	}
+  
+	  
 }
 //"comment_count": 1,
 //"fromuserid": 0,

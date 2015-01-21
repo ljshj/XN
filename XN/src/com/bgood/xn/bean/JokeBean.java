@@ -3,6 +3,8 @@ package com.bgood.xn.bean;
 import java.io.Serializable;
 import java.util.List;
 
+import com.bgood.xn.system.SystemConfig;
+
 /**
  * @todo:笑话类
  * @date:2014-11-21 下午6:28:55
@@ -76,4 +78,7 @@ public class JokeBean implements Serializable {
 		return wbean;
 	}
 	
+	public String getPhoto() {
+		return SystemConfig.FILE_SERVER + photo;
+	}
 }

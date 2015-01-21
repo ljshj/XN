@@ -37,6 +37,7 @@ import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.ProductRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.CBaseSlidingMenu;
 import com.bgood.xn.view.slidingmenu.lib.SlidingMenu.OnClosedListener;
@@ -425,19 +426,7 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 	private void setData(ShowcaseBean showcaseDTO)
 	{
 			setCredibility(!TextUtils.isEmpty(showcaseDTO.credit)?Integer.parseInt(showcaseDTO.credit):0);
-	        DisplayImageOptions options;
-			options = new DisplayImageOptions.Builder()
-			.showImageOnFail(R.drawable.icon_default)
-			.showImageOnLoading(R.drawable.icon_default)
-			.showImageForEmptyUri(R.drawable.icon_default)
-			.cacheInMemory(true)
-			.cacheOnDisk(true)
-			.bitmapConfig(Bitmap.Config.RGB_565)  
-			.build();
-			
-			 ImageLoader.getInstance().displayImage(showcaseDTO.logo,m_showcaseIconImgV, options);
-	        
-	        
+			BGApp.getInstance().setImage(showcaseDTO.logo, m_showcaseIconImgV);
 			
 			m_recommendTv.setText("("+(showcaseDTO.recommend_list == null?"0":String.valueOf(showcaseDTO.recommend_list.size()))+")");
 			

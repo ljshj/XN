@@ -3,6 +3,9 @@ package com.bgood.xn.bean;
 import java.io.Serializable;
 import java.util.List;
 
+import com.bgood.xn.system.BGApp;
+import com.bgood.xn.system.SystemConfig;
+
 /**
  * @todo:微墙类
  * @date:2014-10-24 下午2:10:40
@@ -68,6 +71,12 @@ public class WeiQiangBean implements Serializable {
 		//wbean.Comments;
 		return wbean;
 	}
+
+	public String getPhoto() {
+		return SystemConfig.FILE_SERVER + photo;
+	}
+	
+	
 	
 }
 

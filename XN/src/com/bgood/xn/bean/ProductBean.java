@@ -2,6 +2,8 @@ package com.bgood.xn.bean;
 
 import java.io.Serializable;
 
+import com.bgood.xn.system.SystemConfig;
+
 /**
  * 
  * @todo:商品实体类
@@ -28,6 +30,14 @@ public class ProductBean implements Serializable
 	
 	public String getPrice(){
 		return "¥"+price;
+	}
+	
+	public String getImg() {
+		return SystemConfig.FILE_SERVER + img;
+	}
+	
+	public String getImgThum() {
+		return SystemConfig.FILE_SERVER + img_thum;
 	}
 }
 

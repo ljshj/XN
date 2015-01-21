@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.ProductBean;
+import com.bgood.xn.system.BGApp;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
@@ -59,7 +60,7 @@ public class ProductEditAdapter extends KBaseAdapter
 		
 		final ProductBean productDTO = (ProductBean) mList.get(position);
 
-		 ImageLoader.getInstance().displayImage(productDTO.img_thum,holder.iconImgV);
+		BGApp.getInstance().setImage(productDTO.getImgThum(),holder.iconImgV);
 		
 		holder.nameTv.setText(productDTO.product_name);
 		holder.priceTv.setText(productDTO.getPrice());
