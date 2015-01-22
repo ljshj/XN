@@ -37,12 +37,12 @@ public class IndexActivity extends BaseActivity implements TaskListenerWithState
 		IntentFilter mFilter = new IntentFilter();
         mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(receiverNetWork, mFilter);
-		UserCenterRequest.getInstance().requestUnLoginBSServer(this, this);
+        startIndex();
 	}
 	
 	private void startIndex(){
 		if(pUitl.getShowWelcomePage()){//已经向导过
-			gotoMain();
+			UserCenterRequest.getInstance().requestUnLoginBSServer(this, this);
 		}else{
 			gotoNavigate();
 		}
@@ -64,10 +64,8 @@ public class IndexActivity extends BaseActivity implements TaskListenerWithState
 	private void gotoNavigate(){
 		Intent i = new Intent();
 		i.setClass(IndexActivity.this, NavigateActivity.class);
-		i.putExtra("from_index", true);
 		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(i);
-		finish();
 	}
 	
 	
@@ -87,11 +85,11 @@ public class IndexActivity extends BaseActivity implements TaskListenerWithState
 				SystemConfig.BS_SERVER = body.optString("bserver");
 				SystemConfig.FILE_SERVER = body.optString("fserver");
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(500);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				startIndex();
+				gotoMain();
 			}
 		}
 	}
@@ -103,7 +101,7 @@ public class IndexActivity extends BaseActivity implements TaskListenerWithState
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			//监听网络变化
-			if(intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)){	
+			if(intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION) && pUitl.getShowWelcomePage()){	
 				connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
 				info = connectivityManager.getActiveNetworkInfo();
 				if (info != null && info.isAvailable()) {//重新请求一下
@@ -114,5 +112,4 @@ public class IndexActivity extends BaseActivity implements TaskListenerWithState
 			}
 		}
 	};
-	
 }

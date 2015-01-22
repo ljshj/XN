@@ -5,7 +5,12 @@
 		<item name="android:windowSoftInputMode">stateAlwaysHidden</item>
 		<item name="android:windowAnimationStyle">@style/activityAnimation</item>
 		<item name="android:orientation">vertical</item>
-		
+	</style>
+	
+<!-- 解决启动时的白屏问题 -->
+	 <style name="AppIndexTheme" parent="android:Theme.Light">
+	    <item name="android:windowBackground">@drawable/loading</item>
+	    <item name="android:windowNoTitle">true</item> 
 	</style>
 	
 	<!-- 底部弹出动画 -->
