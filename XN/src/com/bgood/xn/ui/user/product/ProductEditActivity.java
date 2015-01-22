@@ -111,7 +111,7 @@ public class ProductEditActivity extends BaseActivity implements OnClickListener
     	img_thumb = m_ProductBean.img_thum;
     	m_recommend = m_ProductBean.brecom;
    	    
-    	BGApp.getInstance().setImage(m_ProductBean.img, m_photoImgV);
+    	BGApp.getInstance().setImageSqure(m_ProductBean.img, m_photoImgV);
 		 
         m_recommendCb.setChecked(m_recommend==1?true:false);
         m_productNameEt.setText(m_ProductBean.product_name);

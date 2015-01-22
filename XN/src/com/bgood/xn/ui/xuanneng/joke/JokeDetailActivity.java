@@ -35,6 +35,7 @@ import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.ui.user.info.ShowNameCardListener;
 import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.utils.ShareUtils;
 import com.bgood.xn.utils.ToolUtils;
@@ -109,12 +110,14 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 	   	View head_weiqiang_detail = inflater.inflate(R.layout.weiqiang_item_layout, listview, false);
 		ivAuthorImg = (ImageView) head_weiqiang_detail.findViewById(R.id.iv_img);
 		tvAuthorName = (TextView) head_weiqiang_detail.findViewById(R.id.tv_nick);
+		
 		tvTime = (TextView) head_weiqiang_detail.findViewById(R.id.tv_time);
 		tvComments = (TextView) head_weiqiang_detail.findViewById(R.id.tv_comments);
 		gridView = (GridView) head_weiqiang_detail.findViewById(R.id.gv_show_img);
 		
 		
 		tvOldAuthorName = (TextView) head_weiqiang_detail.findViewById(R.id.tv_old_user);
+		
 		tvContent = (TextView) head_weiqiang_detail.findViewById(R.id.tv_content);
 		llTransArea = (LinearLayout) head_weiqiang_detail.findViewById(R.id.ll_old_area);
 		oldGridview = (GridView) head_weiqiang_detail.findViewById(R.id.gv_old_show_img);
@@ -155,6 +158,10 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 		
 		tvTime.setText(ToolUtils.getFormatDate(jBean.date_time));
 		
+		ivAuthorImg.setOnClickListener(new ShowNameCardListener(mJokeBean,mActivity));
+		tvAuthorName.setOnClickListener(new ShowNameCardListener(mJokeBean,mActivity));
+		tvOldAuthorName.setOnClickListener(new ShowNameCardListener(mJokeBean,mActivity));
+		
 		tvAuthorName.setText(jBean.username);
 		
 		tvTime.setText(ToolUtils.getFormatDate(jBean.date_time));
@@ -164,12 +171,12 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 			tvOldAuthorName.setText(jBean.fromname);
 			tvContent.setText(jBean.content);
 			tvComments.setText(jBean.Comments);
-			showImgs(jBean.imgs,oldGridview);
+			ImgUtils.showImgs(jBean.imgs,oldGridview,mActivity);
 			
 		}else{
 			llTransArea.setVisibility(View.GONE);
 			tvComments.setText(jBean.content);
-			showImgs(jBean.imgs,gridView);
+			ImgUtils.showImgs(jBean.imgs,gridView,mActivity);
 		}
 		
 		avZan.setCount(jBean.like_count);
@@ -180,18 +187,6 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
     	
 		avShare.setCount(jBean.share_count);
 		
-	}
-
-	/**处理九宫格图片**/
-	@SuppressWarnings("null")
-	private void showImgs(List<ImageBean> list,GridView gv){
-		if(null==list && list.size()==0){	//如果没有图片
-			gv.setVisibility(View.GONE);
-		}else{
-			gv.setVisibility(View.VISIBLE);
-			ImageAdapter adapter = new ImageAdapter(list, mActivity);
-			gv.setAdapter(adapter);
-		}
 	}
 	
     @Override

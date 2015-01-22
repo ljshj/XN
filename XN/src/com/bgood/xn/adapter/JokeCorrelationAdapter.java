@@ -20,6 +20,7 @@ import com.bgood.xn.bean.JokeCorattionBean;
 import com.bgood.xn.bean.SimpleUserBean;
 import com.bgood.xn.bean.WeiqiangCorattionBean;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.ActionView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -92,7 +93,7 @@ public class JokeCorrelationAdapter extends KBaseAdapter
 			holder.tvOldAuthorName.setTag(wcb);
 			holder.tvContent.setText(wcb.content);
 			holder.tvComments.setText(wcb.comments);
-			showImgs(wcb.imgs,holder.oldgridView);
+			ImgUtils.showImgs(wcb.imgs,holder.oldgridView,mActivity);
 			holder.gridView.setVisibility(View.GONE);
 			holder.tvContent.setVisibility(TextUtils.isEmpty(wcb.content)?View.GONE:View.VISIBLE);
 			holder.tvComments.setVisibility(TextUtils.isEmpty(wcb.comments)?View.GONE:View.VISIBLE);
@@ -101,7 +102,7 @@ public class JokeCorrelationAdapter extends KBaseAdapter
 			holder.tvComments.setText(wcb.content);
 			holder.tvComments.setVisibility(TextUtils.isEmpty(wcb.content)?View.GONE:View.VISIBLE);
 			holder.gridView.setVisibility(View.GONE);
-			showImgs(wcb.imgs,holder.gridView);
+			ImgUtils.showImgs(wcb.imgs,holder.gridView,mActivity);
 		}
 		
 		setCountAndListener(holder.avZan, wcb.like_count, mListener, wcb);
@@ -114,18 +115,6 @@ public class JokeCorrelationAdapter extends KBaseAdapter
 		setCommentList(wcb.commentlist,holder.lvShowComment);
 		
 		return convertView;
-	}
-	
-	/**处理九宫格图片**/
-	@SuppressWarnings("null")
-	private void showImgs(List<ImageBean> list,GridView gv){
-		if(null==list && list.size()==0){	//如果没有图片
-			gv.setVisibility(View.GONE);
-		}else{
-			gv.setVisibility(View.VISIBLE);
-			ImageAdapter adapter = new ImageAdapter(list, mActivity);
-			gv.setAdapter(adapter);
-		}
 	}
 	
 	/**设置下面的数据*/

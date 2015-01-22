@@ -352,8 +352,7 @@ public class CommunicateDetailActivity extends BaseActivity implements OnClickLi
 							deleteMembersFromGroup();
 						} else {
 							 //正常情况下点击user，可以进入用户详情
-							 startActivity(new Intent(CommunicateDetailActivity.this,NameCardActivity.class).putExtra(UserInfoBean.KEY_USER_ID,actionFriendBean.userid));
-
+							 NameCardActivity.lookNameCard(mActivity, actionFriendBean.userid);
 						}
 					}});
 			return convertView;

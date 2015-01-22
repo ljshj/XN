@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,7 +20,10 @@ import com.bgood.xn.view.dialog.BottomDialog;
 import com.bgood.xn.widget.TitleBar;
 
 /**
- * 账号中心页面
+ * 
+ * @todo:账号中心
+ * @date:2015-1-22 下午3:49:17
+ * @author:hg_liuzl@163.com
  */
 public class AccountCenterActivity extends BaseActivity implements OnClickListener
 {
@@ -98,11 +102,11 @@ public class AccountCenterActivity extends BaseActivity implements OnClickListen
             case R.id.tv_quit_login:
             	doLoginOutDialog();
                 break;
-            case R.id.log_off_btn_confirm:
+            case R.id.btn_ok:
             	quitLogin();
             	dialog.dismiss();
             	break;
-            case R.id.log_off_btn_cancel:
+            case R.id.btn_cancel:
             	dialog.dismiss();
             	break;
             default:
@@ -116,10 +120,10 @@ public class AccountCenterActivity extends BaseActivity implements OnClickListen
 			dialog = new BottomDialog(this);
 		}
 		
-		LinearLayout ll = (LinearLayout) inflater.inflate(R.layout.layout_log_off_dialog, null);
+		FrameLayout ll = (FrameLayout) inflater.inflate(R.layout.layout_log_off_dialog, null);
 		ll.setLayoutParams(new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
-		ll.findViewById(R.id.log_off_btn_confirm).setOnClickListener(this);
-		ll.findViewById(R.id.log_off_btn_cancel).setOnClickListener(this);
+		ll.findViewById(R.id.btn_ok).setOnClickListener(this);
+		ll.findViewById(R.id.btn_cancel).setOnClickListener(this);
 		dialog.setvChild(ll);
 		dialog.show();
 	}

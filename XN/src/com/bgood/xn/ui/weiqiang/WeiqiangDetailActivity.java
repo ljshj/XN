@@ -23,9 +23,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.CommentAdapter;
-import com.bgood.xn.adapter.ImageAdapter;
 import com.bgood.xn.bean.CommentBean;
-import com.bgood.xn.bean.ImageBean;
 import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.bean.WeiQiangBean.WeiqiangActionType;
@@ -41,6 +39,7 @@ import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.user.info.NameCardActivity;
+import com.bgood.xn.ui.user.info.ShowNameCardListener;
 import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.utils.ShareUtils;
 import com.bgood.xn.utils.ToolUtils;
@@ -50,8 +49,6 @@ import com.bgood.xn.view.dialog.BGDialog;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.TitleBar;
-
-
 /**
  * @todo:微墙详情界面
  * @date:2014-10-24 下午2:22:14
@@ -113,6 +110,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	   	View head_weiqiang_detail = inflater.inflate(R.layout.weiqiang_item_layout, listview, false);
 		ivAuthorImg = (ImageView) head_weiqiang_detail.findViewById(R.id.iv_img);
 		tvAuthorName = (TextView) head_weiqiang_detail.findViewById(R.id.tv_nick);
+		
 		tvTime = (TextView) head_weiqiang_detail.findViewById(R.id.tv_time);
 		tvComments = (TextView) head_weiqiang_detail.findViewById(R.id.tv_comments);
 		gridView = (GridView) head_weiqiang_detail.findViewById(R.id.gv_show_img);
@@ -164,6 +162,10 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		
 		tvAuthorName.setText(weiqiangBean.name);
 		
+		ivAuthorImg.setOnClickListener(new ShowNameCardListener(weiqiangBean,mActivity));
+		tvAuthorName.setOnClickListener(new ShowNameCardListener(weiqiangBean,mActivity));
+		tvOldAuthorName.setOnClickListener(new ShowNameCardListener(weiqiangBean,mActivity));
+		
 		tvTime.setText(ToolUtils.getFormatDate(weiqiangBean.date_time));
     	
 		if(!TextUtils.isEmpty(weiqiangBean.fromname)){	//如果转发人存在
@@ -171,12 +173,12 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 			tvOldAuthorName.setText(weiqiangBean.fromname);
 			tvContent.setText(weiqiangBean.content);
 			tvComments.setText(weiqiangBean.comments);
-			showImgs(weiqiangBean.imgs,oldGridview);
+			ImgUtils.showImgs(weiqiangBean.imgs,oldGridview,mActivity);
 			
 		}else{
 			llTransArea.setVisibility(View.GONE);
 			tvComments.setText(weiqiangBean.content);
-			showImgs(weiqiangBean.imgs,gridView);
+			ImgUtils.showImgs(weiqiangBean.imgs,gridView,mActivity);
 		}
 		avZan.setCount(weiqiangBean.like_count);
     	
@@ -185,18 +187,6 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		avTranspont.setCount(weiqiangBean.forward_count);
     	
 		avShare.setCount(weiqiangBean.share_count);
-	}
-
-	/**处理九宫格图片**/
-	@SuppressWarnings("null")
-	private void showImgs(List<ImageBean> list,GridView gv){
-		if(null==list && list.size()==0){	//如果没有图片
-			gv.setVisibility(View.GONE);
-		}else{
-			gv.setVisibility(View.VISIBLE);
-			ImageAdapter adapter = new ImageAdapter(list, mActivity);
-			gv.setAdapter(adapter);
-		}
 	}
 	
     @Override
@@ -226,17 +216,6 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
     			share.setShareContent(weiqiangBean.content, weiqiangBean.imgs.size() > 0 ? weiqiangBean.imgs.get(0).img:null);
     			WeiqiangRequest.getInstance().requestWeiqiangShare(this, mActivity, weiqiangBean.weiboid);
                 break;
-            case R.id.iv_img:
-    		case R.id.tv_nick:
-                intent = new Intent(mActivity, NameCardActivity.class);
-                intent.putExtra(UserInfoBean.KEY_USER_ID, String.valueOf(weiqiangBean.userid));
-                startActivity(intent);
-    			break;
-    		case R.id.tv_old_user:
-    			intent = new Intent(mActivity, NameCardActivity.class);
-    			intent.putExtra(UserInfoBean.KEY_USER_ID, String.valueOf(weiqiangBean.fromuserid));
-    			startActivity(intent);
-    			break;
             default:
                 break;
         }

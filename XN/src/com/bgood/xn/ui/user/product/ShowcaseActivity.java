@@ -37,6 +37,7 @@ import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.ProductRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.CBaseSlidingMenu;
@@ -117,6 +118,7 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 		m_backgroundFl = (FrameLayout) findViewById(R.id.showcase_fl_background);
 		m_searchEt = (EditText) findViewById(R.id.showcase_et_search);
 		m_showcaseIconImgV = (ImageView) findViewById(R.id.showcase_imgv_showcase_icon);
+		m_showcaseIconImgV.setOnClickListener(this);
 		m_showcaseNameTv = (TextView) findViewById(R.id.showcase_tv_shop_name);
 		m_commentsTv = (TextView) findViewById(R.id.showcase_tv_comments);
 		m_oneHintImgV = (ImageView) findViewById(R.id.showcase_imgv_one);
@@ -267,6 +269,9 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
     				ProductRequest.getInstance().requestProductList(this, this, mUserId, "", String.valueOf(m_start_page), String.valueOf(m_start_page+m_add_pagesize));
     			}
     			setProduct(1);
+    			break;
+    		case R.id.showcase_imgv_showcase_icon:	//查看用户名片
+    			NameCardActivity.lookNameCard(ShowcaseActivity.this, mUserId);
     			break;
     		default:
     			break;

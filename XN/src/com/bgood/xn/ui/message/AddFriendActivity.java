@@ -94,10 +94,8 @@ public class AddFriendActivity extends BaseShowDataActivity implements IXListVie
 
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View v, int location,long arg3) {
-				MemberResultBean mrb = (MemberResultBean) adapter.getAdapter().getItem(location);
-				Intent intent = new Intent(mActivity,NameCardActivity.class);
-				intent.putExtra(UserInfoBean.KEY_USER_ID, mrb.userid);
-				mActivity.startActivity(intent);
+				final MemberResultBean mrb = (MemberResultBean) adapter.getAdapter().getItem(location);
+				NameCardActivity.lookNameCard(mActivity, mrb.userid);
 			}
 		});
 	}

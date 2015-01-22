@@ -300,19 +300,6 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 			share.setShareContent(wqb.content, wqb.imgs.size() > 0 ? wqb.imgs.get(0).img:null);
 			WeiqiangRequest.getInstance().requestWeiqiangShare(this, this, wqb.weiboid);
 			break;
-		case R.id.iv_img:
-		case R.id.tv_nick:
-			wqb = (WeiQiangBean) v.getTag();
-            intent = new Intent(mActivity, NameCardActivity.class);
-            intent.putExtra(UserInfoBean.KEY_USER_ID, String.valueOf(wqb.userid));
-            startActivity(intent);
-			break;
-		case R.id.tv_old_user:
-			wqb = (WeiQiangBean) v.getTag();
-            intent = new Intent(mActivity, NameCardActivity.class);
-            intent.putExtra(UserInfoBean.KEY_USER_ID, String.valueOf(wqb.fromuserid));
-            startActivity(intent);
-			break;
 		}
 	}
 	

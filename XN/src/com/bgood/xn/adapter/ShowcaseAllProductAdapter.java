@@ -44,7 +44,7 @@ public class ShowcaseAllProductAdapter extends KBaseAdapter
 		
 		final ProductBean productDTO = (ProductBean) mList.get(position);
 		
-		BGApp.getInstance().setImage(productDTO.img_thum,holder.iconImgV);
+		BGApp.getInstance().setImageSqure(productDTO.img,holder.iconImgV);
 		
 		holder.nameTv.setText(productDTO.product_name);
 		holder.priceTv.setText(productDTO.getPrice());

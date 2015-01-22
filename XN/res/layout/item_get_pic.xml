@@ -2,57 +2,40 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/translucent" >
+    android:background="@color/translucent" 
+    >
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/common_page_bg"
+        android:background="@color/bottom_dialog_bg"
         android:orientation="vertical" >
-
+<!-- 
         <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
-            android:text="注销登录后您将不能使用会员权限及更多功能是否注销"
-            android:textSize="16dp" />
+            android:id="@+id/tv_title"
+           	style="@style/bottom_menu_item"
+           	android:text="添加照片"
+           	android:textSize="25sp"
+           /> -->
 
         <Button
             android:id="@+id/btn_take_photo"
-            android:layout_width="260dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/myself_info_log_off_btn_selector"
-            android:textColor="@color/white"
-            android:textSize="16dp"
+            style="@style/bottom_menu_item_select"
+            android:layout_marginTop="20dp"
             android:text="照相" />
         
           <Button
             android:id="@+id/btn_select_photo"
-            android:layout_width="260dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/myself_info_log_off_btn_selector"
-            android:textColor="@color/white"
-            android:textSize="16dp"
-            android:text="从相册中选择" />
+           style="@style/bottom_menu_item_select"
+            android:text="从手机中选择" />
 
         <Button
             android:id="@+id/btn_cancel"
-            android:layout_width="260dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="25dp"
-            android:layout_marginTop="30dp"
+            style="@style/bottom_menu_item_select"
             android:background="@drawable/myself_info_cancel_selector"
-            android:textColor="@color/white"
-            android:textSize="16dp"
+             android:layout_marginTop="20dp"
+             android:layout_marginBottom="20dp"
             android:text="取消" />
     </LinearLayout>
 

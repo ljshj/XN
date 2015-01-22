@@ -25,7 +25,6 @@
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
-    
 
 	
 	<!-- 自定义dialog -->
@@ -428,9 +427,48 @@
         <item name ="android:textSize">16sp</item>
     </style>
     
+    <style name ="bottom_menu_item">
+ 		<item name ="android:layout_width">match_parent</item>
+        <item name ="android:layout_height">wrap_content</item>
+        <item name ="android:layout_marginLeft">20dp</item>
+        <item name ="android:layout_marginRight">20dp</item>
+        <item name ="android:layout_marginTop">10dp</item>
+        <item name ="android:padding">4dp</item>
+        <item name ="android:textColor">@color/black</item>
+        <item name ="android:textSize">20sp</item>   
+        <item name ="android:gravity" >center</item>         </style>
     
-  
-    
+      <style name ="bottom_menu_item_select" parent="bottom_menu_item">
+ 		<item name ="android:background">@drawable/selector_pic_bg</item>
+        <item name ="android:textColor">@color/black</item>
+    </style>
+        
+      
+       <style name ="style_img">
+          <item name="android:layout_width">wrap_content</item>
+          <item name="android:layout_height">wrap_content</item>
+          <item name="android:scaleType">centerCrop</item>
+          <item name="android:adjustViewBounds">true</item>
+          <item name ="@drawable/icon_default"></item>
+       </style>
+      <!-- 小图 -->
+      <style name="style_img_small" parent="style_img">
+           <item name="android:layout_width">55dp</item>
+          <item name="android:layout_height">55dp</item>
+      </style>
+      
+      <!--中图 -->
+      <style name="style_img_middle">
+           <item name="android:layout_width">100dp</item>
+          <item name="android:layout_height">100dp</item>
+      </style>
+      
+          <!-- 大图 -->
+      <style name="style_img_big">
+          <item name="android:layout_width">match_parent</item>
+          <item name="android:layout_height">400dp</item>
+      </style>
+      
     <!-- 炫能 -->
     <!-- 个人中心 -->
     

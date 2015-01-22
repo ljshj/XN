@@ -1,31 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/img_user_center_bg"
-    android:orientation="vertical" >
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/translucent" 
+    >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/bottom_dialog_bg"
+        android:orientation="vertical" >
 
         <TextView
-            android:text="注销登录后您将不能使用会员权限及更多功能是否注销"
-			style="@style/text_dialog"
-          />
-        <View 
-            style="@style/cut_line_horizontal"
-            />
+            android:id="@+id/tv_title"
+           	style="@style/bottom_menu_item"
+           	android:layout_marginTop="20dp"
+           	android:text="退出登录"
+           	android:textSize="25sp"
+           />
 
-        <TextView
-            android:id="@+id/log_off_btn_confirm"
-            android:text="确定"
-			style="@style/text_dialog"
-             />
-         <View 
-            style="@style/cut_line_horizontal"
-            />
-        <TextView
-            android:id="@+id/log_off_btn_cancel"
-            android:text="取消"
-			style="@style/text_dialog"/>
+        <Button
+            android:id="@+id/btn_ok"
+            style="@style/bottom_menu_item_select"
+            android:background="@drawable/myself_info_log_off_btn_selector"
+            android:textColor="@color/white"
+            android:text="确定" />
+        
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btn_cancel"
+            style="@style/bottom_menu_item_select"
+            android:background="@drawable/myself_info_cancel_selector"
+             android:layout_marginTop="20dp"
+             android:layout_marginBottom="20dp"
+            android:text="取消" />
+    </LinearLayout>
 
+</FrameLayout>

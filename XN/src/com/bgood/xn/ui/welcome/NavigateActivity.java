@@ -23,7 +23,7 @@ public class NavigateActivity extends BaseActivity {
 			R.drawable.help_01,
 			R.drawable.help_02,
 			R.drawable.help_03,
-			//R.drawable.help_04,
+			R.drawable.help_04,
 	};
 	private boolean from_index = false;
 	@Override

@@ -1,8 +1,8 @@
 package com.bgood.xn.ui.user.info;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,7 +25,6 @@ import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.user.product.ShowcaseActivity;
 import com.bgood.xn.ui.weiqiang.WeiqiangPersonActivity;
 import com.bgood.xn.ui.xuanneng.XuanNengMainActivity;
-import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.utils.LogUtils;
 import com.bgood.xn.view.ActionView;
 import com.bgood.xn.view.BToast;
@@ -33,8 +32,6 @@ import com.bgood.xn.view.RoundImageView;
 import com.bgood.xn.widget.TitleBar;
 import com.easemob.chat.EMContactManager;
 import com.easemob.chat.activity.ChatActivity;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 /***
  * 
@@ -227,7 +224,7 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
      */
     private void setData(UserInfoBean userDTO)
     {
-		BGApp.getInstance().setImage(userDTO.photo,m_userIconImgV);
+		BGApp.getInstance().setImageSqure(userDTO.photo,m_userIconImgV);
         // 昵称
         m_userNicteTv.setText(userDTO.nickn);
         
@@ -294,5 +291,19 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 				break;
 			}
 		}
+	}
+	
+	/**
+	 * 
+	 * @todo:查看名片
+	 * @date:2015-1-22 上午11:19:56
+	 * @author:hg_liuzl@163.com
+	 * @params:@param activity
+	 * @params:@param userid
+	 */
+	public static void lookNameCard(Activity activity,String userid){
+		 Intent intent = new Intent(activity, NameCardActivity.class);
+         intent.putExtra(UserInfoBean.KEY_USER_ID, userid);
+         activity.startActivity(intent);
 	}
 }

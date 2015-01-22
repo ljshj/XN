@@ -33,7 +33,7 @@ public class NoScrollGridAdapter extends KBaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		convertView = mInflater.inflate(R.layout.item_gridview, null);
 		ImageView imageView = (ImageView) convertView.findViewById(R.id.iv_image);
-		BGApp.getInstance().setImage(imageSmallUrls.get(position), imageView);
+		BGApp.getInstance().setImageSqure(imageSmallUrls.get(position), imageView);
 		return convertView;
 	}
 

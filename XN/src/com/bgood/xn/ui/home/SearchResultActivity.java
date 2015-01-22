@@ -164,6 +164,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
         ll_home_search_check_type.setOnClickListener(this);
 		
 		home_tv_check_search_indecator = (TextView) findViewById(R.id.home_tv_check_search_indecator);
+		home_tv_check_search_indecator.setText(search_type==1?"我能":"我想");
 		
 		mTabPager = (ViewPager) findViewById(R.id.account_query_result_panel);
 		//设置ViewPager的页面翻滚监听
@@ -445,9 +446,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
         {
             case CHOOSE_MEMBER:
             	final MemberResultBean userDTO = (MemberResultBean) adapter.getAdapter().getItem(position);
-                intent = new Intent(SearchResultActivity.this, NameCardActivity.class);
-                intent.putExtra(UserInfoBean.KEY_USER_ID, userDTO.userid);
-                startActivity(intent);
+                NameCardActivity.lookNameCard(mActivity,userDTO.userid);
                 break;
             
             case CHOOSE_WEI_QIANG:

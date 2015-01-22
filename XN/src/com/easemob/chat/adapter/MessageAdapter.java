@@ -455,9 +455,7 @@ public class MessageAdapter extends BaseAdapter{
 			holder.head_iv.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					Intent intent = new Intent(activity,NameCardActivity.class);
-					intent.putExtra(UserInfoBean.KEY_USER_ID, message.getFrom().substring(2));
-					activity.startActivity(intent);					
+					NameCardActivity.lookNameCard(activity, message.getFrom().substring(2));
 				}
 			});
 			

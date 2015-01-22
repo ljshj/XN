@@ -5,6 +5,8 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
@@ -25,6 +27,7 @@ import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.ui.base.BaseShowDataActivity;
 import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
@@ -38,17 +41,17 @@ import com.bgood.xn.widget.TitleBar;
  * @date:2014-12-4 上午11:32:31
  * @author:hg_liuzl@163.com
  */
-public class AttentionActivity extends BaseActivity implements IXListViewListener,TaskListenerWithState,OnClickListener
-{
+public class AttentionActivity extends BaseShowDataActivity implements TaskListenerWithState,OnClickListener{
 	/**我关注的，与关注我的key*/
 	public static final String KEY_ATTENTION = "key_attention";
+	/**粉丝或者关注人的数量*/
     private XListView m_listLv = null;  // 列表数据
     private AttentionAdapter attentionAdapter = null;
     private List<AttentionBean> m_list = new ArrayList<AttentionBean>();
     private int m_start = 0;
     private int mType = 0;
-    private boolean isRefresh = true;
-
+    private int count;
+    private TitleBar mTilteBar;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -57,79 +60,43 @@ public class AttentionActivity extends BaseActivity implements IXListViewListene
         
         mType = getIntent().getIntExtra(KEY_ATTENTION, 0);
         
-        (new TitleBar(mActivity)).initTitleBar(mType == AttentionBean.ATTENTION ?"我的关注":"我的粉丝");
+        count = TextUtils.isEmpty(BGApp.mUserBean.guanzhu)?0:Integer.valueOf(BGApp.mUserBean.guanzhu);
+        
+        mTilteBar = new TitleBar(mActivity);
+        mTilteBar.initTitleBar(mType == AttentionBean.ATTENTION ?"我的关注":"我的粉丝");
+        mTilteBar.backBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+					doBackLast();
+			}
+		});
         
         m_listLv = (XListView) findViewById(R.id.follow_xlv_list);
         m_listLv.setPullRefreshEnable(false);
         m_listLv.setPullLoadEnable(false);
         m_listLv.setFooterDividersEnabled(false);
-        UserCenterRequest.getInstance().requestAttentionOfMe(this, mActivity, String.valueOf(mType),String.valueOf(m_start),String.valueOf(m_start+PAGE_SIZE_ADD));
-    }
-    
-
-    /**
-     * 设置适配器数据方法
-     */
-    private void setAdapter()
-    {
-		attentionAdapter = new AttentionAdapter(m_list,mActivity,this);
+        attentionAdapter = new AttentionAdapter(m_list, mActivity, this);
         m_listLv.setAdapter(attentionAdapter);
-    }
-
-    
-    /**
-     * 加载完成之后进行时间保存等方法
-     */
-    private void stopLoad() {
-        m_listLv.stopRefresh();
-        m_listLv.stopLoadMore();
-        m_listLv.setRefreshTime(ToolUtils.getNowTime());
-    }
-    
-    @Override
-    public void onRefresh()
-    {
-    	isRefresh = true;
-    	m_start = 0;
-    	UserCenterRequest.getInstance().requestAttentionOfMe(this, mActivity, String.valueOf(mType),String.valueOf(m_start),String.valueOf(m_start+PAGE_SIZE_ADD));
-
-    }
-
-    @Override
-    public void onLoadMore()
-    {
-        
+        UserCenterRequest.getInstance().requestAttentionOfMe(this, mActivity, String.valueOf(mType),String.valueOf(m_start),String.valueOf(m_start+PAGE_SIZE_ADD));
     }
 
 	@Override
 	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
 		if(info.getState() == HttpTaskState.STATE_OK){
-			stopLoad();
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			String strJson = bNetWork.getStrJson();
-			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 					switch (bNetWork.getMessageType()) {
 					case 820005:
-						AttentionResponse response = JSON.parseObject(strJson, AttentionResponse.class);
-						if (response.items.size() < PAGE_SIZE_ADD) {
-							m_listLv.setPullLoadEnable(false);
-							BToast.show(mActivity, "数据加载完毕");
-						} else {
-							m_start = m_start + PAGE_SIZE_ADD;
-							m_listLv.setPullLoadEnable(true);
+						if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+							AttentionResponse response = JSON.parseObject(strJson, AttentionResponse.class);
+							setDataAdapter(m_listLv, attentionAdapter, m_list, response.items, isRefreshAction);
 						}
-						if(isRefresh){
-							isRefresh = false;
-							m_list.clear();
-						}
-						m_list.addAll(response.items);
-						setAdapter();
 						break;
 
 					default:
 						break;
 					}
-				}
 			}
 	}
 
@@ -142,23 +109,36 @@ public class AttentionActivity extends BaseActivity implements IXListViewListene
 			if(bean.searchtype == 0){
 				UserCenterRequest.getInstance().requestAttention(AttentionActivity.this, mActivity,String.valueOf(bean.userid),BGApp.mUserId,String.valueOf(1));
 				m_list.remove(bean);
+				count--;
 			}else{
 				UserCenterRequest.getInstance().requestAttention(AttentionActivity.this, mActivity,String.valueOf(bean.userid),BGApp.mUserId,String.valueOf(bean.guanzhutype==1?1:0));
-				bean.guanzhutype = bean.guanzhutype ==1?0:1;
+				bean.guanzhutype = bean.guanzhutype ==1?0:1;//0，普通，1可以相互关注
+				count = bean.guanzhutype == 0 ?count++:count--;	//0表示添加了取消关注，非0表示关注
 			}
 			attentionAdapter.notifyDataSetChanged();
 			break;
 		case R.id.iv_user:
 		case R.id.tv_username:
-            Intent intent = new Intent(mActivity, NameCardActivity.class);
-            intent.putExtra(UserInfoBean.KEY_USER_ID, String.valueOf(bean.userid));
-            startActivity(intent);
+            NameCardActivity.lookNameCard(mActivity, String.valueOf(bean.userid));
 			break;
 
 		default:
 			break;
 		}
 	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if(keyCode == KeyEvent.KEYCODE_BACK){
+			doBackLast();
+		}
+		return super.onKeyDown(keyCode, event);
+	}
 	
-	
+	private void doBackLast() {
+		UserInfoBean userBean = BGApp.mUserBean;
+		userBean.guanzhu = String.valueOf(count);
+		BGApp.mUserBean = userBean;
+		finish();
+	}
 }

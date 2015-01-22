@@ -1,33 +1,24 @@
 package com.bgood.xn.adapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
-import com.bgood.xn.bean.ImageBean;
 import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.ui.user.info.ShowNameCardListener;
 import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.ActionView;
 import com.bgood.xn.view.NoScrollGridView;
-import com.bgood.xn.view.photoview.ImagePagerActivity;
-import com.nostra13.universalimageloader.core.ImageLoader;
 /**
  * 
  * @todo:微墙适配器
@@ -74,12 +65,10 @@ public class WeiqiangAdapter extends KBaseAdapter
 		
 		BGApp.getInstance().setImage(weiqiangBean.photo, holder.ivAuthorImg);
 		
-		holder.ivAuthorImg.setOnClickListener(mListener);
-		holder.ivAuthorImg.setTag(weiqiangBean);
+		holder.ivAuthorImg.setOnClickListener(new ShowNameCardListener(weiqiangBean, mActivity));
 		
 		holder.tvAuthorName.setText(weiqiangBean.name);
-		holder.tvAuthorName.setOnClickListener(mListener);
-		holder.tvAuthorName.setTag(weiqiangBean);
+		holder.tvAuthorName.setOnClickListener(new ShowNameCardListener(weiqiangBean, mActivity));
 		
 		
 		holder.tvTime.setText(ToolUtils.getFormatDate(weiqiangBean.date_time));
@@ -87,11 +76,10 @@ public class WeiqiangAdapter extends KBaseAdapter
 		if(!TextUtils.isEmpty(weiqiangBean.fromname)){	//如果转发人存在
 			holder.llTransArea.setVisibility(View.VISIBLE);
 			holder.tvOldAuthorName.setText(weiqiangBean.fromname);
-			holder.tvOldAuthorName.setOnClickListener(mListener);
-			holder.tvOldAuthorName.setTag(weiqiangBean);
+			holder.tvOldAuthorName.setOnClickListener(new ShowNameCardListener(weiqiangBean, mActivity));
 			holder.tvContent.setText(weiqiangBean.content);
 			holder.tvComments.setText(weiqiangBean.comments);
-			showImgs(weiqiangBean.imgs,holder.oldgridView);
+			ImgUtils.showImgs(weiqiangBean.imgs,holder.oldgridView,mActivity);
 			holder.gridView.setVisibility(View.GONE);
 			holder.tvContent.setVisibility(TextUtils.isEmpty(weiqiangBean.content)?View.GONE:View.VISIBLE);
 			holder.tvComments.setVisibility(TextUtils.isEmpty(weiqiangBean.comments)?View.GONE:View.VISIBLE);
@@ -100,7 +88,7 @@ public class WeiqiangAdapter extends KBaseAdapter
 			holder.tvComments.setText(weiqiangBean.content);
 			holder.tvComments.setVisibility(TextUtils.isEmpty(weiqiangBean.content)?View.GONE:View.VISIBLE);
 			holder.gridView.setVisibility(View.GONE);
-			showImgs(weiqiangBean.imgs,holder.gridView);
+			ImgUtils.showImgs(weiqiangBean.imgs,holder.gridView,mActivity);
 		}
 		
 		holder.avZan.setCount(weiqiangBean.like_count);
@@ -137,64 +125,5 @@ public class WeiqiangAdapter extends KBaseAdapter
 		
 		public ActionView avZan,avReply,avTranspnt,avShare;
 	}
-	
-	
-	/**
-	 * 打开图片查看器
-	 * 
-	 * @param position
-	 * @param urls2
-	 */
-	protected void imageBrower(int position, List<ImageBean> imgList) {
-		ArrayList<String> arrays = new ArrayList<String>();
-		for(ImageBean img:imgList){
-			arrays.add(img.img);
-		}
-		Intent intent = new Intent(mActivity, ImagePagerActivity.class);
-		// 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
-		intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, arrays);
-		intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
-		mActivity.startActivity(intent);
-	}
-	
-	
-	/**处理九宫格图片**/
-	@SuppressWarnings("null")
-	private void showImgs(final List<ImageBean> list,GridView gv){
-		if (list == null || list.size() == 0) { // 没有图片资源就隐藏GridView
-			gv.setVisibility(View.GONE);
-		} else {
-			gv.setVisibility(View.VISIBLE);
-			gv.setAdapter(new NoScrollGridAdapter(list, mActivity));
-		}
-		gv.setSelector(new ColorDrawable(Color.TRANSPARENT));
-		// 点击回帖九宫格，查看大图
-		gv.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				imageBrower(position, list);
-			}
-		});
-	}
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

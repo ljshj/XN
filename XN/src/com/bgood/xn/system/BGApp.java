@@ -29,6 +29,7 @@ import com.iflytek.cloud.SpeechUtility;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 public class BGApp extends Application {
 	
@@ -104,16 +105,29 @@ public class BGApp extends Application {
 	 * 展示图片
 	 */
 	private DisplayImageOptions options = null;
+	private DisplayImageOptions optionsRound = null;
 	private void initImgDisPlay() {
 		options = new DisplayImageOptions.Builder() //
+		.showImageOnLoading(R.drawable.icon_pic_user_loading)
 		.showImageForEmptyUri(R.drawable.icon_default) //
-		.showImageOnFail(R.drawable.icon_default) //
+		.showImageOnFail(R.drawable.icon_pic_user_error) //
 		.cacheInMemory(true) //
 		.cacheOnDisk(true) //
 		.build();//
+		
+		optionsRound = new DisplayImageOptions.Builder() //
+		.showImageOnLoading(R.drawable.icon_pic_user_loading)
+		.showImageForEmptyUri(R.drawable.icon_default) //
+		.showImageOnFail(R.drawable.icon_pic_user_error) //
+		
+		.cacheInMemory(true) //
+		.cacheOnDisk(true) //
+		.displayer(new RoundedBitmapDisplayer(10))
+		.build();//
+		
+		
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration//
 		.Builder(getApplicationContext())//
-		.defaultDisplayImageOptions(options)//
 		.diskCacheFileCount(1000)
 		.diskCacheSize(50*1024*1024)
 		.build();//
@@ -282,10 +296,24 @@ public class BGApp extends Application {
 	}
 	
 
-	/**设置图片*/
+	/**设置圆角图片*/
     public  void setImage(final String imgUrl,final ImageView iv){
     	if(TextUtils.isEmpty(imgUrl)){
-    		iv.setVisibility(View.GONE);
+    		return;
+    	}
+    	
+    	String strImgUrl = imgUrl;
+    	
+    	if(!strImgUrl.contains("http")){
+    		strImgUrl = SystemConfig.FILE_SERVER+imgUrl;
+    	}
+    	
+	   ImageLoader.getInstance().displayImage(strImgUrl,iv, optionsRound);
+    }
+    
+	/**设置直角图片*/
+    public  void setImageSqure(final String imgUrl,final ImageView iv){
+    	if(TextUtils.isEmpty(imgUrl)){
     		return;
     	}
     	
