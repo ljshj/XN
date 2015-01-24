@@ -23,16 +23,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.PrivinceAdapter;
 import com.bgood.xn.bean.AddressBean;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.utils.PingYinUtil;
+import com.bgood.xn.view.LoadingProgress;
 import com.bgood.xn.widget.TitleBar;
 import com.bgood.xn.widget.ZZPrivinceQuickAlphabeticBar;
 
@@ -42,7 +40,6 @@ import com.bgood.xn.widget.ZZPrivinceQuickAlphabeticBar;
 public class PrivinceActivity extends BaseActivity implements OnItemClickListener
 {
 	private ListView m_privinceLv = null;
-	private ProgressBar m_progressBar = null;
 	private ZZPrivinceQuickAlphabeticBar m_alphaBar = null;
 	
 	private PrivinceAdapter m_privinceAdapter;
@@ -75,7 +72,6 @@ public class PrivinceActivity extends BaseActivity implements OnItemClickListene
 	 */
 	private void findView()
 	{
-		m_progressBar = (ProgressBar) findViewById(R.id.privince_progress);
 		m_privinceLv = (ListView) findViewById(R.id.privince_lv_privince);
 		m_privinceLv.setOnItemClickListener(this);
 		m_alphaBar = (ZZPrivinceQuickAlphabeticBar) findViewById(R.id.privince_qab_fast_scroller);
@@ -98,7 +94,7 @@ public class PrivinceActivity extends BaseActivity implements OnItemClickListene
 		protected void onPreExecute()
 		{
 			super.onPreExecute();
-			m_progressBar.setVisibility(View.VISIBLE);
+			LoadingProgress.getInstance().show(context);
 		}
 
 		@Override
@@ -120,11 +116,9 @@ public class PrivinceActivity extends BaseActivity implements OnItemClickListene
 		protected void onPostExecute(List<AddressBean> result)
 		{
 			super.onPostExecute(result);
-			m_progressBar.setVisibility(View.GONE);
-			
+			LoadingProgress.getInstance().dismiss();
 			setAdapter(result);
 		}
-		
 	}
     
     private void initSearchDate()
@@ -194,9 +188,7 @@ public class PrivinceActivity extends BaseActivity implements OnItemClickListene
 	{
 		AddressBean addressDTO = (AddressBean) arg0.getItemAtPosition(position);
 		Intent intent = new Intent(PrivinceActivity.this, CityActivity.class);
-		Bundle data = new Bundle();
-        data.putSerializable("AddressDTO", addressDTO);
-        intent.putExtras(data);
+		intent.putExtra("AddressDTO", addressDTO);
 		intent.putExtra("index", index);
 		startActivity(intent);		
 	}

@@ -75,8 +75,8 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="15dp"
                         android:gravity="center_vertical"
-                        android:text="产品价格："
-                        android:textSize="18dp" />
+                        android:text="产品价格(元)："
+                        android:textSize="18sp" />
 
                     <EditText
                         android:id="@+id/product_edit_et_price"
@@ -85,8 +85,8 @@
                         android:layout_marginLeft="10dp"
                         android:background="@null"
                         android:gravity="center_vertical"
-                        android:inputType="number"
-                        android:textSize="18dp" />
+                        android:inputType="numberDecimal"
+                        android:textSize="18sp" />
                 </LinearLayout>
 
                 <View

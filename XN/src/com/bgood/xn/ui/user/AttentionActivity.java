@@ -113,7 +113,7 @@ public class AttentionActivity extends BaseShowDataActivity implements TaskListe
 			}else{
 				UserCenterRequest.getInstance().requestAttention(AttentionActivity.this, mActivity,String.valueOf(bean.userid),BGApp.mUserId,String.valueOf(bean.guanzhutype==1?1:0));
 				bean.guanzhutype = bean.guanzhutype ==1?0:1;//0，普通，1可以相互关注
-				count = bean.guanzhutype == 0 ?count++:count--;	//0表示添加了取消关注，非0表示关注
+				count = bean.guanzhutype == 0 ? count -1 : count + 1;	//0表示添加了取消关注，非0表示关注
 			}
 			attentionAdapter.notifyDataSetChanged();
 			break;

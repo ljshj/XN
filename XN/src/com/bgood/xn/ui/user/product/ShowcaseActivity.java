@@ -1,5 +1,6 @@
 package com.bgood.xn.ui.user.product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
@@ -44,6 +45,7 @@ import com.bgood.xn.view.CBaseSlidingMenu;
 import com.bgood.xn.view.slidingmenu.lib.SlidingMenu.OnClosedListener;
 import com.bgood.xn.view.slidingmenu.lib.SlidingMenu.OnOpenedListener;
 import com.bgood.xn.view.xlistview.XListView;
+import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -79,7 +81,8 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 	private XListView m_recommendXLv = null;  // 推荐产品
 	private XListView m_allProductXLv = null;  // 所有产品
 	private boolean m_menuShowing; // 右菜单是否显示
-	
+	private List<ProductBean> listRecommend = new ArrayList<ProductBean>();	//	推荐的产品
+	private List<ProductBean> listAll = new ArrayList<ProductBean>();	//	所有的产品
 	private ShowcaseRecommendAdapter m_recommendAdapter = null;    // 推荐商品适配器
 	private ShowcaseAllProductAdapter m_allProductAdapter = null;  // 所有商品适配器
 	
@@ -102,7 +105,6 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 		findView();
 		setListener();
 		setRightMenu();
-		ProductRequest.getInstance().requestShowCase(this, this, mUserId);
 	}
 	/**
 	 * 控件初始化方法
@@ -137,16 +139,22 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 		m_recommendXLv.setOnItemClickListener(this);
 		m_recommendXLv.setPullRefreshEnable(false);
 		m_recommendXLv.setPullLoadEnable(false);
+		m_recommendAdapter = new ShowcaseRecommendAdapter(listRecommend,ShowcaseActivity.this);
+		m_recommendXLv.setAdapter(m_recommendAdapter);
 		
 		m_allProductXLv = (XListView) findViewById(R.id.showcase_xlv_all_product);
 		m_allProductXLv.setPullRefreshEnable(false);
+		m_allProductXLv.setPullLoadEnable(false);
 		m_allProductXLv.setOnItemClickListener(this);
+		m_allProductAdapter = new ShowcaseAllProductAdapter(listAll,ShowcaseActivity.this);
+		m_allProductXLv.setAdapter(m_allProductAdapter);
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
 		setBackgroundColor();
+		ProductRequest.getInstance().requestShowCase(this, this, mUserId);
 	}
 
 	/**
@@ -265,7 +273,7 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
     			break;
     		// 全部产品
     		case R.id.showcase_ll_all_product:
-    			if(null == m_allProductAdapter){	//如果m_allProductAdapter 为null,说明还没有做初始化工作
+    			if(listAll.size() == 0){	//如果m_allProductAdapter 为null,说明还没有做初始化工作
     				ProductRequest.getInstance().requestProductList(this, this, mUserId, "", String.valueOf(m_start_page), String.valueOf(m_start_page+m_add_pagesize));
     			}
     			setProduct(1);
@@ -365,64 +373,64 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 		}
 	}
 	
-	/**
-	 * 进行推荐商品数据显示
-	 * @param list 数据源
-	 */
-	private void setRecommendAdapter(List<ProductBean> list)
-	{
-		m_recommendXLv.stopLoadMore();
-		m_recommendXLv.stopRefresh();
-		
-		if(null == list){
-			return;
-		}
-		
-		if (m_recommendAdapter == null)
-		{
-			m_recommendAdapter = new ShowcaseRecommendAdapter(list,ShowcaseActivity.this);
-			m_recommendXLv.setAdapter(m_recommendAdapter);
-		}
-		else
-		{
-			m_recommendAdapter.notifyDataSetChanged();
-		}
-		
-	}
+//	/**
+//	 * 进行推荐商品数据显示
+//	 * @param list 数据源
+//	 */
+//	private void setRecommendAdapter(List<ProductBean> list)
+//	{
+//		m_recommendXLv.stopLoadMore();
+//		m_recommendXLv.stopRefresh();
+//		
+//		if(null == list){
+//			return;
+//		}
+//		
+//		if (m_recommendAdapter == null)
+//		{
+//			m_recommendAdapter = new ShowcaseRecommendAdapter(list,ShowcaseActivity.this);
+//			m_recommendXLv.setAdapter(m_recommendAdapter);
+//		}
+//		else
+//		{
+//			m_recommendAdapter.notifyDataSetChanged();
+//		}
+//		
+//	}
 	
-	/**
-	 * 进行所有商品数据显示
-	 * @param list 数据源
-	 */
-	private void setAllProductAdapter(List<ProductBean> list)
-	{
-		
-		m_allProductXLv.stopLoadMore();
-		m_allProductXLv.stopRefresh();		
-		
-		if(null == list){
-			return;
-		}
-		
-		if(list.size() < m_add_pagesize){
-			BToast.show(this, "数据加载完毕");
-			m_allProductXLv.setPullLoadEnable(false);
-		}else{
-			m_start_page += m_add_pagesize;
-			m_allProductXLv.setPullLoadEnable(true);
-		}
-		
-		if (m_allProductAdapter == null)
-		{
-			m_allProductAdapter = new ShowcaseAllProductAdapter(list,ShowcaseActivity.this);
-			m_allProductXLv.setAdapter(m_allProductAdapter);
-		}
-		else
-		{
-			m_allProductAdapter.notifyDataSetChanged();
-		}
-		
-	}
+//	/**
+//	 * 进行所有商品数据显示
+//	 * @param list 数据源
+//	 */
+//	private void setAllProductAdapter(List<ProductBean> list)
+//	{
+//		
+//		m_allProductXLv.stopLoadMore();
+//		m_allProductXLv.stopRefresh();		
+//		
+//		if(null == list){
+//			return;
+//		}
+//		
+//		if(list.size() < m_add_pagesize){
+//			BToast.show(this, "数据加载完毕");
+//			m_allProductXLv.setPullLoadEnable(false);
+//		}else{
+//			m_start_page += m_add_pagesize;
+//			m_allProductXLv.setPullLoadEnable(true);
+//		}
+//		
+//		if (m_allProductAdapter == null)
+//		{
+//			m_allProductAdapter = new ShowcaseAllProductAdapter(list,ShowcaseActivity.this);
+//			m_allProductXLv.setAdapter(m_allProductAdapter);
+//		}
+//		else
+//		{
+//			m_allProductAdapter.notifyDataSetChanged();
+//		}
+//		
+//	}
 	
 	/**
 	 * 设置数据显示方法
@@ -439,7 +447,10 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 			m_commentsTv.setText(showcaseDTO.good_comments);
 			
 			m_showcaseNameTv.setText(showcaseDTO.shop_name);
-			setRecommendAdapter(showcaseDTO.recommend_list);
+			
+			listRecommend.clear();
+			listRecommend.addAll(showcaseDTO.recommend_list);
+			m_recommendAdapter.notifyDataSetChanged();
 			
 	}
     @Override
@@ -463,7 +474,9 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 					break;
 				case 830008:
 					final ProductResponse response = JSON.parseObject(strJson, ProductResponse.class);
-					setAllProductAdapter(response.products);
+					listAll.clear();
+					listAll.addAll(response.products);
+					m_allProductAdapter.notifyDataSetChanged();
 					break;
 				default:
 					break;

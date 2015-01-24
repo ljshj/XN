@@ -270,15 +270,6 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 		case R.id.av_zan:	//赞
 			wqb = (WeiQiangBean) v.getTag();
 			mActionWeiqiang = wqb;
-			if(m_type == WeiQiangBean.WEIQIANG_ALL){
-				mActionWeiqiang.like_count = String.valueOf(Integer.valueOf(mActionWeiqiang.like_count)+1);
-				m_allFriendsXLv.setSelection(m_allFriendsList.indexOf(wqb));
-				m_allFriendsAdapter.notifyDataSetChanged();
-			}else{
-				mActionWeiqiang.like_count = String.valueOf(Integer.valueOf(mActionWeiqiang.like_count)+1);
-				m_followFriendsXLv.setSelection(m_allFriendsList.indexOf(wqb));
-				m_followFriendsAdapter.notifyDataSetChanged();
-			}
 			WeiqiangRequest.getInstance().requestWeiqiangZan(this, mActivity, wqb.weiboid);
 			break;
 		case R.id.av_reply:	//评论
@@ -504,8 +495,6 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
             	 weiqiang_attion_start += PAGE_SIZE_ADD;
             	 m_followFriendsXLv.setPullLoadEnable(true);
              }
-			
-			 
              this.m_followFriendsList.addAll(weiqiangs);
              m_followFriendsAdapter.notifyDataSetChanged();
 		}
@@ -548,11 +537,17 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			String strJson = bNetWork.getStrJson();
-			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				switch(bNetWork.getMessageType()){
 				case 860001:	//获取微墙列表
-					WeiqiangResponse response  = JSON.parseObject(strJson, WeiqiangResponse.class);
-					setWeiqiangData(response.items);
+					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+						WeiqiangResponse response  = JSON.parseObject(strJson, WeiqiangResponse.class);
+						setWeiqiangData(response.items);
+					}else{
+						m_allFriendsXLv.stopRefresh();
+						m_allFriendsXLv.stopLoadMore();
+						m_followFriendsXLv.stopRefresh();
+						m_followFriendsXLv.stopLoadMore();
+					}
 					break;
 				case 860002:	//获取微墙详细内容
 					break;
@@ -562,43 +557,35 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 					break;
 				case 860005:	//转发微墙
 					break;
-				case 860006:
+				case 860006: 	//分享
+					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+						if(m_type == WeiQiangBean.WEIQIANG_ALL){
+							mActionWeiqiang.share_count = String.valueOf(Integer.valueOf(mActionWeiqiang.share_count)+1);
+							m_allFriendsAdapter.notifyDataSetChanged();
+						}else{
+							mActionWeiqiang.share_count = String.valueOf(Integer.valueOf(mActionWeiqiang.share_count)+1);
+							m_followFriendsAdapter.notifyDataSetChanged();
+						}
+					}
 					break;
 				case 860007:
 					break;
 				case 860008:	//赞微墙
+					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+						if(m_type == WeiQiangBean.WEIQIANG_ALL){
+							mActionWeiqiang.like_count = String.valueOf(Integer.valueOf(mActionWeiqiang.like_count)+1);
+							m_allFriendsAdapter.notifyDataSetChanged();
+						}else{
+							mActionWeiqiang.like_count = String.valueOf(Integer.valueOf(mActionWeiqiang.like_count)+1);
+							m_followFriendsAdapter.notifyDataSetChanged();
+						}
+					}else if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_HAS_ZAN){
+						BToast.show(mActivity, "不要重复点赞");
+					}
+					break;
+				default:
 					break;
 				}
-				
-				}else{
-					switch(bNetWork.getMessageType()){
-					case 860001:
-						m_allFriendsXLv.stopRefresh();
-						m_allFriendsXLv.stopLoadMore();
-						m_followFriendsXLv.stopRefresh();
-						m_followFriendsXLv.stopLoadMore();
-						break;
-					case 860002:
-						break;
-					case 860003:
-						break;
-					case 860004:
-						break;
-					case 860005:
-						break;
-					case 860006:
-						break;
-					case 860007:
-						break;
-					case 860008:
-						break;
-					}
-				}
-			}else{
-				m_allFriendsXLv.stopRefresh();
-				m_allFriendsXLv.stopLoadMore();
-				m_followFriendsXLv.stopRefresh();
-				m_followFriendsXLv.stopLoadMore();
 			}
 		}
 }

@@ -17,6 +17,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -39,7 +40,9 @@ import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.ui.user.PersonalDataActivity;
 import com.bgood.xn.utils.PingYinUtil;
+import com.bgood.xn.view.LoadingProgress;
 import com.bgood.xn.widget.TitleBar;
 import com.bgood.xn.widget.ZZCityQuickAlphabeticBar;
 
@@ -49,7 +52,6 @@ import com.bgood.xn.widget.ZZCityQuickAlphabeticBar;
 public class CityActivity extends BaseActivity implements OnItemClickListener,TaskListenerWithState
 {
 	private ListView m_cityLv = null;
-	private ProgressBar m_progressBar = null;
 	private ZZCityQuickAlphabeticBar m_alphaBar = null;
 	private  CityAdapter m_cityAdapter = null;
     private List<AddressBean> m_cityList = null;    // 省份/直辖市列表
@@ -66,7 +68,13 @@ public class CityActivity extends BaseActivity implements OnItemClickListener,Ta
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_city);
 		index = getIntent().getIntExtra("index", 0);
-		(new TitleBar(mActivity)).initTitleBar(index == 0 ?"家乡(省)":"所在地(省)");
+		
+		if(index==0){
+			(new TitleBar(mActivity)).initTitleBar("家乡(市)");
+		}else{
+			(new TitleBar(mActivity)).initTitleBar("所在地(市)");
+		}
+		m_addressDTO = (AddressBean) getIntent().getSerializableExtra("AddressDTO");
 		findView();
 		new GetCityListTask(CityActivity.this).execute(m_cityLv);
 	}
@@ -78,7 +86,6 @@ public class CityActivity extends BaseActivity implements OnItemClickListener,Ta
 	 */
 	private void findView()
 	{
-		m_progressBar = (ProgressBar) findViewById(R.id.city_progress);
 		m_cityLv = (ListView) findViewById(R.id.city_lv_privince);
 		m_cityLv.setOnItemClickListener(this);
 		m_alphaBar = (ZZCityQuickAlphabeticBar) findViewById(R.id.city_qab_fast_scroller);
@@ -101,7 +108,7 @@ public class CityActivity extends BaseActivity implements OnItemClickListener,Ta
 		protected void onPreExecute()
 		{
 			super.onPreExecute();
-			m_progressBar.setVisibility(View.VISIBLE);
+			LoadingProgress.getInstance().show(context);
 		}
 
 		@Override
@@ -122,8 +129,7 @@ public class CityActivity extends BaseActivity implements OnItemClickListener,Ta
 		protected void onPostExecute(List<AddressBean> result)
 		{
 			super.onPostExecute(result);
-			m_progressBar.setVisibility(View.GONE);
-			
+			LoadingProgress.getInstance().dismiss();
 			setAdapter(result);
 		}
 		
@@ -133,6 +139,7 @@ public class CityActivity extends BaseActivity implements OnItemClickListener,Ta
 	{
 		if (m_cityList == null)
 			return;
+		
 		searchs = new String[m_cityList.size()];
 		searchsHead = new String[m_cityList.size()];
 		searchsCH = new String[m_cityList.size()];
@@ -205,8 +212,7 @@ public class CityActivity extends BaseActivity implements OnItemClickListener,Ta
 	{
 		try 
 		{
-			DocumentBuilderFactory factory = DocumentBuilderFactory
-					.newInstance();
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			InputStream inputStream= this.getResources().getAssets().open("address.xml");
 			Document document = builder.parse(inputStream);
@@ -274,14 +280,14 @@ public class CityActivity extends BaseActivity implements OnItemClickListener,Ta
 					 ub.loplace = address;
 				 }
 				 BGApp.mUserBean = ub;
+				 
+				 Intent intent = new Intent(CityActivity.this, PersonalDataActivity.class);
+				 startActivity(intent);
 				 finish();
 		            
 			}else{
 				Toast.makeText(this, "修改失败！", Toast.LENGTH_LONG).show();
 			}
-			
-			
-			}
+		}
 	}
-
 }

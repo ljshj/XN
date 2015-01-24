@@ -197,8 +197,6 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
         {
             // 赞
             case R.id.av_zan:
-            	weiqiangBean.like_count = String.valueOf(Integer.valueOf(weiqiangBean.like_count)+1);
-            	avZan.setCount(weiqiangBean.like_count);
                 zanWeiqiang();
                 break;
             // 评论
@@ -236,16 +234,29 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			String strJson = bNetWork.getStrJson();
-			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				switch (bNetWork.getMessageType()) {
 				case 860002:
-					CommentResponse response = JSON.parseObject(strJson, CommentResponse.class);
-					setCommentData(response.comments);
+					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+						CommentResponse response = JSON.parseObject(strJson, CommentResponse.class);
+						setCommentData(response.comments);
+					}
 					break;
-
+				case 860006:	//分享
+					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+		            	weiqiangBean.share_count = String.valueOf(Integer.valueOf(weiqiangBean.share_count)+1);
+		            	avZan.setCount(weiqiangBean.share_count);
+					}
+					break;
+				case 860008:	//赞微墙
+					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+		            	weiqiangBean.like_count = String.valueOf(Integer.valueOf(weiqiangBean.like_count)+1);
+		            	avZan.setCount(weiqiangBean.like_count);
+					}else if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_HAS_ZAN){
+						BToast.show(mActivity, "不要重复点赞");
+					}
+					break;
 				default:
 					break;
-				}
 				
 			}
 		}
@@ -352,5 +363,4 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 			createSendDialog("@"+bean.name+"  ");
 		}
 	}
-	
 }

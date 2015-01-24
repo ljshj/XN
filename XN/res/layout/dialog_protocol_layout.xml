@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/tv_protocol_title"
+        style="@style/group_text_tag"
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:text="@string/xn_protocol_title"
+        android:textSize="18sp"
+         android:layout_margin="10dp"
+        />
+    
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:background="@color/common_bg"
+        >
+	    <TextView 
+	        android:id="@+id/tv_protocol_content"
+	        style="@style/group_text_tag"
+	        android:textSize="12sp"
+	        android:text="@string/xn_protocol_content"
+	        />
+    </ScrollView>
+       
+     <Button
+        android:id="@+id/btn_protocol"
+        style="@style/bottom_menu_item_select"
+        android:textColor="@color/white"
+        android:background="@drawable/myself_info_cancel_selector"
+         android:layout_margin="10dp"
+        android:text="同意"
+        />
+    
+    
+
+</LinearLayout>

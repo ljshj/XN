@@ -11,6 +11,10 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Animation.AnimationListener;
 
 import com.bgood.xn.R;
 import com.bgood.xn.network.BaseNetWork;
@@ -46,12 +50,37 @@ public class NavigateActivity extends BaseActivity implements TaskListenerWithSt
 	/**
 	 * 进入首页
 	 */
-	private void gotoMain() {
+	private void gotoMain(){
 		Intent i = new Intent();
-		i.setClass(mActivity, MainActivity.class);
-		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-		mActivity.startActivity(i);
-		mActivity.finish();
+		i.setClass(NavigateActivity.this, MainActivity.class);
+		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(i);
+		finish();
+		
+//		  Animation fadeOutAnimation = AnimationUtils.loadAnimation(mActivity, R.anim.fade_out);
+//		  
+//		  
+//		  fadeOutAnimation.setAnimationListener(new AnimationListener() {
+//			@Override
+//			public void onAnimationStart(Animation arg0) {
+//			}
+//			
+//			@Override
+//			public void onAnimationRepeat(Animation arg0) {
+//			}
+//			@Override
+//			public void onAnimationEnd(Animation arg0) {
+//				Intent i = new Intent();
+//				i.setClass(NavigateActivity.this, MainActivity.class);
+//				i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//				startActivity(i);
+//				finish();
+//			}
+//		});
+	}
+	
+	public void requestUnLogin(View v){
+		UserCenterRequest.getInstance().requestUnLoginBSServer(this, this);
 	}
 	
 	@Override
@@ -106,11 +135,11 @@ public class NavigateActivity extends BaseActivity implements TaskListenerWithSt
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				SystemConfig.BS_SERVER = body.optString("bserver");
 				SystemConfig.FILE_SERVER = body.optString("fserver");
-				try {
+				/*try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
-				}
+				}*/
 				gotoMain();
 			}
 		}

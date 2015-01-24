@@ -86,10 +86,10 @@ public class FeedbackActivity extends BaseActivity implements TaskListenerWithSt
     private void checkContent() {
     	mContent = m_contentEt.getText().toString().trim();
     	mCommact = m_commact.getText().toString().trim();
-    	if(TextUtils.isEmpty(mCommact)){
+    	if(TextUtils.isEmpty(mContent)){
     		 BToast.show(mActivity, "请输入您的反馈意见!");
              return;
-    	}else if(TextUtils.isEmpty(mContent)){
+    	}else if(TextUtils.isEmpty(mCommact)){
     		BToast.show(mActivity, "请输入您的联系方式!");
     		return;
     	}

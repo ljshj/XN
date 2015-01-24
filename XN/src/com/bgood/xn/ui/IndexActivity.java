@@ -9,6 +9,11 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 
 import com.bgood.xn.R;
 import com.bgood.xn.network.BaseNetWork;
@@ -30,33 +35,57 @@ import com.bgood.xn.view.BToast;
  * @author:hg_liuzl@163.com
  */
 public class IndexActivity extends BaseActivity implements TaskListenerWithState {
+	private View v;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.a_index);
-		IntentFilter mFilter = new IntentFilter();
-        mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(receiverNetWork, mFilter);
-        startIndex();
+		
+		if(!pUitl.getShowWelcomePage()){	//如果没有向导过
+			gotoNavigate();
+		}else{//已经向导过了
+			setContentView(R.layout.a_index);
+			v = findViewById(R.id.ll_view);
+			IntentFilter mFilter = new IntentFilter();
+			mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+			registerReceiver(receiverNetWork, mFilter);
+			UserCenterRequest.getInstance().requestUnLoginBSServer(this, this);
+		}
 	}
 	
-	private void startIndex(){
-		if(pUitl.getShowWelcomePage()){//已经向导过
-			UserCenterRequest.getInstance().requestUnLoginBSServer(this, this);
-		}else{
-			gotoNavigate();
-		}
+	public void requestUnLogin(View v){
+		UserCenterRequest.getInstance().requestUnLoginBSServer(this, this);
 	}
 	
 	/**
 	 * 进入主界面
 	 */
 	private void gotoMain(){
+		
 		Intent i = new Intent();
 		i.setClass(IndexActivity.this, MainActivity.class);
 		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(i);
 		finish();
+//		  Animation fadeOutAnimation = AnimationUtils.loadAnimation(mActivity, R.anim.push_top_out2);
+//		  v.setAnimation(fadeOutAnimation);
+//		  fadeOutAnimation.setAnimationListener(new AnimationListener() {
+//			@Override
+//			public void onAnimationStart(Animation arg0) {
+//			}
+//			
+//			@Override
+//			public void onAnimationRepeat(Animation arg0) {
+//			}
+//			@Override
+//			public void onAnimationEnd(Animation arg0) {
+//				Intent i = new Intent();
+//				i.setClass(IndexActivity.this, MainActivity.class);
+//				i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//				startActivity(i);
+//				finish();
+//			}
+//		});
+//		  v.startAnimation(fadeOutAnimation);
 	}
 	/**
 	 * 进入使用向导
@@ -84,11 +113,6 @@ public class IndexActivity extends BaseActivity implements TaskListenerWithState
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				SystemConfig.BS_SERVER = body.optString("bserver");
 				SystemConfig.FILE_SERVER = body.optString("fserver");
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
 				gotoMain();
 			}
 		}

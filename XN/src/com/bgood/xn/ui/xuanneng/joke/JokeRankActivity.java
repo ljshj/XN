@@ -28,6 +28,7 @@ import com.bgood.xn.R;
 import com.bgood.xn.adapter.JokeAdapter;
 import com.bgood.xn.adapter.KBaseAdapter;
 import com.bgood.xn.bean.JokeBean;
+import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.bean.JokeBean.JokeActionType;
 import com.bgood.xn.bean.response.JokeResponse;
 import com.bgood.xn.network.BaseNetWork;
@@ -41,6 +42,7 @@ import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.ui.base.BaseShowDataActivity;
 import com.bgood.xn.ui.xuanneng.XuannengActivity;
 import com.bgood.xn.utils.ShareUtils;
+import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.dialog.BGDialog;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
@@ -315,6 +317,20 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 							}
 					}
 				break;
+			case 870005: //分享
+				if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+					mActionJoke.share_count = String.valueOf(Integer.valueOf(mActionJoke.share_count)+1);
+					actionAdapter();
+				}
+				break;
+			case 870007:	//点赞
+				if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+					mActionJoke.like_count = String.valueOf(Integer.valueOf(mActionJoke.like_count)+1);
+					actionAdapter();
+				}else if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_HAS_ZAN){
+					BToast.show(mActivity, "你已经点赞了");
+				}
+				break;
 
 			default:
 				break;
@@ -372,8 +388,6 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 		case R.id.av_zan:	//赞
 			jBean = (JokeBean) v.getTag();
 			mActionJoke = jBean;
-			mActionJoke.like_count = String.valueOf(Integer.valueOf(mActionJoke.like_count)+1);
-			actionAdapter();
 			XuannengRequest.getInstance().requestXuanZan(this, mActivity, jBean.jokeid);
 			break;
 		case R.id.av_reply:	//评论

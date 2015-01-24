@@ -5,22 +5,19 @@ import java.io.File;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -28,14 +25,13 @@ import com.bgood.xn.R;
 import com.bgood.xn.bean.ProductBean;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpRequestInfo;
 import com.bgood.xn.network.http.HttpResponseInfo;
-import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.FileRequest;
 import com.bgood.xn.network.request.ProductRequest;
 import com.bgood.xn.system.BGApp;
-import com.bgood.xn.system.Const;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.view.BToast;
@@ -88,11 +84,30 @@ public class ProductAddActivity extends BaseActivity implements OnClickListener,
         m_photoImgV = (ImageView) findViewById(R.id.add_product_imgv_photo);
         m_photoImgV.setOnClickListener(this);
         m_productNameEt = (EditText) findViewById(R.id.add_product_et_name);
-        m_productPriceEt = (EditText) findViewById(R.id.add_product_et_price);
         m_recommendCb = (CheckBox) findViewById(R.id.add_product_cb_recommend);
         m_infoEt = (EditText) findViewById(R.id.add_product_et_info);
         m_doneBtn = (Button) findViewById(R.id.add_product_btn_done);
         m_doneBtn.setOnClickListener(this);
+        m_productPriceEt = (EditText) findViewById(R.id.add_product_et_price);
+        
+        m_productPriceEt.addTextChangedListener(new TextWatcher() 
+        {
+            public void afterTextChanged(Editable edt) 
+            {
+                String temp = edt.toString();
+                int posDot = temp.indexOf(".");
+                if (posDot <= 0) return;
+                if (temp.length() - posDot - 1 > 2)
+                {
+                    edt.delete(posDot + 3, posDot + 4);
+                }
+            }
+
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+        });
+        
     }
     
     /**

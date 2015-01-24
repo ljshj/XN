@@ -562,7 +562,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
             popupWindowCheckSearchType = new PopupWindow(view, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
             popupWindowCheckSearchType.setBackgroundDrawable(getResources().getDrawable(R.drawable.img_home_check_popup));
             popupWindowCheckSearchType.setOutsideTouchable(true);
-            popupWindowCheckSearchType.showAsDropDown(ll_home_search_check_type, 0, 10);
+            popupWindowCheckSearchType.showAsDropDown(ll_home_search_check_type, 0, 0);
             break;
 		  case R.id.home_ll_ican:
 	            search_type = 1;

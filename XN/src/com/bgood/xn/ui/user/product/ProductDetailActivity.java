@@ -1,5 +1,7 @@
 package com.bgood.xn.ui.user.product;
 
+import java.util.ArrayList;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -44,6 +46,7 @@ public class ProductDetailActivity extends BaseActivity implements OnClickListen
     private RelativeLayout m_lookCommentRl = null; // 查看评论信息
     private LinearLayout m_contactSellerLl = null; // 联系卖家
     private String productId;
+    private ArrayList<String> imgList = new ArrayList<String>(); //存储图片查看器的图片地址
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -71,6 +74,7 @@ public class ProductDetailActivity extends BaseActivity implements OnClickListen
         m_productInfoTv = (TextView) findViewById(R.id.product_detail_tv_product_info);
         m_lookCommentRl = (RelativeLayout) findViewById(R.id.product_detail_rl_look_comment);
         m_contactSellerLl = (LinearLayout) findViewById(R.id.product_detail_ll_contact_seller);
+        m_iconImgV.setOnClickListener(this);
         m_lookCommentRl.setOnClickListener(this);
         m_contactSellerLl.setOnClickListener(this);
     }
@@ -92,7 +96,10 @@ public class ProductDetailActivity extends BaseActivity implements OnClickListen
             case R.id.product_detail_ll_contact_seller:
             	BToast.show(mActivity, "即将上线，敬请期待");
                 break;
-            
+            //查看图片
+            case R.id.product_detail_imgv_icon:
+            	ImgUtils.imageBrower(0, imgList, mActivity);
+            	break;
             default:
                 break;
         }
@@ -100,7 +107,8 @@ public class ProductDetailActivity extends BaseActivity implements OnClickListen
     
     private void setData(final ProductBean productBean)
     {
-    	BGApp.getInstance().setImage(productBean.img, m_iconImgV);
+    	imgList.add(productBean.img);
+    	BGApp.getInstance().setImageSqure(productBean.img, m_iconImgV);
     	m_productNameTv.setText(productBean.product_name);
     	m_priceTv.setText(productBean.getPrice());
     	m_productInfoTv.setText(productBean.intro);

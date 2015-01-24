@@ -251,21 +251,21 @@ public class ChatHistoryFragment extends BaseFragment {
 			refresh();
 		}
 	}
-//
-//	@Override
-//	public void onResume() {
-//		super.onResume();
-//		if (!hidden && ! ((MessageActivity)getActivity()).isConflict) {
-//			refresh();
-//		}
-//	}
-//
-//	@Override
-//    public void onSaveInstanceState(Bundle outState) {
-//        if(((MessageActivity)getActivity()).isConflict)
-//            outState.putBoolean("isConflict", true);
-//        super.onSaveInstanceState(outState);
-//        
-//    }
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (!hidden && ! ((MessageActivity)getActivity()).isConflict) {
+			refresh();
+		}
+	}
+
+	@Override
+    public void onSaveInstanceState(Bundle outState) {
+        if(((MessageActivity)getActivity()).isConflict)
+            outState.putBoolean("isConflict", true);
+        super.onSaveInstanceState(outState);
+        
+    }
 
 }

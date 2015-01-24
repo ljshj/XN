@@ -2,8 +2,6 @@ package com.bgood.xn.ui.welcome;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
-import android.os.Handler;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -18,8 +16,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.bgood.xn.R;
-import com.bgood.xn.db.PreferenceUtil;
-import com.bgood.xn.ui.MainActivity;
 
 /**
  * 
@@ -127,9 +123,7 @@ public class NavigatePagerAdapter extends PagerAdapter {
             	left_view.setVisibility(View.GONE);  
             	right_view.setVisibility(View.GONE);  
             	mLoad.loadCommplet();
-            	
             }  
         });  
-          
     }  
 }

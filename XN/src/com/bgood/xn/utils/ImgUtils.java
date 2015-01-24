@@ -208,6 +208,21 @@ public class ImgUtils {
 		mActivity.startActivity(intent);
 	}
 	
+	/**
+	 * 打开图片查看器
+	 * 
+	 * @param position
+	 * @param urls2
+	 */
+	public static void imageBrower(int position, ArrayList<String> imgList,Activity mActivity) {
+		Intent intent = new Intent(mActivity, ImagePagerActivity.class);
+		// 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
+		intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, imgList);
+		intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
+		mActivity.startActivity(intent);
+	}
+	
+	
 	
 	/**
 	 * 

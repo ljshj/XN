@@ -395,10 +395,14 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				
 				BGApp.getInstance().setImage(friendBean.photo,iv);
 				
-				//Drawable avatar = getResources().getDrawable(R.drawable.default_avatar);
 				Drawable avatar = iv.getDrawable();
+				if(null==avatar){
+					avatar = getResources().getDrawable(R.drawable.default_avatar);
+				}
+				
 				avatar.setBounds(0, 0, referenceWidth, referenceHeight);
 				button.setCompoundDrawables(null, avatar, null, null);
+				
 				// demo群组成员的头像都用默认头像，需由开发者自己去设置头像
 				if (isInDeleteMode) {
 					// 如果是删除模式下，显示减人图标

@@ -196,10 +196,6 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
         {
             // 赞
             case R.id.av_zan:
-            	mJokeBean.like_count = String.valueOf(Integer.valueOf(mJokeBean.like_count)+1);
-            	
-            	avZan.setCount(mJokeBean.like_count);
-            	
             	XuannengRequest.getInstance().requestXuanZan(this, mActivity, mJokeBean.jokeid);
                 break;
             // 评论
@@ -214,8 +210,7 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
                 break;
             // 分享
             case R.id.av_share:
-            	mJokeBean.share_count = String.valueOf(Integer.valueOf(mJokeBean.share_count)+1);
-    			XuannengRequest.getInstance().requestXuanZan(this, mActivity, mJokeBean.jokeid);
+    			XuannengRequest.getInstance().requestXuanShare(this, mActivity, mJokeBean.jokeid);
     			share.setShareContent(mJokeBean.content, mJokeBean.imgs.size() > 0 ? mJokeBean.imgs.get(0).img:null);
                 break;
             default:
@@ -237,7 +232,20 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 					List<CommentBean> comments = response.comments;
 					setCommentData(comments);
 					break;
-
+				case 870005: //分享
+					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+						mJokeBean.share_count = String.valueOf(Integer.valueOf(mJokeBean.share_count)+1);
+		            	avShare.setCount(mJokeBean.like_count);
+					}
+					break;
+				case 870007:	//点赞
+					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+						mJokeBean.like_count = String.valueOf(Integer.valueOf(mJokeBean.like_count)+1);
+		            	avZan.setCount(mJokeBean.like_count);
+					}else if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_HAS_ZAN){
+						BToast.show(mActivity, "不要重复点赞");
+					}
+					break;
 				default:
 					break;
 				}

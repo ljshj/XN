@@ -17,6 +17,7 @@ import com.bgood.xn.system.SystemConfig;
 import com.bgood.xn.system.SystemConfig.ServerType;
 import com.bgood.xn.utils.ConfigUtil;
 import com.bgood.xn.utils.LogUtils;
+import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.LoadingProgress;
 
 public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo > {
@@ -122,7 +123,8 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 			LoadingProgress.getInstance().dismiss();
 		}
 		
-		if(null == response){
+		if(null == response || response.getmBaseNetWork() == null){
+			BToast.show(context, "服务器发生故障");
 			return;
 		}
 		
@@ -168,9 +170,9 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 			case RETURNCODE_CHAT_DISCONNECT:
 				Toast.makeText(context, "聊天连接已断开", Toast.LENGTH_SHORT).show();
 				break;
-			default:
-				Toast.makeText(context, "未知错误", Toast.LENGTH_SHORT).show();
-				break;
+//			default:
+//				Toast.makeText(context, "未知错误", Toast.LENGTH_SHORT).show();
+//				break;
 			}
 			break;
 		default:

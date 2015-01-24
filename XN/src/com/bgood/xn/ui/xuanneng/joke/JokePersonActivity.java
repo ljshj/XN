@@ -81,8 +81,6 @@ public class JokePersonActivity extends BaseActivity implements OnItemClickListe
 		case R.id.av_zan:	//赞
 			joke = (JokeBean) v.getTag();
 			mActionjoke = joke;
-			mActionjoke.like_count = String.valueOf(Integer.valueOf(mActionjoke.like_count)+1);
-			jokeAdapter.notifyDataSetChanged();
 			XuannengRequest.getInstance().requestXuanZan(this, mActivity, joke.jokeid);
 			break;
 		case R.id.av_reply:	//评论
@@ -121,7 +119,13 @@ public class JokePersonActivity extends BaseActivity implements OnItemClickListe
 					break;
 				case 870006:
 					break;
-				case 870007:
+				case 870007:	//点赞
+					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+						mActionjoke.like_count = String.valueOf(Integer.valueOf(mActionjoke.like_count)+1);
+						jokeAdapter.notifyDataSetChanged();
+					}else if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+						BToast.show(mActivity, "您已经点过赞！");
+					}
 					break;
 				case 870008:	//获取微墙列表
 					JokeResponse response  = JSON.parseObject(strJson, JokeResponse.class);

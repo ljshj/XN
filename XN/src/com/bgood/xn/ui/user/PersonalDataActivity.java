@@ -164,6 +164,10 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
      */
     private void setData(UserInfoBean userDTO)
     {
+    	if(null==userDTO){
+    		return;
+    	}
+    	
     	BGApp.getInstance().setImage(userDTO.photo, m_iconImgV);
         m_idTv.setText(userDTO.username);
         m_phoneTv.setText(userDTO.phonenumber);

@@ -24,7 +24,9 @@
 
                         <ImageView
                             android:id="@+id/product_detail_imgv_icon"
-                            style="@style/style_img_big" />
+                            style="@style/style_img_big"
+                            android:layout_height="400dp"
+                             />
 
                         <LinearLayout
                             android:layout_width="wrap_content"

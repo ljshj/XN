@@ -14,7 +14,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
@@ -87,7 +89,6 @@ public class ProductEditActivity extends BaseActivity implements OnClickListener
         m_photoImgV.setOnClickListener(this);
         
         m_productNameEt = (EditText) findViewById(R.id.product_edit_et_name);
-        m_productPriceEt = (EditText) findViewById(R.id.product_edit_et_price);
         m_recommendCb = (CheckBox) findViewById(R.id.product_edit_cb_recommend);
         m_infoEt = (EditText) findViewById(R.id.product_edit_et_info);
         findViewById(R.id.product_edit_btn_done).setOnClickListener(this);
@@ -99,6 +100,25 @@ public class ProductEditActivity extends BaseActivity implements OnClickListener
             	m_recommend = isChecked?1:0;
             }
         });
+        m_productPriceEt = (EditText) findViewById(R.id.product_edit_et_price);
+        m_productPriceEt.addTextChangedListener(new TextWatcher() 
+        {
+            public void afterTextChanged(Editable edt) 
+            {
+                String temp = edt.toString();
+                int posDot = temp.indexOf(".");
+                if (posDot <= 0) return;
+                if (temp.length() - posDot - 1 > 2)
+                {
+                    edt.delete(posDot + 3, posDot + 4);
+                }
+            }
+
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+        });
+        
     }
     
     

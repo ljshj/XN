@@ -85,8 +85,6 @@ public class WeiqiangPersonActivity extends BaseActivity implements OnItemClickL
 		mActionWeiqiang = wqb;
 		switch (v.getId()) {
 		case R.id.av_zan:	//赞
-			mActionWeiqiang.like_count = String.valueOf(Integer.valueOf(mActionWeiqiang.like_count)+1);
-			weiqiangAdapter.notifyDataSetChanged();
 			WeiqiangRequest.getInstance().requestWeiqiangZan(this, mActivity, wqb.weiboid);
 			break;
 		case R.id.av_reply:	//评论
@@ -109,11 +107,15 @@ public class WeiqiangPersonActivity extends BaseActivity implements OnItemClickL
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			String strJson = bNetWork.getStrJson();
-			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				switch(bNetWork.getMessageType()){
 				case 860001:	//获取微墙列表
+					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 					WeiqiangResponse response  = JSON.parseObject(strJson, WeiqiangResponse.class);
 					setWeiqiangData(response.items);
+					}else{
+						m_weiqiang_listview.stopRefresh();
+						m_weiqiang_listview.stopLoadMore();
+					}
 					break;
 				case 860002:	//获取微墙详细内容
 					break;
@@ -128,38 +130,16 @@ public class WeiqiangPersonActivity extends BaseActivity implements OnItemClickL
 				case 860007:
 					break;
 				case 860008:	//赞微墙
+					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+						mActionWeiqiang.like_count = String.valueOf(Integer.valueOf(mActionWeiqiang.like_count)+1);
+						weiqiangAdapter.notifyDataSetChanged();
+					}else if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_HAS_ZAN){
+						BToast.show(mActivity, "不要重复点赞");
+					}
 					break;
 				}
-				
-				}else{
-					switch(bNetWork.getMessageType()){
-					case 860001:
-						m_weiqiang_listview.stopRefresh();
-						m_weiqiang_listview.stopLoadMore();
-						break;
-					case 860002:
-						break;
-					case 860003:
-						break;
-					case 860004:
-						break;
-					case 860005:
-						break;
-					case 860006:
-						break;
-					case 860007:
-						break;
-					case 860008:
-						break;
-					}
-				}
-			}else{
-				m_weiqiang_listview.stopRefresh();
-				m_weiqiang_listview.stopLoadMore();
 			}
 		}
-	
-	
 	private void setWeiqiangData(List<WeiQiangBean> weiqiangs) {
 		if(isRefresh){
 			mRefreshTime = ToolUtils.getNowTime();

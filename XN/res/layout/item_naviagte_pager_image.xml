@@ -48,7 +48,7 @@
 	        android:layout_gravity="center_horizontal|bottom"
 	        android:contentDescription="@null"
 	        android:background="@drawable/touch_drawable"
-	        android:layout_marginBottom="70dp"
+	        android:layout_marginBottom="50dp"
 	        android:visibility="gone"
          />
 

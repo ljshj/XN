@@ -119,7 +119,6 @@ public class BGApp extends Application {
 		.showImageOnLoading(R.drawable.icon_pic_user_loading)
 		.showImageForEmptyUri(R.drawable.icon_default) //
 		.showImageOnFail(R.drawable.icon_pic_user_error) //
-		
 		.cacheInMemory(true) //
 		.cacheOnDisk(true) //
 		.displayer(new RoundedBitmapDisplayer(10))

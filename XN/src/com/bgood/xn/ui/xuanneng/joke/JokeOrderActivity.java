@@ -95,8 +95,6 @@ public class JokeOrderActivity extends BaseShowDataActivity implements OnItemCli
 		case R.id.av_zan:	//赞
 			jBean = (JokeBean) v.getTag();
 			mActionJoke = jBean;
-			mActionJoke.like_count = String.valueOf(Integer.valueOf(mActionJoke.like_count)+1);
-			adapter.notifyDataSetChanged();
 			XuannengRequest.getInstance().requestXuanZan(this, mActivity, jBean.jokeid);
 			break;
 		case R.id.av_reply:	//评论
@@ -114,10 +112,8 @@ public class JokeOrderActivity extends BaseShowDataActivity implements OnItemCli
 		case R.id.av_share:	//分享
 			jBean = (JokeBean) v.getTag();
 			mActionJoke = jBean;
-			XuannengRequest.getInstance().requestXuanZan(this, mActivity, jBean.jokeid);
 			share.setShareContent(jBean.content, jBean.imgs.size() > 0 ? jBean.imgs.get(0).img:null);
-			mActionJoke.share_count = String.valueOf(Integer.valueOf(mActionJoke.share_count)+1);
-			adapter.notifyDataSetChanged();
+			XuannengRequest.getInstance().requestXuanShare(this, mActivity, jBean.jokeid);
 			break;
 		}
 	}
@@ -200,7 +196,20 @@ public class JokeOrderActivity extends BaseShowDataActivity implements OnItemCli
 							setDataAdapter(m_listXlv, adapter, listJoke, response.jokes, isRefreshAction);
 						}
 					break;
-
+				case 870005://分享
+					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+						mActionJoke.share_count = String.valueOf(Integer.valueOf(mActionJoke.share_count)+1);
+						adapter.notifyDataSetChanged();
+					}
+					break;
+				case 870007:	//点赞
+					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+						mActionJoke.like_count = String.valueOf(Integer.valueOf(mActionJoke.like_count)+1);
+						adapter.notifyDataSetChanged();
+					}else if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+						BToast.show(mActivity, "您已经点过赞！");
+					}
+					break;
 				default:
 					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 						BToast.show(mActivity, "操作成功");
