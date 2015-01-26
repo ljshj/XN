@@ -94,29 +94,39 @@ public class NavigateActivity extends BaseActivity implements TaskListenerWithSt
 		adapter = new NavigatePagerAdapter(this, ids,load);
 		viewpager.setAdapter(adapter);
 		
-		IntentFilter mFilter = new IntentFilter();
-        mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(receiverNetWork, mFilter);
+//		IntentFilter mFilter = new IntentFilter();
+//        mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+//        registerReceiver(receiverNetWork, mFilter);
 	}
 	
-	/**监听网络变化*/
-	public BroadcastReceiver receiverNetWork = new BroadcastReceiver(){
-		private ConnectivityManager connectivityManager;
-	    private NetworkInfo info;
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			//监听网络变化
-			if(intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION) && pUitl.getShowWelcomePage()){	
-				connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-				info = connectivityManager.getActiveNetworkInfo();
-				if (info != null && info.isAvailable()) {//重新请求一下
-					UserCenterRequest.getInstance().requestUnLoginBSServer(NavigateActivity.this, mActivity);
-				} else {
-					BToast.show(mActivity, "没有连接网络");
-				}
-			}
-		}
-	};
+//	/**监听网络变化*/
+//	public BroadcastReceiver receiverNetWork = new BroadcastReceiver(){
+//		private ConnectivityManager connectivityManager;
+//	    private NetworkInfo info;
+//		@Override
+//		public void onReceive(Context context, Intent intent) {
+//			//监听网络变化
+//			if(intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION) && pUitl.getShowWelcomePage()){	
+//				connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+//				info = connectivityManager.getActiveNetworkInfo();
+//				if (info != null && info.isAvailable()) {//重新请求一下
+//					UserCenterRequest.getInstance().requestUnLoginBSServer(NavigateActivity.this, mActivity);
+//				} else {
+//					BToast.show(mActivity, "没有连接网络");
+//				}
+//			}
+//		}
+//	};
+//	
+//	
+//	@Override
+//	protected void onDestroy() {
+//		super.onDestroy();
+//		try {
+//			unregisterReceiver(receiverNetWork);
+//		} catch (Exception e) {
+//		}
+//	}
 	
 	private ILoadCommpletListener load = new ILoadCommpletListener(){
 
@@ -135,11 +145,6 @@ public class NavigateActivity extends BaseActivity implements TaskListenerWithSt
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				SystemConfig.BS_SERVER = body.optString("bserver");
 				SystemConfig.FILE_SERVER = body.optString("fserver");
-				/*try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}*/
 				gotoMain();
 			}
 		}

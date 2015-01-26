@@ -27,6 +27,7 @@ public class ProductBean implements Serializable
 	public String intro;       // 商品介绍信息
 	public String date_time;    // 商品上架时间
 	public int brecom;		//是否推荐
+	public String userid;
 	
 	public String getPrice(){
 		return "¥"+price;

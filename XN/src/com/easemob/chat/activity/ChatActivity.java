@@ -5,7 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -50,9 +52,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.FriendBean;
+import com.bgood.xn.bean.FriendGroupBean;
 import com.bgood.xn.bean.GroupBean;
+import com.bgood.xn.bean.GroupMemberBean;
+import com.bgood.xn.network.BaseNetWork;
+import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.http.HttpRequestInfo;
+import com.bgood.xn.network.http.HttpResponseInfo;
+import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
+import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
+import com.bgood.xn.network.request.IMRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.system.Const;
 import com.bgood.xn.ui.message.CommunicateDetailActivity;
@@ -92,7 +104,7 @@ import com.easemob.util.VoiceRecorder;
  * @date:2014-12-26 下午2:02:21
  * @author:hg_liuzl@163.com
  */
-public class ChatActivity extends BaseActivity implements OnClickListener {
+public class ChatActivity extends BaseActivity implements OnClickListener,TaskListenerWithState {
 	
 	/**好友的实体类**/
 	public static final String KEY_FRIEND_BEAN = "key_friend_bean";
@@ -322,6 +334,12 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 			toChatUsername = getIntent().getStringExtra(Const.CHAT_HXGROUPID);
 			group =BGApp.getInstance().getGroupAndHxId().get(toChatUsername);
  			((TextView) findViewById(R.id.name)).setText(group.name);
+ 			
+ 			
+ 			
+ 			/**获取群成员*/
+ 			IMRequest.getInstance().requestGroupMembers(ChatActivity.this, this,group.roomid,false);
+ 			
 		}
 		conversation = EMChatManager.getInstance().getConversation(toChatUsername);
 		// 把此会话的未读数置为0
@@ -1447,4 +1465,38 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 		return toChatUsername;
 	}
 
+	@Override
+	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
+		if(info.getState() == HttpTaskState.STATE_OK){
+			BaseNetWork bNetWork = info.getmBaseNetWork();
+			String json = bNetWork.getStrJson();
+				switch (bNetWork.getMessageType()) {
+				case 850013: //获取群成员列表	
+						if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
+							FriendGroupBean fgb = JSON.parseObject(json,FriendGroupBean.class);
+							ArrayList<FriendBean> friends = new ArrayList<FriendBean>();
+							friends.addAll(fgb.items);
+							//每次同步一下数据
+							GroupMemberBean.deleteGroupMemberBean(dbHelper, group.roomid);
+							GroupMemberBean.storeGroupMemberBean(dbHelper, group.hxgroupid, group.roomid, friends);
+							
+							
+							//清除数据
+							Iterator<?> iter = BGApp.getInstance().getGroupMemberAndHxId().entrySet().iterator();
+							while (iter.hasNext()) {
+								Entry<?, ?> entry = (Entry<?, ?>) iter.next();
+								if(entry.getKey().equals(group.hxgroupid)){
+									iter.remove();
+									break;
+								}
+							}
+							
+//							List<FriendBean> storeFriend = BGApp.getInstance().getGroupMemberAndHxId().get(group.hxgroupid);
+//							storeFriend.addAll(friends);
+							BGApp.getInstance().getGroupMemberAndHxId().put(group.hxgroupid, friends);
+						}
+					break;
+				}
+			}
+		}
 }

@@ -1,8 +1,14 @@
 ﻿package com.bgood.xn.db;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.bgood.xn.system.BGApp;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 public class PreferenceUtil {
 	

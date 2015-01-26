@@ -51,6 +51,7 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.bgood.xn.R;
+import com.bgood.xn.widget.TitleBar;
 import com.easemob.chat.video.util.Utils;
 import com.easemob.util.EMLog;
 import com.easemob.util.PathUtil;
@@ -86,6 +87,10 @@ public class RecorderVideoActivity extends BaseActivity implements
 		// 选择支持半透明模式，在有surfaceview的activity中使用
 		getWindow().setFormat(PixelFormat.TRANSLUCENT);
 		setContentView(R.layout.recorder_activity);
+		
+		(new TitleBar(this)).initTitleBar("录制视频");
+		
+		
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		mWakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK,
 				CLASS_LABEL);

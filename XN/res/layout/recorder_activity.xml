@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <RelativeLayout
+<!--     <RelativeLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
@@ -20,7 +20,9 @@
             android:text="@string/recording_video"
             android:textColor="#ffffff"
             android:textSize="18sp" />
-    </RelativeLayout>
+    </RelativeLayout> -->
+
+ 	<include layout="@layout/title_bar"/>
 
     <RelativeLayout
         android:layout_width="fill_parent"

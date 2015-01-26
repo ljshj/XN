@@ -108,7 +108,7 @@ public class ForgetPasswordNewPassWordActivity extends BaseActivity implements T
 				if(isSuccess){
 					BToast.show(mActivity, "密码重置成功");
 					Intent intent = new Intent(this, LoginActivity.class);
-					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK); 
+					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(intent);
 					finish();
 				}else{

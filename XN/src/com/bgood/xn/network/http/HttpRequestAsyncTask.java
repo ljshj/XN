@@ -123,8 +123,7 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 			LoadingProgress.getInstance().dismiss();
 		}
 		
-		if(null == response || response.getmBaseNetWork() == null){
-			BToast.show(context, "服务器发生故障");
+		if(null == response){
 			return;
 		}
 		
@@ -138,7 +137,7 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 			Toast.makeText(context, "服务器发生故障", Toast.LENGTH_SHORT).show();
 			break;
 		case STATE_NO_NETWORK_CONNECT:
-			Toast.makeText(context, "没有网络，请检查您的网络连接", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "网络未连接", Toast.LENGTH_SHORT).show();
 			break;
 		case STATE_TIME_OUT:
 			Toast.makeText(context, "连接超时", Toast.LENGTH_SHORT).show();

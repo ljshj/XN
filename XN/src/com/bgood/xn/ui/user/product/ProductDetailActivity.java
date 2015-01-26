@@ -3,7 +3,6 @@ package com.bgood.xn.ui.user.product;
 import java.util.ArrayList;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,11 +23,9 @@ import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.ProductRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.utils.ImgUtils;
-import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * 
@@ -47,6 +44,7 @@ public class ProductDetailActivity extends BaseActivity implements OnClickListen
     private LinearLayout m_contactSellerLl = null; // 联系卖家
     private String productId;
     private ArrayList<String> imgList = new ArrayList<String>(); //存储图片查看器的图片地址
+    private ProductBean mProductBean;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -94,7 +92,7 @@ public class ProductDetailActivity extends BaseActivity implements OnClickListen
                 break;
             // 联系卖家
             case R.id.product_detail_ll_contact_seller:
-            	BToast.show(mActivity, "即将上线，敬请期待");
+            	NameCardActivity.lookNameCard(mActivity, mProductBean.userid);
                 break;
             //查看图片
             case R.id.product_detail_imgv_icon:
@@ -105,13 +103,13 @@ public class ProductDetailActivity extends BaseActivity implements OnClickListen
         }
     }
     
-    private void setData(final ProductBean productBean)
+    private void setData()
     {
-    	imgList.add(productBean.img);
-    	BGApp.getInstance().setImageSqure(productBean.img, m_iconImgV);
-    	m_productNameTv.setText(productBean.product_name);
-    	m_priceTv.setText(productBean.getPrice());
-    	m_productInfoTv.setText(productBean.intro);
+    	imgList.add(mProductBean.img);
+    	BGApp.getInstance().setImageSqure(mProductBean.img, m_iconImgV);
+    	m_productNameTv.setText(mProductBean.product_name);
+    	m_priceTv.setText(mProductBean.getPrice());
+    	m_productInfoTv.setText(mProductBean.intro);
     }
 
 	@Override
@@ -120,8 +118,8 @@ public class ProductDetailActivity extends BaseActivity implements OnClickListen
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			String strJson = bNetWork.getStrJson();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
-				ProductBean proBean = JSON.parseObject(strJson, ProductBean.class);
-				setData(proBean);
+				mProductBean = JSON.parseObject(strJson, ProductBean.class);
+				setData();
 			}
 		}
 	}

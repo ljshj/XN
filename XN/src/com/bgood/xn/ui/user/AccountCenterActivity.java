@@ -132,6 +132,7 @@ public class AccountCenterActivity extends BaseActivity implements OnClickListen
     private void quitLogin() {
     	pUitl.setAccountNumber(null);
     	pUitl.setAccountPassword(null);
+    	pUitl.setInitFriendAndGroup(false);
     	BGApp.isUserLogin = false;
     	BGApp.mLoginBean = null;
     	BGApp.mUserBean = null;

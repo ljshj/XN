@@ -11,13 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
         >
     
                 <LinearLayout
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
-                    android:layout_margin="10dp"
                     android:background="@drawable/img_search_bg"
                     android:orientation="horizontal" >
 
@@ -66,38 +68,27 @@
 			                    android:id="@+id/search_result_btn_search"
 			                    android:layout_width="50dp"
 			                    android:layout_height="match_parent"
-			                    android:layout_marginTop="10dp"
-			                    android:layout_marginBottom="10dp"
-			                    android:layout_marginRight="10dp"
 			                    android:background="@drawable/img_search_bg"
 			                    android:text="搜索" />
 
                      </LinearLayout>
     
-    	<LinearLayout 
-    	    android:id="@+id/ll_communcation"
-    	    android:layout_width="match_parent"
-    	    android:layout_height="wrap_content"
-    	    android:orientation="vertical"
-    	    >
-		        <TextView
-		            android:id="@+id/tv_comm_tags"
+    	  <TextView android:id="@+id/tv_comm_tags"
 		            android:layout_width="match_parent"
 		            android:layout_height="25dp"
 		            android:background="@color/search_result_yellow"
 		            android:ellipsize="end"
-		            android:layout_marginTop="10dp"
-		            android:layout_marginBottom="10dp"
 		            android:gravity="center"
 		            android:singleLine="true"
 		            android:text="系统已根据您的关键字找到以下结果并自动匹配加入相关交流大厅"
 		            android:textColor="#2f2f2f"
 		            android:textSize="12sp" />
-    	    
+    	  
 		        <RelativeLayout 
+    	   			android:id="@+id/rl_communcation"
 		            android:layout_width="match_parent"
 		            android:layout_height="wrap_content"
-		            android:padding="7dp"
+		            android:layout_margin="10dp"
 		            >
 		            
 			        <ImageView 
@@ -142,8 +133,6 @@
 			         
 			         
 		        </RelativeLayout>
-    	    
-    	</LinearLayout>
                      
                      
 

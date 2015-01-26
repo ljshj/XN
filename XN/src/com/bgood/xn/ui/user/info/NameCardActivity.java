@@ -196,14 +196,14 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 						runOnUiThread(new Runnable() {
 							public void run() {
 								progressDialog.dismiss();
-								BToast.show(mActivity, "请求添加好友成功");
+								BToast.show(mActivity, "添加好友信息已发送");
 							}
 						});
 					} catch (final Exception e) {
 						runOnUiThread(new Runnable() {
 							public void run() {
 								progressDialog.dismiss();
-								BToast.show(mActivity, "请求添加好友失败");
+								BToast.show(mActivity, "添加好友信息发送失败");
 							}
 						});
 					}

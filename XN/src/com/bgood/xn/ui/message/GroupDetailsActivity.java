@@ -41,7 +41,6 @@ import com.bgood.xn.bean.FriendBean;
 import com.bgood.xn.bean.FriendGroupBean;
 import com.bgood.xn.bean.GroupBean;
 import com.bgood.xn.bean.GroupMemberBean;
-import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
@@ -496,11 +495,16 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				case 850016: // 解散群聊
 						if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
 							progressDialog.dismiss();
+							if(null != GroupFragment.instance){
+								GroupFragment.instance.refresh();
+							}
+							if(null !=ChatActivity.activityInstance){
+								ChatActivity.activityInstance.finish();
+							}
 							BGApp.getInstance().deleteGroup(dbHelper, group);
 							setResult(RESULT_OK);
 							finish();
-							GroupFragment.instance.refresh();
-							ChatActivity.activityInstance.finish();
+
 						} else {
 							progressDialog.dismiss();
 							BToast.show(mActivity, "解散群聊失败");

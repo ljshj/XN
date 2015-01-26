@@ -35,7 +35,7 @@ import com.bgood.xn.view.BToast;
  * @author:hg_liuzl@163.com
  */
 public class IndexActivity extends BaseActivity implements TaskListenerWithState {
-	private View v;
+//	private View v;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,10 +44,10 @@ public class IndexActivity extends BaseActivity implements TaskListenerWithState
 			gotoNavigate();
 		}else{//已经向导过了
 			setContentView(R.layout.a_index);
-			v = findViewById(R.id.ll_view);
-			IntentFilter mFilter = new IntentFilter();
-			mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-			registerReceiver(receiverNetWork, mFilter);
+//			v = findViewById(R.id.ll_view);
+//			IntentFilter mFilter = new IntentFilter();
+//			mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+//			registerReceiver(receiverNetWork, mFilter);
 			UserCenterRequest.getInstance().requestUnLoginBSServer(this, this);
 		}
 	}
@@ -98,12 +98,15 @@ public class IndexActivity extends BaseActivity implements TaskListenerWithState
 	}
 	
 	
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		unregisterReceiver(receiverNetWork);
-	}
-	
+//	@Override
+//	protected void onDestroy() {
+//		super.onDestroy();
+//		try {
+//			unregisterReceiver(receiverNetWork);
+//		} catch (Exception e) {
+//		}
+//		
+//	}
 
 	@Override
 	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
@@ -118,22 +121,22 @@ public class IndexActivity extends BaseActivity implements TaskListenerWithState
 		}
 	}
 	
-	/**监听网络变化*/
-	public BroadcastReceiver receiverNetWork = new BroadcastReceiver(){
-		private ConnectivityManager connectivityManager;
-	    private NetworkInfo info;
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			//监听网络变化
-			if(intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION) && pUitl.getShowWelcomePage()){	
-				connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-				info = connectivityManager.getActiveNetworkInfo();
-				if (info != null && info.isAvailable()) {//重新请求一下
-					UserCenterRequest.getInstance().requestUnLoginBSServer(IndexActivity.this, mActivity);
-				} else {
-					BToast.show(mActivity, "没有连接网络");
-				}
-			}
-		}
-	};
+//	/**监听网络变化*/
+//	public BroadcastReceiver receiverNetWork = new BroadcastReceiver(){
+//		private ConnectivityManager connectivityManager;
+//	    private NetworkInfo info;
+//		@Override
+//		public void onReceive(Context context, Intent intent) {
+//			//监听网络变化
+//			if(intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION) && pUitl.getShowWelcomePage()){	
+//				connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+//				info = connectivityManager.getActiveNetworkInfo();
+//				if (info != null && info.isAvailable()) {//重新请求一下
+//					UserCenterRequest.getInstance().requestUnLoginBSServer(IndexActivity.this, mActivity);
+//				} else {
+//					BToast.show(mActivity, "没有连接网络");
+//				}
+//			}
+//		}
+//	};
 }

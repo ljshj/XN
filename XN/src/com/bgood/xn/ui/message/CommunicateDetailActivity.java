@@ -52,6 +52,7 @@ import com.bgood.xn.network.request.IMRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.system.Const;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.ui.message.fragment.CommunicateFragment;
 import com.bgood.xn.ui.message.fragment.GroupFragment;
 import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.view.BToast;
@@ -413,15 +414,16 @@ public class CommunicateDetailActivity extends BaseActivity implements OnClickLi
 				case 850016: // 解散群聊
 						if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
 							progressDialog.dismiss();
-							BGApp.getInstance().deleteGroup(dbHelper, group);
-							setResult(RESULT_OK);
-							finish();
-							if(null!=GroupFragment.instance){
-								GroupFragment.instance.refresh();
+							if(null!=CommunicateFragment.instance){
+								CommunicateFragment.instance.refresh();
 							}
 							if(null!=ChatActivity.activityInstance){
 								ChatActivity.activityInstance.finish();
 							}
+							BGApp.getInstance().deleteGroup(dbHelper, group);
+							
+							setResult(RESULT_OK);
+							finish();
 							
 						} else {
 							progressDialog.dismiss();
