@@ -90,7 +90,6 @@ public class CommunicateDetailActivity extends BaseActivity implements OnClickLi
 	private int referenceHeight;
 	private ProgressDialog progressDialog;
 	private List<FriendBean> friends = new ArrayList<FriendBean>();
-	
 	/**添加群成员*/
 	private List<FriendBean> addFriends = new ArrayList<FriendBean>();
 
@@ -111,6 +110,7 @@ public class CommunicateDetailActivity extends BaseActivity implements OnClickLi
 		(new TitleBar(mActivity)).initTitleBar("交流厅详情");
 		hxgroupId = getIntent().getStringExtra(Const.CHAT_HXGROUPID);
 		group = BGApp.getInstance().getGroupAndHxId().get(hxgroupId);
+		initView();
 		/**获取群成员*/
 		IMRequest.getInstance().requestGroupMembers(CommunicateDetailActivity.this, this,group.roomid,true);
 	}
@@ -401,7 +401,8 @@ public class CommunicateDetailActivity extends BaseActivity implements OnClickLi
 						if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
 							FriendGroupBean fgb = JSON.parseObject(json,FriendGroupBean.class);
 							friends.addAll(fgb.items);
-							initView();
+							adapter.notifyDataSetChanged();
+							//initView();
 							//每次同步一下数据
 							GroupMemberBean.deleteGroupMemberBean(dbHelper, group.roomid);
 							GroupMemberBean.storeGroupMemberBean(dbHelper, group.hxgroupid, group.roomid, friends);

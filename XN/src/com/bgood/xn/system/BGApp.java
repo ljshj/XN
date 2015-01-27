@@ -122,13 +122,14 @@ public class BGApp extends Application {
 		.cacheInMemory(true) //
 		.cacheOnDisk(true) //
 		.displayer(new RoundedBitmapDisplayer(10))
+		.resetViewBeforeLoading(true)
 		.build();//
 		
 		
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration//
 		.Builder(getApplicationContext())//
 		.diskCacheFileCount(1000)
-		.diskCacheSize(50*1024*1024)
+		.diskCacheSize(100*1024*1024)
 		.build();//
 		ImageLoader.getInstance().init(config);
 	}

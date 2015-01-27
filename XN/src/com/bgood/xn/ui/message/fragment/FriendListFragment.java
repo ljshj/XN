@@ -57,6 +57,7 @@ import com.bgood.xn.network.request.IMRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseFragment;
 import com.bgood.xn.ui.message.MessageActivity;
+import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.view.BToast;
 import com.easemob.chat.Constant;
 import com.easemob.chat.EMChatManager;
@@ -121,7 +122,9 @@ public class FriendListFragment extends BaseFragment implements TaskListenerWith
 					startActivity(new Intent(getActivity(), NewFriendsMsgActivity.class));
 				}else {
 					// demo中直接进入聊天页面，实际一般是进入用户详情页
-					startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", adapter.getItem(position).userid));
+					//startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", adapter.getItem(position).userid));
+					NameCardActivity.lookNameCard(mActivity, adapter.getItem(position).userid);
+					
 				}
 			}
 		});

@@ -404,6 +404,7 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 			break;
 		case R.id.av_share:	//分享
 			jBean = (JokeBean) v.getTag();
+			mActionJoke = jBean;
 			share.setShareContent(jBean.content, jBean.imgs.size() > 0 ? jBean.imgs.get(0).img:null);
 			actionAdapter();
 			XuannengRequest.getInstance().requestXuanShare(this, this, jBean.jokeid);

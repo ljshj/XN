@@ -370,6 +370,7 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
 				String status = object.optString("success");
 				if(status.equalsIgnoreCase("true")){
 					mUserBean.photo = object.optString("smallurl");
+					//mUserBean.photo = object.optString("url");
 					BGApp.mUserBean = mUserBean;
 					BGApp.getInstance().setImage(mUserBean.photo, m_iconImgV);
 					UserCenterRequest.getInstance().requestUpdatePerson(this, mActivity, "photo", mUserBean.photo);

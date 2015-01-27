@@ -29,8 +29,7 @@ import com.bgood.xn.widget.TitleBar;
  */
 public class RegisterDoneActivity extends BaseActivity implements TaskListenerWithState
 {
-	private EditText m_passwordEt = null; // 密码
-	private EditText m_confirmPasswordEt = null; // 确认密码
+	private EditText editNick,m_passwordEt,m_confirmPasswordEt = null; // 确认密码
 	private String newPassword = "";
 	private String m_phone;
 	private String userID;
@@ -40,7 +39,7 @@ public class RegisterDoneActivity extends BaseActivity implements TaskListenerWi
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_register_done);
-		(new TitleBar(mActivity)).initTitleBar("请输入密码");
+		(new TitleBar(mActivity)).initTitleBar("账号设置");
 		findView();
 	}
 
@@ -54,8 +53,9 @@ public class RegisterDoneActivity extends BaseActivity implements TaskListenerWi
 		if (bundle != null)
 		{
 		    m_phone = bundle.getString("phone");
-			userID = bundle.getString("userID");
+			//userID = bundle.getString("userID");
 		}
+		editNick = (EditText) findViewById(R.id.register_done_et_nick);
 		m_passwordEt = (EditText) findViewById(R.id.register_done_et_password);
 		m_confirmPasswordEt = (EditText) findViewById(R.id.register_done_et_confirm_password);
 		findViewById(R.id.register_done_btn_login).setOnClickListener(new OnClickListener()
@@ -77,21 +77,22 @@ public class RegisterDoneActivity extends BaseActivity implements TaskListenerWi
         // 用户手机号码查询
          newPassword = m_passwordEt.getText().toString().trim();
          String confirmPassword = m_confirmPasswordEt.getText().toString().trim();
-        if (TextUtils.isEmpty(newPassword))
-        {
+         userID = editNick.getText().toString().trim();		//临机用userID代替userNick
+         
+         if (TextUtils.isEmpty(userID)){
+             BToast.show(mActivity, "请输入您的昵称");
+             return;
+         }else if (TextUtils.isEmpty(newPassword)){
             BToast.show(mActivity, "请输入密码");
             return;
         }
-        else if (newPassword.length() < 6 || newPassword.length() > 10)
-        {
+        else if (newPassword.length() < 6 || newPassword.length() > 10){
             BToast.show(mActivity, "请输入6-10位字符密码");
             return;
-        }else if (!newPassword.equals(confirmPassword))
-        {
+        }else if (!newPassword.equals(confirmPassword)){
         	BToast.show(mActivity, "两次输入密码不一致");
             return;
-        }
-        else
+        }else
         {
           UserCenterRequest.getInstance().requestRegister(this, mActivity, m_phone,userID,newPassword);
         }
@@ -107,7 +108,7 @@ public class RegisterDoneActivity extends BaseActivity implements TaskListenerWi
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				boolean isSuccess = body.opt("success").equals("True");
 				if(isSuccess){
-					BToast.show(mActivity, "注册成功");
+					BToast.show(mActivity, "注册成功,请登录");
 					Intent intent = new Intent(this, LoginActivity.class);
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(intent);

@@ -90,32 +90,40 @@ public class RegisterCodeActivity extends BaseActivity implements TaskListenerWi
 	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
-
-			JSONObject body = bNetWork.getBody();
+//			JSONObject body = bNetWork.getBody();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
-				try {
-					boolean verfied = body.getBoolean("verfied");
-					JSONArray jsonArray = body.getJSONArray("ids");
-					String[] ids = null;
-					if (jsonArray != null)
-					{
-						ids = new String[jsonArray.length()];
-						for (int i = 0; i < jsonArray.length(); i++)
-						{
-							JSONObject jsonObject = jsonArray.getJSONObject(i);
-							ids[i] = jsonObject.getString("id");
-						}
-					}
-					
-					Intent intent = new Intent(RegisterCodeActivity.this, RegisterSelectNumberActivity.class);
-					intent.putExtra("ids", ids);
-					intent.putExtra("phone", m_phone);
-					startActivity(intent);
-					
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
+				Intent intent = new Intent(RegisterCodeActivity.this, RegisterDoneActivity.class);
+				intent.putExtra("phone", m_phone);
+				startActivity(intent);
+			}else if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_FAIL){
+				BToast.show(mActivity, "验证码错误");
 			}
+			
+			
+//			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+//				try {
+//					boolean verfied = body.getBoolean("verfied");
+//					JSONArray jsonArray = body.getJSONArray("ids");
+//					String[] ids = null;
+//					if (jsonArray != null)
+//					{
+//						ids = new String[jsonArray.length()];
+//						for (int i = 0; i < jsonArray.length(); i++)
+//						{
+//							JSONObject jsonObject = jsonArray.getJSONObject(i);
+//							ids[i] = jsonObject.getString("id");
+//						}
+//					}
+//					
+//					//Intent intent = new Intent(RegisterCodeActivity.this, RegisterSelectNumberActivity.class);
+//					Intent intent = new Intent(RegisterCodeActivity.this, RegisterDoneActivity.class);
+//					intent.putExtra("ids", ids);
+//					intent.putExtra("phone", m_phone);
+//					startActivity(intent);
+//					
+//				} catch (JSONException e) {
+//					e.printStackTrace();
+//				}
 		}
 	}
 	

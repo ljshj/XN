@@ -7,6 +7,29 @@
     
     <include layout="@layout/title_bar"/>
 
+        <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/img_user_center_bg"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/register_done_et_nick"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:singleLine="true"
+            android:gravity="center_vertical"
+            android:hint="请设置你的昵称">
+
+            <requestFocus />
+        </EditText>
+    </LinearLayout>
+    
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="50dp"
@@ -26,8 +49,6 @@
             android:password="true"
             android:hint="请输入您的登录密码"
             android:lines="1" >
-
-            <requestFocus />
         </EditText>
     </LinearLayout>
 
@@ -62,7 +83,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/login_btn_selector"
         android:gravity="center"
-        android:text="立即登录"
+        android:text="确定"
         android:textColor="@color/white"
         android:textSize="18sp" />
 

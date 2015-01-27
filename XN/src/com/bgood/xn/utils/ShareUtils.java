@@ -44,7 +44,8 @@ public class ShareUtils {
 	public static final String QQ_APP_KEY = "uQrjhyh93ifnPE0W";
 
 	public static final String LOGO_URL = "http://114.215.189.189/files/logo.png";
-	public static final String TARGET_URL = "http://www.umeng.com";
+	
+	public static final String TARGET_URL = "http://www.showneng.com/app-download.html";
 	
     public final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 

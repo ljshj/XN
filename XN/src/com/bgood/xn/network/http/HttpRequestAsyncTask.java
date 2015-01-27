@@ -149,30 +149,30 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 			if(type == ServerType.FileServer){
 				return;
 			}
-			BaseNetWork bNetWork = response.getmBaseNetWork();
-			switch (bNetWork.getReturnCode()) {
-			case RETURNCODE_OK:
-				LogUtils.i("-----------------"+bNetWork.getStrJson());
-				break;
-			case RETURNCODE_FAIL:
-				Toast.makeText(context, "操作失败", Toast.LENGTH_SHORT).show();
-				break;
-			case RETURNCODE_MESSAGETYPE_ERROR:
-				Toast.makeText(context, "消息类型错误", Toast.LENGTH_SHORT).show();
-				break;
-			case RETURNCODE_DATA_ERROR:
-				Toast.makeText(context, "数据格式错误", Toast.LENGTH_SHORT).show();
-				break;
-			case RETURNCODE_SESSION_OVER:
-				Toast.makeText(context, "会话过期", Toast.LENGTH_SHORT).show();
-				break;
-			case RETURNCODE_CHAT_DISCONNECT:
-				Toast.makeText(context, "聊天连接已断开", Toast.LENGTH_SHORT).show();
-				break;
+//			BaseNetWork bNetWork = response.getmBaseNetWork();
+//			switch (bNetWork.getReturnCode()) {
+//			case RETURNCODE_OK:
+//				LogUtils.i("-----------------"+bNetWork.getStrJson());
+//				break;
+//			case RETURNCODE_FAIL:
+//				Toast.makeText(context, "操作失败", Toast.LENGTH_SHORT).show();
+//				break;
+//			case RETURNCODE_MESSAGETYPE_ERROR:
+//				Toast.makeText(context, "消息类型错误", Toast.LENGTH_SHORT).show();
+//				break;
+//			case RETURNCODE_DATA_ERROR:
+//				Toast.makeText(context, "数据格式错误", Toast.LENGTH_SHORT).show();
+//				break;
+//			case RETURNCODE_SESSION_OVER:
+//				Toast.makeText(context, "会话过期", Toast.LENGTH_SHORT).show();
+//				break;
+//			case RETURNCODE_CHAT_DISCONNECT:
+//				Toast.makeText(context, "聊天连接已断开", Toast.LENGTH_SHORT).show();
+//				break;
 //			default:
 //				Toast.makeText(context, "未知错误", Toast.LENGTH_SHORT).show();
 //				break;
-			}
+//			}
 			break;
 		default:
 			Toast.makeText(context, "未知错误", Toast.LENGTH_SHORT).show();

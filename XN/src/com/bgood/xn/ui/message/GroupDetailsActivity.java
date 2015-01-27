@@ -112,6 +112,9 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		
 		hxgroupId = getIntent().getStringExtra(Const.CHAT_HXGROUPID);
 		group = BGApp.getInstance().getGroupAndHxId().get(hxgroupId);
+		
+		initView();
+		
 		/**获取群成员*/
 		IMRequest.getInstance().requestGroupMembers(GroupDetailsActivity.this, this,group.roomid,true);
 	}
@@ -480,7 +483,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 									}
 								}
 							sortMemberByType();
-							initView();
+							adapter.notifyDataSetChanged();;
 							//每次同步一下数据
 							GroupMemberBean.deleteGroupMemberBean(dbHelper, group.roomid);
 							GroupMemberBean.storeGroupMemberBean(dbHelper, group.hxgroupid, group.roomid, friends);

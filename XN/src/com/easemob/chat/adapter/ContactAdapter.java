@@ -74,6 +74,8 @@ public class ContactAdapter extends ArrayAdapter<FriendBean>  implements Section
 		return position == 0 ? 0 : 1;
 	}
 	
+	private ViewHolder viewHolder;
+	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (position == 0) {//搜索框
@@ -118,57 +120,73 @@ public class ContactAdapter extends ArrayAdapter<FriendBean>  implements Section
 		}else{
 			if(convertView == null){
 				convertView = layoutInflater.inflate(res, null);
+				viewHolder = new ViewHolder();
+				viewHolder.ivImg = (ImageView) convertView.findViewById(R.id.avatar);
+				viewHolder.tvunreadMsgView = (TextView) convertView.findViewById(R.id.unread_msg_number);
+				viewHolder.tvnameTextview = (TextView) convertView.findViewById(R.id.name);
+				viewHolder.tvHeader = (TextView) convertView.findViewById(R.id.header);
+				convertView.setTag(viewHolder);
+			}else{
+				viewHolder = (ViewHolder) convertView.getTag();
 			}
 			
-			final ImageView avatar = (ImageView) convertView.findViewById(R.id.avatar);
-			final TextView unreadMsgView = (TextView) convertView.findViewById(R.id.unread_msg_number);
-			final TextView nameTextview = (TextView) convertView.findViewById(R.id.name);
-			final TextView tvHeader = (TextView) convertView.findViewById(R.id.header);
+//			final ImageView avatar = (ImageView) convertView.findViewById(R.id.avatar);
+//			final TextView unreadMsgView = (TextView) convertView.findViewById(R.id.unread_msg_number);
+//			final TextView nameTextview = (TextView) convertView.findViewById(R.id.name);
+//			final TextView tvHeader = (TextView) convertView.findViewById(R.id.header);
 			FriendBean user = getItem(position);
 			if(user == null)
 			{
 				return null;
 			}
 			
-			BGApp.getInstance().setImage(user.photo,avatar);
+			BGApp.getInstance().setImage(user.photo,viewHolder.ivImg);
 			
 			//设置nick，demo里不涉及到完整user，用username代替nick显示
 			String username = user.getName();
 			String header = user.getHeader();
 			if (position == 0 || header != null && !header.equals(getItem(position - 1).getHeader())) {
 				if ("".equals(header)) {
-					tvHeader.setVisibility(View.GONE);
+					viewHolder.tvHeader.setVisibility(View.GONE);
 				} else {
-					tvHeader.setVisibility(View.VISIBLE);
-					tvHeader.setText(header);
+					viewHolder.tvHeader.setVisibility(View.VISIBLE);
+					viewHolder.tvHeader.setText(header);
 				}
 			} else {
-				tvHeader.setVisibility(View.GONE);
+				viewHolder.tvHeader.setVisibility(View.GONE);
 			}
 			//显示申请与通知item
 			if(username.equals(Constant.NEW_FRIENDS_USERNAME)){
-				nameTextview.setText(user.getNick());
-				avatar.setImageResource(R.drawable.new_friends_icon);
+				viewHolder.tvnameTextview.setText(user.getNick());
+				viewHolder.ivImg.setImageResource(R.drawable.new_friends_icon);
 				if(user.getUnreadMsgCount() > 0){
-					unreadMsgView.setVisibility(View.VISIBLE);
-					unreadMsgView.setText(user.getUnreadMsgCount()+"");
+					viewHolder.tvunreadMsgView.setVisibility(View.VISIBLE);
+					viewHolder.tvunreadMsgView.setText(user.getUnreadMsgCount()+"");
 				}else{
-					unreadMsgView.setVisibility(View.INVISIBLE);
+					viewHolder.tvunreadMsgView.setVisibility(View.INVISIBLE);
 				}
 			}else if(username.equals(Constant.GROUP_USERNAME)){
 				//群聊item
-				nameTextview.setText(user.getNick());
-				avatar.setImageResource(R.drawable.groups_icon);
+				viewHolder.tvnameTextview.setText(user.getNick());
+				viewHolder.ivImg.setImageResource(R.drawable.groups_icon);
 			}else{
-				nameTextview.setText(username);
-				if(unreadMsgView != null)
-					unreadMsgView.setVisibility(View.INVISIBLE);
-				avatar.setImageResource(R.drawable.default_avatar);
+				viewHolder.tvnameTextview.setText(username);
+				if(viewHolder.tvunreadMsgView != null)
+					viewHolder.tvunreadMsgView.setVisibility(View.INVISIBLE);
+			//	viewHolder.ivImg.setImageResource(R.drawable.default_avatar);	//简直就是大坑
 			}
 		}
 		
 		return convertView;
 	}
+	
+	static final class ViewHolder{
+		ImageView ivImg;
+		TextView tvunreadMsgView,tvnameTextview,tvHeader;
+	}
+	
+	
+	
 	
 	@Override
 	public FriendBean getItem(int position) {

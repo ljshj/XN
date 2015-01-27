@@ -288,6 +288,7 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 			break;
 		case R.id.av_share:	//分享
 			wqb = (WeiQiangBean) v.getTag();
+			mActionWeiqiang = wqb;
 			share.setShareContent(wqb.content, wqb.imgs.size() > 0 ? wqb.imgs.get(0).img:null);
 			WeiqiangRequest.getInstance().requestWeiqiangShare(this, this, wqb.weiboid);
 			break;

@@ -165,7 +165,6 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 		}else if(BGApp.getInstance().getFriendMapById().containsKey(userId)){
 			Intent intent = new Intent(mActivity,ChatActivity.class);
 			intent.putExtra("userId", userId);
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 			finish();
 		}

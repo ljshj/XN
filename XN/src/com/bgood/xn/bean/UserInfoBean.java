@@ -80,6 +80,7 @@ public class UserInfoBean implements Serializable {
 	public String ican;
 	public String ineed;
 	public String photo;
+	public String bigPhoto;
 	public String nickn;
 	public String signature;
 	public int sex;
