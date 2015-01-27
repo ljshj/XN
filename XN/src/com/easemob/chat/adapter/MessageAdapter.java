@@ -324,17 +324,25 @@ public class MessageAdapter extends BaseAdapter{
 				}
 			}
 			
+			/**如果是收到的消息，则展示对方的名字，否则不展示*/
 			if(message.direct == EMMessage.Direct.RECEIVE ){
 				// demo用username代替nick
 				if(null!=friendBean){
-					/**如果是收到的消息，则展示对方的名字，否则不展示*/
 					holder.tv_userId.setText(friendBean.name);
 					BGApp.getInstance().setImage(friendBean.photo,holder.head_iv);
-					
-				}else{
-					/**如果是收到的消息，则展示对方的名字，否则不展示*/
-					holder.tv_userId.setText(message.getFrom());
+				}else{//如果收到的用户对象为空，就只传一个messageID
+					//holder.tv_userId.setText(message.getFrom());
+					holder.tv_userId.setText("新成员");
 				}
+				
+				if(holder.tv_userId.getText().length() > 3){
+		        	holder.tv_userId.setTextSize(10f);
+		        }else{
+		        	holder.tv_userId.setTextSize(14f);
+		        }
+				
+				holder.tv_userId.setSingleLine(true);
+				
 			}else{
 				BGApp.getInstance().setImage(BGApp.mUserBean.photo,holder.head_iv);
 			}
