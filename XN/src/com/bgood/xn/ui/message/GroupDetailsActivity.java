@@ -51,6 +51,7 @@ import com.bgood.xn.network.request.IMRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.system.Const;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.ui.message.fragment.ChatHistoryFragment;
 import com.bgood.xn.ui.message.fragment.GroupFragment;
 import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.view.BToast;
@@ -483,6 +484,16 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 									}
 								}
 							sortMemberByType();
+							
+							// 如果自己是群主，显示解散按钮
+							if (type.equals("2")) {
+								exitBtn.setVisibility(View.GONE);
+								deleteBtn.setVisibility(View.VISIBLE);
+							}else{
+								exitBtn.setVisibility(View.VISIBLE);
+								deleteBtn.setVisibility(View.GONE);
+							}
+							
 							adapter.notifyDataSetChanged();;
 							//每次同步一下数据
 							GroupMemberBean.deleteGroupMemberBean(dbHelper, group.roomid);
@@ -501,6 +512,10 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 							if(null != GroupFragment.instance){
 								GroupFragment.instance.refresh();
 							}
+							if(null!=ChatHistoryFragment.instance){
+								ChatHistoryFragment.instance.refresh();
+							}
+							
 							if(null !=ChatActivity.activityInstance){
 								ChatActivity.activityInstance.finish();
 							}

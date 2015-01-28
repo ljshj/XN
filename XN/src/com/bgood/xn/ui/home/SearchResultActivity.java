@@ -58,6 +58,7 @@ import com.bgood.xn.system.BGApp;
 import com.bgood.xn.system.Const;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.message.fragment.CommunicateFragment;
+import com.bgood.xn.ui.user.account.LoginActivity;
 import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.ui.user.product.ProductDetailActivity;
 import com.bgood.xn.ui.weiqiang.WeiqiangDetailActivity;
@@ -616,12 +617,14 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 	 * 进入交流厅
 	 */
 	private void requestJoinCommuncation() {
-		judgeLogin();
-		
-		if(BGApp.getInstance().getGroupAndHxId().containsKey(mGroupBean.hxgroupid)){	//如果已经是这个交流厅的成员，则可以直接进入
-			inToChat();
-		}else{
-			IMRequest.getInstance().requestCommunicationMemberJoinOrInvite(SearchResultActivity.this, mActivity, new String[]{BGApp.mUserId}, mGroupBean.roomid);
+		if(!BGApp.isUserLogin){
+			LoginActivity.doLoginAction(this);
+		}else{		
+			if(BGApp.getInstance().getGroupAndHxId().containsKey(mGroupBean.hxgroupid)){	//如果已经是这个交流厅的成员，则可以直接进入
+				inToChat();
+			}else{
+				IMRequest.getInstance().requestCommunicationMemberJoinOrInvite(SearchResultActivity.this, mActivity, new String[]{BGApp.mUserId}, mGroupBean.roomid);
+			}
 		}
 	}
 	

@@ -43,6 +43,7 @@ import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.ui.user.account.LoginActivity;
 import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.utils.LogUtils;
 import com.bgood.xn.utils.ShareUtils;
@@ -149,6 +150,7 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 		
 		m_followFriendsAdapter = new WeiqiangAdapter(m_followFriendsList,mActivity,this);
 		m_followFriendsXLv.setAdapter(m_followFriendsAdapter);
+		m_followFriendsXLv.setFooterDividersEnabled(false);
 		
 		m_allFriendsAdapter = new WeiqiangAdapter(m_allFriendsList,mActivity,this);
 		m_allFriendsXLv.setAdapter(m_allFriendsAdapter);
@@ -231,7 +233,11 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 	@Override
 	public void onClick(View v)
 	{
-		judgeLogin();
+		
+		if(!BGApp.isUserLogin){
+			LoginActivity.doLoginAction(this);
+		}else{
+		
 		Intent intent = null;
 		WeiQiangBean wqb = null;
 		switch (v.getId())
@@ -292,7 +298,7 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 			share.setShareContent(wqb.content, wqb.imgs.size() > 0 ? wqb.imgs.get(0).img:null);
 			WeiqiangRequest.getInstance().requestWeiqiangShare(this, this, wqb.weiboid);
 			break;
-		}
+		}}
 	}
 	
 	
@@ -319,7 +325,9 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 		vSend.requestFocus();
 
 		final EditText etcontent = (EditText) vSend.findViewById(R.id.et_content);
-		vSend.findViewById(R.id.btn_send).setOnClickListener(new OnClickListener() {
+		Button btnSend = (Button) vSend.findViewById(R.id.btn_send);
+		btnSend.setText(type == WeiqiangActionType.TRANSPOND?"转发":"评论");
+		btnSend.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {

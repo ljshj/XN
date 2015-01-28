@@ -201,7 +201,7 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 			case 870003:
 				LoadingProgress.getInstance().dismiss();
 				if(bNetWork.getReturnCode() ==  ReturnCode.RETURNCODE_OK){
-					BToast.show(mActivity,"投稿成功");
+					BToast.show(mActivity,"投稿成功,待审核发布");
 					finish();
 				}else{
 					BToast.show(mActivity,"投稿失败");

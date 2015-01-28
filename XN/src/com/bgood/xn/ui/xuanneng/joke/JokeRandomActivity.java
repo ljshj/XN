@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 
@@ -28,7 +29,9 @@ import com.bgood.xn.network.http.HttpRequestInfo;
 import com.bgood.xn.network.http.HttpResponseInfo;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.XuannengRequest;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseShowDataActivity;
+import com.bgood.xn.ui.user.account.LoginActivity;
 import com.bgood.xn.ui.xuanneng.XuannengActivity;
 import com.bgood.xn.utils.ShareUtils;
 import com.bgood.xn.view.BToast;
@@ -90,8 +93,11 @@ public class JokeRandomActivity extends BaseShowDataActivity implements OnItemCl
 	@Override
 	public void onClick(View v)
 	{
+	
+		if(!BGApp.isUserLogin){
+			LoginActivity.doLoginAction(this);
+		}else{
 		
-		judgeLogin();
 		JokeBean jBean = null;
 		switch (v.getId())
 		{
@@ -120,7 +126,7 @@ public class JokeRandomActivity extends BaseShowDataActivity implements OnItemCl
 			break;
 		default:
 			break;
-		}
+		}}
 	}
 	
 	
@@ -142,7 +148,9 @@ public class JokeRandomActivity extends BaseShowDataActivity implements OnItemCl
 		vSend.requestFocus();
 
 		final EditText etcontent = (EditText) vSend.findViewById(R.id.et_content);
-		vSend.findViewById(R.id.btn_send).setOnClickListener(new OnClickListener() {
+		Button btnSend = (Button) vSend.findViewById(R.id.btn_send);
+		btnSend.setText(type == JokeActionType.TRANSPOND?"转发":"评论");
+		btnSend.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {

@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ import com.bgood.xn.bean.CommentBean;
 import com.bgood.xn.bean.ImageBean;
 import com.bgood.xn.bean.JokeBean;
 import com.bgood.xn.bean.JokeBean.JokeActionType;
+import com.bgood.xn.bean.WeiQiangBean.WeiqiangActionType;
 import com.bgood.xn.bean.response.CommentResponse;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
@@ -35,6 +37,7 @@ import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.ui.user.account.LoginActivity;
 import com.bgood.xn.ui.user.info.ShowNameCardListener;
 import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.utils.ShareUtils;
@@ -192,6 +195,10 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
     @Override
     public void onClick(View v)
     {
+    	if(!BGApp.isUserLogin){
+			LoginActivity.doLoginAction(this);
+		}else{
+    	
         switch (v.getId())
         {
             // 赞
@@ -215,6 +222,7 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
                 break;
             default:
                 break;
+        }
         }
     }
 
@@ -291,7 +299,9 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 		vSend.requestFocus();
 
 		final EditText etcontent = (EditText) vSend.findViewById(R.id.et_content);
-		vSend.findViewById(R.id.btn_send).setOnClickListener(new OnClickListener() {
+		Button btnSend = (Button) vSend.findViewById(R.id.btn_send);
+		btnSend.setText(type == JokeActionType.TRANSPOND?"转发":"评论");
+		btnSend.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {

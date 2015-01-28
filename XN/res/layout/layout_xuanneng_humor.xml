@@ -15,7 +15,9 @@
 
             <Button
                 android:id="@+id/return_btn"
-                style="@style/common_btn_back_style" />
+                style="@style/common_btn_back_style"
+                android:onClick="onBackPressed"
+                 />
 
              <Button
 	            android:id="@+id/joke_main_b_more_operate"

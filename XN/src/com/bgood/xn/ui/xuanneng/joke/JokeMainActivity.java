@@ -10,12 +10,14 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.PopupWindow;
-import android.widget.RadioGroup;
 import android.widget.PopupWindow.OnDismissListener;
+import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost;
 
 import com.bgood.xn.R;
+import com.bgood.xn.system.BGApp;
+import com.bgood.xn.ui.user.account.LoginActivity;
 
 /**
  * @todo:炫能主页
@@ -37,7 +39,6 @@ public class JokeMainActivity extends TabActivity implements OnCheckedChangeList
 		initViews();
 		joke_main_b_more_operate = (Button) findViewById(R.id.joke_main_b_more_operate);
 		joke_main_b_more_operate.setOnClickListener(this);
-		findViewById(R.id.return_btn).setOnClickListener(this);
 	}
 	/**
 	 * 初始化tabhost
@@ -84,13 +85,18 @@ public class JokeMainActivity extends TabActivity implements OnCheckedChangeList
 	@Override
 	public void onClick(View v)
 	{
+		if(!BGApp.isUserLogin){
+			LoginActivity.doLoginAction(this);
+		}else{
+		
 		switch (v.getId())
 		{
+		
 		case R.id.joke_main_b_more_operate:	//展开笑话
-			if (popupWindow_more != null && popupWindow_more.isShowing()){
-				dissmissPopupMore();
-			} else{
-				showPopupMore();
+				if (popupWindow_more != null && popupWindow_more.isShowing()){
+					dissmissPopupMore();
+				} else{
+					showPopupMore();
 			}
 			break;
 		case R.id.tv_joke_publish:	//投稿
@@ -103,10 +109,7 @@ public class JokeMainActivity extends TabActivity implements OnCheckedChangeList
 			Intent intent2 = new Intent(this, JokeMentionActivity.class);
 			startActivity(intent2);
 			break;
-		case R.id.return_btn:
-			onBackPressed();
-			break;
-		}
+		}}
 	}
 	
 	

@@ -155,6 +155,8 @@
 	                android:background="@drawable/login_btn_selector"
 	                android:text="确定添加"
 	                android:textColor="@color/white"
+	                android:visibility="gone"
+	                
 	                android:textSize="18sp" />
                 
             </LinearLayout>

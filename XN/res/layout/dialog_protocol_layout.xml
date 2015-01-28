@@ -29,15 +29,36 @@
 	        />
     </ScrollView>
        
-     <Button
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+         <Button
+        android:id="@+id/btn_dis_argee"
+        style="@style/bottom_menu_item_select"
+        android:textColor="@color/white"
+        android:background="@drawable/myself_info_log_off_btn_selector"
+         android:layout_margin="10dp"
+        android:text="不同意"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        />
+         
+          <Button
         android:id="@+id/btn_protocol"
         style="@style/bottom_menu_item_select"
         android:textColor="@color/white"
         android:background="@drawable/myself_info_cancel_selector"
          android:layout_margin="10dp"
         android:text="同意"
+         android:layout_width="0dp"
+        android:layout_weight="1"
         />
+        
+    </LinearLayout>
     
-    
+   
 
 </LinearLayout>

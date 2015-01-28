@@ -125,7 +125,7 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 			final FriendBean fb = BGApp.getInstance().getFriendMapById().get(username.substring(2));//去掉bg 得到用户id
 			
 			if(null == fb){
-				return null;
+				return convertView;
 			}
 			
 			BGApp.getInstance().setImage(fb.photo, holder.avatar);

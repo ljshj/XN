@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -38,6 +39,7 @@ import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.ui.user.account.LoginActivity;
 import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.ui.user.info.ShowNameCardListener;
 import com.bgood.xn.utils.ImgUtils;
@@ -137,6 +139,8 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		listview.addHeaderView(head_weiqiang_detail);
 		weiQiangCommentAdapter = new CommentAdapter(weiqiangComments,this);
 		listview.setAdapter(weiQiangCommentAdapter);
+		listview.setFooterDividersEnabled(false);
+		listview.setHeaderDividersEnabled(false);
 	}
 	
 	
@@ -192,31 +196,35 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
     @Override
     public void onClick(View v)
     {
-    	 Intent intent = null;
-        switch (v.getId())
-        {
-            // 赞
-            case R.id.av_zan:
-                zanWeiqiang();
-                break;
-            // 评论
-            case R.id.av_reply:
-            	type = WeiqiangActionType.RESPONSE;
-                createSendDialog("");
-                break;
-            // 转发
-            case R.id.av_transpont:
-            	type = WeiqiangActionType.TRANSPOND;
-            	createSendDialog("");
-                break;
-            // 分享
-            case R.id.av_share:
-    			share.setShareContent(weiqiangBean.content, weiqiangBean.imgs.size() > 0 ? weiqiangBean.imgs.get(0).img:null);
-    			WeiqiangRequest.getInstance().requestWeiqiangShare(this, mActivity, weiqiangBean.weiboid);
-                break;
-            default:
-                break;
-        }
+    	
+    	if(!BGApp.isUserLogin){
+			LoginActivity.doLoginAction(this);
+		}else{
+	        switch (v.getId())
+	        {
+	            // 赞
+	            case R.id.av_zan:
+	                zanWeiqiang();
+	                break;
+	            // 评论
+	            case R.id.av_reply:
+	            	type = WeiqiangActionType.RESPONSE;
+	                createSendDialog("");
+	                break;
+	            // 转发
+	            case R.id.av_transpont:
+	            	type = WeiqiangActionType.TRANSPOND;
+	            	createSendDialog("");
+	                break;
+	            // 分享
+	            case R.id.av_share:
+	    			share.setShareContent(weiqiangBean.content, weiqiangBean.imgs.size() > 0 ? weiqiangBean.imgs.get(0).img:null);
+	    			WeiqiangRequest.getInstance().requestWeiqiangShare(this, mActivity, weiqiangBean.weiboid);
+	                break;
+	            default:
+	                break;
+	        }
+       }
     }
     
     /**
@@ -301,7 +309,10 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		final EditText etcontent = (EditText) vSend.findViewById(R.id.et_content);
 		etcontent.setText(tag);
 		etcontent.setSelection(tag.length());
-		vSend.findViewById(R.id.btn_send).setOnClickListener(new OnClickListener() {
+
+		Button btnSend = (Button) vSend.findViewById(R.id.btn_send);
+		btnSend.setText(type == WeiqiangActionType.TRANSPOND?"转发":"评论");
+		btnSend.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {

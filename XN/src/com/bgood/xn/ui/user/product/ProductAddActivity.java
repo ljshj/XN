@@ -64,14 +64,22 @@ public class ProductAddActivity extends BaseActivity implements OnClickListener,
     private int m_recommend = 0; 	//
     private ProductBean m_ProductBean = null;
     private String img,img_thumb;
-    
+    private TitleBar mTitleBar;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_add_product);
         m_ProductBean = new ProductBean();
-        (new TitleBar(mActivity)).initTitleBar("添加产品");
+        mTitleBar = new TitleBar(mActivity);
+        mTitleBar.initAllBar("添加产品", "添加");
+        mTitleBar.rightBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				chenkInfo();
+			}
+		});
         findView();
       
     }
@@ -260,7 +268,7 @@ public class ProductAddActivity extends BaseActivity implements OnClickListener,
 				dialog.dismiss();
 				break;
 			case R.id.add_product_btn_done:
-				chenkInfo();
+//				chenkInfo();
 				break;
 			default:
 				break;

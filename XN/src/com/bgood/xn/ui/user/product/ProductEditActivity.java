@@ -69,14 +69,25 @@ public class ProductEditActivity extends BaseActivity implements OnClickListener
     private int m_recommend = 1;
     private ProductBean m_ProductBean = null;
     private String img,img_thumb;
-    
+    private TitleBar mTitleBar;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_product_edit);
         m_ProductBean = (ProductBean) getIntent().getSerializableExtra(ProductBean.KEY_PRODUCT_BEAN);
-        (new TitleBar(mActivity)).initTitleBar("编辑产品");
+       // (new TitleBar(mActivity)).initTitleBar("编辑产品");
+        
+        mTitleBar = new TitleBar(mActivity);
+        mTitleBar.initAllBar("编辑产品", "确定");
+        mTitleBar.rightBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				chenkInfo();
+			}
+		});
+        
         findView();
         setData();
     }

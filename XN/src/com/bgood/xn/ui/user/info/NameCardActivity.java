@@ -22,6 +22,7 @@ import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.ui.user.account.LoginActivity;
 import com.bgood.xn.ui.user.product.ShowcaseActivity;
 import com.bgood.xn.ui.weiqiang.WeiqiangPersonActivity;
 import com.bgood.xn.ui.xuanneng.XuanNengMainActivity;
@@ -118,6 +119,10 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 	@Override
 	public void onClick(View v)
 	{
+		
+		if(!BGApp.isUserLogin){
+			LoginActivity.doLoginAction(this);
+		}else{
 		Intent intent = null;
 		switch (v.getId()) {
 		 // 关注
@@ -130,6 +135,8 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 		case R.id.av_call_message:
 			doChat();
 			break;
+			
+			
 		case R.id.tv_xuanneng:
 			intent = new Intent(mActivity, XuanNengMainActivity.class);
 			intent.putExtra(UserInfoBean.KEY_USER_ID, userId);
@@ -148,7 +155,7 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 			break;
 		default:
 			break;
-		}
+		}}
 	}
 	
 	/**

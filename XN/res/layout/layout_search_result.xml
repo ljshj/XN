@@ -80,7 +80,7 @@
 		            android:ellipsize="end"
 		            android:gravity="center"
 		            android:singleLine="true"
-		            android:text="系统已根据您的关键字找到以下结果并自动匹配加入相关交流大厅"
+		            android:text="系统将根据您的搜索自动匹配交流厅"
 		            android:textColor="#2f2f2f"
 		            android:textSize="12sp" />
     	  

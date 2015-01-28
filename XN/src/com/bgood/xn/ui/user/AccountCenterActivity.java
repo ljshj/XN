@@ -133,11 +133,13 @@ public class AccountCenterActivity extends BaseActivity implements OnClickListen
     	pUitl.setAccountNumber(null);
     	pUitl.setAccountPassword(null);
     	pUitl.setInitFriendAndGroup(false);
+    	pUitl.setHasLogin(false);
     	BGApp.isUserLogin = false;
     	BGApp.mLoginBean = null;
     	BGApp.mUserBean = null;
     	BGApp.getInstance().logout(null);
     	Intent intent = new Intent(mActivity, LoginActivity.class);
+    	intent.putExtra(LoginActivity.FROM_KEY, LoginActivity.FROM_KEY_OTHER);
     	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
     	startActivity(intent);
     	finish();

@@ -24,6 +24,8 @@ public class BaseActivity extends FragmentActivity {
 	public static final int PAGE_SIZE_ADD = 20;
 	public PreferenceUtil pUitl;
 	public DBHelper dbHelper = null;
+	/**登录码**/
+	public static final int LOGIN_CODE = 100;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,24 +68,5 @@ public class BaseActivity extends FragmentActivity {
 		}
 		
 		im.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.SHOW_FORCED);
-	}
-	/**
-	 * 
-	 * @todo:判断用户是否登录了
-	 * @date:2014-10-29 上午9:36:15
-	 * @author:hg_liuzl@163.com
-	 * @params:
-	 */
-	public void judgeLogin(){
-		if(!BGApp.isUserLogin){
-			Intent intent = new Intent(mActivity, LoginActivity.class);
-			mActivity.startActivity(intent);
-			return;
-		}
-	}
-	
-	@Override
-	public void onResume() {
-		super.onResume();
 	}
 }

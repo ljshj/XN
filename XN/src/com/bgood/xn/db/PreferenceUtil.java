@@ -1,14 +1,8 @@
 ﻿package com.bgood.xn.db;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import com.bgood.xn.system.BGApp;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.text.TextUtils;
 
 public class PreferenceUtil {
 	
@@ -21,6 +15,16 @@ public class PreferenceUtil {
 	public PreferenceUtil(Context context, String file) {
 		sp = context.getSharedPreferences(file, Context.MODE_PRIVATE);
 		editor = sp.edit();
+	}
+	
+	/**设置是否已经登录*/
+	public void setHasLogin(boolean isLogin){
+		editor.putBoolean("isLogin", isLogin);
+		editor.commit();
+	}
+	
+	public boolean isLogin(){
+		return sp.getBoolean("isLogin", false);
 	}
 	
 	/**设置热词**/

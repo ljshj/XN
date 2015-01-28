@@ -18,6 +18,7 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -39,7 +40,9 @@ import com.bgood.xn.network.http.HttpResponseInfo;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.network.request.XuannengRequest;
+import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseShowDataActivity;
+import com.bgood.xn.ui.user.account.LoginActivity;
 import com.bgood.xn.ui.xuanneng.XuannengActivity;
 import com.bgood.xn.utils.ShareUtils;
 import com.bgood.xn.view.BToast;
@@ -380,8 +383,10 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 	@Override
 	public void onClick(View v)
 	{
+		if(!BGApp.isUserLogin){
+			LoginActivity.doLoginAction(this);
+		}else{
 		
-		judgeLogin();
 		JokeBean jBean = null;
 		switch (v.getId())
 		{
@@ -409,7 +414,7 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 			actionAdapter();
 			XuannengRequest.getInstance().requestXuanShare(this, this, jBean.jokeid);
 			break;
-		}
+		}}
 	}
 	
 	/**
@@ -452,7 +457,9 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 		vSend.requestFocus();
 
 		final EditText etcontent = (EditText) vSend.findViewById(R.id.et_content);
-		vSend.findViewById(R.id.btn_send).setOnClickListener(new OnClickListener() {
+		Button btnSend = (Button) vSend.findViewById(R.id.btn_send);
+		btnSend.setText(type == JokeActionType.TRANSPOND?"转发":"评论");
+		btnSend.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
