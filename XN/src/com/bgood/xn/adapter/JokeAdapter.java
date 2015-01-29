@@ -29,6 +29,14 @@ import com.bgood.xn.view.ActionView;
 public class JokeAdapter extends KBaseAdapter 
 {
 
+	/**是否是排行榜*/
+	private boolean isRank = false;	
+	
+	public JokeAdapter(List<?> mList, Activity mActivity,OnClickListener listener,boolean isRank) {
+		super(mList, mActivity, listener);
+		this.isRank = isRank;
+	}
+	
 	public JokeAdapter(List<?> mList, Activity mActivity,OnClickListener listener) {
 		super(mList, mActivity, listener);
 	}
@@ -46,7 +54,7 @@ public class JokeAdapter extends KBaseAdapter
 			holder.tvTime = (TextView) convertView.findViewById(R.id.tv_time);
 			holder.tvComments = (TextView) convertView.findViewById(R.id.tv_comments);
 			holder.gridView = (GridView) convertView.findViewById(R.id.gv_show_img);
-			
+			holder.tvRank = (TextView) convertView.findViewById(R.id.tv_rank);
 			
 			holder.llTransArea = (LinearLayout) convertView.findViewById(R.id.ll_old_area);
 			holder.tvOldAuthorName = (TextView) convertView.findViewById(R.id.tv_old_user);
@@ -76,6 +84,14 @@ public class JokeAdapter extends KBaseAdapter
 		
 		
 		holder.tvTime.setText(ToolUtils.getFormatDate(jokeBean.date_time));
+		
+		if(position < 3 && isRank){
+			holder.tvRank.setText(String.valueOf(position+1));
+			holder.tvRank.setVisibility(View.VISIBLE);
+		}else{
+			holder.tvRank.setVisibility(View.GONE);
+		}
+		
 		
 		if(!TextUtils.isEmpty(jokeBean.fromname)){	//如果转发人存在
 			holder.llTransArea.setVisibility(View.VISIBLE);
@@ -121,7 +137,7 @@ public class JokeAdapter extends KBaseAdapter
 		public TextView tvAuthorName;
 		public TextView tvTime;
 		public TextView tvComments;
-		
+		public TextView tvRank;
 		public LinearLayout llTransArea;
 		public TextView tvOldAuthorName;
 		public TextView tvContent;

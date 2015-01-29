@@ -12,12 +12,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.ImageAdapter;
@@ -29,12 +33,15 @@ import com.bgood.xn.network.http.HttpRequestInfo;
 import com.bgood.xn.network.http.HttpResponseInfo;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.FileRequest;
+import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.ui.user.account.RegisterActivity;
 import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.LoadingProgress;
+import com.bgood.xn.view.dialog.BGDialog;
 import com.bgood.xn.view.dialog.BottomDialog;
 import com.bgood.xn.widget.TitleBar;
 
@@ -73,6 +80,7 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
     private int uploadCount = 0;
     
     private JokeBean mJokeBean = null;
+    private TextView tvShowRule;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -90,6 +98,9 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 
 	private void initViews()
 	{
+		tvShowRule = (TextView) findViewById(R.id.tv_show_rule);
+		tvShowRule.setVisibility(View.VISIBLE);
+		tvShowRule.setOnClickListener(this);
 		gridview_images = (GridView) findViewById(R.id.gridview_images);
 		adapter = new ImageAdapter(bitmaps,this,this);
 		gridview_images.setAdapter(adapter);
@@ -264,10 +275,52 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 			files.remove(position);
 			adapter.notifyDataSetChanged();
 			break;
-
+		case R.id.tv_show_rule:
+			createProtocolDialog();
+			break;
 		default:
 			break;
 		}
+	}
+	/**
+	 * 
+	 * @todo:使用协议
+	 * @date:2015-1-24 上午10:47:52
+	 * @author:hg_liuzl@163.com
+	 * @params:
+	 */
+	private void createProtocolDialog() {
+		@SuppressWarnings("deprecation")
+		final BottomDialog dialog = new BottomDialog(mActivity,R.style.dialog_no_thing);
+		View vProtocol = inflater.inflate(R.layout.dialog_protocol_layout, null);
 		
+		TextView tvRuleTitle = (TextView) vProtocol.findViewById(R.id.tv_protocol_title);
+		tvRuleTitle.setText(getString(R.string.joke_rule_title));
+		
+		TextView tvRule = (TextView) vProtocol.findViewById(R.id.tv_protocol_content);
+		tvRule.setText(getString(R.string.joke_rule));
+		
+		Button btnKnow = (Button) vProtocol.findViewById(R.id.btn_protocol);
+		btnKnow.setText("我知道了");
+		btnKnow.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+		
+		Button btn =  (Button) vProtocol.findViewById(R.id.btn_dis_argee);
+		btn.setVisibility(View.GONE);
+		
+		dialog.setvChild(vProtocol);
+		dialog.show();
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if(keyCode == KeyEvent.KEYCODE_BACK){
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

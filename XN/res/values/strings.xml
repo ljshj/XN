@@ -53,6 +53,7 @@
     <!-- 首页 -->
     <string name="speech_text_begin">请开始说话&#8230;</string>
      <string name="search_result_comm_size">交流厅人数：%1$s人</string>
+     
     
     
     
@@ -109,5 +110,22 @@
 但是，如果您已经与深圳市邦固科技有限公司达成支持服务协议，深圳市邦固科技有限公司就支持服务的全部赔偿责任应以该协议条款为准。  \n\t\t
 本《协议》受中华人民共和国法律管辖。
 如果您对本《协议》有什么问题，请同深圳市邦固科技有限公司 联系，或写信给sz_banggu@qq.com。 \n \n</string>
+
+    <string name="joke_rule">
+		\t\t1.奖金分配方式:
+		\n\t\t\t\t日排行\n\t\t\t\t\t\t第一名 50元
+		\n\t\t\t\t周排行\n\t\t\t\t\t\t第一名 100元
+		\n\t\t\t\t月排行\n\t\t\t\t\t\t第一名  300元
+					  \n\t\t\t\t\t\t第二名  200元
+		\n\t\t\t\t年排行\n\t\t\t\t\t\t第一名  3000元
+		\n\t\t\t\t\t\t第二名  2000元
+		\n\t\t\t\t\t\t第三名 1000元
+		\n\t\t\t\t每周结算一次现金转帐给获奖者\n
+		\t\t2.采取积分制:按积分高低列出日排行、周排行、月排行、年排行的前三名\n
+		\t\t3.作品获得积分的计算方法:0.5分/点赞 、1分/评论、1分/转发、2分/分享！系统自动统计加分！
+        
+    </string>
+    
+    <string name="joke_rule_title"> 幽默秀有奖投稿规则</string>
 
 </resources>

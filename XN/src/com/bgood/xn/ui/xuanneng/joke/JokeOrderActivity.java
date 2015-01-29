@@ -61,8 +61,8 @@ public class JokeOrderActivity extends BaseShowDataActivity implements OnItemCli
 	{
 		super.onCreate(savedInstanceState);
 		share = new ShareUtils(mActivity);
-		setContentView(R.layout.home_layout_result_listview);
-		m_listXlv = (XListView) findViewById(R.id.xListView);
+		setContentView(R.layout.listview_space_bar);
+		m_listXlv = (XListView) findViewById(R.id.xlv_sapce);
 		m_listXlv.setPullLoadEnable(true);
 		m_listXlv.setPullRefreshEnable(true);
 		m_listXlv.setXListViewListener(this);

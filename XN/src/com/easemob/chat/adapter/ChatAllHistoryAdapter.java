@@ -19,6 +19,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ import com.bgood.xn.bean.GroupBean;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.utils.ImgUtils;
 import com.easemob.chat.Constant;
+import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContact;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMGroup;
@@ -101,6 +103,7 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 		
 		// 获取用户username或者群组groupid
 		String username = conversation.getUserName();
+		
 		List<EMGroup> groups = EMGroupManager.getInstance().getAllGroups();
 		boolean isGroup = false;
 		for (EMGroup group : groups) {
@@ -109,6 +112,7 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 				break;
 			}
 		}
+		
 		if (isGroup) {
 			
 			 GroupBean group = BGApp.getInstance().getGroupAndHxId().get(username);//这里获取到的是环信id

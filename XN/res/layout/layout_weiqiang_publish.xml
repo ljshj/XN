@@ -16,9 +16,19 @@
             android:orientation="vertical"
             android:padding="10dp" >
 
+            <TextView
+                android:id="@+id/tv_show_rule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/text_common"
+                android:text="点击查看有奖投稿规则"
+                android:textColor="@color/orange"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"
+                />
+            
             <include layout="@layout/layout_common_publish" />
-
-           
+            
             <Button
                 android:id="@+id/weiqiang_publish_submit"
                 android:layout_width="match_parent"

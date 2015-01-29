@@ -21,6 +21,12 @@ public class BGDialog extends Dialog {
     private boolean isAnimation = true;
     private int animationStyle = R.style.dialog_bottom;
     
+    public BGDialog(Context context,int theme) {
+    	  super(context,theme);
+          this.windowDialogWidth = LayoutParams.MATCH_PARENT;
+          this.windowDialogHeight = LayoutParams.MATCH_PARENT;
+    }
+    
     public BGDialog(Context context,int windowDialogWidth,int windowDialogHeight) {
         this(context,R.style.myDialogTheme,windowDialogWidth,windowDialogHeight);
     }
@@ -77,8 +83,23 @@ public class BGDialog extends Dialog {
             params.width = LayoutParams.MATCH_PARENT;
             params.height = LayoutParams.WRAP_CONTENT;
             params.gravity = Gravity.BOTTOM;
+            params.dimAmount = 0f;
             getWindow().setAttributes(params);
             //getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);  
         show();
     }
+    
+//    public void showDialog(View view,int gravity){
+//        setContentView(view);
+//        Window window = getWindow(); //得到对话框
+//        if(isAnimation) window.setWindowAnimations(animationStyle); 
+//        
+//            WindowManager.LayoutParams params = getWindow().getAttributes();
+//            params.width = LayoutParams.MATCH_PARENT;
+//            params.height = LayoutParams.MATCH_PARENT;
+//            params.gravity = gravity;
+//            getWindow().setAttributes(params);
+//            //getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);  
+//        show();
+//    }
 }

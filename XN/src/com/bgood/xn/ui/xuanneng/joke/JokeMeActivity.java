@@ -88,16 +88,16 @@ public class JokeMeActivity extends BaseActivity implements OnClickListener, OnI
 		//设置ViewPager的页面翻滚监听
 		mTabPager.setOnPageChangeListener(new myOnPageChangeListener());
 		
-		View view1 = inflater.inflate(R.layout.home_layout_result_listview, null);
-		m_VerifyXLv = (XListView) view1.findViewById(R.id.xListView);
+		View view1 = inflater.inflate(R.layout.listview_space_bar, null);
+		m_VerifyXLv = (XListView) view1.findViewById(R.id.xlv_sapce);
 		m_VerifyXLv.setPullLoadEnable(true);
 		m_VerifyXLv.setPullRefreshEnable(true);
 		m_VerifyXLv.setXListViewListener(this);
 		m_VerifyAdapter = new JokeAdapter(m_VerifyList, mActivity,this);
 		m_VerifyXLv.setAdapter(m_VerifyAdapter);
 		
-		View view2 = inflater.inflate(R.layout.home_layout_result_listview, null);
-		m_UnVerifyXLv = (XListView) view2.findViewById(R.id.xListView);
+		View view2 = inflater.inflate(R.layout.listview_space_bar, null);
+		m_UnVerifyXLv = (XListView) view2.findViewById(R.id.xlv_sapce);
 		m_UnVerifyXLv.setPullLoadEnable(true);
 		m_UnVerifyXLv.setPullRefreshEnable(true);
 		m_UnVerifyXLv.setXListViewListener(this);

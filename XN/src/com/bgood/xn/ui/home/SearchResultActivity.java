@@ -183,24 +183,24 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		//加载布局
 		LayoutInflater inflater = LayoutInflater.from(this);
 
-		View view1 = inflater.inflate(R.layout.home_layout_result_listview, null);
-		m_memberXLv = (XListView) view1.findViewById(R.id.xListView);
+		View view1 = inflater.inflate(R.layout.listview_bar, null);
+		m_memberXLv = (XListView) view1.findViewById(R.id.xlv_spaceless);
 		m_memberXLv.setPullLoadEnable(true);
 		m_memberXLv.setPullRefreshEnable(false);
 		m_memberXLv.setXListViewListener(this);
 		m_memberAdapter = new ResultMemberAdapter(m_memberList, mActivity);
 		m_memberXLv.setAdapter(m_memberAdapter);
 		
-		View view2 = inflater.inflate(R.layout.home_layout_result_listview, null);
-		m_weiQiangXLv = (XListView) view2.findViewById(R.id.xListView);
+		View view2 = inflater.inflate(R.layout.listview_bar, null);
+		m_weiQiangXLv = (XListView) view2.findViewById(R.id.xlv_spaceless);
 		m_weiQiangXLv.setPullLoadEnable(true);
 		m_weiQiangXLv.setPullRefreshEnable(false);
 		m_weiQiangXLv.setXListViewListener(this);
 		m_weiqiangAdapter = new ResultWeiQiangAdapter(m_weiQiangList, mActivity);
 		m_weiQiangXLv.setAdapter(m_weiqiangAdapter);
 		
-		View view3 = inflater.inflate(R.layout.home_layout_result_listview, null);
-		m_showcaseXLv = (XListView) view3.findViewById(R.id.xListView);
+		View view3 = inflater.inflate(R.layout.listview_bar, null);
+		m_showcaseXLv = (XListView) view3.findViewById(R.id.xlv_spaceless);
 		m_showcaseXLv.setPullLoadEnable(true);
 		m_showcaseXLv.setPullRefreshEnable(false);
 		m_showcaseXLv.setXListViewListener(this);

@@ -116,40 +116,40 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 		radio_group = (RadioGroup) findViewById(R.id.radio_group);
 		radio_group.setOnCheckedChangeListener(mOnCheckedChangeListener);
 
-		View view1 = inflater.inflate(R.layout.home_layout_result_listview, null);
-		mXLDay = (XListView) view1.findViewById(R.id.xListView);
+		View view1 = inflater.inflate(R.layout.listview_space_bar, null);
+		mXLDay = (XListView) view1.findViewById(R.id.xlv_sapce);
 		mXLDay.setPullLoadEnable(true);
 		mXLDay.setPullRefreshEnable(true);
 		mXLDay.setXListViewListener(this);
 		mXLDay.setOnItemClickListener(this);
-		adapterDay = new JokeAdapter(listDay, mActivity,this);
+		adapterDay = new JokeAdapter(listDay, mActivity,this,true);
 		mXLDay.setAdapter(adapterDay);
 		
-		View view2 = inflater.inflate(R.layout.home_layout_result_listview, null);
-		mXLWeek = (XListView) view2.findViewById(R.id.xListView);
+		View view2 = inflater.inflate(R.layout.listview_space_bar, null);
+		mXLWeek = (XListView) view2.findViewById(R.id.xlv_sapce);
 		mXLWeek.setPullLoadEnable(true);
 		mXLWeek.setPullRefreshEnable(true);
 		mXLWeek.setXListViewListener(this);
 		mXLWeek.setOnItemClickListener(this);
-		adapterWeek = new JokeAdapter(listWeek, mActivity,this);
+		adapterWeek = new JokeAdapter(listWeek, mActivity,this,true);
 		mXLWeek.setAdapter(adapterWeek);
 		
-		View view3 = inflater.inflate(R.layout.home_layout_result_listview, null);
-		mXLMonth = (XListView) view3.findViewById(R.id.xListView);
+		View view3 = inflater.inflate(R.layout.listview_space_bar, null);
+		mXLMonth = (XListView) view3.findViewById(R.id.xlv_sapce);
 		mXLMonth.setPullLoadEnable(true);
 		mXLMonth.setPullRefreshEnable(true);
 		mXLMonth.setXListViewListener(this);
 		mXLMonth.setOnItemClickListener(this);
-		adapterMonth = new JokeAdapter(listMonth, mActivity,this);
+		adapterMonth = new JokeAdapter(listMonth, mActivity,this,true);
 		mXLMonth.setAdapter(adapterMonth);
 		
-		View view4 = inflater.inflate(R.layout.home_layout_result_listview, null);
-		mXLYear = (XListView) view4.findViewById(R.id.xListView);
+		View view4 = inflater.inflate(R.layout.listview_space_bar, null);
+		mXLYear = (XListView) view4.findViewById(R.id.xlv_sapce);
 		mXLYear.setPullLoadEnable(true);
 		mXLYear.setPullRefreshEnable(true);
 		mXLYear.setXListViewListener(this);
 		mXLYear.setOnItemClickListener(this);
-		adapterYear = new JokeAdapter(listYear, mActivity,this);
+		adapterYear = new JokeAdapter(listYear, mActivity,this,true);
 		mXLYear.setAdapter(adapterYear);
 		
 		//将布局放入集合

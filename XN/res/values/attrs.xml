@@ -82,6 +82,12 @@
         <attr name="text" format="reference"/> 
     </declare-styleable> 
     
+                  <!-- 操作的小控件 -->
+      <declare-styleable name="markRadionButton"> 
+        <attr name="txtTitle" format="reference"/> 
+        <attr name="txtCount" format="reference"/> 
+    </declare-styleable> 
+    
        <!--圆形图片控件 -->
       <declare-styleable name="circleImg"> 
         <attr name="border_thickness" format="dimension"/> 

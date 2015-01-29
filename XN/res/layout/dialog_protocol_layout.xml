@@ -24,7 +24,7 @@
 	    <TextView 
 	        android:id="@+id/tv_protocol_content"
 	        style="@style/group_text_tag"
-	        android:textSize="12sp"
+	        android:textSize="14sp"
 	        android:text="@string/xn_protocol_content"
 	        />
     </ScrollView>

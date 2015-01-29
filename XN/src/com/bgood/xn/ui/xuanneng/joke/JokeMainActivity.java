@@ -62,6 +62,14 @@ public class JokeMainActivity extends TabActivity implements OnCheckedChangeList
 
 		radioGroup = (RadioGroup) this.findViewById(R.id.xuanneng_humor_rg_tab);
 		radioGroup.setOnCheckedChangeListener(this);
+		
+		findViewById(R.id.return_btn).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				JokeMainActivity.this.finish();
+			}
+		});
 	}
 
 	@Override
