@@ -323,7 +323,7 @@ public class UserCenterRequest extends BaseNetWork {
 			    setMessageType(80001);
 				JSONObject body = new JSONObject();
 				try {
-					body.put("os", "android");
+					body.put("type", "android");
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}

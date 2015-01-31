@@ -9,17 +9,16 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -27,15 +26,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bgood.xn.R;
-import com.bgood.xn.bean.GroupBean;
+import com.bgood.xn.bean.FriendBean;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.system.Const;
 import com.bgood.xn.ui.base.BaseFragment;
@@ -143,8 +139,30 @@ public class ChatHistoryFragment extends BaseFragment {
 				}
 			}
 		});
-		// 注册上下文菜单
-		registerForContextMenu(listView);
+//		// 注册上下文菜单
+//		registerForContextMenu(listView);
+		
+		listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapter, View view, int position, long id) {
+            	final EMConversation tobeDeleteCons = (EMConversation) adapter.getAdapter().getItem(position);
+            	final AlertDialog dialog = new AlertDialog.Builder(getActivity())
+            	.setTitle("删除消息")
+            	.setCancelable(true)
+            	.setPositiveButton("确定", new OnClickListener() {
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						deleteConve(tobeDeleteCons);
+					}
+				})
+            	.show();
+                return true;
+            }
+        });
+		
+		
+		
+		
 
 		listView.setOnTouchListener(new OnTouchListener() {
 
@@ -170,21 +188,24 @@ public class ChatHistoryFragment extends BaseFragment {
 		super.onCreateContextMenu(menu, v, menuInfo);
 			getActivity().getMenuInflater().inflate(R.menu.delete_message, menu);
 	}
+	
+	
+	private void deleteConve(EMConversation tobeDeleteCons) {
+		// 删除此会话
+		EMChatManager.getInstance().deleteConversation(tobeDeleteCons.getUserName(), tobeDeleteCons.isGroup());
+		InviteMessgeDao inviteMessgeDao = new InviteMessgeDao(getActivity());
+		inviteMessgeDao.deleteMessage(tobeDeleteCons.getUserName());
+		adapter.remove(tobeDeleteCons);
+		adapter.notifyDataSetChanged();
+
+//		// 更新消息未读数
+		((MessageActivity) getActivity()).updateUnreadLabel();
+
+	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.delete_message) {
-			EMConversation tobeDeleteCons = adapter.getItem(((AdapterContextMenuInfo) item.getMenuInfo()).position);
-			// 删除此会话
-			EMChatManager.getInstance().deleteConversation(tobeDeleteCons.getUserName(), tobeDeleteCons.isGroup());
-			InviteMessgeDao inviteMessgeDao = new InviteMessgeDao(getActivity());
-			inviteMessgeDao.deleteMessage(tobeDeleteCons.getUserName());
-			adapter.remove(tobeDeleteCons);
-			adapter.notifyDataSetChanged();
-
-//			// 更新消息未读数
-			((MessageActivity) getActivity()).updateUnreadLabel();
-
 			return true;
 		}
 		return super.onContextItemSelected(item);

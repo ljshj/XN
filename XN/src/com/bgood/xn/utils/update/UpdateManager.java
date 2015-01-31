@@ -24,7 +24,11 @@ import android.widget.ProgressBar;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.ApkBean;
+import com.bgood.xn.system.BGApp;
+import com.bgood.xn.system.Const;
+import com.bgood.xn.system.SystemConfig;
 import com.bgood.xn.utils.ToolUtils;
+import com.tencent.utils.SystemUtils;
 
 
 /**
@@ -70,6 +74,7 @@ public class UpdateManager {
 				mProgress.setProgress(progress);
 				break;
 			case DOWN_OVER:
+				downloadDialog.dismiss();
 				installApk();
 				break;
 			default:
@@ -85,19 +90,27 @@ public class UpdateManager {
 		this.apkVersionCode = bean.versioncode;
 	}
 	
-	//外部接口让主Activity调用
-	public void checkUpdateInfo(){
+	/**
+	 * 
+	 * @todo:TODO
+	 * @date:2015-1-30 下午7:00:47
+	 * @author:hg_liuzl@163.com
+	 * @params:@param showTag  没有新版本的时候，是否需要提示,false不展示，true展示
+	 */
+	public void checkUpdateInfo(boolean showTag){
 		boolean isNeedUpdate = ToolUtils.isNeedUpdate(apkVersionCode, mContext);
 		if(isNeedUpdate){
 			showNoticeDialog();
 		}else{
-			doNoNeedUpdate();
+			doNoNeedUpdate(showTag);
 		}
-		
 	}
 
 	
-	private void doNoNeedUpdate(){
+	private void doNoNeedUpdate(boolean showDialog){
+		if(!showDialog){
+			return;
+		}
 		new AlertDialog.Builder(mContext).setTitle("已经是最新版本")
 		.setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
 			@Override
@@ -110,7 +123,7 @@ public class UpdateManager {
 	
 	private void showNoticeDialog(){
 		AlertDialog.Builder builder = new Builder(mContext);
-		builder.setTitle("软件版本更新");
+		builder.setTitle("发现新版本");
 		builder.setMessage(apkUpdateMsg);
 		builder.setPositiveButton("下载", new OnClickListener() {			
 			@Override
@@ -145,6 +158,8 @@ public class UpdateManager {
 				interceptFlag = true;
 			}
 		});
+		
+		builder.setCancelable(false);
 		downloadDialog = builder.create();
 		downloadDialog.show();
 		
@@ -155,7 +170,7 @@ public class UpdateManager {
 		@Override
 		public void run() {
 			try {
-				URL url = new URL(apkUrl);
+				URL url = new URL(SystemConfig.FILE_SERVER+apkUrl);
 			
 				HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 				conn.connect();
@@ -217,6 +232,7 @@ public class UpdateManager {
             return;
         }    
         Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.setDataAndType(Uri.parse("file://" + apkfile.toString()), "application/vnd.android.package-archive"); 
         mContext.startActivity(i);
 	

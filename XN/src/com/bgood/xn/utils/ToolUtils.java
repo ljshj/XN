@@ -642,6 +642,10 @@ public class ToolUtils {
 	 * 说明，远程服务器升级包版本格式必须与本地应用版本格式一致 如 1.1.1.1和1.1.1.2
 	 */
 	public static boolean isNeedUpdate(String version,Context mContext) {
+		
+		if(TextUtils.isEmpty(version))
+			return false;
+		
 		/**远程app,版本*/
 		String[] netVersion = version.split("\\.");
 		/**当前应用的app,版本*/

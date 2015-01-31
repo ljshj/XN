@@ -2,18 +2,9 @@ package com.bgood.xn.ui;
 
 import org.json.JSONObject;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AnimationUtils;
 
 import com.bgood.xn.R;
 import com.bgood.xn.network.BaseNetWork;
@@ -26,7 +17,7 @@ import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.system.SystemConfig;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.welcome.NavigateActivity;
-import com.bgood.xn.view.BToast;
+import com.umeng.socialize.utils.LoadingDialog;
 
 /**
  * 
@@ -49,6 +40,8 @@ public class IndexActivity extends BaseActivity implements TaskListenerWithState
 //			mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
 //			registerReceiver(receiverNetWork, mFilter);
 			UserCenterRequest.getInstance().requestUnLoginBSServer(this, this);
+			
+			
 		}
 	}
 	

@@ -19,6 +19,7 @@ import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.utils.ConfigUtil;
 import com.bgood.xn.utils.update.UpdateManager;
+import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
 
 /**
@@ -89,7 +90,7 @@ public class MoreActivity extends BaseActivity implements OnClickListener,TaskLi
 				/**版本升级处理*/
 				final ApkBean apk = JSON.parseObject(strJson, ApkBean.class);
 				UpdateManager manager = new UpdateManager(mActivity, apk);
-				manager.checkUpdateInfo();
+				manager.checkUpdateInfo(true);
 			}
 		}
 	}
