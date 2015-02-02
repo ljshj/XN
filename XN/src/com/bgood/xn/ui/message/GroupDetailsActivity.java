@@ -520,6 +520,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 								ChatActivity.activityInstance.finish();
 							}
 							BGApp.getInstance().deleteGroup(dbHelper, group);
+							EMChatManager.getInstance().deleteConversation(group.hxgroupid, true);
 							setResult(RESULT_OK);
 							finish();
 

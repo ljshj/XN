@@ -87,6 +87,8 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 			holder = (ViewHolder) convertView.getTag();
 			
 		}
+		
+		convertView.setVisibility(View.VISIBLE);
 		if (position % 2 == 0) {
 			holder.list_item_layout.setBackgroundResource(R.drawable.mm_listitem);
 		} else {
@@ -118,7 +120,13 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 			 GroupBean group = BGApp.getInstance().getGroupAndHxId().get(username);//这里获取到的是环信id
 			
 			if(null == group){
-				return null;
+				//如果没有这个群组，把这个会话从缓存中删除吧。
+				this.remove(conversation);
+				//也从数据库中删除
+				EMChatManager.getInstance().deleteConversation(username, true);
+				
+				convertView.setVisibility(View.GONE);
+				return convertView;
 			}
 			
 			// 群聊消息，显示群聊头像
@@ -128,7 +136,12 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 			
 			final FriendBean fb = BGApp.getInstance().getFriendMapById().get(username.substring(2));//去掉bg 得到用户id
 			
-			if(null == fb){
+			if(null == fb){	
+				//如果没有这个好友，把这个会话从缓存中删除吧。
+				this.remove(conversation);
+				//也从数据库中删除
+				EMChatManager.getInstance().deleteConversation(username,false);
+				convertView.setVisibility(View.GONE);
 				return convertView;
 			}
 			

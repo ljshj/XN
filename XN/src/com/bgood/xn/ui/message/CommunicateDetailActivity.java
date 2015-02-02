@@ -423,6 +423,9 @@ public class CommunicateDetailActivity extends BaseActivity implements OnClickLi
 							}
 							BGApp.getInstance().deleteGroup(dbHelper, group);
 							
+							
+							EMChatManager.getInstance().deleteConversation(group.hxgroupid, true);
+							
 							setResult(RESULT_OK);
 							finish();
 							

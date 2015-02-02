@@ -157,7 +157,7 @@ public class GroupMemberBean {
 				list.add(values);
 			}
 			int count = dbHelper.insert(DBHelper.TB_GROUP_MEMBER, list);
-			LogUtils.i("-----------批量插入群----"+count);
+			LogUtils.i("-----------批量插入群成员----"+count);
 	}
 	
 	

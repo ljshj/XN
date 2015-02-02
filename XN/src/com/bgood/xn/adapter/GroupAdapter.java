@@ -51,7 +51,7 @@ public class GroupAdapter extends KBaseAdapter {
 	    	holder.tvGroupType.setText("固定群");
 	    	holder.tvGroupType.setBackgroundResource(R.drawable.icon_fixation_group_bg);
 	    }else if("1".equals(group.grouptype)){	//临时群
-	    	holder.tvGroupType.setText("临时群");
+	    	holder.tvGroupType.setText("交流厅");
 	    	holder.tvGroupType.setBackgroundResource(R.drawable.icon_temp_group_bg);
 	    }
 	    

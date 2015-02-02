@@ -79,10 +79,6 @@ public class BaseActivity extends FragmentActivity {
             return;
         }
         
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(getApplicationInfo().icon)
-                .setWhen(System.currentTimeMillis()).setAutoCancel(true);
-        
         String ticker = CommonUtils.getMessageDigest(message, this);
         if(message.getType() == Type.TXT)
             ticker = ticker.replaceAll("\\[.{2,3}\\]", "[表情]");
@@ -98,8 +94,11 @@ public class BaseActivity extends FragmentActivity {
         ChatType chatType = message.getChatType();
 			if (chatType == ChatType.Chat) { // 单聊信息
 				FriendBean bean = BGApp.getInstance().getFriendMapById().get(message.getFrom().substring(2));
-				msgFrom = (null == bean) ? msgFrom : bean.name;
-				
+				if(null!=bean){
+					msgFrom = bean.name;
+				}else{
+					return;
+				}
 			} else { // 群聊信息
 				List<FriendBean> friends = BGApp.getInstance().getGroupMemberAndHxId().get(message.getTo());
 				if (null != friends) {
@@ -113,12 +112,17 @@ public class BaseActivity extends FragmentActivity {
 				GroupBean group = BGApp.getInstance().getGroupAndHxId().get(message.getTo());
 				if(null!=group){
 					msgFrom+="("+group.name+")";
+				}else{
+					return;
 				}
 			}
+		
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+        .setSmallIcon(getApplicationInfo().icon)
+        .setWhen(System.currentTimeMillis()).setAutoCancel(true);
+			
         //设置状态栏提示
         mBuilder.setTicker(msgFrom+": " + ticker);
-        
-        
 
         Notification notification = mBuilder.build();
         notificationManager.notify(notifiId, notification);

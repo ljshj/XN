@@ -69,7 +69,11 @@ public class ChatHXSDKHelper extends HXSDKHelper{
               ChatType chatType = message.getChatType();
 				if (chatType == ChatType.Chat) { // 单聊信息
 					FriendBean bean = BGApp.getInstance().getFriendMapById().get(message.getFrom().substring(2));
-					msgFrom = (null == bean) ? msgFrom : bean.name;
+					if(null!=bean){
+						msgFrom = bean.name;
+					}else{
+						return "";
+					}
 					
 				} else { // 群聊信息
 					List<FriendBean> friends = BGApp.getInstance().getGroupMemberAndHxId().get(message.getTo());

@@ -188,7 +188,7 @@ public class FriendBean implements Parcelable {
 				list.add(values);
 			}
 			int count = dbHelper.insert(DBHelper.TB_FRIEND, list);
-			LogUtils.i("-----------批量插入群----"+count);
+			LogUtils.i("-----------批量插入好友----"+count);
 	}
 	
 	

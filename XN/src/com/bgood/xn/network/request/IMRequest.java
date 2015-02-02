@@ -41,9 +41,9 @@ public class IMRequest extends BaseNetWork {
 	 * @params:@param userid
 	 * @params:@param vertify
 	 */
-	public void requestContactsList(TaskListenerWithState mHttpTaskListener,Context context) {
+	public void requestContactsList(TaskListenerWithState mHttpTaskListener,Context context,boolean showDialog) {
 		setMessageType(50006);
-		new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+		new HttpRequestAsyncTask(showDialog,ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 	}
 
 	/**
