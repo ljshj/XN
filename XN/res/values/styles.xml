@@ -152,13 +152,17 @@
     </style>
 
     <style name="common_listview">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:cacheColorHint">@android:color/transparent</item>
         <item name="android:background">@color/white</item>
         <item name="android:listSelector">@android:color/transparent</item>
         <item name="android:overScrollMode">never</item>
-        <item name="android:scrollbars">vertical</item>
+        <item name="android:scrollbars">none</item>
+      <!--   <item name="android:headerDividersEnabled">false</item>
+        <item name="android:footerDividersEnabled">false</item> -->
     </style>
-
+    
     <style name="tv_singline_ellipsize_end" parent="android:Widget.TextView">
         <item name="android:ellipsize">end</item>
         <item name="android:singleLine">true</item>

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.CommentBean;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.ui.user.info.ShowNameCardListener;
 import com.bgood.xn.utils.ToolUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -49,6 +50,12 @@ public class CommentAdapter extends KBaseAdapter
        BGApp.getInstance().setImage(wComment.photo,holder.ivComment);
        
         holder.tvCommentAuthor.setText(wComment.name);
+        
+        holder.ivComment.setOnClickListener(new ShowNameCardListener(wComment, mActivity));
+		
+		holder.tvCommentAuthor.setText(wComment.name);
+		holder.tvCommentAuthor.setOnClickListener(new ShowNameCardListener(wComment, mActivity));
+        
         holder.tvCommentTime.setText(ToolUtils.getFormatDate(wComment.commenttime));
         holder.tvCommentContent.setText(wComment.content);
         

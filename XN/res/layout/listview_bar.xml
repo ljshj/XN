@@ -3,10 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/xlv_spaceless"
     style="@style/common_listview"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
     android:divider="@color/gray"
-     android:scrollbars="none"
     android:dividerHeight="@dimen/divierHeight" >
 </com.bgood.xn.view.xlistview.XListView>

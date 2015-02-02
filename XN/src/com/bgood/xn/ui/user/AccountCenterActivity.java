@@ -139,8 +139,7 @@ public class AccountCenterActivity extends BaseActivity implements OnClickListen
     	BGApp.mUserBean = null;
     	BGApp.getInstance().logout(null);
     	Intent intent = new Intent(mActivity, LoginActivity.class);
-    	intent.putExtra(LoginActivity.FROM_KEY, LoginActivity.FROM_KEY_OTHER);
-    	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
     	startActivity(intent);
     	finish();
 	}

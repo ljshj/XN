@@ -1,6 +1,7 @@
 package com.bgood.xn.ui.user.info;
 
 import com.bgood.xn.R;
+import com.bgood.xn.bean.CommentBean;
 import com.bgood.xn.bean.JokeBean;
 import com.bgood.xn.bean.WeiQiangBean;
 
@@ -32,6 +33,9 @@ public class ShowNameCardListener implements OnClickListener {
 			}else if(object instanceof WeiQiangBean){
 				WeiQiangBean mWeiqiang = (WeiQiangBean) object;
 				NameCardActivity.lookNameCard(mActivity, String.valueOf(mWeiqiang.userid));
+			}else if(object instanceof CommentBean){
+				CommentBean mCommentBean = (CommentBean) object;
+				NameCardActivity.lookNameCard(mActivity, String.valueOf(mCommentBean.userid));
 			}
 			break;
 		case R.id.tv_old_user:	//进入转发人的名片
@@ -41,6 +45,9 @@ public class ShowNameCardListener implements OnClickListener {
 			}else if(object instanceof WeiQiangBean){
 				WeiQiangBean mWeiqiang = (WeiQiangBean) object;
 				NameCardActivity.lookNameCard(mActivity, String.valueOf(mWeiqiang.fromuserid));
+			}else if(object instanceof CommentBean){
+				CommentBean mCommentBean = (CommentBean) object;
+				NameCardActivity.lookNameCard(mActivity, String.valueOf(mCommentBean.userid));
 			}
 			break;
 		default:
