@@ -16,6 +16,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost;
 
 import com.bgood.xn.R;
+import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.user.account.LoginActivity;
 
@@ -93,6 +94,7 @@ public class JokeMainActivity extends TabActivity implements OnCheckedChangeList
 	@Override
 	public void onClick(View v)
 	{
+		Intent intent = null;
 		if(!BGApp.isUserLogin){
 			LoginActivity.doLoginAction(this);
 		}else{
@@ -107,18 +109,25 @@ public class JokeMainActivity extends TabActivity implements OnCheckedChangeList
 					showPopupMore();
 			}
 			break;
-		case R.id.tv_joke_publish:	//投稿
+		case R.id.tv_joke_publish:	/**投稿**/
 			dissmissPopupMore();
-			Intent intent = new Intent(this, JokePublishActivity.class);
+			intent = new Intent(this, JokePublishActivity.class);
 			startActivity(intent);
 			break;
-		case R.id.tv_joke_mention:
+		case R.id.tv_joke_mention:/**提到我的*/
 			dissmissPopupMore();
-			Intent intent2 = new Intent(this, JokeMentionActivity.class);
-			startActivity(intent2);
+			intent = new Intent(this, JokeMentionActivity.class);
+			startActivity(intent);
 			break;
-		}}
+		case R.id.tv_joke_me:/**我的幽默秀*/
+			dissmissPopupMore();
+			intent = new Intent(this, JokeMeActivity.class);
+			intent.putExtra(UserInfoBean.KEY_USER_ID, BGApp.mUserId);
+			startActivity(intent);
+			break;
+		}
 	}
+}
 	
 	
 	@SuppressLint("InflateParams")
@@ -129,6 +138,7 @@ public class JokeMainActivity extends TabActivity implements OnCheckedChangeList
 		{
 			View contentView = LayoutInflater.from(this).inflate(R.layout.popup_joke_main_more_operate, null);
 			contentView.findViewById(R.id.tv_joke_publish).setOnClickListener(this);
+			contentView.findViewById(R.id.tv_joke_me).setOnClickListener(this);
 			contentView.findViewById(R.id.tv_joke_mention).setOnClickListener(this);
 			popupWindow_more = new PopupWindow(contentView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			popupWindow_more.setFocusable(true);

@@ -12,6 +12,8 @@ import com.bgood.xn.system.SystemConfig;
  */
 public class JokeBean implements Serializable {
 	
+	/**未通过审核**/
+	public static final int JOKE_FAIL_VERIFY = -1;
 	/**未审核**/
 	public static final int JOKE_UN_VERIFY = 0;
 	/**已经审核**/
@@ -46,7 +48,7 @@ public class JokeBean implements Serializable {
 	public String type;
 	public List<ImageBean> imgs;
 	public String Comments;
-	
+	public String remark;	/**审核备注*/
 	public int status;		/**1，审核中 2.未通过审核***/
 	
 	/**操作

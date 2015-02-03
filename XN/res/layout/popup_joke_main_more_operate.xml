@@ -13,11 +13,11 @@
             style="@style/pop_text"
             />
 
-<!--         <TextView
-            android:id="@+id/tv_weiqiang_me"
+         <TextView
+            android:id="@+id/tv_joke_me"
             android:drawableLeft="@drawable/img_weiqiang_my_weiqiang_indicator"
-            android:text="我的微墙"
-            style="@style/pop_text"/> -->
+            android:text="我的幽默秀"
+            style="@style/pop_text"/> 
         
           <TextView
             android:id="@+id/tv_joke_mention"

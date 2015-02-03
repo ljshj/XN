@@ -40,12 +40,15 @@ public class ShareUtils {
 	public static final String WX_APP_ID = "wx8fd7339391e0d06a";
 	public static final String WX_APP_SECRET = "a6cfc6406d9c31305c882f77b8aead65";
 	
-	public static final String QQ_APP_ID = "1103507475";
-	public static final String QQ_APP_KEY = "uQrjhyh93ifnPE0W";
+//	public static final String QQ_APP_ID = "1103507475";
+//	public static final String QQ_APP_KEY = "uQrjhyh93ifnPE0W";
+	
+	public static final String QQ_APP_ID = "1104200467";
+	public static final String QQ_APP_KEY = "FecuY1h9fM7kTxZN";
 
 	public static final String LOGO_URL = "http://114.215.189.189/files/logo.png";
 	
-	public static final String TARGET_URL = "http://www.showneng.com/app-download.html";
+	public static final String TARGET_URL = "http://t.cn/RZFgBtv";
 	
     public final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 

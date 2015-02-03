@@ -87,7 +87,6 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_weiqiang_publish);
-		
 		mJokeBean = (JokeBean) getIntent().getSerializableExtra(JokeBean.JOKE_BEAN);
 		(new TitleBar(mActivity)).initTitleBar(null==mJokeBean ? "有奖投稿":"修改投搞");
 		files.add(null);

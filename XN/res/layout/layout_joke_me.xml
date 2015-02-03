@@ -17,28 +17,31 @@
 	            android:id="@+id/radio_01"
 	            style="@style/xuanneng_tab_text"
 	            android:checked="true"
-	            android:text="我的投搞" />
+	            android:text="已审核" />
 
 	        <RadioButton
 	            android:id="@+id/radio_02"
 	            style="@style/xuanneng_tab_text"
-	            android:text="审核中" />
+	            android:text="未审核" />
 	      
+	         <RadioButton
+	            android:id="@+id/radio_03"
+	            style="@style/xuanneng_tab_text"
+	            android:text="审核失败" />
+	        
 	    </RadioGroup>
 
-
+<!-- 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@drawable/img_common_h_divider" />
+        android:background="@drawable/img_common_h_divider" /> -->
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_joke_type_select"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-		android:layout_marginTop="1dp"
-		android:layout_marginLeft="2dp"
-		android:layout_marginRight="2dp"
+		android:layout_margin="2dp"
         android:background="@color/white" />
             
 </LinearLayout>

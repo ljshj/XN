@@ -46,6 +46,7 @@ public class AttentionAdapter extends KBaseAdapter
         }
         
         final AttentionBean mAttentionBean = (AttentionBean) mList.get(position);
+        
         BGApp.getInstance().setImage(mAttentionBean.img, holder.userIconImgV);
         
         holder.userIconImgV.setOnClickListener(mListener);

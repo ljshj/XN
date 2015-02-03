@@ -41,6 +41,10 @@ public class JokeAdapter extends KBaseAdapter
 		super(mList, mActivity, listener);
 	}
 
+	public JokeAdapter(List<?> mList, Activity mActivity) {
+		super(mList, mActivity);
+	}
+	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
 	{

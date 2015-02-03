@@ -19,6 +19,8 @@
     <string name="dlg_sdcard_load_err">SD卡空间不足或已卸载，无法下载安装应用</string>
     
     
+     <string name="joke_fail_verify">未通过审核原因：%s</string>
+     
      <string name="action_count">1</string>
      <string name="errcode_success">发送成功</string>
 	<string name="errcode_cancel">发送取消</string>

@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"   
-    android:background="@drawable/img_user_center_bg"
     android:descendantFocusability="blocksDescendants"
     >
         
@@ -58,5 +57,13 @@
 	       android:horizontalSpacing="2dp"
 	       android:numColumns="4"
 	       />
+       
+       <TextView
+	       android:id="@+id/tv_verify_remark"
+	       style="@style/item_content"
+	       android:text="内容"
+	       android:textColor="@color/red"
+	       android:visibility="gone"
+	        />
 
 </LinearLayout>

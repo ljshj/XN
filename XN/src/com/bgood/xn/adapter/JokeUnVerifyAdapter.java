@@ -3,6 +3,7 @@ package com.bgood.xn.adapter;
 import java.util.List;
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -41,6 +42,7 @@ public class JokeUnVerifyAdapter extends KBaseAdapter {
 			holder.gridView = (GridView) convertView.findViewById(R.id.gv_show_img);
 			holder.tvContent = (TextView) convertView.findViewById(R.id.tv_content);
 			holder.tvJokeStatus = (TextView) convertView.findViewById(R.id.tv_joke_status);
+			holder.tvVerifyRemark = (TextView) convertView.findViewById(R.id.tv_verify_remark);
 			convertView.setTag(holder);
 		} else
 		{
@@ -56,10 +58,21 @@ public class JokeUnVerifyAdapter extends KBaseAdapter {
 		holder.tvTime.setText(ToolUtils.getFormatDate(jokeBean.date_time));
 		if(jokeBean.status == 1){
 			holder.tvJokeStatus.setText("审核中");
-			holder.tvJokeStatus.setBackgroundColor(mActivity.getResources().getColor(R.color.orange_normal));
-		}else{
+			holder.tvJokeStatus.setBackgroundColor(mActivity.getResources().getColor(R.color.green));
+			holder.tvVerifyRemark.setVisibility(View.GONE);
+		}else if(jokeBean.status == -1){
 			holder.tvJokeStatus.setText("未通过审核");
 			holder.tvJokeStatus.setBackgroundColor(mActivity.getResources().getColor(R.color.red));
+			holder.tvVerifyRemark.setVisibility(View.VISIBLE);
+			if(TextUtils.isEmpty(jokeBean.remark)){
+				holder.tvVerifyRemark.setText("言论不符合要求");
+			}else{
+				holder.tvVerifyRemark.setText(mActivity.getResources().getString(R.string.joke_fail_verify,jokeBean.remark));
+			}
+		}else if(jokeBean.status == 0){
+			holder.tvJokeStatus.setText("未审核");
+			holder.tvJokeStatus.setBackgroundColor(mActivity.getResources().getColor(R.color.white));
+			holder.tvVerifyRemark.setVisibility(View.GONE);
 		}
 		
 		holder.tvContent.setText(jokeBean.content);
@@ -77,6 +90,7 @@ public class JokeUnVerifyAdapter extends KBaseAdapter {
 		public TextView tvJokeStatus;
 		public TextView tvContent;
 		public GridView gridView;
+		public TextView tvVerifyRemark;
 		
 	}
 	

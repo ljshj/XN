@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bgood.xn"
     android:versionCode="1"
-    android:versionName="1.0.0.8" >
+    android:versionName="1.0.0.1" >
 
     <supports-screens 
            android:largeScreens="true"  
