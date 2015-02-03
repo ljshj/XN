@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="85dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/result_app_item_imgv_icon"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/icon_default" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/img_user_center_y_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="3" >
+
+                <Button
+                    android:id="@+id/result_app_item_btn_open"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/icon_default"
+                    android:text="打开" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@id/result_app_item_btn_open"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/result_app_item_tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:gravity="center_vertical"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:text="和哈哈热按体内that好热好热啊好热"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
+                    
+                    <TextView
+                        android:id="@+id/result_app_item_tv_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:lines="1"
+                        android:text="1.8M"
+                        android:textColor="#626262"
+                        android:textSize="14dp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/result_app_item_tv_info"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:text="会让她身体如何让太阳他们与冷酷衣服裤裤弹吉他收入将投入实际上一体机"
+                android:textColor="#626262"
+                android:textSize="14dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@drawable/img_search_x_line" />
+
+</LinearLayout>

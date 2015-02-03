@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    
+     >
+
+    <include layout="@layout/title_bar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/common_page_bg"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+		    android:layout_marginTop="10dp"
+		    android:layout_marginLeft="10dp"
+		    android:layout_marginRight="10dp"
+		    android:paddingBottom="30dp"
+            android:orientation="vertical" >
+
+            <com.easemob.chat.widget.ExpandGridView
+                android:id="@+id/gridview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/app_pref_bg"
+                android:columnWidth="52dp"
+                android:gravity="start"
+                android:horizontalSpacing="6dp"
+                android:listSelector="@android:color/transparent"
+                android:numColumns="4"
+                android:verticalSpacing="10dp" />
+            
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:padding="5dp"
+	    android:orientation="horizontal"
+	    >
+	     <TextView
+		  		style="@style/group_text_tag"
+		        android:text="交流厅名称"
+		        android:layout_width="0dp"
+		        android:layout_weight="1"
+		        android:gravity="center"
+		        />
+		    
+		    <TextView 
+		        android:id="@+id/tv_communcation_name"
+		        style="@style/group_text_tag"
+		        android:layout_width="0dp"
+		        android:layout_weight="1"
+		        android:gravity="center"
+		        android:textColor="@color/black"
+		        />
+	    
+	    
+	</LinearLayout>
+                
+             <Button
+              android:id="@+id/clear_all_history"
+              android:text="清空聊天记录"
+              style="@style/btn_alert" />
+
+
+            <Button
+                android:id="@+id/btn_exit_comm"
+                android:onClick="exitGroup"
+                android:text="退出交流厅"
+               style="@style/btn_alert"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

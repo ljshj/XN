@@ -1,0 +1,662 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_page_bg"
+    android:orientation="vertical" >
+
+	<include layout="@layout/title_bar"/>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/presonal_data_rl_icon"
+                android:layout_width="fill_parent"
+                android:layout_height="80dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:ellipsize="end"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="1"
+                    android:singleLine="true"
+                    android:text="头像"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/presonal_data_imgv_icon"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="35dp"
+                    android:src="@drawable/icon_default" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/img_common_right" />
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@drawable/img_user_center_x_line"
+                    android:scaleType="matrix" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/presonal_data_rl_id"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:ellipsize="end"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="1"
+                    android:singleLine="true"
+                    android:text="ID"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/presonal_data_tv_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:ellipsize="end"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="1"
+                    android:singleLine="true"
+                    android:text="bfabf"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@drawable/img_user_center_x_line"
+                    android:scaleType="matrix" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/presonal_data_rl_phone"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:ellipsize="end"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="1"
+                    android:singleLine="true"
+                    android:text="手机号码"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/presonal_data_tv_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:ellipsize="end"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="1"
+                    android:singleLine="true"
+                    android:text="15999646691"
+                    android:textColor="#626262"
+                    android:textSize="18sp" />
+
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@drawable/img_user_center_x_line"
+                    android:scaleType="matrix" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/presonal_data_rl_name"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:ellipsize="end"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="1"
+                    android:singleLine="true"
+                    android:text="昵称"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/presonal_data_tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="35dp"
+                    android:ellipsize="end"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="1"
+                    android:singleLine="true"
+                    android:text="笑笑"
+                    android:textColor="#626262"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/img_common_right" />
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@drawable/img_user_center_x_line"
+                    android:scaleType="matrix" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/presonal_data_rl_sex"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:ellipsize="end"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="1"
+                    android:singleLine="true"
+                    android:text="性别"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/presonal_data_tv_sex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="35dp"
+                    android:ellipsize="end"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="1"
+                    android:singleLine="true"
+                    android:text="男"
+                    android:textColor="#626262"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/img_common_right" />
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@drawable/img_user_center_x_line"
+                    android:scaleType="matrix" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/presonal_data_rl_age"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:ellipsize="end"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="1"
+                    android:singleLine="true"
+                    android:text="年龄"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/presonal_data_tv_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="35dp"
+                    android:ellipsize="end"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="1"
+                    android:singleLine="true"
+                    android:text="24"
+                    android:textColor="#626262"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/img_common_right" />
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@drawable/img_user_center_x_line"
+                    android:scaleType="matrix" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/presonal_data_rl_birthday"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:ellipsize="end"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="1"
+                    android:singleLine="true"
+                    android:text="生日"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/presonal_data_tv_birthday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="35dp"
+                    android:ellipsize="end"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="1"
+                    android:singleLine="true"
+                    android:text="3月4日"
+                    android:textColor="#626262"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/img_common_right" />
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@drawable/img_user_center_x_line"
+                    android:scaleType="matrix" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/presonal_data_rl_constellation"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:ellipsize="end"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="1"
+                    android:singleLine="true"
+                    android:text="星座"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/presonal_data_tv_constellation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="35dp"
+                    android:ellipsize="end"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="1"
+                    android:singleLine="true"
+                    android:text="魔蝎座"
+                    android:textColor="#626262"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/img_common_right" />
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@drawable/img_user_center_x_line"
+                    android:scaleType="matrix" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/presonal_data_rl_hometown"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:ellipsize="end"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="1"
+                    android:singleLine="true"
+                    android:text="家乡"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/presonal_data_tv_hometown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="35dp"
+                    android:ellipsize="end"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="1"
+                    android:singleLine="true"
+                    android:text="江西抚州"
+                    android:textColor="#626262"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/img_common_right" />
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@drawable/img_user_center_x_line"
+                    android:scaleType="matrix" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/presonal_data_rl_locus"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:ellipsize="end"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="1"
+                    android:singleLine="true"
+                    android:text="所在地"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/presonal_data_tv_locus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="35dp"
+                    android:ellipsize="end"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="1"
+                    android:singleLine="true"
+                    android:text="广东深圳"
+                    android:textColor="#626262"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/img_common_right" />
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@drawable/img_user_center_x_line"
+                    android:scaleType="matrix" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/presonal_data_rl_email"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:ellipsize="end"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="1"
+                    android:singleLine="true"
+                    android:text="邮箱"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/presonal_data_tv_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="35dp"
+                    android:ellipsize="end"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="1"
+                    android:singleLine="true"
+                    android:text="广东深圳"
+                    android:textColor="#626262"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/img_common_right" />
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@drawable/img_user_center_x_line"
+                    android:scaleType="matrix" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/presonal_data_rl_blood_group"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:ellipsize="end"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="1"
+                    android:singleLine="true"
+                    android:text="血型"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/presonal_data_tv_blood_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="35dp"
+                    android:ellipsize="end"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="1"
+                    android:singleLine="true"
+                    android:text="A型"
+                    android:textColor="#626262"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/img_common_right" />
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@drawable/img_user_center_x_line"
+                    android:scaleType="matrix" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/presonal_data_btn_done"
+                android:layout_width="fill_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="25dp"
+                android:background="@drawable/login_btn_selector"
+                android:gravity="center"
+                android:text="立即预览我的名片"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

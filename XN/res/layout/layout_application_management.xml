@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_page_bg"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/application_management_rl_title"
+        style="@style/common_top_title_style" >
+
+        <Button
+            android:id="@+id/application_management_btn_back"
+            style="@style/common_btn_back_style" />
+
+        <TextView
+            android:id="@+id/application_management_tv_title"
+            style="@style/common_tv_title_style"
+            android:text="本地应用管理" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/img_common_search_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/img_common_search_hint" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:background="@drawable/img_message_main_search_divider" />
+
+            <EditText
+                android:id="@+id/application_management_et_search"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="5dp"
+                android:background="@null"
+                android:hint="请输入您要搜索的产品"
+                android:textSize="20dp" >
+
+                <requestFocus />
+            </EditText>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/application_management_lv_list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:divider="@null" >
+        </ListView>
+    </LinearLayout>
+
+</LinearLayout>

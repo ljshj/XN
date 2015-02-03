@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:divider="@drawable/img_common_h_divider"
+    android:orientation="vertical"
+    android:showDividers="middle" >
+
+    <LinearLayout
+        android:id="@+id/home_ll_ithink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/home_iv_ithink_indicator"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/img_home_seach_checked" />
+
+        <TextView
+            android:id="@+id/home_tv_ithink_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:text="我想"
+            android:textColor="@color/home_check_search_checked"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/home_ll_ican"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/home_iv_ican_indicator"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/img_home_seach_normal" />
+
+        <TextView
+            android:id="@+id/home_tv_ican_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="我能"
+            android:textColor="@color/home_check_search_normal"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    android:background="@drawable/img_user_center_bg"
+    android:orientation="vertical" >
+    
+                <include layout="@layout/top_img_name_layout"/>
+            
+               <TextView
+		                android:id="@+id/tv_comments"
+		               style="@style/item_content"
+		               android:text="内容" />
+               
+                  <com.bgood.xn.view.NoScrollGridView 
+		                android:id="@+id/gv_show_img"
+		                android:layout_width="match_parent"
+		                android:layout_height="wrap_content"
+		                android:verticalSpacing="2dp"
+		                android:horizontalSpacing="2dp"
+		                android:numColumns="4"
+		                android:layout_margin="5dp"
+		                />
+            
+               <LinearLayout 
+                   android:id="@+id/ll_old_area"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="20dp"
+                   android:layout_marginRight="20dp"
+                   android:layout_marginBottom="10dp"
+                   android:background="@color/gray_white"
+                   >
+		             <TextView
+		             android:id="@+id/tv_old_user"
+		             style="@style/item_nick"
+		             android:text="愤怒的小鸟"
+		             android:layout_margin="5dp"
+		             />
+		
+		            <TextView
+		                android:id="@+id/tv_content"
+		               style="@style/item_content"
+		               android:text="内容" />
+		            
+		            <com.bgood.xn.view.NoScrollGridView 
+		                android:id="@+id/gv_old_show_img"
+		                android:layout_width="match_parent"
+		                android:layout_height="wrap_content"
+		                android:verticalSpacing="2dp"
+		                android:horizontalSpacing="2dp"
+		                android:numColumns="4"
+		                android:layout_margin="5dp"
+		                />
+
+               </LinearLayout>
+                   
+               <include layout="@layout/action_bar"/>
+            
+</LinearLayout>

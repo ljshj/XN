@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_page_bg"
+    android:orientation="vertical" >
+    
+    <include layout="@layout/title_bar"/>
+    
+    <ScrollView
+         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/img_user_center_bg"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/register_done_et_nick"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:singleLine="true"
+            android:gravity="center_vertical"
+            android:hint="请设置你的昵称">
+
+            <requestFocus />
+        </EditText>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/img_user_center_bg"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/register_done_et_password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:password="true"
+            android:hint="请输入您的登录密码"
+            android:lines="1" >
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/img_user_center_bg"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/register_done_et_confirm_password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:password="true"
+            android:hint="请再次输入您的登录密码"
+            android:lines="1" >
+        </EditText>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/register_done_btn_login"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/login_btn_selector"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+    
+    </LinearLayout></ScrollView>
+
+</LinearLayout>

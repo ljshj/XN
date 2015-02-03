@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <include layout="@layout/title_bar"/>
+   <LinearLayout 
+       android:layout_width="match_parent"
+       android:layout_height="0dp" 
+		android:layout_weight="1"     
+		android:gravity="center_horizontal"  
+       >
+       <ImageView 
+           android:layout_marginTop="40dp"
+           android:layout_width="80dp"
+           android:layout_height="80dp"
+           android:scaleType="fitXY"
+           android:background="@drawable/icon_app"
+           />
+	     <TextView 
+	         android:layout_marginTop="10dp"
+	         style="@style/text_common"
+	         android:text="炫  能"
+	         /> 
+	      <TextView
+	         android:layout_marginTop="10dp"
+	          style="@style/text_common"
+	          android:textColor="@color/gray"
+	           android:text="炫了就有可能"
+	          />
+	      	     
+       
+   </LinearLayout>
+   <TextView 
+         android:id="@+id/tv_version"
+       style="@style/text_common"
+       android:layout_gravity="center_horizontal"
+       />
+</LinearLayout>

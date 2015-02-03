@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_page_bg"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+           
+            <TextView
+                android:id="@+id/showcase_recommend_item_tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:drawableLeft="@drawable/img_showcase_time_hint"
+                style="@style/item_time"
+                android:drawablePadding="3dp"
+                android:text="2014-07-10" />
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/img_showcase_recommend_bg"
+                android:gravity="center"
+                android:text="推荐"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/showcase_recommend_item_imgv_icon"
+            android:layout_width="fill_parent"
+            android:layout_height="400dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_big_default" />
+        
+        <TextView 
+            android:id="@+id/showcase_recommend_item_tv_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:lines="2"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:text="你海岸边广大如果让个" />
+        
+        <TextView 
+            android:id="@+id/showcase_recommend_item_tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/red"
+            android:textSize="16dp"
+            android:text="￥ 89" />
+        
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout style="@style/common_top_title_style" >
+
+        <Button
+            android:id="@+id/return_btn"
+            style="@style/common_btn_back_style" />
+
+        <TextView
+            style="@style/common_tv_title_style"
+            android:text="详情" />
+    </RelativeLayout>
+
+    <include layout="@layout/listview_bar"/>
+
+</LinearLayout>

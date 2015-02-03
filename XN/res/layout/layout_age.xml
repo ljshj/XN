@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_page_bg"
+    android:orientation="vertical" >
+    
+	<include layout="@layout/title_bar"/>
+    
+    <EditText
+            android:id="@+id/age_et_age"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
+            android:background="@null"
+            android:drawableRight="@drawable/img_clear_edit"
+            android:gravity="center_vertical"
+            android:inputType="number"
+            android:maxLength="2"
+            android:hint="请输入您的年龄"
+            android:singleLine="true" />
+    
+    <Button
+        android:id="@+id/age_btn_done"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/login_btn_selector"
+        android:gravity="center"
+        android:text="完成"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+</LinearLayout>

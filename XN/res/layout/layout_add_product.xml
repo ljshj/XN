@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_page_bg"
+    android:orientation="vertical" >
+    
+	<include layout="@layout/title_bar"/>    
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/add_product_imgv_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:layout_margin="15dp"
+                    android:src="@drawable/icon_product_add" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/img_search_x_line" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="60dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:gravity="center_vertical"
+                        android:text="产品名称："
+                        android:textSize="18dp" />
+
+                    <EditText
+                        android:id="@+id/add_product_et_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="10dp"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:textSize="18dp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/img_search_x_line" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="60dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:gravity="center_vertical"
+                        android:text="产品价格(元)："
+                        android:textSize="18dp" />
+
+                    <EditText
+                        android:id="@+id/add_product_et_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="10dp"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:inputType="numberDecimal"
+                        android:textSize="18dp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/img_search_x_line" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:id="@+id/add_product_tv_hint1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:text="是否推荐"
+                        android:textSize="18dp" />
+
+                    <CheckBox
+                        android:id="@+id/add_product_cb_recommend"
+                        android:layout_width="66dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/group_card_sound_prompt_selector"
+                        android:button="@null"/>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/img_search_x_line" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="15dp"
+                        android:gravity="center_vertical"
+                        android:text="产品简介："
+                        android:textSize="18sp" />
+
+                        <EditText
+                            android:id="@+id/add_product_et_info"
+                            android:layout_width="280dp"
+                            android:layout_height="230dp"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="top|left"
+                            android:background="@null"
+                            android:hint="请输入商品介绍信息"
+                            android:textSize="16sp" />
+                </LinearLayout>
+                
+                 <Button
+	                android:id="@+id/add_product_btn_done"
+	                android:layout_width="fill_parent"
+	                android:layout_height="45dp"
+	                android:layout_margin="10dp"
+	                android:background="@drawable/login_btn_selector"
+	                android:text="确定添加"
+	                android:textColor="@color/white"
+	                android:visibility="gone"
+	                
+	                android:textSize="18sp" />
+                
+            </LinearLayout>
+
+           
+
+        </ScrollView>
+</LinearLayout>

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:actionbar="http://schemas.android.com/apk/res/com.bgood.xn"
+ 			  xmlns:circleimg="http://schemas.android.com/apk/res/com.bgood.xn"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_page_bg"
+    android:orientation="vertical" >
+
+	<include layout="@layout/title_bar"/>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent" >
+
+        <ProgressBar
+            android:id="@+id/user_card_progress"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true" />
+
+        <ScrollView
+            android:id="@+id/user_card_sl"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/img_user_center_bg"
+                    android:divider="@drawable/img_user_center_x_line"
+                    android:orientation="vertical"
+                    android:showDividers="middle" >
+
+                    <RelativeLayout
+                            android:id="@+id/user_center_rl_user_info"
+                            android:layout_width="match_parent"
+                            android:layout_height="88dp"
+                            android:background="@color/blue_little"
+                            android:layout_gravity="center_vertical"
+                            >
+
+                             <com.bgood.xn.view.RoundImageView
+                                    android:id="@+id/user_center_imgv_user_icon"
+						            android:layout_width="70dp"
+                                    android:layout_height="70dp"
+						            android:scaleType="centerCrop"
+						            circleimg:border_inside_color="@color/white"
+						            circleimg:border_outside_color="@color/white"
+						            circleimg:border_thickness="2px"
+                                    android:layout_margin="10dp"
+						            android:src="@drawable/icon_default" />
+
+                                  <TextView
+                                      android:id="@+id/user_center_tv_user_name"
+                                      android:text="笑笑"
+                                      style="@style/text_common"
+                                      android:layout_toRightOf="@id/user_center_imgv_user_icon"
+                                      android:layout_marginTop="25dp"
+                                      android:drawablePadding="5dp"
+                                      android:textColor="@color/white"
+                                      />
+
+                                   <ImageView
+                                      android:id="@+id/iv_sex"
+                                      android:layout_width="18dp"
+                                      android:layout_height="18dp"
+                                      android:layout_gravity="center_vertical"
+                                      android:layout_marginLeft="10dp"
+                                      android:layout_alignTop="@id/user_center_tv_user_name"
+                                      android:layout_toRightOf="@id/user_center_tv_user_name"
+                                      android:src="@drawable/img_common_sex_male" />
+
+                                  <TextView
+                                      android:id="@+id/tv_identity"
+                                      android:layout_alignTop="@id/iv_sex"
+                                      android:layout_toRightOf="@id/iv_sex"
+                                      style="@style/text_vip"/>
+
+                                    <TextView
+                                        android:id="@+id/user_center_tv_account_number"
+                                        style="@style/text_common"
+                                        android:layout_below="@id/user_center_tv_user_name"
+                                        android:layout_alignLeft="@id/user_center_tv_user_name"
+                                        android:layout_marginTop="10dp"
+                                        android:text="能能"
+                                        android:textColor="@color/white"
+                                        />
+
+                        </RelativeLayout>
+                        
+                  
+                    <LinearLayout 
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/comment_select_layout"
+                        android:orientation="horizontal"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        >
+                       <TextView 
+                           android:text="个性签名"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginLeft="20dp"
+                           android:layout_marginRight="20dp"
+                           />
+                       
+                       <TextView 
+                           android:id="@+id/tv_sign_name"
+                           android:layout_width="0dp"
+                           android:layout_weight="1"
+                           android:layout_height="wrap_content"
+                           android:textColor="@color/gray"
+                           android:text="我的中国心"
+                           android:layout_marginRight="10dp"
+                           />
+                        
+                        
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_action"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/comment_select_layout"
+                        android:divider="@drawable/img_user_center_y_line"
+                        android:orientation="horizontal"
+                        android:showDividers="middle" >
+                       
+                        <com.bgood.xn.view.ActionView
+			                android:id="@+id/av_add_attention"
+			                android:layout_width="0dp"
+			                android:layout_weight="1"
+			                android:layout_height="match_parent"
+			                android:gravity="center"
+							actionbar:img = "@drawable/img_user_card_iv_attention"
+							actionbar:text = "@string/action_add_attention"
+							/>
+                        
+                         <com.bgood.xn.view.ActionView
+			                android:id="@+id/av_add_friend"
+			                android:layout_width="0dp"
+			                android:layout_weight="1"
+			                android:layout_height="match_parent"
+			                android:gravity="center"
+							actionbar:img = "@drawable/img_user_card_iv_add_friend"
+							actionbar:text = "@string/action_add_friend"
+							/>
+                        
+                        <com.bgood.xn.view.ActionView
+			                android:id="@+id/av_call_message"
+			                android:layout_width="0dp"
+			                android:layout_weight="1"
+			                android:layout_height="match_parent"
+			                android:gravity="center"
+							actionbar:img = "@drawable/img_user_card_iv_chat"
+							actionbar:text = "@string/action_chat"
+							/>
+                       
+                        
+                         
+                          
+                   	 </LinearLayout>
+                    
+                    
+                     <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                         >
+                          
+                         
+                         <TextView 
+ 						       android:id="@+id/tv_iwant"
+ 						       android:drawableLeft="@drawable/icon_i_want"
+                                     android:text="我想"
+                                     style="@style/select_layout"
+                                     android:background="@null"
+                                     />
+                         
+							
+ 						<View style="@style/cut_line_horizontal" />
+ 						
+ 						<TextView 
+							    android:id="@+id/tv_ican"
+							    	  android:drawableLeft="@drawable/icon_i_can"
+                             		  android:text="我能"
+                             		  style="@style/select_layout"
+                                     android:background="@null"
+                             		  />
+ 						   	<View style="@style/cut_line_horizontal" />
+                        
+                           <TextView android:id="@+id/tv_xuanneng"
+                                     android:drawableLeft="@drawable/img_user_card_xuanneng"
+                                     android:text="我的炫能"
+                                     style="@style/select_layout"/>
+                           
+ 						<View style="@style/cut_line_horizontal" />
+                       
+                          <TextView android:id="@+id/tv_weiqiang"
+                                    android:drawableLeft="@drawable/img_user_card_weiqiang"
+                                    android:text="我的微墙"
+                                    style="@style/select_layout" />
+                          
+						 <View style="@style/cut_line_horizontal" />
+                     	  
+                     	  <TextView android:id="@+id/tv_shop"
+                                    android:drawableLeft="@drawable/img_user_center_shop"
+                                    android:text="我的店铺"
+                                    style="@style/select_layout"/>
+                   
+                    </LinearLayout>       
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+</LinearLayout>

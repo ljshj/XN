@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="blue_little">#5facff</color>
+    
+    <color name="bottom_dialog_bg">#e3e2e2</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="red">#FF0000</color>
+    <color name="grey">#c8c8c8</color>
+    <color name="gray">#808080</color>
+    <color name="text_color_normal">#c8c8c8</color>
+    <color name="color_home_tab_text_selected">#25a3d7</color>
+    <color name="color_home_tab_text_normal">#6d6d6d</color>
+    <color name="item_press_grey">#d0e6ff</color>
+    <color name="green">#00FF00</color>
+
+    <!-- 公共颜色值 -->
+    <color name="common_page_bg">#f0f0f0</color>
+    <color name="common_title">#626262</color>
+    <color name="listitem_transparent">#00000000</color>
+    <color name="pic_bg">#33838B8B</color>
+    <color name="home_type_text_select">#2e92ff</color>
+    <color name="grey1">#888888</color>
+    <color name="grey2">#909090</color>
+    <color name="translucent">#E0000000</color>
+
+    <!-- 搜索结果 -->
+    <color name="search_result_yellow">#ffebcb</color>
+    <color name="search_result_select_bule">#4ba2df</color>
+    <color name="search_result_unselect_black">#000000</color>
+
+    <!-- 消息 -->
+    <color name="common_title_indicator_grey">#e4e4e4</color>
+
+    <!-- 性别 -->
+    <color name="sex_text_selected">#0F96F5</color>
+    <color name="sex_text_normal">#000000</color>
+    
+    <!-- 生日 -->
+    <color name="birthday_dialog_bg">#D7D7D7</color>
+    <color name="home_check_search_normal">#494949</color>
+    <color name="home_check_search_checked">#ff5c30</color>
+    
+    
+    <color name="text_select_color">#343434</color>
+    
+    
+    
+    <!-- 个性化模块 -->
+    <color name="individuation_blue1">#5cb9e0</color>
+    <color name="individuation_white2">#ffffff</color>
+    <color name="individuation_purple3">#ab6afb</color>
+    <color name="individuation_green4">#48ce48</color>
+    <color name="individuation_lightblue5">#48c3ce</color>
+    <color name="individuation_yellow6">#e7e55c</color>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+	<color name="body_text_1">#ff000000</color>
+	<color name="body_text_2">#99000000</color>
+	<color name="body_text_disabled">#66000000</color>
+	<color name="body_text_1_inverse">#ffffffff</color>
+	<color name="body_text_2_inverse">#99ffffff</color>
+	<color name="accent_1">#ff29549f</color>
+	<color name="hyperlink">#ffff549f</color>
+	<color name="background_1">#ffffffff</color>
+	<color name="whats_on_separator">#4d000000</color>
+	<color name="all_track_color">#ff222222</color>
+	<color name="block_column_1">#ff0fabff</color>
+	<color name="block_column_2">#ffdf1831</color>
+	<color name="block_column_3">#ff009939</color>
+	<color name="red_dark">#9F1721</color>
+	<color name="gray_nomal">#F1F1F1</color>
+	<color name="gray_dark">#A1A1A1</color>
+	<color name="orange_normal">#F9A490</color>
+	<color name="khaki_light">#FFD6AB</color>
+	<color name="khaki_dark">#D5834D</color>
+	<color name="dark_orange">#F6690B</color>
+	<color name="little_gray">#d4d4d4</color>
+	<color name="blue">#3A5FCD</color>
+	<color name="app_bg">#dddcdc</color>
+	<color name="k_color">#1e24a0</color>
+	<color name="k_bg">#ebebeb</color>
+	<color name="k_line_below">#1e24a0</color>
+	<color name="transparent">#00000000</color>
+	<color name="bgColor">#000000</color>
+	<color name="title_clolor">#5a5a5a</color>
+	<color name="txt_gray">#323131</color>
+	<color name="txt_orange">#fa741f</color>
+	<color name="txt_red">#a71a1a</color>
+	<color name="account_profits">#fa7420</color>
+	<color name="helps_open_color">#d5d5d5</color>
+	<color name="gray_white">#ededed</color>
+	<color name="help_content_color">#513a25</color>
+	<color name="jiuhong">#930B0D</color>
+	<color name="gl_background">#737373</color>
+	<!-- 掌财颜色值 -->
+	<!-- 标题 -->
+	<color name="color_zc_black">#1f1f1f</color>
+ <!-- 风险的颜色 -->
+	<!-- 深灰 -->
+	<color name="color_zc_gray_dark">#5e5a5a</color>
+	<!-- 浅灰 -->
+	<color name="color_zc_gray_light">#aeaeae</color>
+	<!-- 中度灰，文本段落 -->
+	<color name="color_zc_gray_mid">#8a8a8a</color>
+	<!-- 红色字 -->
+	<color name="color_zc_red">#9f1721</color>
+	<!-- 橙色字 -->
+	<color name="color_zc_orange">#f4a854</color>
+	<!-- 佣金列表颜色 -->
+	<color name="color_zc_orange_light">#f9c888</color>
+    
+    
+    
+    
+	
+	<!-- 环信颜色值 -->
+	
+	 <color name="common_top_bar_blue">#4ebcd3</color>
+      <color name="btn_login_normal">#007086</color>
+    <color name="btn_login_pressed">#303744</color>
+    <color name="btn_logout_normal">#d33f3f</color>
+    <color name="btn_logout_pressed">#DA5A4D</color>
+    <color name="btn_register_normal">#2dafa3</color>
+    <color name="btn_register_pressed">#4ebcd3</color>
+    <color name="common_bottom_bar_normal_bg">#2d2f31</color>
+    <color name="common_bottom_bar_selected_bg">#161718</color>
+    <color name="common_botton_bar_blue">#2ea7e0</color>
+    <color name="common_bg">#fcfcfc</color>
+    <color name="btn_pressed_green_solid">#B6DA53</color>
+    <color name="divider_list">#cccccc</color>
+    <color name="top_bar_normal_bg">#4ebcd3</color>
+    <color name="error_item_color">#F6EBE6</color>
+    <color name="bottom_bar_normal_bg">#2D2F31</color>
+    <color name="bottom_text_color_normal">#ffffff</color>
+     <color name="btn_white_normal">#f7f8f8</color>
+    <color name="btn_white_pressed">#b5b5b6</color>
+    <color name="btn_green_noraml">#68C270</color>
+    <color name="btn_green_pressed">#6FCD78</color>
+    <color name="btn_gray_normal">#c0c0c0</color>
+     <color name="btn_gray_pressed_status">#b5b5b6</color>
+    <color name="btn_gray_pressed">#666667</color>
+    <color name="btn_blue_normal">#1e90ff</color>
+    <color name="btn_blue_pressed">#0066FF</color>
+     <color name="orange">#FFA500</color>
+     <color name="gray_pressed">#b5b5b6</color>
+     <color name="gray_normal">#666667</color>
+     <color name="grid_state_pressed">#1Affffff</color>
+    <color name="grid_state_focused">#80000000</color>
+    
+      <color name="voip_interface_text_color">#bababa</color>
+    <color name="black_deep">#FF000000</color>
+
+</resources>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+	<include layout="@layout/title_bar"/>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/tv_show_rule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/text_common"
+                android:text="点击查看有奖投稿规则"
+                android:textColor="@color/orange"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"
+                />
+            
+            <include layout="@layout/layout_common_publish" />
+            
+            <Button
+                android:id="@+id/weiqiang_publish_submit"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/login_btn_selector"
+                android:text="确定发表"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_page_bg"
+    android:orientation="vertical" >
+    
+<include layout="@layout/title_bar"/>
+    
+    <Button
+        android:id="@+id/my_xuanneng_btn_humor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/img_xuanneng_humor_icon" />
+    
+    <GridView
+        android:id="@+id/my_xuanneng_gv_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:listSelector="@drawable/adapter_view_item_selector"
+        android:paddingTop="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="5dp"
+        android:horizontalSpacing="5dp"
+        android:visibility="gone"
+        android:numColumns="3" >
+    </GridView>
+
+</LinearLayout>

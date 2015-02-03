@@ -1,0 +1,194 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:background="@color/common_page_bg"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/layout_edit"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
+
+        <ImageView
+            android:id="@+id/h_line"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/img_common_h_divider"
+            android:scaleType="matrix" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/chat_rl_send"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical" >
+
+                    <Button
+                        android:id="@+id/chat_b_record_indicator"
+                        android:layout_width="@dimen/chat_keybord_button_indicator"
+                        android:layout_height="@dimen/chat_keybord_button_indicator"
+                        android:background="@drawable/img_chat_type_record" />
+
+                    <Button
+                        android:id="@+id/chat_b_text_indicator"
+                        android:layout_width="@dimen/chat_keybord_button_indicator"
+                        android:layout_height="@dimen/chat_keybord_button_indicator"
+                        android:background="@drawable/img_chat_type_text"
+                        android:visibility="invisible" />
+                </RelativeLayout>
+
+                <ImageButton
+                    android:id="@+id/face_btn"
+                    android:layout_width="@dimen/chat_keybord_button_indicator"
+                    android:layout_height="@dimen/chat_keybord_button_indicator"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/img_chat_face" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp" >
+
+                    <EditText
+                        android:id="@+id/chat_et_edit"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/img_chat_text_edit"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:imeOptions="actionSend"
+                        android:inputType="textMultiLine"
+                        android:maxLength="500"
+                        android:maxLines="3"
+                        android:minHeight="40dp"
+                        android:padding="5dp" >
+                    </EditText>
+
+                    <Button
+                        android:id="@+id/chat_b_record"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/img_chat_text_edit"
+                        android:text="按住 说话"
+                        android:textSize="18dp"
+                        android:visibility="invisible" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/chat_rl_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:gravity="center_vertical" >
+
+                <ImageButton
+                    android:id="@+id/chat_iv_send_more"
+                    android:layout_width="@dimen/chat_keybord_button_indicator"
+                    android:layout_height="@dimen/chat_keybord_button_indicator"
+                    android:background="@drawable/img_chat_send_more" />
+
+                <Button
+                    android:id="@+id/chat_b_send"
+                    android:layout_width="@dimen/chat_keybord_button_indicator"
+                    android:layout_height="@dimen/chat_keybord_button_indicator"
+                    android:background="@drawable/img_chat_send"
+                    android:visibility="gone" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <RelativeLayout
+            android:id="@+id/layout_face"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:paddingBottom="30dp"
+            android:visibility="gone" >
+
+            <GridView
+                android:id="@+id/facegridview"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:columnWidth="50dp"
+                android:horizontalSpacing="10dp"
+                android:numColumns="auto_fit"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="12dp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/chat_ll_send_more"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <LinearLayout
+                android:id="@+id/chat_ll_send_img_indicator"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/img_chat_send_img_indicator" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="图片"
+                    android:textColor="@color/common_title" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/chat_ll_send_file_indicator"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/img_chat_send_file_indicator" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="图片"
+                    android:textColor="@color/common_title" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

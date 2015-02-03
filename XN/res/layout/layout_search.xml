@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+           <EditText
+              android:id="@+id/search_tv_content"
+              android:layout_width="0dp"
+              android:layout_weight="1"
+              android:layout_height="match_parent"
+              android:background="@drawable/img_search_bg"
+              android:hint="动词+名词;例如: &apos;&apos;打篮球&apos;&apos;"
+              android:paddingLeft="5dp"
+			  android:imeOptions="actionSearch"     
+              android:singleLine="true"
+              android:textSize="15sp" />
+           
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:layout_marginLeft="8dp"
+                android:text="取消"
+                android:textSize="18sp" />
+    </LinearLayout>
+
+
+        <ListView
+            android:id="@+id/search_lv_list"
+            style="@style/common_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/img_common_h_divider"
+            android:dividerHeight="1px" />
+
+</LinearLayout>

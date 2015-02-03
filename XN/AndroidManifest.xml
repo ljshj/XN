@@ -1,0 +1,763 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.bgood.xn"
+    android:versionCode="1"
+    android:versionName="1.0.0.8" >
+
+    <supports-screens 
+           android:largeScreens="true"  
+            android:normalScreens="true" 
+            android:smallScreens="true"  
+            android:anyDensity="true"/> 
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="19"
+         />
+    
+
+    <!-- 环信说明 -->
+    
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>  
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INSTALL_PACKAGES" />  
+    
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <!-- 检测网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />  
+    <!-- 获取mac地址作为用户的备用唯一标识 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />     
+    <!-- 获取用户手机的IMEI，用来唯一的标识用户 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />      
+    <!-- 缓存资源优先存入SDcard -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 允许应用程序联网，以便向我们的服务器端发送数据 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" /> <!-- 振动权限 -->
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 允许拍照权限 -->
+    <uses-feature android:name="android.hardware.camera" /> <!-- 摄像头功能 -->
+    <uses-feature android:name="android.hardware.camera.autofocus" /> <!-- 是否聚焦 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+   <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" /> 
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" /> 
+    
+    <permission android:name="android.permission.BAIDU_LOCATION_SERVICE" />
+
+    <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE" />
+    
+    <application
+		 android:name="com.bgood.xn.system.BGApp"
+        android:allowBackup="true"
+        android:icon="@drawable/icon_app"
+        android:label="@string/app_name"
+        android:theme="@style/APPTheme" >
+        
+<!--             android:launchMode="singleTask" -->
+          <activity
+            android:name=".ui.IndexActivity"
+            android:screenOrientation="portrait" 
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppIndexTheme"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+          <!-- 启动模块 -->
+          
+            <activity
+            android:name="com.bgood.xn.view.photoview.ImagePagerActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+          <!-- 启动模块 -->
+          
+            <activity
+            android:name=".ui.welcome.NavigateActivity"
+            android:theme="@style/AppIndexTheme"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        
+         <activity
+            android:name=".ui.MainActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
+         
+         
+          <activity
+            android:name=".ui.home.HomeActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+          
+          <activity
+            android:name=".ui.weiqiang.WeiqiangActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+                    
+          <activity
+            android:name=".ui.xuanneng.XuannengActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+                              
+          <activity
+            android:name=".ui.message.MessageActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+                                        
+          <activity
+            android:name=".ui.user.UserCenterActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+         
+         
+         <!-- 关于账号模块 -->
+         
+          <activity
+            android:name=".ui.user.account.RegisterActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+          <activity
+            android:name=".ui.user.account.ForgetPasswordActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+          
+          <activity
+            android:name=".ui.user.account.ForgetPasswordCodeActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+                    
+          <activity
+            android:name=".ui.user.account.ForgetPasswordNewPassWordActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+                              
+          <activity
+            android:name=".ui.user.account.LoginActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+                                        
+          <activity
+            android:name=".ui.user.account.ModifyPasswordActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+                                                  
+          <activity
+            android:name=".ui.user.account.RegisterCodeActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+                                                            
+          <activity
+            android:name=".ui.user.account.RegisterDoneActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+                                                                      
+         <activity
+            android:name=".ui.user.account.RegisterSelectNumberActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        
+	<!-- 首页模块 -->
+        <activity
+            android:name=".ui.home.SearchActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|orientation"
+            android:windowSoftInputMode="stateAlwaysVisible"
+             />
+        <activity
+            android:name=".ui.home.SpeechSearchActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.SearchResultActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        
+    <!-- 消息模块 -->    
+        <activity
+            android:name=".ui.message.MessageMainActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.message.MessageCenterActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.message.MessageFriendActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.message.MessageGroupActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.message.MessageCommunicationHallActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.message.CommunicationHallCardActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.message.UserCardActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.message.UserDataActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.message.GroupDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+<!--         <activity
+            android:name=".ui.message.ChatActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity> -->
+        <activity
+            android:name=".ui.message.CommunicateDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.message.GroupCardActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.message.GroupAllMemberActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.message.SearchFriendOrGroupActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.message.AddFriendActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.message.AddGroupActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.message.CreateGroupActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+        
+        <!-- 微墙模块 -->
+        <activity
+            android:name=".ui.weiqiang.WeiqiangDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.weiqiang.WeiqiangPublishActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.weiqiang.WeiqiangPersonActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.weiqiang.WeiqiangMentionActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+       <!-- 个人中心 -->
+        <activity
+            android:name=".ui.user.AccountCenterActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.user.PersonalDataActivity"
+            android:configChanges="orientation|keyboardHidden"
+            />
+        
+           <activity
+            android:name=".ui.user.AttentionActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+           
+                   <activity
+            android:name=".ui.user.SettingsActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        
+        <!-- 个人中心，资料 -->
+        <activity
+            android:name=".ui.user.info.NameActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name=".ui.user.info.SignatureActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name=".ui.user.info.SexActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.user.info.AgeActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name=".ui.user.info.BirthdayActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name=".ui.user.info.PrivinceActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.user.info.CityActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.user.info.ConstellationActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.user.info.EmailActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name=".ui.user.info.BloodGroupActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.user.info.NameCardActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.user.info.IThinkActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name=".ui.user.info.ICanActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+            
+       <!-- 个人中心，更多 --> 
+        
+         <activity
+            android:name=".ui.user.more.MoreActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+         
+          <activity
+            android:name=".ui.user.more.FeedbackActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+          
+          <activity
+            android:name=".ui.user.more.FeedbackShowActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+          
+           <activity
+            android:name=".ui.user.more.AboutUsActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+           
+           <!-- 版本升级的服务 -->
+           <service
+            android:name="com.bgood.xn.utils.update.updateService"
+            android:enabled="true"
+            android:label="@string/app_name">
+            </service>
+        
+        
+     <!-- 个人中心，产品 -->
+
+        <activity
+            android:name=".ui.user.product.ShowcaseActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name=".ui.user.product.ProductListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.user.product.ProductDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.user.product.ProductAddActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.user.product.ProductEditListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="stateAlwaysVisible"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.user.product.ProductEditActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.user.product.ProductCommentActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.user.product.ProductCommentShowActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.user.product.IndividuationActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.user.ApplicationManagementActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+       <!-- 炫能,幽默秀 -->
+        <activity
+            android:name="com.bgood.xn.ui.xuanneng.joke.JokeMainActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+       <activity
+            android:name="com.bgood.xn.ui.xuanneng.joke.JokeDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+       <activity
+            android:name="com.bgood.xn.ui.xuanneng.joke.JokeMentionActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+        <activity
+            android:name="com.bgood.xn.ui.xuanneng.joke.JokeOrderActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+       <activity
+            android:name="com.bgood.xn.ui.xuanneng.joke.JokePublishActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+        <activity
+            android:name="com.bgood.xn.ui.xuanneng.joke.JokeRandomActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+        <activity
+            android:name="com.bgood.xn.ui.xuanneng.joke.JokeRankActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+
+         <activity
+            android:name="com.bgood.xn.ui.xuanneng.joke.JokePersonActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+         <activity
+            android:name="com.bgood.xn.ui.xuanneng.joke.JokeMeActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+         
+        <activity
+            android:name="com.bgood.xn.ui.xuanneng.XuanNengMainActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+        <!-- 裁剪相片 -->
+		<activity android:name=".utils.pic.CropImageActivity"
+			android:screenOrientation="portrait" android:windowSoftInputMode="stateAlwaysHidden" />
+		
+		
+		
+		
+		 <!-- ###################注册SDK使用的Activity###################### -->
+        <!--分享编辑页-->
+        <activity
+            android:name="com.umeng.socialize.view.ShareActivity"
+            android:configChanges="orientation|keyboard"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:theme="@style/Theme.UMDialog"
+            android:windowSoftInputMode="stateVisible|adjustResize" >
+        </activity>
+
+        <!-- ############ QQ空间和QQ SSO授权的Activity注册 ############ -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- 100424468，如果你使用的公用账号，则不需要修改；否则修改成你在QQ开放平台申请的 APP ID-->
+                <data android:scheme="tencent1103507475" /> 
+            </intent-filter>
+        </activity>
+        <activity android:name="com.tencent.connect.common.AssistActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:screenOrientation="portrait">
+        </activity>
+        
+        <activity
+		   android:name=".wxapi.WXEntryActivity"
+		   android:theme="@android:style/Theme.Translucent.NoTitleBar"
+		   android:configChanges="keyboardHidden|orientation|screenSize"
+		   android:exported="true"
+		   android:screenOrientation="portrait" />
+
+    <!-- ###################添加UmengAppkey###################### -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="544e311cfd98c5dc4e00a0de" >
+        </meta-data>
+        
+         <!-- 百度地图所需的service -->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+        
+		<!-- ########################################环信聊天模块############################################# -->
+        <!--  环信需要的key-->
+        
+         <!-- Required. AppKey copied from Portal -->
+		    <meta-data android:name="EASEMOB_APPKEY"  android:value="banggood#shownengapp" />
+		    <!-- Required SDK核心功能-->
+		    <service android:name="com.easemob.chat.EMChatService" />
+		    
+	       <!-- 聊天页面 -->
+        <activity
+            android:name="com.easemob.chat.activity.ChatActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
+        <!-- 添加好友 -->
+        <activity
+            android:name="com.easemob.chat.activity.AddContactActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" >
+        </activity>
+        <!-- 群组详情 -->
+        <activity
+            android:name="com.bgood.xn.ui.message.GroupDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" >
+        </activity>
+                <!-- 群组选人 -->
+        <activity
+            android:name="com.bgood.xn.ui.message.GroupPickContactsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <!-- 群组列表 -->
+        <activity
+            android:name="com.easemob.chat.activity.GroupsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <!-- 新建群组 -->
+        <activity
+            android:name="com.easemob.chat.activity.NewGroupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <!-- 退出群组提示框 -->
+        <activity
+            android:name="com.easemob.chat.activity.ExitGroupDialog"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyleBottom" >
+        </activity>
+        <!-- 地图 -->
+        <activity
+            android:name="com.easemob.chat.activity.BaiduMapActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" >
+        </activity>
+
+        <!-- 新的朋友邀请消息页面 -->
+        <activity
+            android:name="com.easemob.chat.activity.NewFriendsMsgActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" >
+        </activity>
+        <!-- 转发消息用户列表页面 -->
+        <activity
+            android:name="com.easemob.chat.activity.ForwardMessageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <!-- 自定义的contextmenu -->
+        <activity
+            android:name="com.easemob.chat.activity.ContextMenu"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyle" >
+        </activity>
+        <!-- 自定义的alertdialog -->
+        <activity
+            android:name="com.easemob.chat.activity.AlertDialog"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyle" >
+        </activity>
+        <!-- 显示下载大图页面 -->
+        <activity
+            android:name="com.easemob.chat.activity.ShowBigImage"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" >
+        </activity>
+        <!-- 下载文件 -->
+        <activity
+            android:name="com.easemob.chat.activity.ShowNormalFileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" >
+        </activity>
+        <!-- 黑名单 -->
+        <activity
+            android:name="com.easemob.chat.activity.BlacklistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" >
+        </activity>
+
+        <!-- 公开的群聊列表 -->
+        <activity
+            android:name="com.easemob.chat.activity.PublicGroupsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <!-- 语音通话页面 -->
+        <activity
+            android:name="com.easemob.chat.activity.VoiceCallActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/nornal_style" >
+        </activity>
+        <!-- 群聊简单信息 -->
+        <activity
+            android:name="com.easemob.chat.activity.GroupSimpleDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" >
+        </activity>
+        <!-- 群组黑名单用户列表 -->
+        <activity
+            android:name="com.easemob.chat.activity.GroupBlacklistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" >
+        </activity>
+        <activity
+            android:name="com.easemob.chat.activity.EditActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible"
+            android:theme="@style/horizontal_slide" >
+        </activity>
+        <activity
+            android:name="com.easemob.chat.activity.ShowVideoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+        <!-- choose video -->
+        <activity
+            android:name="com.easemob.chat.activity.ImageGridActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+        <activity
+            android:name="com.easemob.chat.activity.RecorderVideoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+        <!-- upload error log -->
+        <activity
+            android:name="com.easemob.chat.activity.DiagnoseActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+        
+        
+        <!-- 同步数据的服务 -->
+
+		<service android:name="com.bgood.xn.ui.message.SyncIMDataService">
+		    <intent-filter>
+		        <action android:name="com.bgood.xn.ui.message.SYNCDATA"></action>
+		    </intent-filter>
+		</service>
+
+
+        <!-- 开机自启动服务 -->
+        <receiver android:name="com.easemob.chat.StartServiceReceiver" >
+            <intent-filter android:priority="1000" >
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </receiver>
+    </application>
+    
+
+</manifest>

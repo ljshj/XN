@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+android:background="@drawable/item_press_grey_selector"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/message_friend_list_margin_left_right"
+    android:paddingRight="@dimen/message_friend_list_margin_left_right" >
+
+    <ImageView
+        android:id="@+id/friend_list_parent_item_icon"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:background="@drawable/friend_list_group_indicator" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:id="@+id/friend_list_parent_item_name"
+            style="@style/tv_singline_ellipsize_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="默认分组"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/friend_list_parent_item_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="2/2"
+            android:textSize="18dp" />
+    </RelativeLayout>
+
+</LinearLayout>

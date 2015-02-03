@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/img_user_center_bg"
+    >
+ 	<include layout="@layout/top_img_name_layout"/>
+                
+    <TextView 
+        android:id="@+id/product_comment_item_tv_content"
+        style="@style/item_content"
+        android:text="我是一个兵啊"
+        />
+</LinearLayout>

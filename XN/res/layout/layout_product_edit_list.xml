@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sp="http://schemas.android.com/apk/res/com.bgood.xn"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_page_bg"
+    android:orientation="vertical" >
+
+	<include layout="@layout/title_bar"/>
+
+        
+
+        <com.bgood.xn.widget.SwipeListView
+            android:id="@+id/product_edit_list_lv_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff4f7f9"
+            android:cacheColorHint="#00000000"
+            android:divider="#dddbdb"
+            android:dividerHeight="1dp"
+            sp:right_width="120dp">
+        </com.bgood.xn.widget.SwipeListView>
+
+</LinearLayout>

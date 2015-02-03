@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/translucent" 
+    >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/bottom_dialog_bg"
+        android:orientation="vertical" >
+<!-- 
+        <TextView
+            android:id="@+id/tv_title"
+           	style="@style/bottom_menu_item"
+           	android:text="添加照片"
+           	android:textSize="25sp"
+           /> -->
+
+        <Button
+            android:id="@+id/btn_take_photo"
+            style="@style/bottom_menu_item_select"
+            android:layout_marginTop="20dp"
+            android:text="照相" />
+        
+          <Button
+            android:id="@+id/btn_select_photo"
+           style="@style/bottom_menu_item_select"
+            android:text="从手机中选择" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            style="@style/bottom_menu_item_select"
+            android:background="@drawable/myself_info_cancel_selector"
+             android:layout_marginTop="20dp"
+             android:layout_marginBottom="20dp"
+            android:text="取消" />
+    </LinearLayout>
+
+</FrameLayout>

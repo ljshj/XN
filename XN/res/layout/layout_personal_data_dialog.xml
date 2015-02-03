@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/translucent" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="180dp"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+        <TextView 
+            android:id="@+id/personal_data_dialog_tv_photograph"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:text="拍照"/>
+        
+        <View 
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@drawable/img_search_x_line"/>
+        
+        <TextView 
+            android:id="@+id/personal_data_dialog_tv_album"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:text="相册选取"/>
+        
+        <View 
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@drawable/img_search_x_line"/>
+
+        <TextView 
+            android:id="@+id/personal_data_dialog_tv_cancel"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:text="取消"/>
+
+    </LinearLayout>
+
+</FrameLayout>

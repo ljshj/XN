@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" 
+    android:gravity="center"
+    >
+    <TextView 
+        android:id="@+id/tv_title"
+        style="@style/message_main_tab_button"
+         android:gravity="center"
+         android:text="消息"
+         android:textColor="@color/color_home_radiobutton_text" 
+        />
+    
+    <TextView 
+        android:id="@+id/tv_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100"
+        style="@style/action_text"
+        android:layout_gravity="right|top"
+        android:textColor="@color/white"
+        android:background="@drawable/unread_count_bg"
+        />
+</FrameLayout>

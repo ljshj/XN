@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_page_bg"
+    android:orientation="vertical" >
+
+	<include layout="@layout/title_bar"/>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <RadioGroup
+                android:id="@+id/constellation_rg_constellation"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical" >
+
+                <RadioButton
+                    android:id="@+id/constellation_rb_bai_yang"
+                    android:layout_width="fill_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:button="@null"
+                    android:checked="true"
+                    android:drawableRight="@drawable/sex_radiobutton_selector"
+                    android:text="白羊座"
+                    android:textColor="@color/color_sex_radiobutton" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/img_search_x_line" />
+
+                <RadioButton
+                    android:id="@+id/constellation_rb_jin_niu"
+                    android:layout_width="fill_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:button="@null"
+                    android:drawableRight="@drawable/sex_radiobutton_selector"
+                    android:text="金牛座"
+                    android:textColor="@color/color_sex_radiobutton" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/img_search_x_line" />
+
+                <RadioButton
+                    android:id="@+id/constellation_rb_shuang_zi"
+                    android:layout_width="fill_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:button="@null"
+                    android:drawableRight="@drawable/sex_radiobutton_selector"
+                    android:text="双子座"
+                    android:textColor="@color/color_sex_radiobutton" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/img_search_x_line" />
+
+                <RadioButton
+                    android:id="@+id/constellation_rb_ju_xie"
+                    android:layout_width="fill_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:button="@null"
+                    android:drawableRight="@drawable/sex_radiobutton_selector"
+                    android:text="巨蟹座"
+                    android:textColor="@color/color_sex_radiobutton" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/img_search_x_line" />
+
+                <RadioButton
+                    android:id="@+id/constellation_rb_shi_zi"
+                    android:layout_width="fill_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:button="@null"
+                    android:drawableRight="@drawable/sex_radiobutton_selector"
+                    android:text="狮子座"
+                    android:textColor="@color/color_sex_radiobutton" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/img_search_x_line" />
+
+                <RadioButton
+                    android:id="@+id/constellation_rb_chu_nv"
+                    android:layout_width="fill_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:button="@null"
+                    android:drawableRight="@drawable/sex_radiobutton_selector"
+                    android:text="处女座"
+                    android:textColor="@color/color_sex_radiobutton" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/img_search_x_line" />
+
+                <RadioButton
+                    android:id="@+id/constellation_rb_tian_cheng"
+                    android:layout_width="fill_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:button="@null"
+                    android:drawableRight="@drawable/sex_radiobutton_selector"
+                    android:text="天秤座"
+                    android:textColor="@color/color_sex_radiobutton" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/img_search_x_line" />
+
+                <RadioButton
+                    android:id="@+id/constellation_rb_tian_xie"
+                    android:layout_width="fill_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:button="@null"
+                    android:drawableRight="@drawable/sex_radiobutton_selector"
+                    android:text="天蝎座"
+                    android:textColor="@color/color_sex_radiobutton" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/img_search_x_line" />
+
+                <RadioButton
+                    android:id="@+id/constellation_rb_she_shou"
+                    android:layout_width="fill_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:button="@null"
+                    android:drawableRight="@drawable/sex_radiobutton_selector"
+                    android:text="射手座"
+                    android:textColor="@color/color_sex_radiobutton" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/img_search_x_line" />
+
+                <RadioButton
+                    android:id="@+id/constellation_rb_mo_xie"
+                    android:layout_width="fill_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:button="@null"
+                    android:drawableRight="@drawable/sex_radiobutton_selector"
+                    android:text="魔蝎座"
+                    android:textColor="@color/color_sex_radiobutton" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/img_search_x_line" />
+
+                <RadioButton
+                    android:id="@+id/constellation_rb_shui_ping"
+                    android:layout_width="fill_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:button="@null"
+                    android:drawableRight="@drawable/sex_radiobutton_selector"
+                    android:text="水瓶座"
+                    android:textColor="@color/color_sex_radiobutton" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/img_search_x_line" />
+
+                <RadioButton
+                    android:id="@+id/constellation_rb_shuang_yu"
+                    android:layout_width="fill_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:button="@null"
+                    android:drawableRight="@drawable/sex_radiobutton_selector"
+                    android:text="双鱼座"
+                    android:textColor="@color/color_sex_radiobutton" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/img_search_x_line" />
+            </RadioGroup>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_page_bg"
+    android:orientation="vertical" >
+    
+	<include layout="@layout/title_bar"/>
+    
+    <RadioGroup 
+        android:id="@+id/sex_rg_sex"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white">
+        
+        <RadioButton 
+            android:id="@+id/sex_rb_male"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:text="男"
+            android:textColor="@color/color_sex_radiobutton"
+            android:checked="true"
+            android:button="@null"
+            android:drawableRight="@drawable/sex_radiobutton_selector"/>
+        
+        <View 
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/img_search_x_line"/>
+        
+        <RadioButton 
+            android:id="@+id/sex_rb_female"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:textColor="@color/color_sex_radiobutton"
+            android:text="女"
+            android:button="@null"
+            android:drawableRight="@drawable/sex_radiobutton_selector"/>
+        
+        <View 
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/img_search_x_line"/>
+        
+        <RadioButton 
+            android:id="@+id/sex_rb_secrecy"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:textColor="@color/color_sex_radiobutton"
+            android:text="保密"
+            android:visibility="gone"
+            android:button="@null"
+            android:drawableRight="@drawable/sex_radiobutton_selector"/>
+        <View 
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@drawable/img_search_x_line"/>
+    </RadioGroup>
+
+</LinearLayout>

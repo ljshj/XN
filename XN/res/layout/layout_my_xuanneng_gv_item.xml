@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/imy_xuanneng_item_ll"
+        android:layout_width="74dip"
+        android:layout_height="74dip"
+        android:background="@color/pic_bg"
+        android:gravity="center" >
+
+        <ImageView
+            android:id="@+id/my_xuanneng_item_imgv_icon"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:src="@drawable/icon_default" >
+        </ImageView>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/my_xuanneng_item_tv_name"
+        style="@style/gridview_item_tv_style"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="#FF000000" >
+    </TextView>
+
+</LinearLayout>

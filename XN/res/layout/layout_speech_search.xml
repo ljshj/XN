@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <RelativeLayout
+        android:id="@+id/speech_search_rl_title"
+        style="@style/common_top_title_style" >
+
+        <Button
+            android:id="@+id/speech_search_btn_back"
+            style="@style/common_btn_back_style" />
+
+        <TextView
+            android:id="@+id/speech_search_tv_title"
+            style="@style/common_tv_title_style"
+            android:text="语音搜索" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent" >
+
+        <ImageView
+            android:id="@+id/speech_search_imgv_speech"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_gravity="center"
+            android:src="@drawable/img_speech_start_1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="110dp"
+            android:text="语音搜索准备成功"
+            android:textColor="#606060"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/speech_search_tv_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="150dp"
+            android:text="请点击"
+            android:textColor="#606060"
+            android:textSize="28dp"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+</LinearLayout>
