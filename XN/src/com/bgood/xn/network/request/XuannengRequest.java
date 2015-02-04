@@ -290,4 +290,26 @@ public class XuannengRequest extends BaseNetWork {
 				setBody(body);
 				 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 			 }
+		 
+		 /**、
+		  * 
+		  * @todo:修改炫能
+		  * @date:2014-10-20 下午6:25:50
+		  * @author:hg_liuzl@163.com
+		  * @params:@param mHttpTaskListener
+		  * @params:@param context
+		  * @params:@param phone
+		  */
+		 public void requestXuanUpdate(TaskListenerWithState mHttpTaskListener,Context context,String info,String xnid){
+			 	setMessageType(70018);
+				JSONObject body = new JSONObject();
+				try {
+					body.put("info", info);
+					body.put("xnid", xnid);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				setBody(body);
+				 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 }
 }

@@ -301,6 +301,7 @@
         <activity
             android:name=".ui.user.PersonalDataActivity"
             android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" 
             />
         
            <activity

@@ -7,7 +7,7 @@
 	<include layout="@layout/title_bar"/>
 
     <ScrollView
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
         <LinearLayout
@@ -28,16 +28,6 @@
                 />
             
             <include layout="@layout/layout_common_publish" />
-            
-            <Button
-                android:id="@+id/weiqiang_publish_submit"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/login_btn_selector"
-                android:text="确定发表"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
         </LinearLayout>
     </ScrollView>
 

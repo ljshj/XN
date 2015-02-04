@@ -7,16 +7,15 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -26,20 +25,18 @@ import android.widget.GridView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.ImageAdapter;
-import com.bgood.xn.bean.ImageBean;
+import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpRequestInfo;
 import com.bgood.xn.network.http.HttpResponseInfo;
-import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.FileRequest;
 import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.system.BGApp;
-import com.bgood.xn.system.Const;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.utils.ImgUtils;
-import com.bgood.xn.utils.WindowUtil;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.LoadingProgress;
 import com.bgood.xn.view.dialog.BottomDialog;
@@ -80,26 +77,57 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
     
     private int uploadCount = 0;
     
+    private TitleBar mTitleBar;
+    private WeiQiangBean mWeiqiangBean = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_weiqiang_publish);
-		(new TitleBar(mActivity)).initTitleBar("发微墙");
-		files.add(null);
-		bitmaps.add(null);
+		mWeiqiangBean = (WeiQiangBean) getIntent().getSerializableExtra(WeiQiangBean.KEY_WEIQIANG_BEAN);
+		mTitleBar = new TitleBar(mActivity);
+		mTitleBar.initAllBar(null == mWeiqiangBean ?"发微墙":"编辑微墙", null == mWeiqiangBean?"发表":"修改");
+		mTitleBar.rightBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				doSubmit();
+			}
+		});
 		initViews();
+		setData();
 	}
 
 	private void initViews()
 	{
 		gridview_images = (GridView) findViewById(R.id.gridview_images);
-		adapter = new ImageAdapter(bitmaps,this,this);
-		gridview_images.setAdapter(adapter);
-		gridview_images.setOnItemClickListener(this);
 		comment_content = (EditText) findViewById(R.id.comment_content);
-		findViewById(R.id.weiqiang_publish_submit).setOnClickListener(this);
+	}
+	
+	/**
+	 * 
+	 * @todo:设置数据
+	 * @date:2015-2-4 下午3:55:16
+	 * @author:hg_liuzl@163.com
+	 * @params:
+	 */
+	private void setData() {
+		if(null == mWeiqiangBean){
+			adapter = new ImageAdapter(bitmaps,this,this);
+			gridview_images.setAdapter(adapter);
+			gridview_images.setOnItemClickListener(this);
+			files.add(null);
+			bitmaps.add(null);
+		}else{
+			if(mWeiqiangBean.imgs.size()>0){
+				adapter = new ImageAdapter(mWeiqiangBean.imgs,this,this);
+				gridview_images.setAdapter(adapter);
+				gridview_images.setVisibility(View.VISIBLE);
+			}else{
+				gridview_images.setVisibility(View.GONE);
+			}
+			comment_content.setText(mWeiqiangBean.content);
+		}
 	}
 
 
@@ -111,11 +139,6 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 				showPicDialog();
 			}
 		}
-		
-//		else{
-//			//查看图片
-//			WindowUtil.getInstance().dialogViewPagerShow(mActivity, listImg, position);
-//		}
 	}
 	
 	private void checkInfo()
@@ -197,7 +220,7 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			switch (bNetWork.getMessageType()) {
-			case 860003:
+			case 860003:	//发微墙
 				LoadingProgress.getInstance().dismiss();
 				if(bNetWork.getReturnCode() ==  ReturnCode.RETURNCODE_OK){
 					BToast.show(mActivity,"微墙发送成功");
@@ -205,7 +228,15 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 				}else{
 					BToast.show(mActivity,"微墙发送失败");
 				}
-				break;					
+				break;		
+			case 860011: //修改微墙
+				if(bNetWork.getReturnCode() ==  ReturnCode.RETURNCODE_OK){
+					BToast.show(mActivity," 修改成功");
+					finish();
+				}else{
+					BToast.show(mActivity,"修改失败");
+				}
+				break;
 			default:	//因为上传图片 没有设置messageType
 				JSONObject object = bNetWork.getBody();
 				String status = object.optString("success");
@@ -226,11 +257,19 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 			}
 		}
 	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.weiqiang_publish_submit:
+	
+	/**
+	 * 
+	 * @todo:提交
+	 * @date:2015-2-4 下午4:07:12
+	 * @author:hg_liuzl@163.com
+	 * @params:
+	 */
+	private void doSubmit() {
+		
+		if(null!=mWeiqiangBean){
+			WeiqiangRequest.getInstance().requestWeiqiangUpdate(this, mActivity, m_content,mWeiqiangBean.weiboid);
+		}else{
 			files.remove(files.size()-1);	//移除最后一张空白的图片
 			if(files.size()>0){	//如果有图片的话
 				m_content = comment_content.getText().toString().trim();
@@ -243,12 +282,17 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 				smallImgs = new String[files.size()];
 				LoadingProgress.getInstance().show(mActivity, "正在发送微墙");
 				ImgUtils.compressBmpToFile(BitmapFactory.decodeFile(files.get(uploadCount).getAbsolutePath()), files.get(uploadCount));
-
+	
 				FileRequest.getInstance().requestUpLoadFile(this,mActivity,false,files.get(uploadCount), String.valueOf(BGApp.mUserId), "webo", "jpg");
 			}else{
 				checkInfo();
 			}
-			break;
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
 		case R.id.btn_take_photo:
 			dialog.dismiss();
 			tempFile = ImgUtils.takePicture(mActivity, tempFile, FLAG_CHOOSE_FROM_CAMERA);
@@ -266,7 +310,6 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 			files.remove(position);
 			adapter.notifyDataSetChanged();
 			break;
-
 		default:
 			break;
 		}

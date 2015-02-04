@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.ui.help.DeleteListener;
+import com.bgood.xn.ui.help.IDeleteCallback;
 import com.bgood.xn.ui.user.info.ShowNameCardListener;
 import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.utils.ToolUtils;
@@ -41,6 +43,7 @@ public class WeiqiangAdapter extends KBaseAdapter
 			convertView = mInflater.inflate(R.layout.weiqiang_item_layout, parent, false);
 			holder.ivAuthorImg = (ImageView) convertView.findViewById(R.id.iv_img);
 			holder.tvAuthorName = (TextView) convertView.findViewById(R.id.tv_nick);
+			holder.ivDelete = (ImageView) convertView.findViewById(R.id.iv_delete);
 			holder.tvTime = (TextView) convertView.findViewById(R.id.tv_time);
 			holder.tvComments = (TextView) convertView.findViewById(R.id.tv_comments);
 			holder.gridView = (NoScrollGridView) convertView.findViewById(R.id.gv_show_img);
@@ -70,6 +73,12 @@ public class WeiqiangAdapter extends KBaseAdapter
 		holder.tvAuthorName.setText(weiqiangBean.name);
 		holder.tvAuthorName.setOnClickListener(new ShowNameCardListener(weiqiangBean, mActivity));
 		
+		if(!TextUtils.isEmpty(BGApp.mUserId)&& BGApp.mUserId.equals(String.valueOf(weiqiangBean.userid))){
+			holder.ivDelete.setVisibility(View.VISIBLE);
+			holder.ivAuthorImg.setOnClickListener(new DeleteListener(weiqiangBean, mActivity,callback));
+		}else{
+			holder.ivDelete.setVisibility(View.GONE);
+		}
 		
 		holder.tvTime.setText(ToolUtils.getFormatDate(weiqiangBean.date_time));
 		
@@ -110,20 +119,32 @@ public class WeiqiangAdapter extends KBaseAdapter
 		
 		return convertView;
 	}
+	
+	/**删除微墙的回调*/
+	private IDeleteCallback callback = new IDeleteCallback() {
+		@Override
+		public void deleteAction(final Object object) {
+			if(object instanceof WeiQiangBean){
+				mList.remove(object);
+				notifyDataSetChanged();
+			}
+		}
+	};
 
 	final class Holder
 	{
-		public ImageView ivAuthorImg;
-		public TextView tvAuthorName;
-		public TextView tvTime;
-		public TextView tvComments;
+	      ImageView ivDelete;
+		 ImageView ivAuthorImg;
+		 TextView tvAuthorName;
+		 TextView tvTime;
+		 TextView tvComments;
 		
-		public LinearLayout llTransArea;
-		public TextView tvOldAuthorName;
-		public TextView tvContent;
-		public NoScrollGridView gridView,oldgridView;
+		 LinearLayout llTransArea;
+		 TextView tvOldAuthorName;
+		 TextView tvContent;
+		 NoScrollGridView gridView,oldgridView;
 		
-		public ActionView avZan,avReply,avTranspnt,avShare;
+		 ActionView avZan,avReply,avTranspnt,avShare;
 	}
 
 }

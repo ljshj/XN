@@ -107,6 +107,7 @@ public class AddFriendActivity extends BaseShowDataActivity implements IXListVie
 			return;
 		}else{
 			isRefreshAction = true;
+			m_start = 0;
 			doRequest();
 		}
 	}
@@ -117,12 +118,14 @@ public class AddFriendActivity extends BaseShowDataActivity implements IXListVie
 
 	@Override
 	public void onRefresh() {
+		m_start = 0;
 		isRefreshAction = true;
 		doRequest();
 	}
 
 	@Override
 	public void onLoadMore() {
+		isRefreshAction = false;
 		doRequest();
 	}
 
@@ -133,6 +136,7 @@ public class AddFriendActivity extends BaseShowDataActivity implements IXListVie
 			String strJson = bNetWork.getStrJson();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				MemberResultResponse response = JSON.parseObject(strJson, MemberResultResponse.class);
+				m_start += PAGE_SIZE_ADD;
 		    	 setDataAdapter(m_memberXLv, m_memberAdapter, m_memberList, response.items,isRefreshAction);
 				}
 			}

@@ -1,6 +1,5 @@
 package com.bgood.xn.bean;
 
-import com.bgood.xn.system.SystemConfig;
 
 /**
  * @todo:关注类，关注我的与我关注的
@@ -19,16 +18,12 @@ public class AttentionBean {
 	public int sex;
 	public int searchtype;
 	public String name;
-	public String img;
+	public String photo;
 	public int userid;
 	public int level;
 	public String signatrue;
 	public int guanzhutype;
 	public String ican;
 	public String ineed;
-	
-	public String getImg() {
-		return SystemConfig.FILE_SERVER + img;
-	}
 }
 

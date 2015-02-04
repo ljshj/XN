@@ -14,7 +14,10 @@ import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.JokeBean;
+import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.ui.help.DeleteListener;
+import com.bgood.xn.ui.help.IDeleteCallback;
 import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.ui.user.info.ShowNameCardListener;
 import com.bgood.xn.utils.ImgUtils;
@@ -59,6 +62,7 @@ public class JokeAdapter extends KBaseAdapter
 			holder.tvComments = (TextView) convertView.findViewById(R.id.tv_comments);
 			holder.gridView = (GridView) convertView.findViewById(R.id.gv_show_img);
 			holder.tvRank = (TextView) convertView.findViewById(R.id.tv_rank);
+			holder.ivDelete = (ImageView) convertView.findViewById(R.id.iv_delete);
 			
 			holder.llTransArea = (LinearLayout) convertView.findViewById(R.id.ll_old_area);
 			holder.tvOldAuthorName = (TextView) convertView.findViewById(R.id.tv_old_user);
@@ -85,8 +89,6 @@ public class JokeAdapter extends KBaseAdapter
 		holder.tvAuthorName.setText(jokeBean.username);
 		holder.tvAuthorName.setOnClickListener(new ShowNameCardListener(jokeBean,mActivity));
 		
-		
-		
 		holder.tvTime.setText(ToolUtils.getFormatDate(jokeBean.date_time));
 		
 		if(position < 3 && isRank){
@@ -94,6 +96,13 @@ public class JokeAdapter extends KBaseAdapter
 			holder.tvRank.setVisibility(View.VISIBLE);
 		}else{
 			holder.tvRank.setVisibility(View.GONE);
+		}
+		
+		if(!TextUtils.isEmpty(BGApp.mUserId)&& BGApp.mUserId.equals(String.valueOf(jokeBean.userid))){
+			holder.ivDelete.setVisibility(View.VISIBLE);
+			holder.ivAuthorImg.setOnClickListener(new DeleteListener(jokeBean, mActivity,callback));
+		}else{
+			holder.ivDelete.setVisibility(View.GONE);
 		}
 		
 		
@@ -135,18 +144,30 @@ public class JokeAdapter extends KBaseAdapter
 		return convertView;
 	}
 
+	/**删除微墙的回调*/
+	private IDeleteCallback callback = new IDeleteCallback() {
+		@Override
+		public void deleteAction(final Object object) {
+			if(object instanceof WeiQiangBean){
+				mList.remove(object);
+				notifyDataSetChanged();
+			}
+		}
+	};
+	
 	final class Holder
 	{
-		public ImageView ivAuthorImg;
-		public TextView tvAuthorName;
-		public TextView tvTime;
-		public TextView tvComments;
-		public TextView tvRank;
-		public LinearLayout llTransArea;
-		public TextView tvOldAuthorName;
-		public TextView tvContent;
-		public GridView gridView,oldgridView;
+		 ImageView ivDelete;
+		 ImageView ivAuthorImg;
+		 TextView tvAuthorName;
+		 TextView tvTime;
+		 TextView tvComments;
+		 TextView tvRank;
+		 LinearLayout llTransArea;
+		 TextView tvOldAuthorName;
+		 TextView tvContent;
+		 GridView gridView,oldgridView;
 		
-		public ActionView avZan,avReply,avTranspnt,avShare;
+		 ActionView avZan,avReply,avTranspnt,avShare;
 	}
 }

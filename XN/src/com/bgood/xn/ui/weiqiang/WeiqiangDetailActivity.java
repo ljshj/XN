@@ -39,6 +39,8 @@ import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.ui.help.DeleteListener;
+import com.bgood.xn.ui.help.IDeleteCallback;
 import com.bgood.xn.ui.user.account.LoginActivity;
 import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.ui.user.info.ShowNameCardListener;
@@ -59,15 +61,16 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 {
 	/**微墙详情类的key*/
 	private XListView listview;
-	public LinearLayout llTransArea;
-	public ImageView ivAuthorImg;
-	public TextView tvAuthorName;
-	public TextView tvTime;
-	public TextView tvOldAuthorName;
-	public TextView tvComments;
-	public TextView tvContent;
-	public GridView gridView,oldGridview;
-	public ActionView avZan,avReply,avTranspont,avShare;
+	private LinearLayout llTransArea;
+	private ImageView ivAuthorImg;
+	private ImageView ivDelete;
+	private TextView tvAuthorName;
+	private TextView tvTime;
+	private TextView tvOldAuthorName;
+	private TextView tvComments;
+	private TextView tvContent;
+	private GridView gridView,oldGridview;
+	private ActionView avZan,avReply,avTranspont,avShare;
 	
 	private CommentAdapter weiQiangCommentAdapter;
 	private List<CommentBean> weiqiangComments = new ArrayList<CommentBean>();
@@ -91,7 +94,16 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		weiqiangBean = (WeiQiangBean) getIntent().getSerializableExtra(WeiQiangBean.KEY_WEIQIANG_BEAN);
 		weiqiangId = weiqiangBean.weiboid;
 		titleBar = new TitleBar(mActivity);
-		titleBar.initTitleBar("微墙详情");
+		titleBar.initAllBar("微墙详情","编辑");
+		titleBar.rightBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(WeiqiangDetailActivity.this,WeiqiangPublishActivity.class);
+				intent.putExtra(WeiQiangBean.KEY_WEIQIANG_BEAN, weiqiangBean);
+				WeiqiangDetailActivity.this.startActivity(intent);
+				finish();
+			}
+		});
 		findView();
 		setData();
 		WeiqiangRequest.getInstance().requestWeiqiangContent(this, this, weiqiangBean.weiboid, String.valueOf(comment_start), String.valueOf(comment_start+PAGE_SIZE_ADD));
@@ -112,6 +124,9 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	   	View head_weiqiang_detail = inflater.inflate(R.layout.weiqiang_item_layout, listview, false);
 		ivAuthorImg = (ImageView) head_weiqiang_detail.findViewById(R.id.iv_img);
 		tvAuthorName = (TextView) head_weiqiang_detail.findViewById(R.id.tv_nick);
+		
+		ivDelete = (ImageView) head_weiqiang_detail.findViewById(R.id.iv_delete);
+		
 		
 		tvTime = (TextView) head_weiqiang_detail.findViewById(R.id.tv_time);
 		tvComments = (TextView) head_weiqiang_detail.findViewById(R.id.tv_comments);
@@ -152,6 +167,16 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		
 	}
 	
+	private IDeleteCallback callback = new IDeleteCallback() {
+		
+		@Override
+		public void deleteAction(Object object) {
+			if(object instanceof WeiQiangBean){
+				WeiqiangDetailActivity.this.finish();
+			}
+		}
+	};
+	
 	@Override
 	public void onPause() {
 		super.onPause();
@@ -161,6 +186,13 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	private void setData()
 	{
 		BGApp.getInstance().setImage(weiqiangBean.photo,ivAuthorImg);
+		
+		if(BGApp.mUserId.equals(String.valueOf(weiqiangBean.userid))){
+			ivDelete.setVisibility(View.VISIBLE);
+			ivDelete.setOnClickListener(new DeleteListener(weiqiangBean, mActivity, callback));
+		}else{
+			ivDelete.setVisibility(View.GONE);
+		}
 		
 		tvTime.setText(ToolUtils.getFormatDate(weiqiangBean.date_time));
 		

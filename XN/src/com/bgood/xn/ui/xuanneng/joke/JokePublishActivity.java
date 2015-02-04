@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -81,6 +82,7 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
     
     private JokeBean mJokeBean = null;
     private TextView tvShowRule;
+    private TitleBar mTitleBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -88,9 +90,15 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_weiqiang_publish);
 		mJokeBean = (JokeBean) getIntent().getSerializableExtra(JokeBean.JOKE_BEAN);
-		(new TitleBar(mActivity)).initTitleBar(null==mJokeBean ? "有奖投稿":"修改投搞");
-		files.add(null);
-		bitmaps.add(null);
+		mTitleBar = new TitleBar(mActivity);
+		mTitleBar.initAllBar(null==mJokeBean ? "有奖投稿":"修改投搞", null==mJokeBean ? "发表":"修改");
+		mTitleBar.rightBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				doSubmit();
+			}
+		});
 		initViews();
 		setData();
 	}
@@ -101,21 +109,26 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 		tvShowRule.setVisibility(View.VISIBLE);
 		tvShowRule.setOnClickListener(this);
 		gridview_images = (GridView) findViewById(R.id.gridview_images);
-		adapter = new ImageAdapter(bitmaps,this,this);
-		gridview_images.setAdapter(adapter);
-		gridview_images.setOnItemClickListener(this);
 		comment_content = (EditText) findViewById(R.id.comment_content);
-		findViewById(R.id.weiqiang_publish_submit).setOnClickListener(this);
 	}
 	
 	private void setData() {
 		if(null == mJokeBean){
-			return;
+			files.add(null);
+			bitmaps.add(null);
+			adapter = new ImageAdapter(bitmaps,this,this);
+			gridview_images.setAdapter(adapter);
+			gridview_images.setOnItemClickListener(this);
+		}else{
+			if(mJokeBean.imgs.size()>0){
+				adapter = new ImageAdapter(mJokeBean.imgs,this,this);
+				gridview_images.setAdapter(adapter);
+				gridview_images.setVisibility(View.VISIBLE);
+			}else{
+				gridview_images.setVisibility(View.GONE);
+			}
+			comment_content.setText(mJokeBean.content);
 		}
-		
-		comment_content.setText(mJokeBean.content);
-		gridview_images.setVisibility(View.GONE);
-		
 	}
 
 
@@ -211,10 +224,10 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 			case 870003:
 				LoadingProgress.getInstance().dismiss();
 				if(bNetWork.getReturnCode() ==  ReturnCode.RETURNCODE_OK){
-					BToast.show(mActivity,"投稿成功,待审核发布");
+					BToast.show(mActivity,null==mJokeBean?"投稿成功,待审核发布":"修改成功,待审核发布");
 					finish();
 				}else{
-					BToast.show(mActivity,"投稿失败");
+					BToast.show(mActivity,null==mJokeBean?"投稿失败":"修改失败");
 				}
 				break;					
 			default:	//因为上传图片 没有设置messageType
@@ -236,11 +249,18 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 			}
 		}
 	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.weiqiang_publish_submit:
+	
+	/**
+	 * 
+	 * @todo:提交或者修改
+	 * @date:2015-2-4 下午3:38:46
+	 * @author:hg_liuzl@163.com
+	 * @params:
+	 */
+	private void doSubmit() {
+		if(null!=mJokeBean){	//修改幽默秀
+			XuannengRequest.getInstance().requestXuanUpdate(this, this, m_content, mJokeBean.jokeid);
+		}else{//添加幽默秀
 			files.remove(files.size()-1);	//移除最后一张空白的图片
 			if(files.size()>0){	//如果有图片的话
 				m_content = comment_content.getText().toString().trim();
@@ -256,7 +276,12 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 			}else{
 				checkInfo();
 			}
-			break;
+		}
+}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
 		case R.id.btn_take_photo:
 			dialog.dismiss();
 			tempFile = ImgUtils.takePicture(mActivity, tempFile, FLAG_CHOOSE_FROM_CAMERA);

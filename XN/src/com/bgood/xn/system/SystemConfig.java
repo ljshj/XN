@@ -15,6 +15,7 @@ public class SystemConfig
 	 *用服务器(登录服务器)分配管理其它的服务器
 	 * */
 	public static String HttpServer = "114.215.189.189:5000";		
+	//public static String HttpServer = "192.168.1.120";		
 	
 	public static String SERVERTYPE = "BS";// "BS","AS"
 	

@@ -163,7 +163,7 @@ public class BGApp extends Application {
         {
         	Activity acitivty = m_activityStack.get(i);
         	
-            if (null != acitivty && !acitivty.isDestroyed())
+            if (null != acitivty && !acitivty.isFinishing())
             {
                 m_activityStack.get(i).finish();
             }

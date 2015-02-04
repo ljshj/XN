@@ -199,9 +199,13 @@ public class CropImage
 
     public String saveToLocal(Bitmap bm)
     {
-    	String path = FILE_LOCAL + "";
+    	String path = FILE_LOCAL.getAbsolutePath();
     	try
 		{
+    		File file = new File(path);	//创建文件
+			if(!file.getParentFile().exists()){
+				file.getParentFile().mkdirs();
+			}
 			FileOutputStream fos = new FileOutputStream(path);
 			bm.compress(CompressFormat.JPEG, 100, fos);
 			fos.flush();

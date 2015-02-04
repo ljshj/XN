@@ -25,6 +25,7 @@ import com.bgood.xn.adapter.ImageAdapter;
 import com.bgood.xn.bean.CommentBean;
 import com.bgood.xn.bean.ImageBean;
 import com.bgood.xn.bean.JokeBean;
+import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.bean.JokeBean.JokeActionType;
 import com.bgood.xn.bean.WeiQiangBean.WeiqiangActionType;
 import com.bgood.xn.bean.response.CommentResponse;
@@ -37,8 +38,11 @@ import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.ui.help.DeleteListener;
+import com.bgood.xn.ui.help.IDeleteCallback;
 import com.bgood.xn.ui.user.account.LoginActivity;
 import com.bgood.xn.ui.user.info.ShowNameCardListener;
+import com.bgood.xn.ui.weiqiang.WeiqiangDetailActivity;
 import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.utils.ShareUtils;
 import com.bgood.xn.utils.ToolUtils;
@@ -62,7 +66,7 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 	private XListView listview;
 	
 	public LinearLayout llTransArea;
-	public ImageView ivAuthorImg;
+	public ImageView ivAuthorImg,ivDelete;
 	public TextView tvAuthorName;
 	public TextView tvTime;
 	public TextView tvOldAuthorName;
@@ -113,6 +117,7 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 	   	View head_weiqiang_detail = inflater.inflate(R.layout.weiqiang_item_layout, listview, false);
 		ivAuthorImg = (ImageView) head_weiqiang_detail.findViewById(R.id.iv_img);
 		tvAuthorName = (TextView) head_weiqiang_detail.findViewById(R.id.tv_nick);
+		ivDelete = (ImageView) head_weiqiang_detail.findViewById(R.id.iv_delete);
 		
 		tvTime = (TextView) head_weiqiang_detail.findViewById(R.id.tv_time);
 		tvComments = (TextView) head_weiqiang_detail.findViewById(R.id.tv_comments);
@@ -155,9 +160,27 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 		pUitl.setJokeDetailRefreshTime(mRefreshJokeTime);
 	}
 	
+	
+	private IDeleteCallback callback = new IDeleteCallback() {
+		
+		@Override
+		public void deleteAction(Object object) {
+			if(object instanceof WeiQiangBean){
+				JokeDetailActivity.this.finish();
+			}
+		}
+	};
+	
 	private void setData(JokeBean jBean)
 	{
 		BGApp.getInstance().setImage(jBean.photo,ivAuthorImg);
+		
+		if(BGApp.mUserId.equals(String.valueOf(jBean.userid))){
+			ivDelete.setVisibility(View.VISIBLE);
+			ivDelete.setOnClickListener(new DeleteListener(jBean, mActivity, callback));
+		}else{
+			ivDelete.setVisibility(View.GONE);
+		}
 		
 		tvTime.setText(ToolUtils.getFormatDate(jBean.date_time));
 		
