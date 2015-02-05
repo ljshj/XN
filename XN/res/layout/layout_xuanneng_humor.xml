@@ -18,17 +18,17 @@
                 style="@style/common_btn_back_style"
                  />
 
-             <Button
+             <ImageView
 	            android:id="@+id/joke_main_b_more_operate"
 	            style="@style/common_btn_title_right_style"
 	            android:layout_width="25dp"
 	            android:layout_height="25dp"
-	            android:layout_marginRight="10dp"
-	            android:background="@drawable/img_weiqiang_more_operate_normal" />
+	            android:layout_marginRight="17dp"
+	            android:src="@drawable/icon_drop_bg" />
 
             <RadioGroup
                 android:id="@+id/xuanneng_humor_rg_tab"
-                android:layout_width="150dp"
+                android:layout_width="240dp"
                 android:layout_height="35dp"
                 android:layout_centerInParent="true"
                 android:layout_marginBottom="5dp"
@@ -42,18 +42,10 @@
                 android:showDividers="middle" >
 
                 <RadioButton
-                    android:id="@+id/xuanneng_humor_tab_ranking"
-                    style="@style/message_main_tab_button"
-                    android:button="@null"
-                    android:checked="true"
-                    android:gravity="center"
-                    android:text="排行榜"
-                    android:textColor="@color/color_home_radiobutton_text" />
-
-                <RadioButton
                     android:id="@+id/xuanneng_humor_tab_order"
                     style="@style/message_main_tab_button"
                     android:gravity="center"
+                    android:checked="true"
                     android:text="顺序"
                     android:textColor="@color/color_home_radiobutton_text" />
 
@@ -62,6 +54,21 @@
                     style="@style/message_main_tab_button"
                     android:gravity="center"
                     android:text="随机"
+                    android:textColor="@color/color_home_radiobutton_text" />
+                
+                 <RadioButton
+                    android:id="@+id/xuanneng_humor_tab_ranking"
+                    style="@style/message_main_tab_button"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="排行"
+                    android:textColor="@color/color_home_radiobutton_text" />
+                
+                 <RadioButton
+                    android:id="@+id/xuanneng_humor_tab_record"
+                    style="@style/message_main_tab_button"
+                    android:gravity="center"
+                    android:text="榜单"
                     android:textColor="@color/color_home_radiobutton_text" />
             </RadioGroup>
 

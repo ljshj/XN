@@ -76,7 +76,6 @@ public class ProductEditActivity extends BaseActivity implements OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_product_edit);
         m_ProductBean = (ProductBean) getIntent().getSerializableExtra(ProductBean.KEY_PRODUCT_BEAN);
-       // (new TitleBar(mActivity)).initTitleBar("编辑产品");
         
         mTitleBar = new TitleBar(mActivity);
         mTitleBar.initAllBar("编辑产品", "确定");
@@ -102,7 +101,6 @@ public class ProductEditActivity extends BaseActivity implements OnClickListener
         m_productNameEt = (EditText) findViewById(R.id.product_edit_et_name);
         m_recommendCb = (CheckBox) findViewById(R.id.product_edit_cb_recommend);
         m_infoEt = (EditText) findViewById(R.id.product_edit_et_info);
-        findViewById(R.id.product_edit_btn_done).setOnClickListener(this);
         m_recommendCb.setOnCheckedChangeListener(new OnCheckedChangeListener()
         {
             @Override
@@ -301,9 +299,6 @@ public class ProductEditActivity extends BaseActivity implements OnClickListener
 				break;
 			case R.id.btn_cancel:
 				dialog.dismiss();
-				break;
-			case R.id.product_edit_btn_done:
-				chenkInfo();
 				break;
 			default:
 				break;

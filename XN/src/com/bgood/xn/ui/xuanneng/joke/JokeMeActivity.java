@@ -221,7 +221,7 @@ public class JokeMeActivity extends BaseShowDataActivity implements OnItemClickL
 		switch (REQUEST_FLAG) {
 		case JokeBean.JOKE_VERIFY:	//已经审核了
 			intent = new Intent(mActivity, JokeDetailActivity.class);
-			intent.putExtra(JokeDetailActivity.BEAN_JOKE_KEY, joke);
+			intent.putExtra(JokeBean.JOKE_BEAN, joke);
 		    startActivity(intent);
 			break;
 		case JokeBean.JOKE_UN_VERIFY:	//未审核

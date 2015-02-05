@@ -169,7 +169,11 @@ public class ContactAdapter extends ArrayAdapter<FriendBean>  implements Section
 				//群聊item
 				viewHolder.tvnameTextview.setText(user.getNick());
 				viewHolder.ivImg.setImageResource(R.drawable.groups_icon);
-			}else{
+			}else if(Constant.FRIEND_ADMIN.contains(username)){
+				//管理员item
+				viewHolder.tvnameTextview.setText(user.getNick());
+				viewHolder.ivImg.setImageResource(R.drawable.icon_app);
+			}else {
 				viewHolder.tvnameTextview.setText(username);
 				if(viewHolder.tvunreadMsgView != null)
 					viewHolder.tvunreadMsgView.setVisibility(View.INVISIBLE);

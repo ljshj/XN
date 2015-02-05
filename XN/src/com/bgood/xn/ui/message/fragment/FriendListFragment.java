@@ -28,6 +28,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -59,6 +60,7 @@ import com.bgood.xn.view.BToast;
 import com.easemob.chat.Constant;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContactManager;
+import com.easemob.chat.activity.ChatActivity;
 import com.easemob.chat.activity.NewFriendsMsgActivity;
 import com.easemob.chat.adapter.ContactAdapter;
 import com.easemob.chat.db.InviteMessgeDao;
@@ -116,6 +118,9 @@ public class FriendListFragment extends BaseFragment implements TaskListenerWith
 					FriendBean user = BGApp.getInstance().getFriendMapById().get(Constant.NEW_FRIENDS_USERNAME);
 					user.setUnreadMsgCount(0);
 					startActivity(new Intent(getActivity(), NewFriendsMsgActivity.class));
+				}else if(Constant.FRIEND_ADMIN.contains(username)){	
+					//如果是管理员
+					startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", Constant.FRIEND_ADMIN_ID));
 				}else {
 					// demo中直接进入聊天页面，实际一般是进入用户详情页
 					//startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", adapter.getItem(position).userid));
@@ -281,7 +286,7 @@ public class FriendListFragment extends BaseFragment implements TaskListenerWith
 		contactList.clear();
 		Map<String,FriendBean> allUsers = BGApp.getInstance().getFriendMapById();	//获取缓存中的好友
 		for(FriendBean friend:allUsers.values()){
-			if (!friend.name.equals(Constant.NEW_FRIENDS_USERNAME) && !blackList.contains(friend.name)){
+			if (!Constant.NEW_FRIENDS_USERNAME.equals(friend.name) && !blackList.contains(friend.name)&&!Constant.FRIEND_ADMIN.equals(friend.name)){
 				FriendBean.setUserHearder(friend.name, friend);
 				contactList.add(friend);
 			}
@@ -295,6 +300,7 @@ public class FriendListFragment extends BaseFragment implements TaskListenerWith
 		});
 		// 把"申请与通知"添加到首位
 		contactList.add(0, allUsers.get(Constant.NEW_FRIENDS_USERNAME));
+		contactList.add(1, allUsers.get(Constant.FRIEND_ADMIN_ID));
 	}
 
 	@Override

@@ -40,18 +40,4 @@
             android:layout_marginRight="5.0dip"
             android:text="0/30" />
     </RelativeLayout>
-
-    <Button
-        android:id="@+id/ican_btn_done"
-        android:layout_width="fill_parent"
-        android:layout_height="45dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/login_btn_selector"
-        android:gravity="center"
-        android:text="确定"
-        android:textColor="@color/white"
-        android:textSize="18sp" />
-
 </LinearLayout>

@@ -28,6 +28,7 @@ import com.bgood.xn.bean.GroupBean;
 import com.bgood.xn.db.DBHelper;
 import com.bgood.xn.db.PreferenceUtil;
 import com.bgood.xn.system.BGApp;
+import com.easemob.chat.Constant;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.EMMessage.ChatType;
@@ -85,17 +86,14 @@ public class BaseActivity extends FragmentActivity {
 //        //设置状态栏提示
 //        mBuilder.setTicker(message.getFrom()+": " + ticker);
         
-        
-        
-        
-        
-        
         String msgFrom = message.getFrom();
         ChatType chatType = message.getChatType();
 			if (chatType == ChatType.Chat) { // 单聊信息
 				FriendBean bean = BGApp.getInstance().getFriendMapById().get(message.getFrom().substring(2));
 				if(null!=bean){
 					msgFrom = bean.name;
+				}else if(Constant.FRIEND_ADMIN_ID.contains(message.getFrom())){
+					msgFrom = "炫能小秘书";
 				}else{
 					return;
 				}

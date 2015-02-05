@@ -29,28 +29,30 @@
               />
 
         
+           <ImageView
+              android:id="@+id/iv_rank"
+              style="@style/item_time"
+              android:layout_width="25dp"
+              android:layout_height="38dp"
+              android:layout_alignParentRight="true"
+              android:layout_marginRight="10dp"
+              android:layout_alignTop="@id/iv_img"
+              android:textColor="@color/white"
+              android:text="2"
+              android:textSize="8sp"
+              android:visibility="invisible"
+              />
           
           <ImageView
               android:id="@+id/iv_delete"
               android:layout_width="30dp"
               android:layout_height="30dp"
-              android:layout_alignParentRight="true"
               android:layout_alignTop="@id/iv_img"
               android:background="@drawable/icon_delete"
-              android:layout_marginRight="10dp"
+              android:layout_toLeftOf="@id/iv_rank"
               android:visibility="gone"
               />
           
-            <TextView
-              android:id="@+id/tv_rank"
-              style="@style/item_time"
-              android:layout_alignTop="@id/iv_img"
-              android:background="@drawable/icon_joke_rank"
-              android:textColor="@color/white"
-              android:layout_toLeftOf="@id/iv_delete"
-              android:text="2"
-              android:textSize="8sp"
-              android:visibility="gone"
-              />
+            
           
 </RelativeLayout>

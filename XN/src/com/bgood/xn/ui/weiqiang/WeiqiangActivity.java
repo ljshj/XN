@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
@@ -68,7 +69,7 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 	private View v_weiqiang_type_select_left_underline;
 	private View v_weiqiang_type_select_right_underline;
 	private ViewPager vp_weiqiang_type_select;
-	private Button weiqiang_main_b_more_operate;
+	private ImageView weiqiang_main_b_more_operate;
 	private PopupWindow popupWindow_more;
 	
 	private XListView m_followFriendsXLv = null;
@@ -130,7 +131,7 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 	@SuppressLint("InflateParams")
 	private void initViews()
 	{
-		weiqiang_main_b_more_operate = (Button) findViewById(R.id.weiqiang_main_b_more_operate);
+		weiqiang_main_b_more_operate = (ImageView) findViewById(R.id.weiqiang_main_b_more_operate);
 		tv_weiqiang_type_left_select = (TextView) findViewById(R.id.tv_weiqiang_type_left_select);
 		tv_weiqiang_type_right_select = (TextView) findViewById(R.id.tv_weiqiang_type_right_select);
 		v_weiqiang_type_select_left_underline = findViewById(R.id.v_weiqiang_type_select_left_underline);
@@ -168,7 +169,6 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 	@SuppressLint("InflateParams")
 	private void showPopupMore()
 	{
-		weiqiang_main_b_more_operate.setBackgroundResource(R.drawable.img_weiqiang_more_operate_show);
 		if (popupWindow_more == null)
 		{
 			View contentView = inflater.inflate(R.layout.popup_weiqiang_main_more_operate, null);
@@ -177,15 +177,6 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 			contentView.findViewById(R.id.tv_weiqiang_mention).setOnClickListener(this);
 			popupWindow_more = new PopupWindow(contentView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			popupWindow_more.setFocusable(true);
-			popupWindow_more.setOnDismissListener(new OnDismissListener()
-			{
-
-				@Override
-				public void onDismiss()
-				{
-					weiqiang_main_b_more_operate.setBackgroundResource(R.drawable.img_weiqiang_more_operate_normal);
-				}
-			});
 			popupWindow_more.setOutsideTouchable(true);
 			popupWindow_more.setBackgroundDrawable(getResources().getDrawable(R.drawable.img_weiqiang_more_operate_popup_bg));
 		}

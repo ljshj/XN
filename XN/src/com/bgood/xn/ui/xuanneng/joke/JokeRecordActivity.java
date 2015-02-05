@@ -28,9 +28,7 @@ import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.JokeAdapter;
 import com.bgood.xn.adapter.JokeRecordAdapter;
-import com.bgood.xn.adapter.KBaseAdapter;
 import com.bgood.xn.bean.JokeBean;
-import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.bean.JokeBean.JokeActionType;
 import com.bgood.xn.bean.response.JokeResponse;
 import com.bgood.xn.network.BaseNetWork;
@@ -39,7 +37,6 @@ import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpRequestInfo;
 import com.bgood.xn.network.http.HttpResponseInfo;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
-import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseShowDataActivity;
@@ -54,11 +51,11 @@ import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 
 /**
  * 
- * @todo:炫能排行页
+ * @todo:炫能榜单
  * @date:2014-11-22 下午2:38:22
  * @author:hg_liuzl@163.com
  */
-public class JokeRankActivity extends BaseShowDataActivity implements OnClickListener, OnItemClickListener,TaskListenerWithState,IXListViewListener
+public class JokeRecordActivity extends BaseShowDataActivity implements OnClickListener, OnItemClickListener,TaskListenerWithState,IXListViewListener
 {
 	
 	private ViewPager mTabPager;//页卡内容
@@ -95,7 +92,7 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 	{
 		super.onCreate(savedInstanceState);
 		share = new ShareUtils(mActivity);
-		setContentView(R.layout.layout_xuanneng_rank);
+		setContentView(R.layout.layout_xuanneng_record);
 		findView();
 		getData(CHOOSE_DAY, true);
 	}
@@ -186,13 +183,13 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 		}
 		switch (flag) {
 		case CHOOSE_DAY:
-			XuannengRequest.getInstance().requestXuanRank(this, mActivity, XuannengActivity.XUANNENG_JOKE, CHOOSE_DAY, m_start_day, m_start_day+PAGE_SIZE_ADD);
+			XuannengRequest.getInstance().requestXuanRecord(this, mActivity,XuannengActivity.XUANNENG_JOKE,CHOOSE_DAY, m_start_day, m_start_day+PAGE_SIZE_ADD);
 			break;
 		case CHOOSE_WEEK:
-			XuannengRequest.getInstance().requestXuanRank(this, mActivity, XuannengActivity.XUANNENG_JOKE, CHOOSE_WEEK, m_start_week, m_start_week+PAGE_SIZE_ADD);
+			XuannengRequest.getInstance().requestXuanRecord(this, mActivity,XuannengActivity.XUANNENG_JOKE,CHOOSE_WEEK, m_start_week, m_start_week+PAGE_SIZE_ADD);
 			break;
 		case CHOOSE_MONTH:
-			XuannengRequest.getInstance().requestXuanRank(this, mActivity, XuannengActivity.XUANNENG_JOKE, CHOOSE_MONTH, m_start_month, m_start_month+PAGE_SIZE_ADD);
+			XuannengRequest.getInstance().requestXuanRecord(this, mActivity,XuannengActivity.XUANNENG_JOKE,CHOOSE_MONTH, m_start_month, m_start_month+PAGE_SIZE_ADD);
 			break;
 		default:
 			break;
@@ -273,7 +270,7 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 			String strJson = bNetWork.getStrJson();
 			
 			switch (bNetWork.getMessageType()) {
-			case 870002:
+			case 870019:
 					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 						JokeResponse response = JSON.parseObject(strJson, JokeResponse.class);
 						switch (REQUEST_FLAG) {
@@ -439,11 +436,11 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 					if(type == JokeActionType.TRANSPOND){
 						mActionJoke.forward_count = String.valueOf(Integer.valueOf(mActionJoke.forward_count)+1);
 						actionAdapter();
-						XuannengRequest.getInstance().requestXuanTransport(JokeRankActivity.this, mActivity, mActionJoke.jokeid,content);
+						XuannengRequest.getInstance().requestXuanTransport(JokeRecordActivity.this, mActivity, mActionJoke.jokeid,content);
 					}else{
 						mActionJoke.comment_count = String.valueOf(Integer.valueOf(mActionJoke.comment_count)+1);
 						actionAdapter();
-						XuannengRequest.getInstance().requestXuanComment(JokeRankActivity.this, mActivity, mActionJoke.jokeid,content);
+						XuannengRequest.getInstance().requestXuanComment(JokeRecordActivity.this, mActivity, mActionJoke.jokeid,content);
 					}
 				}
 			}

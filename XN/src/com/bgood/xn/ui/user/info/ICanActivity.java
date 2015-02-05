@@ -1,7 +1,5 @@
 package com.bgood.xn.ui.user.info;
 
-import org.json.JSONObject;
-
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -15,9 +13,9 @@ import com.bgood.xn.R;
 import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpRequestInfo;
 import com.bgood.xn.network.http.HttpResponseInfo;
-import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.system.BGApp;
@@ -35,13 +33,21 @@ public class ICanActivity extends BaseActivity implements TaskListenerWithState
     private TextView tvWordCount;	//字数显示
     private UserInfoBean mUserBean = null;
     private String mContent;
-
+    private TitleBar mTitleBar;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_layout_i_can);
-        (new TitleBar(mActivity)).initTitleBar("我能");
+        mTitleBar = new TitleBar(mActivity);
+        mTitleBar.initAllBar("我能", "确定");
+        mTitleBar.rightBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				checkContent();
+			}
+		});
+        
         mUserBean = (UserInfoBean) getIntent().getSerializableExtra(UserInfoBean.KEY_USER_BEAN);;
         findView();
     }
@@ -75,14 +81,6 @@ public class ICanActivity extends BaseActivity implements TaskListenerWithState
 			@Override
 			public void afterTextChanged(Editable e) {
 				
-			}
-		});
-        
-        findViewById(R.id.ican_btn_done).setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				checkContent();
 			}
 		});
     }

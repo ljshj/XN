@@ -18,14 +18,13 @@ import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.bean.response.WeiqiangResponse;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
+import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpRequestInfo;
 import com.bgood.xn.network.http.HttpResponseInfo;
-import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.system.BGApp;
-import com.bgood.xn.ui.base.BaseActivity;
-import com.bgood.xn.utils.ToolUtils;
+import com.bgood.xn.ui.base.BaseShowDataActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
@@ -37,15 +36,13 @@ import com.bgood.xn.widget.TitleBar;
  * @date:2014-10-24 下午3:50:55
  * @author:hg_liuzl@163.com
  */
-public class WeiqiangPersonActivity extends BaseActivity implements OnItemClickListener,TaskListenerWithState,OnClickListener,IXListViewListener
+public class WeiqiangPersonActivity extends BaseShowDataActivity implements OnItemClickListener,TaskListenerWithState,OnClickListener,IXListViewListener
 {
 	/**我自己的微墙**/
 	private XListView m_weiqiang_listview;
 	private List<WeiQiangBean> mWeiqiangList = new ArrayList<WeiQiangBean>();
 	private WeiqiangAdapter weiqiangAdapter;
 	private int start_size = 0;
-	private boolean isRefresh = true;
-	private String mRefreshTime;
 	private WeiQiangBean mActionWeiqiang = null;
 	private String userid;
 	private boolean isSelf = false;
@@ -110,8 +107,9 @@ public class WeiqiangPersonActivity extends BaseActivity implements OnItemClickL
 				switch(bNetWork.getMessageType()){
 				case 860001:	//获取微墙列表
 					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
-					WeiqiangResponse response  = JSON.parseObject(strJson, WeiqiangResponse.class);
-					setWeiqiangData(response.items);
+						start_size +=PAGE_SIZE_ADD;
+						WeiqiangResponse response  = JSON.parseObject(strJson, WeiqiangResponse.class);
+						setDataAdapter(m_weiqiang_listview, weiqiangAdapter, mWeiqiangList, response.items, isRefreshAction);
 					}else{
 						m_weiqiang_listview.stopRefresh();
 						m_weiqiang_listview.stopLoadMore();
@@ -140,49 +138,49 @@ public class WeiqiangPersonActivity extends BaseActivity implements OnItemClickL
 				}
 			}
 		}
-	private void setWeiqiangData(List<WeiQiangBean> weiqiangs) {
-		if(isRefresh){
-			mRefreshTime = ToolUtils.getNowTime();
-			m_weiqiang_listview.setRefreshTime(mRefreshTime);
-		}
-		
-		m_weiqiang_listview.stopRefresh();
-		m_weiqiang_listview.stopLoadMore();
-		if(null == weiqiangs){
-			return;
-		}
-		
-		if(0 == weiqiangs.size()){
-				m_weiqiang_listview.setPullLoadEnable(false);
-	                 BToast.show(mActivity, "数据加载完毕");
-		}
-			
-		if (isRefresh) {
-			mWeiqiangList.clear();
-			start_size = 0;
-		} 
-			
-		if (weiqiangs.size() < PAGE_SIZE_ADD) {
-			m_weiqiang_listview.setPullLoadEnable(false);
-				BToast.show(mActivity, "数据加载完毕");
-			} else {
-				start_size += PAGE_SIZE_ADD;
-				m_weiqiang_listview.setPullLoadEnable(true);
-			}
-		
-		this.mWeiqiangList.addAll(weiqiangs);
-		weiqiangAdapter.notifyDataSetChanged();
-	}
+//	private void setWeiqiangData(List<WeiQiangBean> weiqiangs) {
+//		if(isRefresh){
+//			mRefreshTime = ToolUtils.getNowTime();
+//			m_weiqiang_listview.setRefreshTime(mRefreshTime);
+//		}
+//		
+//		m_weiqiang_listview.stopRefresh();
+//		m_weiqiang_listview.stopLoadMore();
+//		if(null == weiqiangs){
+//			return;
+//		}
+//		
+//		if(0 == weiqiangs.size()){
+//				m_weiqiang_listview.setPullLoadEnable(false);
+//	                 BToast.show(mActivity, "数据加载完毕");
+//		}
+//			
+//		if (isRefresh) {
+//			mWeiqiangList.clear();
+//			start_size = 0;
+//		} 
+//			
+//		if (weiqiangs.size() < PAGE_SIZE_ADD) {
+//			m_weiqiang_listview.setPullLoadEnable(false);
+//				BToast.show(mActivity, "数据加载完毕");
+//			} else {
+//				start_size += PAGE_SIZE_ADD;
+//				m_weiqiang_listview.setPullLoadEnable(true);
+//			}
+//		
+//		this.mWeiqiangList.addAll(weiqiangs);
+//		weiqiangAdapter.notifyDataSetChanged();
+//	}
 
 	@Override
 	public void onRefresh() {
-		isRefresh = true;
+			isRefreshAction = true;
 			start_size = 0;
-			WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(WeiQiangBean.WEIQIANG_ALL),userid,String.valueOf(start_size), String.valueOf(start_size+PAGE_SIZE_ADD));
+			WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(WeiQiangBean.WEIQIANG_FIND),userid,String.valueOf(start_size), String.valueOf(start_size+PAGE_SIZE_ADD));
 	}
 	@Override
 	public void onLoadMore() {
-		isRefresh = false;
-			WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(WeiQiangBean.WEIQIANG_ALL),userid,String.valueOf(start_size), String.valueOf(start_size+PAGE_SIZE_ADD));
+		isRefreshAction = false;
+			WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(WeiQiangBean.WEIQIANG_FIND),userid,String.valueOf(start_size), String.valueOf(start_size+PAGE_SIZE_ADD));
 	}
 }

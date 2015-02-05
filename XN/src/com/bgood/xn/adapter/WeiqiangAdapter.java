@@ -75,7 +75,7 @@ public class WeiqiangAdapter extends KBaseAdapter
 		
 		if(!TextUtils.isEmpty(BGApp.mUserId)&& BGApp.mUserId.equals(String.valueOf(weiqiangBean.userid))){
 			holder.ivDelete.setVisibility(View.VISIBLE);
-			holder.ivAuthorImg.setOnClickListener(new DeleteListener(weiqiangBean, mActivity,callback));
+			holder.ivDelete.setOnClickListener(new DeleteListener(weiqiangBean, mActivity,callback));
 		}else{
 			holder.ivDelete.setVisibility(View.GONE);
 		}

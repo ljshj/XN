@@ -13,16 +13,16 @@
                     android:id="@+id/radio_01"
                     style="@style/xuanneng_tab_text"
                     android:checked="true"
-                    android:text="日排行"/>
+                    android:text="日榜单"/>
 
 	          <RadioButton
                     android:id="@+id/radio_02"
                     style="@style/xuanneng_tab_text"
-                    android:text="周排行"/>
+                    android:text="周榜单"/>
 	         <RadioButton
                     android:id="@+id/radio_03"
                     style="@style/xuanneng_tab_text"
-                    android:text="月排行"/>
+                    android:text="月榜单"/>
 	      
 	    </RadioGroup>
 	  

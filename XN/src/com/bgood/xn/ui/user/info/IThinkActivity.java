@@ -34,16 +34,24 @@ public class IThinkActivity extends BaseActivity implements TaskListenerWithStat
 {
     private EditText m_contentEt = null;  // 内容
     private TextView m_wordcountTv = null;  // 字数显示
-    private Button m_doneBtn = null;  // 确定按钮
     private String mContent;
     private UserInfoBean mUserBean;
-    
+    private TitleBar mTitleBar;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_layout_i_miss);
-        (new TitleBar(mActivity)).initTitleBar("我想");
+        mTitleBar = new TitleBar(mActivity);
+        mTitleBar.initAllBar("我想", "确定");
+        mTitleBar.rightBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				checkContent();
+			}
+		});
+        
         mUserBean = (UserInfoBean) getIntent().getSerializableExtra(UserInfoBean.KEY_USER_BEAN);;
         findView();
     }
@@ -77,18 +85,6 @@ public class IThinkActivity extends BaseActivity implements TaskListenerWithStat
             public void onTextChanged(CharSequence s, int paramInt1, int paramInt2, int paramInt3)
             {
             	m_wordcountTv.setText(s.length()+"/30");
-            }
-        });
-        
-        // 确定按钮
-        findViewById(R.id.imiss_btn_done).setOnClickListener(new OnClickListener()
-        {
-            
-            @Override
-            public void onClick(View v)
-            {
-            	checkContent();
-
             }
         });
     }

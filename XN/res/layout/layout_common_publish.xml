@@ -4,14 +4,15 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/comment_content"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@drawable/img_common_top_title_bg"
-        android:gravity="left|top"
-        android:hint="请输入正文"
-        android:padding="5dp" />
+	    <EditText
+	        android:id="@+id/comment_content"
+	        android:layout_width="match_parent"
+	        android:layout_height="200dp"
+	        android:background="@drawable/img_common_top_title_bg"
+	        android:gravity="left|top"
+	        android:scrollbars="vertical"
+	        android:hint="请输入正文"
+	        android:padding="5dp" />
 
     <com.bgood.xn.view.ImageGridView
         android:id="@+id/gridview_images"

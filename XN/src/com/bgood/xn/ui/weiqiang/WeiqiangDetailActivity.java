@@ -94,7 +94,13 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		weiqiangBean = (WeiQiangBean) getIntent().getSerializableExtra(WeiQiangBean.KEY_WEIQIANG_BEAN);
 		weiqiangId = weiqiangBean.weiboid;
 		titleBar = new TitleBar(mActivity);
-		titleBar.initAllBar("微墙详情","编辑");
+		
+		if(BGApp.mUserId.equals(weiqiangBean.userid)){	//如果是自己发的东西
+			titleBar.initAllBar("微墙详情","编辑");
+		}else{
+			titleBar.initTitleBar("微墙详情");
+		}
+		
 		titleBar.rightBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -401,7 +407,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3) {
-		final CommentBean bean = (CommentBean) adapter.getAdapter().getItem(position-1);
+		final CommentBean bean = (CommentBean) adapter.getAdapter().getItem(position);
 		if(null != bean){
 			createSendDialog("@"+bean.name+"  ");
 		}

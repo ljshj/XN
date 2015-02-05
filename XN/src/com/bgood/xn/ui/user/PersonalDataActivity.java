@@ -4,14 +4,11 @@ import java.io.File;
 
 import org.json.JSONObject;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
@@ -32,7 +29,6 @@ import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.FileRequest;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.system.BGApp;
-import com.bgood.xn.system.Const;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.user.info.AgeActivity;
 import com.bgood.xn.ui.user.info.BirthdayActivity;
@@ -90,22 +86,34 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
     private TextView       m_bloodGroupTv    = null; // 血型
     private Button         m_doneBtn         = null; // 立即预览我的名片按钮
     private UserInfoBean mUserBean = null;
+    /**是否是自己*/
+    private boolean isSelf = false;	
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_personal_data);
-        (new TitleBar(mActivity)).initTitleBar("编辑个人资料");
         findView();
-        setListener();
+        mUserBean = (UserInfoBean) getIntent().getSerializableExtra(UserInfoBean.KEY_USER_BEAN);
+        if(BGApp.mUserId.equals(mUserBean.userid)){
+        	isSelf = true;
+        	(new TitleBar(mActivity)).initTitleBar("编辑个人资料");
+        	setListener();
+        }else{
+        	isSelf = false;
+        	(new TitleBar(mActivity)).initTitleBar(mUserBean.nickn+"资料");
+        	m_doneBtn.setVisibility(View.GONE);
+        }
     }
     
     @Override
 	public void onResume() {
     	super.onResume();
-    	mUserBean = BGApp.mUserBean;
-    	setData(BGApp.mUserBean);
+    	if(isSelf){
+    		mUserBean = BGApp.mUserBean;
+    		setData(BGApp.mUserBean);
+    	}
     }
 
     
@@ -370,10 +378,10 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
 				String status = object.optString("success");
 				if(status.equalsIgnoreCase("true")){
 					mUserBean.photo = object.optString("smallurl");
-					//mUserBean.photo = object.optString("url");
+					mUserBean.bigPhoto = object.optString("url");
 					BGApp.mUserBean = mUserBean;
 					BGApp.getInstance().setImage(mUserBean.photo, m_iconImgV);
-					UserCenterRequest.getInstance().requestUpdatePerson(this, mActivity, "photo", mUserBean.photo);
+					UserCenterRequest.getInstance().requestUpdatePerson(this, mActivity, "photo", mUserBean.bigPhoto);
 				}else{
 					BToast.show(mActivity, "图片上传失败");
 				}

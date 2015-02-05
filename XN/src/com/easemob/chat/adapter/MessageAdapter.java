@@ -49,6 +49,7 @@ import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.utils.ImgUtils;
+import com.bgood.xn.view.BToast;
 import com.easemob.EMCallBack;
 import com.easemob.chat.Constant;
 import com.easemob.chat.EMChatManager;
@@ -459,11 +460,14 @@ public class MessageAdapter extends BaseAdapter{
 			});
 
 		} else {
-			// 长按头像，移入黑名单
 			holder.head_iv.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					NameCardActivity.lookNameCard(activity, message.getFrom().substring(2));
+					if(Constant.FRIEND_ADMIN_ID.contains(message.getFrom())){
+						BToast.show(activity, "管理员暂无名片");
+					}else{
+						NameCardActivity.lookNameCard(activity, message.getFrom().substring(2));
+					}
 				}
 			});
 			

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.RadioGroup;
@@ -29,7 +30,7 @@ public class JokeMainActivity extends TabActivity implements OnCheckedChangeList
 {
 	private TabHost tabHost;
 	private RadioGroup radioGroup;
-	private Button joke_main_b_more_operate;
+	private ImageView joke_main_b_more_operate;
 	private PopupWindow popupWindow_more;
 	
 	@Override
@@ -38,7 +39,7 @@ public class JokeMainActivity extends TabActivity implements OnCheckedChangeList
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_xuanneng_humor);
 		initViews();
-		joke_main_b_more_operate = (Button) findViewById(R.id.joke_main_b_more_operate);
+		joke_main_b_more_operate = (ImageView) findViewById(R.id.joke_main_b_more_operate);
 		joke_main_b_more_operate.setOnClickListener(this);
 	}
 	/**
@@ -50,15 +51,21 @@ public class JokeMainActivity extends TabActivity implements OnCheckedChangeList
 		tabHost = getTabHost();
 		TabHost.TabSpec spec;
 		Intent intent;
-		intent = new Intent().setClass(this, JokeRankActivity.class);
-		spec = tabHost.newTabSpec("排行榜").setIndicator("排行帮").setContent(intent);
-		tabHost.addTab(spec);
+		
 		intent = new Intent().setClass(this, JokeOrderActivity.class);
 		spec = tabHost.newTabSpec("顺序").setIndicator("顺序").setContent(intent);
 		tabHost.addTab(spec);
 
 		intent = new Intent().setClass(this, JokeRandomActivity.class);
 		spec = tabHost.newTabSpec("随机").setIndicator("随机").setContent(intent);
+		tabHost.addTab(spec);
+		
+		intent = new Intent().setClass(this, JokeRankActivity.class);
+		spec = tabHost.newTabSpec("排行").setIndicator("排行").setContent(intent);
+		tabHost.addTab(spec);
+		
+		intent = new Intent().setClass(this, JokeRecordActivity.class);
+		spec = tabHost.newTabSpec("榜单").setIndicator("榜单").setContent(intent);
 		tabHost.addTab(spec);
 
 		radioGroup = (RadioGroup) this.findViewById(R.id.xuanneng_humor_rg_tab);
@@ -78,14 +85,18 @@ public class JokeMainActivity extends TabActivity implements OnCheckedChangeList
 	{
 		switch (checkedId)
 		{
-		case R.id.xuanneng_humor_tab_ranking:
-			tabHost.setCurrentTabByTag("排行榜");
-			break;
+		
 		case R.id.xuanneng_humor_tab_order:
 			tabHost.setCurrentTabByTag("顺序");
 			break;
 		case R.id.xuanneng_humor_tab_random:
 			tabHost.setCurrentTabByTag("随机");
+			break;
+		case R.id.xuanneng_humor_tab_ranking:
+			tabHost.setCurrentTabByTag("排行");
+			break;
+		case R.id.xuanneng_humor_tab_record:
+			tabHost.setCurrentTabByTag("榜单");
 			break;
 		}
 
@@ -133,7 +144,6 @@ public class JokeMainActivity extends TabActivity implements OnCheckedChangeList
 	@SuppressLint("InflateParams")
 	private void showPopupMore()
 	{
-		joke_main_b_more_operate.setBackgroundResource(R.drawable.img_weiqiang_more_operate_show);
 		if (popupWindow_more == null)
 		{
 			View contentView = LayoutInflater.from(this).inflate(R.layout.popup_joke_main_more_operate, null);
@@ -142,14 +152,6 @@ public class JokeMainActivity extends TabActivity implements OnCheckedChangeList
 			contentView.findViewById(R.id.tv_joke_mention).setOnClickListener(this);
 			popupWindow_more = new PopupWindow(contentView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			popupWindow_more.setFocusable(true);
-			popupWindow_more.setOnDismissListener(new OnDismissListener()
-			{
-				@Override
-				public void onDismiss()
-				{
-					joke_main_b_more_operate.setBackgroundResource(R.drawable.img_weiqiang_more_operate_normal);
-				}
-			});
 			popupWindow_more.setOutsideTouchable(true);
 			popupWindow_more.setBackgroundDrawable(getResources().getDrawable(R.drawable.img_weiqiang_more_operate_popup_bg));
 		}

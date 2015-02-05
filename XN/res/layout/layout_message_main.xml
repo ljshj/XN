@@ -90,14 +90,13 @@
         
           
 
-            <Button
+            <ImageView
                 android:id="@+id/b_message_main_add"
-                android:layout_width="25dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:visibility="invisible"
-                android:layout_height="25dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/img_message_add" />
+                android:layout_marginRight="5dp"/>
     
     </LinearLayout>
 

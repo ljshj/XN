@@ -61,7 +61,6 @@ public class JokeAdapter extends KBaseAdapter
 			holder.tvTime = (TextView) convertView.findViewById(R.id.tv_time);
 			holder.tvComments = (TextView) convertView.findViewById(R.id.tv_comments);
 			holder.gridView = (GridView) convertView.findViewById(R.id.gv_show_img);
-			holder.tvRank = (TextView) convertView.findViewById(R.id.tv_rank);
 			holder.ivDelete = (ImageView) convertView.findViewById(R.id.iv_delete);
 			
 			holder.llTransArea = (LinearLayout) convertView.findViewById(R.id.ll_old_area);
@@ -91,16 +90,16 @@ public class JokeAdapter extends KBaseAdapter
 		
 		holder.tvTime.setText(ToolUtils.getFormatDate(jokeBean.date_time));
 		
-		if(position < 3 && isRank){
-			holder.tvRank.setText(String.valueOf(position+1));
-			holder.tvRank.setVisibility(View.VISIBLE);
-		}else{
-			holder.tvRank.setVisibility(View.GONE);
-		}
+//		if(position < 3 && isRank){
+//			holder.tvRank.setText(String.valueOf(position+1));
+//			holder.tvRank.setVisibility(View.VISIBLE);
+//		}else{
+//			holder.tvRank.setVisibility(View.INVISIBLE);
+//		}
 		
 		if(!TextUtils.isEmpty(BGApp.mUserId)&& BGApp.mUserId.equals(String.valueOf(jokeBean.userid))){
 			holder.ivDelete.setVisibility(View.VISIBLE);
-			holder.ivAuthorImg.setOnClickListener(new DeleteListener(jokeBean, mActivity,callback));
+			holder.ivDelete.setOnClickListener(new DeleteListener(jokeBean, mActivity,callback));
 		}else{
 			holder.ivDelete.setVisibility(View.GONE);
 		}
@@ -162,7 +161,6 @@ public class JokeAdapter extends KBaseAdapter
 		 TextView tvAuthorName;
 		 TextView tvTime;
 		 TextView tvComments;
-		 TextView tvRank;
 		 LinearLayout llTransArea;
 		 TextView tvOldAuthorName;
 		 TextView tvContent;

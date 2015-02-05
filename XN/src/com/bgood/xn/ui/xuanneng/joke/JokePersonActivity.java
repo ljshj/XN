@@ -70,7 +70,7 @@ public class JokePersonActivity extends BaseActivity implements OnItemClickListe
 	{
 		final JokeBean joke = (JokeBean) adapter.getAdapter().getItem(location);
 		Intent intent = new Intent(mActivity, JokeDetailActivity.class);
-		intent.putExtra(JokeDetailActivity.BEAN_JOKE_KEY,joke);
+		intent.putExtra(JokeBean.JOKE_BEAN,joke);
 		startActivity(intent);
 	}
 

@@ -75,7 +75,7 @@ public class GroupPickContactsActivity extends BaseActivity {
 		for(Map.Entry<String, FriendBean> entry:friendMapByName.entrySet()){
 			
 			String key = entry.getKey();
-			if (!key.equals(Constant.NEW_FRIENDS_USERNAME) && !key.equals(Constant.GROUP_USERNAME)){
+			if (!Constant.NEW_FRIENDS_USERNAME.equals(key) && !Constant.GROUP_USERNAME.equals(key) &&!Constant.FRIEND_ADMIN.equals(key)){
 				alluserList.add(entry.getValue());
 			}
 		}   

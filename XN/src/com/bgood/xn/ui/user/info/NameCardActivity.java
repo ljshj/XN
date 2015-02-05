@@ -1,9 +1,12 @@
 package com.bgood.xn.ui.user.info;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -22,10 +25,12 @@ import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.ui.user.PersonalDataActivity;
 import com.bgood.xn.ui.user.account.LoginActivity;
 import com.bgood.xn.ui.user.product.ShowcaseActivity;
 import com.bgood.xn.ui.weiqiang.WeiqiangPersonActivity;
 import com.bgood.xn.ui.xuanneng.XuanNengMainActivity;
+import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.utils.LogUtils;
 import com.bgood.xn.view.ActionView;
 import com.bgood.xn.view.BToast;
@@ -43,7 +48,6 @@ import com.easemob.chat.activity.ChatActivity;
 public class NameCardActivity extends BaseActivity implements OnClickListener,TaskListenerWithState
 {
 	private String userId;
-	private UserInfoBean user;
     private RoundImageView m_userIconImgV = null;  // 用户头像
     private TextView m_userNicteTv = null;  // 用户昵称
     private TextView m_identityTv = null;  // 性别
@@ -55,7 +59,7 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
     private boolean isSelf = false;	//是否是自己本人
     
     private ActionView avFriend,avAttention;
-    
+    private ArrayList<String> imgList = new ArrayList<String>(); //存储图片查看器的图片地址
     private TextView tvWeiqiang;
     private TextView tvXuanneg;
     private TextView tvChuchuang;
@@ -63,6 +67,8 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
     private LinearLayout ll_action;
 	
     private ProgressDialog progressDialog;
+    
+    private UserInfoBean mUserInfoBean = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -85,7 +91,11 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 	 */
 	private void findView()
 	{
+		
+		findViewById(R.id.user_center_rl_user_info).setOnClickListener(this);
+		
 	    m_userIconImgV = (RoundImageView) findViewById(R.id.user_center_imgv_user_icon);
+	    
 	    m_userNicteTv = (TextView) findViewById(R.id.user_center_tv_user_name);
 	    m_sexImgV = (ImageView) findViewById(R.id.iv_sex);
 	    m_identityTv = (TextView) findViewById(R.id.tv_identity);
@@ -125,6 +135,16 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 		}else{
 		Intent intent = null;
 		switch (v.getId()) {
+		
+		case R.id.user_center_rl_user_info:	//查看个人信息
+			intent = new Intent(NameCardActivity.this,PersonalDataActivity.class);
+			intent.putExtra(UserInfoBean.KEY_USER_BEAN, mUserInfoBean);
+			startActivity(intent);
+			break;
+		
+		case R.id.user_center_imgv_user_icon:	//查看个人图片
+			ImgUtils.imageBrower(0, imgList, mActivity);
+			break;
 		 // 关注
         case R.id.av_add_attention:
         	UserCenterRequest.getInstance().requestAttention(NameCardActivity.this, mActivity,userId,BGApp.mUserId,String.valueOf(0));
@@ -228,18 +248,23 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
      * 设置用户数据显示方法
      * @param userDTO 用户信息实体类
      */
-    private void setData(UserInfoBean userDTO)
+    private void setData()
     {
-		BGApp.getInstance().setImageSqure(userDTO.photo,m_userIconImgV);
+    	if(!TextUtils.isEmpty(mUserInfoBean.bigPhoto)){
+    		imgList.add(mUserInfoBean.bigPhoto);
+    		m_userIconImgV.setOnClickListener(this);
+    	}
+    	
+		BGApp.getInstance().setImageSqure(mUserInfoBean.photo,m_userIconImgV);
         // 昵称
-        m_userNicteTv.setText(userDTO.nickn);
+        m_userNicteTv.setText(mUserInfoBean.nickn);
         
         // 性别
-        if (userDTO.sex == 1)
+        if (mUserInfoBean.sex == 1)
         {
             m_sexImgV.setImageResource(R.drawable.img_common_sex_male);
         }
-        else if (userDTO.sex == 2)
+        else if (mUserInfoBean.sex == 2)
         {
             m_sexImgV.setImageResource(R.drawable.img_common_sex_female);
         }
@@ -248,7 +273,7 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
             m_sexImgV.setVisibility(View.GONE);
         }
         
-        if(userDTO.isguanzhu.equals("true")){
+        if(mUserInfoBean.isguanzhu.equals("true")){
         	avAttention.setText("已经关注");
         	avAttention.setEnabled(false);
         }else{
@@ -256,17 +281,17 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
         	avAttention.setEnabled(true);
         }
         
-        avFriend.setVisibility(userDTO.isfriend.equals("true")?View.GONE:View.VISIBLE);
+        avFriend.setVisibility(mUserInfoBean.isfriend.equals("true")?View.GONE:View.VISIBLE);
         
-        m_identityTv.setText(mActivity.getResources().getString(R.string.account_vip, userDTO.level));
-        m_identityTv.setVisibility(userDTO.level < 1 ? View.GONE:View.VISIBLE);
+        m_identityTv.setText(mActivity.getResources().getString(R.string.account_vip, mUserInfoBean.level));
+        m_identityTv.setVisibility(mUserInfoBean.level < 1 ? View.GONE:View.VISIBLE);
         
         ll_action.setVisibility(isSelf?View.GONE:View.VISIBLE);
         
-        m_userNumberTv.setText("能能号:"+userDTO.username);
-        m_signName.setText(userDTO.signature);
-        m_ineedTv.setText(userDTO.ineed); // 我想
-        m_icanTv.setText(userDTO.ican); // 我能
+        m_userNumberTv.setText("能能号:"+mUserInfoBean.username);
+        m_signName.setText(mUserInfoBean.signature);
+        m_ineedTv.setText(mUserInfoBean.ineed); // 我想
+        m_icanTv.setText(mUserInfoBean.ican); // 我能
         tvWeiqiang.setText((isSelf?"我":"TA")+"的微墙");
         tvXuanneg.setText((isSelf?"我":"TA")+"的炫能");
         tvChuchuang.setText((isSelf?"我":"TA")+"的橱窗");
@@ -281,10 +306,10 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 			switch (bNetWork.getMessageType()) {
 			case 820001:
 				if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
-					user = JSON.parseObject(strJson, UserInfoBean.class);
-					setData(user);
+					mUserInfoBean = JSON.parseObject(strJson, UserInfoBean.class);
+					setData();
 					if (!isSelf) {
-						(new TitleBar(mActivity)).initTitleBar(user.nickn+ "的名片");
+						(new TitleBar(mActivity)).initTitleBar(mUserInfoBean.nickn+ "的名片");
 					}
 				}
 				break;

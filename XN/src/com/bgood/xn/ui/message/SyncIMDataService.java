@@ -114,6 +114,13 @@ public class SyncIMDataService extends Service implements TaskListenerWithState 
 		newFriends.setHeader("");
 		userAndIdMap.put(Constant.NEW_FRIENDS_USERNAME, newFriends);
 		
+		// 添加小秘书
+		FriendBean adminFriends = new FriendBean();
+		adminFriends.setName(Constant.FRIEND_ADMIN);
+		adminFriends.setNick("炫能小秘书");
+		adminFriends.setHeader("");
+		userAndIdMap.put(Constant.FRIEND_ADMIN_ID, adminFriends);
+		
 		// 好友存入内存
 		BGApp.getInstance().setFriendMapById(userAndIdMap);
 		//群存入内存中

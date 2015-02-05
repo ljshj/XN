@@ -11,13 +11,13 @@
             style="@style/common_tv_title_style"
             android:text="微墙" />
 
-        <Button
+        <ImageView
             android:id="@+id/weiqiang_main_b_more_operate"
             style="@style/common_btn_title_right_style"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/img_weiqiang_more_operate_normal" />
+            android:layout_marginRight="17dp"
+            android:src="@drawable/icon_drop_bg" />
     </RelativeLayout>
 
 

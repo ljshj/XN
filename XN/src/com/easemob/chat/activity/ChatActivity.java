@@ -71,6 +71,7 @@ import com.bgood.xn.ui.message.CommunicateDetailActivity;
 import com.bgood.xn.ui.message.GroupDetailsActivity;
 import com.bgood.xn.utils.LogUtils;
 import com.easemob.EMError;
+import com.easemob.chat.Constant;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContactManager;
 import com.easemob.chat.EMConversation;
@@ -308,6 +309,9 @@ public class ChatActivity extends BaseActivity implements OnClickListener,TaskLi
 		});
 
 	}
+	
+	/***是否是系统小助手*/
+	private boolean isAdmin = false;
 
 	private void setUpView() {
 		activityInstance = this;
@@ -323,9 +327,20 @@ public class ChatActivity extends BaseActivity implements OnClickListener,TaskLi
 
 		if (chatType == CHATTYPE_SINGLE) { // 单聊
 			mUserId = getIntent().getStringExtra("userId");
+		
+			isAdmin = Constant.FRIEND_ADMIN_ID.contains(mUserId)?true:false;
+			
 			friendBean = BGApp.getInstance().getFriendMapById().get(mUserId);
-			toChatUsername = "bg"+mUserId;
-			((TextView) findViewById(R.id.name)).setText(friendBean.name);
+			
+			if(!isAdmin){	//如果不是管理员
+				toChatUsername = "bg"+mUserId;
+				((TextView) findViewById(R.id.name)).setText(friendBean.name);
+			}else{
+				toChatUsername = mUserId;
+				((TextView) findViewById(R.id.name)).setText(friendBean.getNick());
+			}
+			
+		
 		} else {
 			// 群聊
 			findViewById(R.id.container_to_group).setVisibility(View.VISIBLE);
@@ -334,8 +349,6 @@ public class ChatActivity extends BaseActivity implements OnClickListener,TaskLi
 			toChatUsername = getIntent().getStringExtra(Const.CHAT_HXGROUPID);
 			group =BGApp.getInstance().getGroupAndHxId().get(toChatUsername);
  			((TextView) findViewById(R.id.name)).setText(group.name);
- 			
- 			
  			
  			/**获取群成员*/
  			IMRequest.getInstance().requestGroupMembers(ChatActivity.this, this,group.roomid,false);
@@ -1010,7 +1023,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener,TaskLi
 			if (message.getChatType() == ChatType.GroupChat) {
 				username = message.getTo();
 			}
-			if (!username.equals(toChatUsername)) {
+			if (!toChatUsername.contains(username)) {
 				// 消息不是发给当前会话，return
 			    notifyNewMessage(message);
 				return;

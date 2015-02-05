@@ -32,13 +32,23 @@ public class SignatureActivity extends BaseActivity implements TaskListenerWithS
     private TextView m_wordcountTv = null;  // 字数显示
     private String m_content = "";
     private UserInfoBean m_userDTO = null;
-
+    private TitleBar mTitleBar;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_signature);
-        (new TitleBar(mActivity)).initTitleBar("个性签名");
+        
+        mTitleBar = new TitleBar(mActivity);
+        mTitleBar.initAllBar("编辑产品", "确定");
+        mTitleBar.rightBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				checkInfo();
+			}
+		});
+        
         m_userDTO = (UserInfoBean) getIntent().getSerializableExtra(UserInfoBean.KEY_USER_BEAN);
         findView();
     }
@@ -78,12 +88,6 @@ public class SignatureActivity extends BaseActivity implements TaskListenerWithS
         
         m_contentEt.setText(m_userDTO.signature); 
         m_contentEt.setSelection(m_userDTO.signature.length()); 
-       findViewById(R.id.signature_btn_done).setOnClickListener(new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			checkInfo();
-		}
-	});
    }
     
 

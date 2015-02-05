@@ -294,7 +294,7 @@ public class FriendBean implements Parcelable {
 		}
 		
 		
-		if (Constant.NEW_FRIENDS_USERNAME.equals(name)) {
+		if (Constant.NEW_FRIENDS_USERNAME.equals(name)||Constant.FRIEND_ADMIN.contains(name)) {
 			friend.setHeader("");
 		} else if (Character.isDigit(headerName.charAt(0))) {
 			friend.setHeader("#");

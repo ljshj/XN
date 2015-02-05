@@ -31,21 +31,28 @@ import com.bgood.xn.widget.TitleBar;
 public class EmailActivity extends BaseActivity implements TaskListenerWithState
 {
     private CEditText m_emailEt = null;  // 昵称编辑框
-    private Button m_doneBtn = null;  // 确定按钮
-    
-
     private String m_email = "";
     private UserInfoBean m_userDTO = null;
-    
+    private TitleBar mTitleBar;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_email);
-        (new TitleBar(mActivity)).initTitleBar("修改邮箱");
+        
+        mTitleBar = new TitleBar(mActivity);
+        mTitleBar.initAllBar("修改邮箱", "确定");
+        mTitleBar.rightBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				 checkInfo();
+			}
+		});
+        
+        
         m_userDTO = (UserInfoBean) getIntent().getSerializableExtra(UserInfoBean.KEY_USER_BEAN);
         findView();
-        setListener();
     }
   
     
@@ -55,25 +62,8 @@ public class EmailActivity extends BaseActivity implements TaskListenerWithState
     private void findView()
     {
         m_emailEt = (CEditText) findViewById(R.id.email_et_email);
-        m_doneBtn = (Button) findViewById(R.id.email_btn_done);
         m_emailEt.setText(m_userDTO.email);
         m_emailEt.setSelection(m_userDTO.email.length());
-    }
-    
-    /**
-     * 控件事件监听方法
-     */
-    private void setListener()
-    {
-        // 确定按钮
-        m_doneBtn.setOnClickListener(new OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                checkInfo();
-            }
-        });
     }
     
     /**

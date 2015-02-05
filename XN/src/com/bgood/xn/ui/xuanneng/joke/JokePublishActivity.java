@@ -150,7 +150,13 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 			BToast.show(mActivity, "请输入投稿内容!");
 			return;
 		}else{
-			XuannengRequest.getInstance().requestXuanPublish(this, mActivity, m_content, imgs, smallImgs);
+			
+			if(null != mJokeBean){	//如果是修改幽默秀
+				XuannengRequest.getInstance().requestXuanUpdate(this, this, m_content, mJokeBean.jokeid);
+			}else{	//如果是 添加幽默秀
+				XuannengRequest.getInstance().requestXuanPublish(this, mActivity, m_content, imgs, smallImgs);
+			}
+			
 		}
 	}
 	
@@ -221,15 +227,23 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			switch (bNetWork.getMessageType()) {
-			case 870003:
+			case 870003:	//添加幽默秀
 				LoadingProgress.getInstance().dismiss();
 				if(bNetWork.getReturnCode() ==  ReturnCode.RETURNCODE_OK){
-					BToast.show(mActivity,null==mJokeBean?"投稿成功,待审核发布":"修改成功,待审核发布");
+					BToast.show(mActivity,"投稿成功,待审核发布");
 					finish();
 				}else{
-					BToast.show(mActivity,null==mJokeBean?"投稿失败":"修改失败");
+					BToast.show(mActivity,"投稿失败");
 				}
-				break;					
+				break;			
+			case 870018:	//修改幽默秀
+				if(bNetWork.getReturnCode() ==  ReturnCode.RETURNCODE_OK){
+					BToast.show(mActivity,"修改成功,待重新审核发布");
+					finish();
+				}else{
+					BToast.show(mActivity,"修改失败");
+				}
+				break;
 			default:	//因为上传图片 没有设置messageType
 				JSONObject object = bNetWork.getBody();
 				String status = object.optString("success");
@@ -259,7 +273,9 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 	 */
 	private void doSubmit() {
 		if(null!=mJokeBean){	//修改幽默秀
-			XuannengRequest.getInstance().requestXuanUpdate(this, this, m_content, mJokeBean.jokeid);
+			
+			checkInfo();
+			
 		}else{//添加幽默秀
 			files.remove(files.size()-1);	//移除最后一张空白的图片
 			if(files.size()>0){	//如果有图片的话

@@ -6,11 +6,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -43,6 +46,7 @@ import com.bgood.xn.ui.help.IDeleteCallback;
 import com.bgood.xn.ui.user.account.LoginActivity;
 import com.bgood.xn.ui.user.info.ShowNameCardListener;
 import com.bgood.xn.ui.weiqiang.WeiqiangDetailActivity;
+import com.bgood.xn.ui.weiqiang.WeiqiangPublishActivity;
 import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.utils.ShareUtils;
 import com.bgood.xn.utils.ToolUtils;
@@ -59,10 +63,9 @@ import com.bgood.xn.widget.TitleBar;
  * @date:2014-11-21 下午5:30:37
  * @author:hg_liuzl@163.com
  */
-public class JokeDetailActivity extends BaseActivity implements OnClickListener,TaskListenerWithState,IXListViewListener
+public class JokeDetailActivity extends BaseActivity implements OnClickListener,TaskListenerWithState,IXListViewListener,OnItemClickListener
 {
 	/**炫能详情类的key*/
-	public static final String BEAN_JOKE_KEY = "bean_joke_key";
 	private XListView listview;
 	
 	public LinearLayout llTransArea;
@@ -93,9 +96,25 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 		super.onCreate(savedInstanceState);
 		share = new ShareUtils(mActivity);
 		setContentView(R.layout.layout_weiqiang_detail);
-		mJokeBean = (JokeBean) getIntent().getSerializableExtra(BEAN_JOKE_KEY);
+		mJokeBean = (JokeBean) getIntent().getSerializableExtra(JokeBean.JOKE_BEAN);
 		titleBar = new TitleBar(mActivity);
-		titleBar.initTitleBar("详情");
+		if(BGApp.mUserId.equals(mJokeBean.userid)){	//如果是自己发的东西
+			titleBar.initAllBar("幽默秀详情","编辑");
+		}else{
+			titleBar.initTitleBar("幽默秀详情");
+		}
+		
+		titleBar.rightBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(JokeDetailActivity.this,JokePublishActivity.class);
+				intent.putExtra(JokeBean.JOKE_BEAN, mJokeBean);
+				JokeDetailActivity.this.startActivity(intent);
+				finish();
+			}
+		});
+		
+		
 		findView();
 		setData(mJokeBean);
 		
@@ -113,6 +132,7 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 		listview.setPullLoadEnable(true);
 		listview.setPullRefreshEnable(false);
 		listview.setXListViewListener(this);
+		listview.setOnItemClickListener(this);
 	   
 	   	View head_weiqiang_detail = inflater.inflate(R.layout.weiqiang_item_layout, listview, false);
 		ivAuthorImg = (ImageView) head_weiqiang_detail.findViewById(R.id.iv_img);
@@ -158,6 +178,15 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 	public void onPause() {
 		super.onPause();
 		pUitl.setJokeDetailRefreshTime(mRefreshJokeTime);
+	}
+	
+	
+	@Override
+	public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3) {
+		final CommentBean bean = (CommentBean) adapter.getAdapter().getItem(position);
+		if(null != bean){
+			createSendDialog("@"+bean.name+"  ");
+		}
 	}
 	
 	
@@ -231,12 +260,12 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
             // 评论
             case R.id.av_reply:
             	type = JokeActionType.RESPONSE;
-                createSendDialog();
+                createSendDialog("");
                 break;
             // 转发
             case R.id.av_transpont:
             	type = JokeActionType.TRANSPOND;
-            	createSendDialog();
+            	createSendDialog("");
                 break;
             // 分享
             case R.id.av_share:
@@ -310,7 +339,7 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 	 * @author lzlong@zwmob.com
 	 * @time 2014-3-26 下午2:09:30
 	 */
-	private void createSendDialog() {
+	private void createSendDialog(String atName) {
 
 		int screenWidth = (int) (mActivity.getWindowManager().getDefaultDisplay().getWidth()); // 屏幕宽
 		int screenHeight = (int) (mActivity.getWindowManager().getDefaultDisplay().getHeight()*0.3); // 屏幕高
@@ -322,6 +351,10 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 		vSend.requestFocus();
 
 		final EditText etcontent = (EditText) vSend.findViewById(R.id.et_content);
+		
+		etcontent.setText(atName);
+		etcontent.setSelection(atName.length());
+		
 		Button btnSend = (Button) vSend.findViewById(R.id.btn_send);
 		btnSend.setText(type == JokeActionType.TRANSPOND?"转发":"评论");
 		btnSend.setOnClickListener(new OnClickListener() {
@@ -375,5 +408,4 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 	public void onLoadMore() {
 		XuannengRequest.getInstance().requestJokeContent(this, this, mJokeBean.jokeid, String.valueOf(comment_start), String.valueOf(comment_start+PAGE_SIZE_ADD));
 	}
-	
 }

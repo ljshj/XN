@@ -87,7 +87,7 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 		setContentView(R.layout.layout_weiqiang_publish);
 		mWeiqiangBean = (WeiQiangBean) getIntent().getSerializableExtra(WeiQiangBean.KEY_WEIQIANG_BEAN);
 		mTitleBar = new TitleBar(mActivity);
-		mTitleBar.initAllBar(null == mWeiqiangBean ?"发微墙":"编辑微墙", null == mWeiqiangBean?"发表":"修改");
+		mTitleBar.initAllBar(null == mWeiqiangBean ?"发微墙":"编辑微墙", null == mWeiqiangBean?"发表":"编辑");
 		mTitleBar.rightBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -149,7 +149,11 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 			BToast.show(mActivity, "请输入微墙内容!");
 			return;
 		}else{
-			WeiqiangRequest.getInstance().requestWeiqiangSend(this, mActivity, m_content, imgs, smallImgs, "", String.valueOf(m_longitude), String.valueOf(m_latitude));
+			if(null != mWeiqiangBean ){	//如果是修改微墙
+				WeiqiangRequest.getInstance().requestWeiqiangUpdate(this, mActivity, m_content,mWeiqiangBean.weiboid);
+			}else{ //添加微墙
+				WeiqiangRequest.getInstance().requestWeiqiangSend(this, mActivity, m_content, imgs, smallImgs, "", String.valueOf(m_longitude), String.valueOf(m_latitude));
+			}
 		}
 	}
 	
@@ -268,7 +272,7 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 	private void doSubmit() {
 		
 		if(null!=mWeiqiangBean){
-			WeiqiangRequest.getInstance().requestWeiqiangUpdate(this, mActivity, m_content,mWeiqiangBean.weiboid);
+			checkInfo();
 		}else{
 			files.remove(files.size()-1);	//移除最后一张空白的图片
 			if(files.size()>0){	//如果有图片的话

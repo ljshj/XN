@@ -37,6 +37,7 @@ import com.bgood.xn.system.Const;
 import com.bgood.xn.ui.base.BaseFragment;
 import com.bgood.xn.ui.message.MessageActivity;
 import com.bgood.xn.view.BToast;
+import com.easemob.chat.Constant;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContact;
 import com.easemob.chat.EMConversation;
@@ -114,6 +115,9 @@ public class ChatHistoryFragment extends BaseFragment {
 				String username = conversation.getUserName();
 				if (username.equals(BGApp.getInstance().getUserName())){
 					BToast.show(mActivity, "不能和自己聊天");
+				}else if(Constant.FRIEND_ADMIN_ID.contains(username)){	//如果是炫能小秘书
+					//如果是管理员
+					startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", Constant.FRIEND_ADMIN_ID));
 				}else {
 					// 进入聊天页面
 					Intent intent = new Intent(getActivity(), ChatActivity.class);

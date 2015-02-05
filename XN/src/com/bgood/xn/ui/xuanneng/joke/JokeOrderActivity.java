@@ -233,7 +233,7 @@ public class JokeOrderActivity extends BaseShowDataActivity implements OnItemCli
 	public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3) {
 		final JokeBean joke = (JokeBean) adapter.getAdapter().getItem(position);
         Intent intent = new Intent(mActivity, JokeDetailActivity.class);
-        intent.putExtra(JokeDetailActivity.BEAN_JOKE_KEY, joke);
+        intent.putExtra(JokeBean.JOKE_BEAN, joke);
         startActivity(intent);
 	}
 

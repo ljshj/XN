@@ -162,29 +162,6 @@
                 
             </LinearLayout>
         </ScrollView>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="65dp"
-            android:layout_alignParentBottom="true"
-            android:gravity="center"
-            android:visibility="gone"
-            android:orientation="vertical" >
-
-            <Button
-                android:id="@+id/product_edit_btn_done"
-                android:layout_width="fill_parent"
-                android:layout_height="45dp"
-                android:layout_marginBottom="25dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="25dp"
-                android:background="@drawable/login_btn_selector"
-                android:gravity="center"
-                android:text="确定修改"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-        </LinearLayout>
     </RelativeLayout>
 
 </LinearLayout>
