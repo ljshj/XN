@@ -18,7 +18,7 @@ public class WeiqiangCorattionBean {
 	  public List<ImageBean> imgs;
 	  public List<CommentBean> commentlist;
 	  public String weiboid;
-	  public int userid;
+	  public String userid;
 	  public List<SimpleUserBean> likeuserlist;
 	  public String type;
 	  public String photo;

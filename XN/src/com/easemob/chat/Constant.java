@@ -17,7 +17,7 @@ public class Constant {
 	public static final String NEW_FRIENDS_USERNAME = "item_new_friends";
 	public static final String FRIEND_ADMIN = "item_admin";
 	/**如果是bg0 或者是admin都能接收消息**/
-	public static final String FRIEND_ADMIN_ID = "bg0admin";		
+	public static final String FRIEND_ADMIN_ID = "bg0";		
 	public static final String GROUP_USERNAME = "item_groups";
 	public static final String MESSAGE_ATTR_IS_VOICE_CALL = "is_voice_call";
 }

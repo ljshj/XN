@@ -100,20 +100,18 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 		titleBar = new TitleBar(mActivity);
 		if(BGApp.mUserId.equals(mJokeBean.userid)){	//如果是自己发的东西
 			titleBar.initAllBar("幽默秀详情","编辑");
+			titleBar.rightBtn.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(JokeDetailActivity.this,JokePublishActivity.class);
+					intent.putExtra(JokeBean.JOKE_BEAN, mJokeBean);
+					JokeDetailActivity.this.startActivity(intent);
+					finish();
+				}
+			});
 		}else{
 			titleBar.initTitleBar("幽默秀详情");
 		}
-		
-		titleBar.rightBtn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(JokeDetailActivity.this,JokePublishActivity.class);
-				intent.putExtra(JokeBean.JOKE_BEAN, mJokeBean);
-				JokeDetailActivity.this.startActivity(intent);
-				finish();
-			}
-		});
-		
 		
 		findView();
 		setData(mJokeBean);
@@ -183,9 +181,14 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 	
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3) {
-		final CommentBean bean = (CommentBean) adapter.getAdapter().getItem(position);
-		if(null != bean){
-			createSendDialog("@"+bean.name+"  ");
+		if (!BGApp.isUserLogin) {
+			LoginActivity.doLoginAction(this);
+		} else {
+			final CommentBean bean = (CommentBean) adapter.getAdapter()
+					.getItem(position);
+			if (null != bean) {
+				createSendDialog("@" + bean.name + "  ");
+			}
 		}
 	}
 	

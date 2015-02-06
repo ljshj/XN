@@ -97,19 +97,18 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		
 		if(BGApp.mUserId.equals(weiqiangBean.userid)){	//如果是自己发的东西
 			titleBar.initAllBar("微墙详情","编辑");
+			titleBar.rightBtn.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					Intent intent = new Intent(WeiqiangDetailActivity.this,WeiqiangPublishActivity.class);
+					intent.putExtra(WeiQiangBean.KEY_WEIQIANG_BEAN, weiqiangBean);
+					WeiqiangDetailActivity.this.startActivity(intent);
+					finish();
+				}
+			});
 		}else{
 			titleBar.initTitleBar("微墙详情");
 		}
-		
-		titleBar.rightBtn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				Intent intent = new Intent(WeiqiangDetailActivity.this,WeiqiangPublishActivity.class);
-				intent.putExtra(WeiQiangBean.KEY_WEIQIANG_BEAN, weiqiangBean);
-				WeiqiangDetailActivity.this.startActivity(intent);
-				finish();
-			}
-		});
 		findView();
 		setData();
 		WeiqiangRequest.getInstance().requestWeiqiangContent(this, this, weiqiangBean.weiboid, String.valueOf(comment_start), String.valueOf(comment_start+PAGE_SIZE_ADD));
@@ -407,9 +406,14 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3) {
-		final CommentBean bean = (CommentBean) adapter.getAdapter().getItem(position);
-		if(null != bean){
-			createSendDialog("@"+bean.name+"  ");
+		if (!BGApp.isUserLogin) {
+			LoginActivity.doLoginAction(this);
+		} else {
+			final CommentBean bean = (CommentBean) adapter.getAdapter()
+					.getItem(position);
+			if (null != bean) {
+				createSendDialog("@" + bean.name + "  ");
+			}
 		}
 	}
 }

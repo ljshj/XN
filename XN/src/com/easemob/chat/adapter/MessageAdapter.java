@@ -351,11 +351,15 @@ public class MessageAdapter extends BaseAdapter{
 			
 			FriendBean toBean = BGApp.getInstance().getFriendMapById().get(message.getFrom().substring(2));
 			
+			boolean isAdmin = Constant.FRIEND_ADMIN_ID.contains(username);
+			
 			
 			if(message.direct == EMMessage.Direct.RECEIVE ){
 				// demo用username代替nick
 				if(null!=toBean){
 					BGApp.getInstance().setImage(toBean.photo,holder.head_iv);
+				}else if(isAdmin){//如果是管理员
+					holder.head_iv.setImageResource(R.drawable.icon_app);
 				}
 				
 			}else{

@@ -631,6 +631,48 @@ public class ToolUtils {
 		return str;
 	}
 	
+
+	/**
+	 * 时间格式
+	 * date (MM-dd HH:mm:ss)
+	 * @return
+	 */
+	@SuppressWarnings("deprecation")
+	public static String getFormatTime(String date){
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date currentDate = new Date();
+		Date fromDate = null;
+		StringBuffer sb = new StringBuffer();
+		try {
+			fromDate = dateFormat.parse(date);
+			
+			if(fromDate.getYear() == currentDate.getYear() && fromDate.getMonth() == currentDate.getMonth()){	//如果是同年同月
+				if(fromDate.getDate() == currentDate.getDate()){
+					sb.append("今天");
+				}else if(fromDate.getDate() == currentDate.getDate()-1){
+					sb.append("昨天");
+				}else if(fromDate.getDate() == currentDate.getDate()-2){
+					sb.append("前天");
+				}else{
+					sb.append(fromDate.getMonth()+1).append("月").append(fromDate.getDate()).append("日");
+				}
+				return sb.toString();
+				
+			}else if(fromDate.getYear() == currentDate.getYear() && fromDate.getMonth() != currentDate.getMonth()){//同年不同月
+				return new SimpleDateFormat("MM月dd日").format(fromDate);
+			}else if(fromDate.getYear() != currentDate.getYear()){//不同年
+				return new SimpleDateFormat("yyyy年MM日").format(fromDate);
+			}
+			
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	
+	
 	
 	/**
 	 * 

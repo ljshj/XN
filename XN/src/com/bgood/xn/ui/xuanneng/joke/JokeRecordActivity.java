@@ -28,6 +28,8 @@ import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.JokeAdapter;
 import com.bgood.xn.adapter.JokeRecordAdapter;
+import com.bgood.xn.adapter.JokeRecordAdapter.JokeRank;
+import com.bgood.xn.adapter.JokeRecordAdapter.JokeTimeType;
 import com.bgood.xn.bean.JokeBean;
 import com.bgood.xn.bean.JokeBean.JokeActionType;
 import com.bgood.xn.bean.response.JokeResponse;
@@ -116,7 +118,7 @@ public class JokeRecordActivity extends BaseShowDataActivity implements OnClickL
 		mXLDay.setPullRefreshEnable(true);
 		mXLDay.setXListViewListener(this);
 		mXLDay.setOnItemClickListener(this);
-		adapterDay = new JokeRecordAdapter(listDay, mActivity,this,true);
+		adapterDay = new JokeRecordAdapter(listDay, mActivity,this,JokeRank.RECORD,JokeTimeType.DAY);
 		mXLDay.setAdapter(adapterDay);
 		
 		View view2 = inflater.inflate(R.layout.listview_space_bar, null);
@@ -125,7 +127,7 @@ public class JokeRecordActivity extends BaseShowDataActivity implements OnClickL
 		mXLWeek.setPullRefreshEnable(true);
 		mXLWeek.setXListViewListener(this);
 		mXLWeek.setOnItemClickListener(this);
-		adapterWeek = new JokeRecordAdapter(listWeek, mActivity,this,true);
+		adapterWeek = new JokeRecordAdapter(listWeek, mActivity,this,JokeRank.RECORD,JokeTimeType.WEEK);
 		mXLWeek.setAdapter(adapterWeek);
 		
 		View view3 = inflater.inflate(R.layout.listview_space_bar, null);
@@ -134,7 +136,7 @@ public class JokeRecordActivity extends BaseShowDataActivity implements OnClickL
 		mXLMonth.setPullRefreshEnable(true);
 		mXLMonth.setXListViewListener(this);
 		mXLMonth.setOnItemClickListener(this);
-		adapterMonth = new JokeRecordAdapter(listMonth, mActivity,this,true);
+		adapterMonth = new JokeRecordAdapter(listMonth, mActivity,this,JokeRank.RECORD,JokeTimeType.MONTH);
 		mXLMonth.setAdapter(adapterMonth);
 		
 		//将布局放入集合

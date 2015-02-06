@@ -29,6 +29,7 @@ import com.bgood.xn.R;
 import com.bgood.xn.adapter.JokeAdapter;
 import com.bgood.xn.adapter.JokeRecordAdapter;
 import com.bgood.xn.adapter.KBaseAdapter;
+import com.bgood.xn.adapter.JokeRecordAdapter.JokeRank;
 import com.bgood.xn.bean.JokeBean;
 import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.bean.JokeBean.JokeActionType;
@@ -119,7 +120,7 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 		mXLDay.setPullRefreshEnable(true);
 		mXLDay.setXListViewListener(this);
 		mXLDay.setOnItemClickListener(this);
-		adapterDay = new JokeRecordAdapter(listDay, mActivity,this,true);
+		adapterDay = new JokeRecordAdapter(listDay, mActivity,this,JokeRank.RANK);
 		mXLDay.setAdapter(adapterDay);
 		
 		View view2 = inflater.inflate(R.layout.listview_space_bar, null);
@@ -128,7 +129,7 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 		mXLWeek.setPullRefreshEnable(true);
 		mXLWeek.setXListViewListener(this);
 		mXLWeek.setOnItemClickListener(this);
-		adapterWeek = new JokeRecordAdapter(listWeek, mActivity,this,true);
+		adapterWeek = new JokeRecordAdapter(listWeek, mActivity,this,JokeRank.RANK);
 		mXLWeek.setAdapter(adapterWeek);
 		
 		View view3 = inflater.inflate(R.layout.listview_space_bar, null);
@@ -137,7 +138,7 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 		mXLMonth.setPullRefreshEnable(true);
 		mXLMonth.setXListViewListener(this);
 		mXLMonth.setOnItemClickListener(this);
-		adapterMonth = new JokeRecordAdapter(listMonth, mActivity,this,true);
+		adapterMonth = new JokeRecordAdapter(listMonth, mActivity,this,JokeRank.RANK);
 		mXLMonth.setAdapter(adapterMonth);
 		
 		//将布局放入集合

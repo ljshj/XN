@@ -71,6 +71,8 @@ public class ChatHXSDKHelper extends HXSDKHelper{
 					FriendBean bean = BGApp.getInstance().getFriendMapById().get(message.getFrom().substring(2));
 					if(null!=bean){
 						msgFrom = bean.name;
+					}else if(Constant.FRIEND_ADMIN_ID.contains(message.getFrom())){
+						msgFrom = "炫能小秘书";
 					}else{
 						return "";
 					}
@@ -123,7 +125,11 @@ public class ChatHXSDKHelper extends HXSDKHelper{
                 Intent intent = new Intent(appContext, ChatActivity.class);
                 ChatType chatType = message.getChatType();
                 if (chatType == ChatType.Chat) { // 单聊信息
-                    intent.putExtra("userId", message.getFrom().substring(2));
+                	if(Constant.FRIEND_ADMIN_ID.contains(message.getFrom())){	//如果是管理员
+                		intent.putExtra("userId", Constant.FRIEND_ADMIN_ID);
+                	}else{
+                		intent.putExtra("userId", message.getFrom().substring(2));
+                	}
                     intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
                 } else { // 群聊信息
                             // message.getTo()为群聊id

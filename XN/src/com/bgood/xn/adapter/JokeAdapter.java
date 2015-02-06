@@ -147,7 +147,7 @@ public class JokeAdapter extends KBaseAdapter
 	private IDeleteCallback callback = new IDeleteCallback() {
 		@Override
 		public void deleteAction(final Object object) {
-			if(object instanceof WeiQiangBean){
+			if(object instanceof JokeBean){
 				mList.remove(object);
 				notifyDataSetChanged();
 			}

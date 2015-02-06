@@ -33,12 +33,27 @@ import com.bgood.xn.view.ActionView;
 public class JokeRecordAdapter extends KBaseAdapter 
 {
 
-	/**是否是排行榜*/
-	private boolean isRank = false;	
+	public enum JokeRank{
+		RANK,RECORD
+	}
 	
-	public JokeRecordAdapter(List<?> mList, Activity mActivity,OnClickListener listener,boolean isRank) {
+	public enum JokeTimeType{
+		DAY,WEEK,MONTH
+	}
+	
+	private JokeRank mType;
+	
+	private JokeTimeType mTimeType;
+	
+	public JokeRecordAdapter(List<?> mList, Activity mActivity,OnClickListener listener,JokeRank type) {
 		super(mList, mActivity, listener);
-		this.isRank = isRank;
+		this.mType = type;
+	}
+	
+	public JokeRecordAdapter(List<?> mList, Activity mActivity,OnClickListener listener,JokeRank type,JokeTimeType timeType) {
+		super(mList, mActivity, listener);
+		this.mType = type;
+		this.mTimeType = timeType;
 	}
 	
 	public JokeRecordAdapter(List<?> mList, Activity mActivity,OnClickListener listener) {
@@ -61,6 +76,7 @@ public class JokeRecordAdapter extends KBaseAdapter
 			holder.ivAuthorImg = (ImageView) convertView.findViewById(R.id.iv_img);
 			holder.tvAuthorName = (TextView) convertView.findViewById(R.id.tv_nick);
 			holder.tvTime = (TextView) convertView.findViewById(R.id.tv_time);
+			holder.tvRecordTime = (TextView) convertView.findViewById(R.id.tv_record_time);
 			holder.tvComments = (TextView) convertView.findViewById(R.id.tv_comments);
 			holder.gridView = (GridView) convertView.findViewById(R.id.gv_show_img);
 			holder.ivRank = (ImageView) convertView.findViewById(R.id.iv_rank);
@@ -93,24 +109,29 @@ public class JokeRecordAdapter extends KBaseAdapter
 		
 		holder.tvTime.setText(ToolUtils.getFormatDate(jokeBean.date_time));
 		
-		if(position < 3 && isRank){
-			int mResourceID = -1;
-			switch (position) {
-			case 0:
-				mResourceID =R.drawable.icon_joke_gold;
-				break;
-			case 1:
-				mResourceID = R.drawable.icon_joke_silver;
-				break;
-			default:
-				mResourceID = R.drawable.icon_joke_copper;
-				break;
+		if(mType == JokeRank.RECORD){		//如果是榜单，则需要全部展示
+			setBackgroud(position,holder.ivRank);
+			String time = "";
+			if(mTimeType == JokeTimeType.DAY){	//日排行
+				time = ToolUtils.getFormatTime(jokeBean.opartime);
+			}else if(mTimeType == JokeTimeType.WEEK){	//周排行
+				time = ToolUtils.getFormatTime(jokeBean.opartime);
+			}else{ //月排行
+				time = ToolUtils.getFormatTime(jokeBean.opartime);
 			}
-			holder.ivRank.setImageResource(mResourceID);
-			holder.ivRank.setVisibility(View.VISIBLE);
-		}else{
-			holder.ivRank.setVisibility(View.INVISIBLE);
+			holder.tvRecordTime.setText(time);
+			holder.tvRecordTime.setVisibility(View.VISIBLE);
+		}else{ //if(mType == JokeRank.RANK)
+			holder.tvRecordTime.setVisibility(View.GONE);
+			//如果只是排行榜，则只展示前3名
+			if(position<3){
+				setBackgroud(position,holder.ivRank);
+			}else{
+				holder.ivRank.setVisibility(View.INVISIBLE);
+			}
 		}
+		
+		
 		
 //		if(!TextUtils.isEmpty(BGApp.mUserId)&& BGApp.mUserId.equals(String.valueOf(jokeBean.userid))){
 //			holder.ivDelete.setVisibility(View.VISIBLE);
@@ -157,6 +178,34 @@ public class JokeRecordAdapter extends KBaseAdapter
 		
 		return convertView;
 	}
+	
+	private void setBackgroud(int position,ImageView iv){
+		int mResourceID = -1;
+		switch (position%3) {
+		case 0:
+			mResourceID =R.drawable.icon_joke_gold;
+			break;
+		case 1:
+			mResourceID = R.drawable.icon_joke_silver;
+			break;
+		default:
+			mResourceID = R.drawable.icon_joke_copper;
+			break;
+		
+//		case 0:
+//			mResourceID =R.drawable.icon_joke_1;
+//			break;
+//		case 1:
+//			mResourceID = R.drawable.icon_joke_2;
+//			break;
+//		default:
+//			mResourceID = R.drawable.icon_joke_3;
+//			break;
+		
+		}
+		iv.setImageResource(mResourceID);
+		iv.setVisibility(View.VISIBLE);
+	}
 
 	/**删除微墙的回调*/
 	private IDeleteCallback callback = new IDeleteCallback() {
@@ -175,7 +224,7 @@ public class JokeRecordAdapter extends KBaseAdapter
 		 ImageView ivAuthorImg;
 		 ImageView ivRank;
 		 TextView tvAuthorName;
-		 TextView tvTime;
+		 TextView tvTime,tvRecordTime;
 		 TextView tvComments;
 		 LinearLayout llTransArea;
 		 TextView tvOldAuthorName;

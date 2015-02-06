@@ -38,6 +38,7 @@ public class JokeBean implements Serializable {
 	public String photo;
 	public String distance;
 	public String date_time;
+	public String opartime;
 	public String fromuserid;
 	public String fromname;
 	public String content;

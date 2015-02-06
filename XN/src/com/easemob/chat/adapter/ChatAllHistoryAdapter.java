@@ -136,8 +136,10 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 			
 			final FriendBean fb = BGApp.getInstance().getFriendMapById().get(username.substring(2));//去掉bg 得到用户id
 			
-			if(null == fb){	
-				//如果没有这个好友，把这个会话从缓存中删除吧。
+			boolean isAdmin = Constant.FRIEND_ADMIN_ID.contains(username);
+			
+			if(null == fb && !isAdmin){	
+				//如果没有这个好友,且不是管理员,就移出去
 				this.remove(conversation);
 				//也从数据库中删除
 				EMChatManager.getInstance().deleteConversation(username,false);
@@ -145,7 +147,13 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 				return convertView;
 			}
 			
-			BGApp.getInstance().setImage(fb.photo, holder.avatar);
+			if(isAdmin){//管理员用默认的图标
+				holder.avatar.setImageResource(R.drawable.icon_app);
+				holder.name.setText("炫能小秘书");
+			}else{//非管理员用自己的头标
+				BGApp.getInstance().setImage(fb.photo, holder.avatar);
+				holder.name.setText(fb.name);
+			}
 			// 本地或者服务器获取用户详情，以用来显示头像和nick
 //			holder.avatar.setImageResource(R.drawable.default_avatar);
 //			if (username.equals(Constant.GROUP_USERNAME)) {
@@ -154,7 +162,7 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 //			} else if (username.equals(Constant.NEW_FRIENDS_USERNAME)) {
 //				holder.name.setText("申请与通知");
 //			}
-			holder.name.setText(fb.name);
+			
 		}
 
 		if (conversation.getUnreadMsgCount() > 0) {
