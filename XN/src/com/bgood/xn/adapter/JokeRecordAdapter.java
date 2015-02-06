@@ -182,15 +182,26 @@ public class JokeRecordAdapter extends KBaseAdapter
 	private void setBackgroud(int position,ImageView iv){
 		int mResourceID = -1;
 		switch (position%3) {
+		
 		case 0:
-			mResourceID =R.drawable.icon_joke_gold;
+			mResourceID =R.drawable.icon_joke_one;
 			break;
 		case 1:
-			mResourceID = R.drawable.icon_joke_silver;
+			mResourceID = R.drawable.icon_joke_two;
 			break;
 		default:
-			mResourceID = R.drawable.icon_joke_copper;
+			mResourceID = R.drawable.icon_joke_three;
 			break;
+		
+//		case 0:
+//			mResourceID =R.drawable.icon_joke_gold;
+//			break;
+//		case 1:
+//			mResourceID = R.drawable.icon_joke_silver;
+//			break;
+//		default:
+//			mResourceID = R.drawable.icon_joke_copper;
+//			break;
 		
 //		case 0:
 //			mResourceID =R.drawable.icon_joke_1;

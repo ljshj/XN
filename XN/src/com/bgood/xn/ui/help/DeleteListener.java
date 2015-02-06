@@ -1,6 +1,8 @@
 package com.bgood.xn.ui.help;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -35,13 +37,14 @@ public class DeleteListener implements OnClickListener,TaskListenerWithState {
 	
 	@Override
 	public void onClick(View v) {
-		if(object instanceof WeiQiangBean){	//微墙
-			WeiQiangBean weiqiang = (WeiQiangBean) object;
-			WeiqiangRequest.getInstance().requestWeiqiangDel(DeleteListener.this, mActivity, weiqiang.weiboid);
-		}else if(object instanceof JokeBean){ //炫能
-			JokeBean joke = (JokeBean) object;
-			XuannengRequest.getInstance().requestXuanDel(DeleteListener.this, mActivity, joke.jokeid);
-		}
+		alertDialog();
+//		if(object instanceof WeiQiangBean){	//微墙
+//			WeiQiangBean weiqiang = (WeiQiangBean) object;
+//			WeiqiangRequest.getInstance().requestWeiqiangDel(DeleteListener.this, mActivity, weiqiang.weiboid);
+//		}else if(object instanceof JokeBean){ //炫能
+//			JokeBean joke = (JokeBean) object;
+//			XuannengRequest.getInstance().requestXuanDel(DeleteListener.this, mActivity, joke.jokeid);
+//		}
 	}
 
 	@Override
@@ -59,5 +62,30 @@ public class DeleteListener implements OnClickListener,TaskListenerWithState {
 				break;
 				}
 			}
+	}
+	
+	
+	private void deleteAction() {
+		if(object instanceof WeiQiangBean){	//微墙
+			WeiQiangBean weiqiang = (WeiQiangBean) object;
+			WeiqiangRequest.getInstance().requestWeiqiangDel(DeleteListener.this, mActivity, weiqiang.weiboid);
+		}else if(object instanceof JokeBean){ //炫能
+			JokeBean joke = (JokeBean) object;
+			XuannengRequest.getInstance().requestXuanDel(DeleteListener.this, mActivity, joke.jokeid);
+		}
+
+	}
+	
+	private void alertDialog(){
+		final AlertDialog dialog = new AlertDialog.Builder(mActivity)
+    	.setTitle("删除消息")
+    	.setCancelable(true)
+    	.setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface arg0, int arg1) {
+				deleteAction();
+			}
+		}).setNegativeButton("取消", null)
+    	.show();
 	}
 }

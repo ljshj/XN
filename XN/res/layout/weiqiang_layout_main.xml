@@ -14,10 +14,10 @@
         <ImageView
             android:id="@+id/weiqiang_main_b_more_operate"
             style="@style/common_btn_title_right_style"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginRight="17dp"
-            android:src="@drawable/icon_drop_bg" />
+            android:src="@drawable/icon_drop_new2" />
     </RelativeLayout>
 
 

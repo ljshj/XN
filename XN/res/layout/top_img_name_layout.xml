@@ -31,8 +31,8 @@
            <ImageView
               android:id="@+id/iv_rank"
               style="@style/item_time"
-              android:layout_width="25dp"
-              android:layout_height="38dp"
+              android:layout_width="40dp"
+              android:layout_height="60dp"
               android:layout_alignParentRight="true"
               android:layout_marginRight="10dp"
               android:layout_alignTop="@id/iv_img"
@@ -56,11 +56,12 @@
           
           <ImageView
               android:id="@+id/iv_delete"
-              android:layout_width="24dp"
+              android:layout_width="45dp"
               android:layout_height="30dp"
               android:layout_alignTop="@id/iv_img"
-              android:layout_toLeftOf="@id/iv_rank"
-              android:background="@drawable/icon_delete"
+              android:layout_alignParentRight="true"
+              android:layout_marginRight="10dp"
+              android:background="@drawable/icon_delete_new"
               android:visibility="gone"
               />
           

@@ -21,10 +21,10 @@
              <ImageView
 	            android:id="@+id/joke_main_b_more_operate"
 	            style="@style/common_btn_title_right_style"
-	            android:layout_width="25dp"
-	            android:layout_height="25dp"
+	            android:layout_width="35dp"
+	            android:layout_height="35dp"
 	            android:layout_marginRight="17dp"
-	            android:src="@drawable/icon_drop_bg" />
+	            android:src="@drawable/icon_drop_new2" />
 
             <RadioGroup
                 android:id="@+id/xuanneng_humor_rg_tab"
@@ -74,13 +74,13 @@
 
             <Button
                 android:id="@+id/xuanneng_humor_b_add"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/img_message_add"
+                android:background="@drawable/icon_drop_me"
                 android:visibility="invisible" />
         </RelativeLayout>
 
