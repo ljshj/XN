@@ -235,6 +235,16 @@ public class PreferenceUtil {
 		return sp.getString("joke_random", "");
 	}
 	
+	/**是否有查看幽默秀协议**/
+	public void setInitJokeProtocol(boolean hasInit) {
+		editor.putBoolean("joke_protocol_init", hasInit);
+		editor.commit();
+	}
+
+	public boolean hasInitJokeProtocol() {
+		return sp.getBoolean("joke_protocol_init", false);
+	}
+	
 
 	/**************************************IM聊天模块*******************************************/
 	

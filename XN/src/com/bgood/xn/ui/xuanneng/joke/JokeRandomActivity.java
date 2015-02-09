@@ -12,8 +12,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.alibaba.fastjson.JSON;
@@ -32,7 +32,7 @@ import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseShowDataActivity;
 import com.bgood.xn.ui.user.account.LoginActivity;
-import com.bgood.xn.ui.xuanneng.XuannengActivity;
+import com.bgood.xn.ui.xuanneng.XuanNengMainActivity;
 import com.bgood.xn.utils.ShareUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.dialog.BGDialog;
@@ -71,7 +71,7 @@ public class JokeRandomActivity extends BaseShowDataActivity implements OnItemCl
 		m_listXlv.setOnItemClickListener(this);
 		adapter = new JokeAdapter(listJoke, mActivity,this);
 		m_listXlv.setAdapter(adapter);
-		XuannengRequest.getInstance().requestJokeList(this, this, XuannengActivity.XUANNENG_JOKE, JokeBean.JOKE_RADOM, m_start_page, m_start_page+PAGE_SIZE_ADD);
+		XuannengRequest.getInstance().requestJokeList(this, this, XuanNengMainActivity.XUANNENG_JOKE, JokeBean.JOKE_RADOM, m_start_page, m_start_page+PAGE_SIZE_ADD);
 	}
 
 	
@@ -238,11 +238,11 @@ public class JokeRandomActivity extends BaseShowDataActivity implements OnItemCl
 	public void onRefresh() {
 		isRefreshAction = true;
 		m_start_page = 0;
-		XuannengRequest.getInstance().requestJokeList(this, this, XuannengActivity.XUANNENG_JOKE, JokeBean.JOKE_RADOM, m_start_page, m_start_page+PAGE_SIZE_ADD);
+		XuannengRequest.getInstance().requestJokeList(this, this, XuanNengMainActivity.XUANNENG_JOKE, JokeBean.JOKE_RADOM, m_start_page, m_start_page+PAGE_SIZE_ADD);
 	}
 	@Override
 	public void onLoadMore() {
 		isRefreshAction = false;
-		XuannengRequest.getInstance().requestJokeList(this, this, XuannengActivity.XUANNENG_JOKE, JokeBean.JOKE_RADOM, m_start_page, m_start_page+PAGE_SIZE_ADD);
+		XuannengRequest.getInstance().requestJokeList(this, this, XuanNengMainActivity.XUANNENG_JOKE, JokeBean.JOKE_RADOM, m_start_page, m_start_page+PAGE_SIZE_ADD);
 	}
 }

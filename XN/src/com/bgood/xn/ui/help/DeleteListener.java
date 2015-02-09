@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import com.bgood.xn.R;
 import com.bgood.xn.bean.JokeBean;
 import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.network.BaseNetWork;
@@ -77,8 +78,8 @@ public class DeleteListener implements OnClickListener,TaskListenerWithState {
 	}
 	
 	private void alertDialog(){
-		final AlertDialog dialog = new AlertDialog.Builder(mActivity)
-    	.setTitle("删除消息")
+		final AlertDialog dialog = new AlertDialog.Builder(mActivity, R.style.user_dialog)
+    	.setTitle("确定删除这条幽默秀吗?")
     	.setCancelable(true)
     	.setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
 			@Override

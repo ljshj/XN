@@ -147,25 +147,28 @@ public class FriendListFragment extends BaseFragment implements TaskListenerWith
             @Override
             public boolean onItemLongClick(AdapterView<?> adapter, View view, int position, long id) {
 
-            	final FriendBean friendBean = (FriendBean) adapter.getAdapter().getItem(position);
+            	if(position < 3){
+            		return true;
+            	}
             	
-            	AlertDialog dialog = new AlertDialog.Builder(getActivity())
-            	.setTitle("删除联系人")
-            	.setCancelable(true)
-            	.setPositiveButton("确定", new OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface arg0, int arg1) {
-						mActionFriendBean = friendBean;
-						// 删除此联系人
-						deleteContact(mActionFriendBean);
+            	final FriendBean friendBean = (FriendBean) adapter.getAdapter().getItem(position);
+            	if(null!=friendBean){
+	            	AlertDialog dialog = new AlertDialog.Builder(getActivity())
+	            	.setTitle("删除联系人")
+	            	.setCancelable(true)
+	            	.setPositiveButton("确定", new OnClickListener() {
 						
-					}
-				})
-            	.setNegativeButton("取消", null)
-            	.show();
-                
-                
+						@Override
+						public void onClick(DialogInterface arg0, int arg1) {
+							mActionFriendBean = friendBean;
+							// 删除此联系人
+							deleteContact(mActionFriendBean);
+							
+						}
+					})
+	            	.setNegativeButton("取消", null)
+	            	.show();
+	            	}
                 return true;
             }
         });

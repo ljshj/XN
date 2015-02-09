@@ -113,11 +113,11 @@ public class JokeRecordAdapter extends KBaseAdapter
 			setBackgroud(position,holder.ivRank);
 			String time = "";
 			if(mTimeType == JokeTimeType.DAY){	//日排行
-				time = ToolUtils.getFormatTime(jokeBean.opartime);
+				time = ToolUtils.getFormatTime(jokeBean.opartime,"MM月dd日");
 			}else if(mTimeType == JokeTimeType.WEEK){	//周排行
-				time = ToolUtils.getFormatTime(jokeBean.opartime);
+				time = ToolUtils.getFormatTime(jokeBean.opartime,"MM月dd日",1000 * 3600 * 24 * 7L)+"-"+ToolUtils.getFormatTime(jokeBean.opartime,"MM月dd日");
 			}else{ //月排行
-				time = ToolUtils.getFormatTime(jokeBean.opartime);
+				time = ToolUtils.getFormatTime(jokeBean.opartime,"yyyy年MM月");
 			}
 			holder.tvRecordTime.setText(time);
 			holder.tvRecordTime.setVisibility(View.VISIBLE);

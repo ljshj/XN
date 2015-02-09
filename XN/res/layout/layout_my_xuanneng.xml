@@ -5,17 +5,34 @@
     android:background="@color/common_page_bg"
     android:orientation="vertical" >
     
-<include layout="@layout/title_bar"/>
+	<include layout="@layout/title_bar"/>
     
-    <Button
-        android:id="@+id/my_xuanneng_btn_humor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
+	<LinearLayout
+	    android:id="@+id/ll_show_humor"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:gravity="center_horizontal"
+	    android:padding="10dp"
+	    android:orientation="vertical">
+	 <ImageView
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:enabled="false"
         android:background="@drawable/img_xuanneng_humor_icon" />
     
-    <GridView
+    <TextView
+        style="@style/group_text_tag"
+        android:text="幽默秀"
+        android:layout_margin="5dp"
+        android:textColor="@color/black"
+       />
+	    
+	</LinearLayout>
+	
+
+    
+    
+   <!--  <GridView
         android:id="@+id/my_xuanneng_gv_list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -28,5 +45,5 @@
         android:visibility="gone"
         android:numColumns="3" >
     </GridView>
-
+ -->
 </LinearLayout>

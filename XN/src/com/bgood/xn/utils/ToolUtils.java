@@ -638,40 +638,35 @@ public class ToolUtils {
 	 * @return
 	 */
 	@SuppressWarnings("deprecation")
-	public static String getFormatTime(String date){
+	public static String getFormatTime(String dateStr,String formatData){
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date currentDate = new Date();
-		Date fromDate = null;
-		StringBuffer sb = new StringBuffer();
 		try {
-			fromDate = dateFormat.parse(date);
-			
-			if(fromDate.getYear() == currentDate.getYear() && fromDate.getMonth() == currentDate.getMonth()){	//如果是同年同月
-				if(fromDate.getDate() == currentDate.getDate()){
-					sb.append("今天");
-				}else if(fromDate.getDate() == currentDate.getDate()-1){
-					sb.append("昨天");
-				}else if(fromDate.getDate() == currentDate.getDate()-2){
-					sb.append("前天");
-				}else{
-					sb.append(fromDate.getMonth()+1).append("月").append(fromDate.getDate()).append("日");
-				}
-				return sb.toString();
-				
-			}else if(fromDate.getYear() == currentDate.getYear() && fromDate.getMonth() != currentDate.getMonth()){//同年不同月
-				return new SimpleDateFormat("MM月dd日").format(fromDate);
-			}else if(fromDate.getYear() != currentDate.getYear()){//不同年
-				return new SimpleDateFormat("yyyy年MM日").format(fromDate);
-			}
-			
+			Date date = dateFormat.parse(dateStr);
+			return new SimpleDateFormat(formatData).format(date);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		
-		return null;
+		return "";
 	}
 	
-	
+	/**
+	 * 前面，或者后面多少天
+	 * date (MM-dd HH:mm:ss)
+	 * @return
+	 * String result = getFormatTime("2014-10-20 00:00:00", "MM月dd日", 1000*3600*24L*365);
+	 */
+	@SuppressWarnings("deprecation")
+	public static String getFormatTime(String dateStr,String formatData,long time){
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		try {
+			Date date = dateFormat.parse(dateStr);
+			return new SimpleDateFormat(formatData).format(new Date(date.getTime()-time));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
 	
 	
 	/**

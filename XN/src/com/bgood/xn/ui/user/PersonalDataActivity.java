@@ -104,6 +104,7 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
         	isSelf = false;
         	(new TitleBar(mActivity)).initTitleBar(mUserBean.nickn+"资料");
         	m_doneBtn.setVisibility(View.GONE);
+        	m_phoneRl.setVisibility(View.GONE);
         }
     }
     
@@ -113,6 +114,8 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
     	if(isSelf){
     		mUserBean = BGApp.mUserBean;
     		setData(BGApp.mUserBean);
+    	}else{
+    		setData(mUserBean);
     	}
     }
 

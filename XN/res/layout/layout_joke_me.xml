@@ -22,7 +22,7 @@
 	        <RadioButton
 	            android:id="@+id/radio_02"
 	            style="@style/xuanneng_tab_text"
-	            android:text="未审核" />
+	            android:text="审核中" />
 	      
 	         <RadioButton
 	            android:id="@+id/radio_03"

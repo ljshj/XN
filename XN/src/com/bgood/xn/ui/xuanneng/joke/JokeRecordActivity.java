@@ -26,7 +26,6 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
-import com.bgood.xn.adapter.JokeAdapter;
 import com.bgood.xn.adapter.JokeRecordAdapter;
 import com.bgood.xn.adapter.JokeRecordAdapter.JokeRank;
 import com.bgood.xn.adapter.JokeRecordAdapter.JokeTimeType;
@@ -43,7 +42,7 @@ import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseShowDataActivity;
 import com.bgood.xn.ui.user.account.LoginActivity;
-import com.bgood.xn.ui.xuanneng.XuannengActivity;
+import com.bgood.xn.ui.xuanneng.XuanNengMainActivity;
 import com.bgood.xn.utils.ShareUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.dialog.BGDialog;
@@ -185,13 +184,13 @@ public class JokeRecordActivity extends BaseShowDataActivity implements OnClickL
 		}
 		switch (flag) {
 		case CHOOSE_DAY:
-			XuannengRequest.getInstance().requestXuanRecord(this, mActivity,XuannengActivity.XUANNENG_JOKE,CHOOSE_DAY, m_start_day, m_start_day+PAGE_SIZE_ADD);
+			XuannengRequest.getInstance().requestXuanRecord(this, mActivity,XuanNengMainActivity.XUANNENG_JOKE,CHOOSE_DAY, m_start_day, m_start_day+PAGE_SIZE_ADD);
 			break;
 		case CHOOSE_WEEK:
-			XuannengRequest.getInstance().requestXuanRecord(this, mActivity,XuannengActivity.XUANNENG_JOKE,CHOOSE_WEEK, m_start_week, m_start_week+PAGE_SIZE_ADD);
+			XuannengRequest.getInstance().requestXuanRecord(this, mActivity,XuanNengMainActivity.XUANNENG_JOKE,CHOOSE_WEEK, m_start_week, m_start_week+PAGE_SIZE_ADD);
 			break;
 		case CHOOSE_MONTH:
-			XuannengRequest.getInstance().requestXuanRecord(this, mActivity,XuannengActivity.XUANNENG_JOKE,CHOOSE_MONTH, m_start_month, m_start_month+PAGE_SIZE_ADD);
+			XuannengRequest.getInstance().requestXuanRecord(this, mActivity,XuanNengMainActivity.XUANNENG_JOKE,CHOOSE_MONTH, m_start_month, m_start_month+PAGE_SIZE_ADD);
 			break;
 		default:
 			break;
