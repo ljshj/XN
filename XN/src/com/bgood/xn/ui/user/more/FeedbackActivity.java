@@ -21,6 +21,7 @@ import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -35,6 +36,18 @@ public class FeedbackActivity extends BaseActivity implements TaskListenerWithSt
     private TextView m_wordcountTv = null;  // 字数显示
     private String mContent;
     private String mCommact;
+    
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
     
     @Override
     protected void onCreate(Bundle savedInstanceState)

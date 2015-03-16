@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.bgood.xn.R;
+import com.umeng.analytics.MobclickAgent;
 
 public class ExitGroupDialog extends BaseActivity{
     private TextView text;
@@ -55,4 +56,17 @@ public class ExitGroupDialog extends BaseActivity{
         finish();
         return true;
     }
+    
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+    
 }

@@ -7,6 +7,7 @@ import com.bgood.xn.R;
 import com.bgood.xn.ui.user.product.ShowcaseRightFragment;
 import com.bgood.xn.view.slidingmenu.lib.SlidingMenu;
 import com.bgood.xn.view.slidingmenu.lib.app.SlidingFragmentActivity;
+import com.umeng.analytics.MobclickAgent;
 
 public class CBaseSlidingMenu extends SlidingFragmentActivity
 {
@@ -19,6 +20,18 @@ public class CBaseSlidingMenu extends SlidingFragmentActivity
 	{
 		super.onCreate(savedInstanceState);
 		initSlidingMenu();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 
 	/**

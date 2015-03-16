@@ -54,6 +54,8 @@ public class ImageGridFragment extends Fragment implements OnItemClickListener {
 	 */
 	public ImageGridFragment() {
 	}
+	
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

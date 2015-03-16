@@ -37,6 +37,7 @@ import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.dialog.BottomDialog;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -65,6 +66,19 @@ public class ProductAddActivity extends BaseActivity implements OnClickListener,
     private ProductBean m_ProductBean = null;
     private String img,img_thumb;
     private TitleBar mTitleBar;
+    
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

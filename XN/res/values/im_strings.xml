@@ -63,9 +63,9 @@
       <string name="connect_conflict">同一帐号已在其他设备登录</string>
       
       
-       <string name="title_msg">消息</string>
-    <string name="title_friend">朋友</string>
-    <string name="title_group">群组</string>
+    <string name="title_msg">消息</string>
+    <string name="title_friend">好友</string>
+    <string name="title_group">固定群</string>
     <string name="title_communicate">交流厅</string>
     <string name="txt_count">0</string>
       

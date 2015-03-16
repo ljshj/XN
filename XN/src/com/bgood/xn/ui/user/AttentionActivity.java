@@ -34,6 +34,7 @@ import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -52,6 +53,19 @@ public class AttentionActivity extends BaseShowDataActivity implements TaskListe
     private int mType = 0;
     private int count;
     private TitleBar mTilteBar;
+    
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

@@ -26,6 +26,7 @@ import com.easemob.chat.Constant;
 import com.easemob.chat.adapter.NewFriendsMsgAdapter;
 import com.easemob.chat.db.InviteMessgeDao;
 import com.easemob.chat.domain.InviteMessage;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -36,6 +37,20 @@ import com.easemob.chat.domain.InviteMessage;
 public class NewFriendsMsgActivity extends BaseActivity {
 	private ListView listView;
 
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

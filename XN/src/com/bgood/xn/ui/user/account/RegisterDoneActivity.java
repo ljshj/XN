@@ -20,6 +20,7 @@ import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -34,6 +35,18 @@ public class RegisterDoneActivity extends BaseActivity implements TaskListenerWi
 	private String m_phone;
 	private String userID;
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -74,6 +87,8 @@ public class RegisterDoneActivity extends BaseActivity implements TaskListenerWi
      */
     private void checkUserInfo()
     {
+    	MobclickAgent.onEvent(RegisterDoneActivity.this,"sys_register_done");
+    	
         // 用户手机号码查询
          newPassword = m_passwordEt.getText().toString().trim();
          String confirmPassword = m_confirmPasswordEt.getText().toString().trim();

@@ -24,6 +24,7 @@ import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.CEditText;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 修改邮箱页面
@@ -34,6 +35,19 @@ public class EmailActivity extends BaseActivity implements TaskListenerWithState
     private String m_email = "";
     private UserInfoBean m_userDTO = null;
     private TitleBar mTitleBar;
+    
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

@@ -27,6 +27,7 @@ import com.easemob.chat.Constant;
 import com.easemob.chat.activity.BaseActivity;
 import com.easemob.chat.adapter.ContactAdapter;
 import com.easemob.chat.widget.Sidebar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 选择添加群成员 
@@ -42,6 +43,19 @@ public class GroupPickContactsActivity extends BaseActivity {
 	private List<FriendBean> exitingMembers;
 
 	private TitleBar titleBar;
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

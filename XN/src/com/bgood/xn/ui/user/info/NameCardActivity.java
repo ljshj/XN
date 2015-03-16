@@ -26,6 +26,7 @@ import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.user.PersonalDataActivity;
+import com.bgood.xn.ui.user.UserCenterActivity;
 import com.bgood.xn.ui.user.account.LoginActivity;
 import com.bgood.xn.ui.user.product.ShowcaseActivity;
 import com.bgood.xn.ui.weiqiang.WeiqiangPersonActivity;
@@ -38,6 +39,7 @@ import com.bgood.xn.view.RoundImageView;
 import com.bgood.xn.widget.TitleBar;
 import com.easemob.chat.EMContactManager;
 import com.easemob.chat.activity.ChatActivity;
+import com.umeng.analytics.MobclickAgent;
 
 /***
  * 
@@ -70,6 +72,18 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
     
     private UserInfoBean mUserInfoBean = null;
 	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -137,38 +151,46 @@ public class NameCardActivity extends BaseActivity implements OnClickListener,Ta
 		switch (v.getId()) {
 		
 		case R.id.user_center_rl_user_info:	//查看个人信息
+			MobclickAgent.onEvent(NameCardActivity.this,"namecard_info_friend_click");
 			intent = new Intent(NameCardActivity.this,PersonalDataActivity.class);
 			intent.putExtra(UserInfoBean.KEY_USER_BEAN, mUserInfoBean);
 			startActivity(intent);
 			break;
 		
 		case R.id.user_center_imgv_user_icon:	//查看个人图片
+			MobclickAgent.onEvent(NameCardActivity.this,"namecard_pic_friend_click");
 			ImgUtils.imageBrower(0, imgList, mActivity);
 			break;
 		 // 关注
         case R.id.av_add_attention:
+        	MobclickAgent.onEvent(NameCardActivity.this,"namecard_follow_friend_click");
         	UserCenterRequest.getInstance().requestAttention(NameCardActivity.this, mActivity,userId,BGApp.mUserId,String.valueOf(0));
             break;
 		case R.id.av_add_friend:
+			MobclickAgent.onEvent(NameCardActivity.this,"namecard_add_friend_click");
 			addContact();
 			break;
 		case R.id.av_call_message:
+			MobclickAgent.onEvent(NameCardActivity.this,"namecard_chat_friend_click");
 			doChat();
 			break;
 			
 			
 		case R.id.tv_xuanneng:
+			MobclickAgent.onEvent(NameCardActivity.this,"namecard_xuanneng_friend_click");
 			intent = new Intent(mActivity, XuanNengMainActivity.class);
 			intent.putExtra(UserInfoBean.KEY_USER_ID, userId);
 			startActivity(intent);
 			
 			break;
 		case R.id.tv_weiqiang:
+			MobclickAgent.onEvent(NameCardActivity.this,"namecard_weiqiang_friend_click");
 			intent = new Intent(mActivity, WeiqiangPersonActivity.class);
 			intent.putExtra(UserInfoBean.KEY_USER_ID, userId);
 			startActivity(intent);
 			break;
 		case R.id.tv_shop:
+			MobclickAgent.onEvent(NameCardActivity.this,"namecard_chuchuang_friend_click");
 			intent = new Intent(mActivity, ShowcaseActivity.class);
 			intent.putExtra(ShowcaseActivity.KEY_USER_ID, userId);
 			startActivity(intent);

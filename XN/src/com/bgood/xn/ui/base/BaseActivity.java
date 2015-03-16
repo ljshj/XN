@@ -21,7 +21,7 @@ public class BaseActivity extends FragmentActivity {
 	public LayoutInflater inflater = null;
 	public Activity mActivity = null;
 	protected InputMethodManager im = null;
-	public static final int PAGE_SIZE_ADD = 20;
+	public static final int PAGE_SIZE_ADD = 10;
 	public PreferenceUtil pUitl;
 	public DBHelper dbHelper = null;
 	/**登录码**/

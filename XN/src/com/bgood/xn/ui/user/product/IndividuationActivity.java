@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.bgood.xn.R;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -20,6 +21,19 @@ import com.bgood.xn.widget.TitleBar;
  */
 public class IndividuationActivity extends BaseActivity implements OnClickListener
 {
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+	
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

@@ -10,13 +10,15 @@ import android.widget.TextView;
 
 import com.bgood.xn.R;
 import com.bgood.xn.bean.UserInfoBean;
+import com.bgood.xn.location.MyLocationActivity;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.xuanneng.joke.JokeMainActivity;
-import com.bgood.xn.ui.xuanneng.joke.JokeMeActivity;
 import com.bgood.xn.ui.xuanneng.joke.JokePersonActivity;
+import com.bgood.xn.ui.xuanneng.joke.JokeVerifyActivity;
 import com.bgood.xn.view.dialog.BottomDialog;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -58,14 +60,13 @@ public class XuanNengMainActivity extends BaseActivity implements OnClickListene
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ll_show_humor:
-			if(pUitl.hasInitJokeProtocol()){
-				goToJoke();	
-			}else{
-				pUitl.setInitJokeProtocol(true);
-				createProtocolDialog();
-			}
+			goToJoke();	
+//			if(pUitl.hasInitJokeProtocol()){
+//			}else{
+//				pUitl.setInitJokeProtocol(true);
+//				createProtocolDialog();
+//			}
 			break;
-
 		default:
 			break;
 		}
@@ -126,6 +127,17 @@ public class XuanNengMainActivity extends BaseActivity implements OnClickListene
 		dialog.show();
 	}
 	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 	
 	
 }

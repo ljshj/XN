@@ -28,6 +28,7 @@ import com.bgood.xn.ui.base.BaseShowDataActivity;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * @todo: 与我相关的幽默秀
@@ -58,6 +59,8 @@ public class JokeMentionActivity extends BaseShowDataActivity implements TaskLis
 	public void onClick(View v) {
 		
 	}
+	
+	
 	
 	
 	@Override
@@ -97,5 +100,17 @@ public class JokeMentionActivity extends BaseShowDataActivity implements TaskLis
 	
 	private void doRequest(){
 		XuannengRequest.getInstance().requestXuanWithMe(this, mActivity, m_start_page, m_start_page+PAGE_SIZE_ADD);
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 }

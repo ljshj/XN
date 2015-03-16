@@ -56,6 +56,7 @@ import com.bgood.xn.view.dialog.BGDialog;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -87,8 +88,6 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 	private JokeActionType type;
 	private TitleBar titleBar;
 	private ShareUtils share;
-
-
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -163,10 +162,10 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 		listview.setAdapter(commentAdapter);
 	}
 	
-	
 	@Override
 	public void onResume() {
 		super.onResume();
+		MobclickAgent.onResume(this);
 		mRefreshJokeTime = pUitl.getJokeDetailRefreshTime();
 		listview.setRefreshTime(mRefreshJokeTime);
 		
@@ -175,6 +174,7 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 	@Override
 	public void onPause() {
 		super.onPause();
+		MobclickAgent.onPause(this);
 		pUitl.setJokeDetailRefreshTime(mRefreshJokeTime);
 	}
 	

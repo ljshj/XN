@@ -33,6 +33,9 @@ import com.bgood.xn.view.ActionView;
 public class JokeRecordAdapter extends KBaseAdapter 
 {
 
+	private int paihangindex = 0;
+	private String indextime = "";
+	
 	public enum JokeRank{
 		RANK,RECORD
 	}
@@ -50,7 +53,7 @@ public class JokeRecordAdapter extends KBaseAdapter
 		this.mType = type;
 	}
 	
-	public JokeRecordAdapter(List<?> mList, Activity mActivity,OnClickListener listener,JokeRank type,JokeTimeType timeType) {
+	public JokeRecordAdapter(List<JokeBean> mList, Activity mActivity,OnClickListener listener,JokeRank type,JokeTimeType timeType) {
 		super(mList, mActivity, listener);
 		this.mType = type;
 		this.mTimeType = timeType;
@@ -81,6 +84,7 @@ public class JokeRecordAdapter extends KBaseAdapter
 			holder.gridView = (GridView) convertView.findViewById(R.id.gv_show_img);
 			holder.ivRank = (ImageView) convertView.findViewById(R.id.iv_rank);
 			holder.ivDelete = (ImageView) convertView.findViewById(R.id.iv_delete);
+			holder.ivOriginal = (ImageView) convertView.findViewById(R.id.iv_original);
 			
 			holder.llTransArea = (LinearLayout) convertView.findViewById(R.id.ll_old_area);
 			holder.tvOldAuthorName = (TextView) convertView.findViewById(R.id.tv_old_user);
@@ -91,6 +95,8 @@ public class JokeRecordAdapter extends KBaseAdapter
 			holder.avReply = (ActionView) convertView.findViewById(R.id.av_reply);
 			holder.avTranspnt = (ActionView) convertView.findViewById(R.id.av_transpont);
 			holder.avShare = (ActionView) convertView.findViewById(R.id.av_share);
+			
+			holder.llShare = (LinearLayout) convertView.findViewById(R.id.ll_share);
 			
 			convertView.setTag(holder);
 		} else
@@ -110,7 +116,6 @@ public class JokeRecordAdapter extends KBaseAdapter
 		holder.tvTime.setText(ToolUtils.getFormatDate(jokeBean.date_time));
 		
 		if(mType == JokeRank.RECORD){		//如果是榜单，则需要全部展示
-			setBackgroud(position,holder.ivRank);
 			String time = "";
 			if(mTimeType == JokeTimeType.DAY){	//日排行
 				time = ToolUtils.getFormatTime(jokeBean.opartime,"MM月dd日");
@@ -119,13 +124,14 @@ public class JokeRecordAdapter extends KBaseAdapter
 			}else{ //月排行
 				time = ToolUtils.getFormatTime(jokeBean.opartime,"yyyy年MM月");
 			}
+			setBackgroudByRecord(jokeBean.paihang,holder.ivRank);
 			holder.tvRecordTime.setText(time);
 			holder.tvRecordTime.setVisibility(View.VISIBLE);
 		}else{ //if(mType == JokeRank.RANK)
 			holder.tvRecordTime.setVisibility(View.GONE);
 			//如果只是排行榜，则只展示前3名
-			if(position<3){
-				setBackgroud(position,holder.ivRank);
+			if(position < 3){
+				setBackgroudByRank(position,holder.ivRank);
 			}else{
 				holder.ivRank.setVisibility(View.INVISIBLE);
 			}
@@ -139,6 +145,9 @@ public class JokeRecordAdapter extends KBaseAdapter
 //		}else{
 //			holder.ivDelete.setVisibility(View.GONE);
 //		}
+		
+		//显示是否为原创的icon
+		holder.ivOriginal.setVisibility(jokeBean.original == 0?View.GONE:View.VISIBLE);
 		
 		
 		if(!TextUtils.isEmpty(jokeBean.fromname)){	//如果转发人存在
@@ -175,16 +184,34 @@ public class JokeRecordAdapter extends KBaseAdapter
 		holder.avShare.setOnClickListener(mListener);
 		holder.avShare.setTag(jokeBean);
 		
+		holder.llShare.setOnClickListener(mListener);
+		holder.llShare.setTag(jokeBean);
 		
 		return convertView;
 	}
 	
-	private void setBackgroud(int position,ImageView iv){
+	private void setBackgroudByRecord(int paihang,ImageView iv){
 		int mResourceID = -1;
-		switch (position%3) {
-		
+		switch (paihang) {
+		case 1:
+			mResourceID = R.drawable.icon_joke_one;
+			break;
+		case 2:
+			mResourceID = R.drawable.icon_joke_two;
+			break;
+		default:
+			mResourceID = R.drawable.icon_joke_three;
+			break;
+		}
+		iv.setImageResource(mResourceID);
+		iv.setVisibility(View.VISIBLE);
+	}
+	
+	private void setBackgroudByRank(int position,ImageView iv){
+		int mResourceID = -1;
+		switch (position % 3) {
 		case 0:
-			mResourceID =R.drawable.icon_joke_one;
+			mResourceID = R.drawable.icon_joke_one;
 			break;
 		case 1:
 			mResourceID = R.drawable.icon_joke_two;
@@ -192,27 +219,6 @@ public class JokeRecordAdapter extends KBaseAdapter
 		default:
 			mResourceID = R.drawable.icon_joke_three;
 			break;
-		
-//		case 0:
-//			mResourceID =R.drawable.icon_joke_gold;
-//			break;
-//		case 1:
-//			mResourceID = R.drawable.icon_joke_silver;
-//			break;
-//		default:
-//			mResourceID = R.drawable.icon_joke_copper;
-//			break;
-		
-//		case 0:
-//			mResourceID =R.drawable.icon_joke_1;
-//			break;
-//		case 1:
-//			mResourceID = R.drawable.icon_joke_2;
-//			break;
-//		default:
-//			mResourceID = R.drawable.icon_joke_3;
-//			break;
-		
 		}
 		iv.setImageResource(mResourceID);
 		iv.setVisibility(View.VISIBLE);
@@ -231,13 +237,12 @@ public class JokeRecordAdapter extends KBaseAdapter
 	
 	final class Holder
 	{
-		 ImageView ivDelete;
-		 ImageView ivAuthorImg;
+		 ImageView ivDelete,ivAuthorImg,ivOriginal;
 		 ImageView ivRank;
 		 TextView tvAuthorName;
 		 TextView tvTime,tvRecordTime;
 		 TextView tvComments;
-		 LinearLayout llTransArea;
+		 LinearLayout llTransArea,llShare;
 		 TextView tvOldAuthorName;
 		 TextView tvContent;
 		 GridView gridView,oldgridView;

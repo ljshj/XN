@@ -22,10 +22,15 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.TextView;
 
+import com.baidu.location.BDLocation;
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.ImageAdapter;
 import com.bgood.xn.bean.WeiQiangBean;
+import com.bgood.xn.location.ILocationCallback;
+import com.bgood.xn.location.ILocationManager;
+import com.bgood.xn.location.LocationManagerFactory;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
@@ -41,6 +46,7 @@ import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.LoadingProgress;
 import com.bgood.xn.view.dialog.BottomDialog;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * @todo:发布微墙
@@ -64,9 +70,6 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 	private ImageAdapter adapter;
 	private EditText comment_content;
     
-    private double m_longitude = 0;    // 经度
-    private double m_latitude = 0;     // 纬度
-    
     private String m_content = null;
     
     private List<File> files = new ArrayList<File>();	//文件集合
@@ -80,6 +83,18 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
     private TitleBar mTitleBar;
     private WeiQiangBean mWeiqiangBean = null;
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -130,7 +145,6 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 		}
 	}
 
-
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	{
@@ -152,7 +166,7 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 			if(null != mWeiqiangBean ){	//如果是修改微墙
 				WeiqiangRequest.getInstance().requestWeiqiangUpdate(this, mActivity, m_content,mWeiqiangBean.weiboid);
 			}else{ //添加微墙
-				WeiqiangRequest.getInstance().requestWeiqiangSend(this, mActivity, m_content, imgs, smallImgs, "", String.valueOf(m_longitude), String.valueOf(m_latitude));
+				WeiqiangRequest.getInstance().requestWeiqiangSend(this, mActivity, m_content, imgs, smallImgs, "", String.valueOf(BGApp.location.longitude), String.valueOf(BGApp.location.latitude));
 			}
 		}
 	}
@@ -270,7 +284,7 @@ public class WeiqiangPublishActivity extends BaseActivity implements OnItemClick
 	 * @params:
 	 */
 	private void doSubmit() {
-		
+		MobclickAgent.onEvent(WeiqiangPublishActivity.this,"weiqiang_publish_click");
 		if(null!=mWeiqiangBean){
 			checkInfo();
 		}else{

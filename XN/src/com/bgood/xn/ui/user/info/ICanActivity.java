@@ -22,6 +22,7 @@ import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 
 /**
@@ -34,6 +35,19 @@ public class ICanActivity extends BaseActivity implements TaskListenerWithState
     private UserInfoBean mUserBean = null;
     private String mContent;
     private TitleBar mTitleBar;
+    
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

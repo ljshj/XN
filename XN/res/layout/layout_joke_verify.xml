@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:actionbar="http://schemas.android.com/apk/res/com.bgood.xn"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <include layout="@layout/title_bar"/>
+    
+    <!-- <android.support.v4.view.ViewPager
+		android:id="@+id/paper_content" 
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:padding="5dp"
+		android:layout_width="match_parent" /> -->
+		
+		
+	<com.bgood.xn.view.NoScrollViewPager
+        android:id="@+id/paper_content"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="1" />
+		
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        >
+        
+         <com.bgood.xn.view.ActionView
+                android:id="@+id/av_create"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center"
+				actionbar:img = "@drawable/icon_joke_disagree"
+				actionbar:text = "@string/action_original"
+				>
+            </com.bgood.xn.view.ActionView>
+        
+        <com.bgood.xn.view.ActionView
+                android:id="@+id/av_disagree"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center"
+				actionbar:img = "@drawable/icon_joke_disagree"
+				actionbar:text = "@string/action_disagree"
+				>
+            </com.bgood.xn.view.ActionView>
+            
+        <com.bgood.xn.view.ActionView
+                android:id="@+id/av_agree"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center"
+				actionbar:img = "@drawable/icon_joke_agree"
+				actionbar:text = "@string/action_agree"
+				>
+            </com.bgood.xn.view.ActionView>
+        
+    </LinearLayout>
+
+</LinearLayout>

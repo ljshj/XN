@@ -55,6 +55,7 @@ import com.bgood.xn.widget.TitleBar;
 import com.easemob.chat.video.util.Utils;
 import com.easemob.util.EMLog;
 import com.easemob.util.PathUtil;
+import com.umeng.analytics.MobclickAgent;
 
 public class RecorderVideoActivity extends BaseActivity implements
 		OnClickListener, SurfaceHolder.Callback, OnErrorListener,
@@ -118,10 +119,15 @@ public class RecorderVideoActivity extends BaseActivity implements
 		releaseCamera();
 		finish();
 	}
+	
+	
+
+	
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+		MobclickAgent.onResume(this);
 		if (mWakeLock == null) {
 			// 获取唤醒锁,保持屏幕常亮
 			PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -217,6 +223,7 @@ public class RecorderVideoActivity extends BaseActivity implements
 	@Override
 	protected void onPause() {
 		super.onPause();
+		MobclickAgent.onPause(this);
 		if (mWakeLock != null) {
 			mWakeLock.release();
 			mWakeLock = null;

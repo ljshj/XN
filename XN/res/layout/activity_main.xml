@@ -23,7 +23,7 @@
             android:layout_weight="0.0"
             android:visibility="gone" />
 
-        <RadioGroup
+       <!--  <RadioGroup
             android:id="@+id/main_tab_group"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
@@ -62,7 +62,74 @@
                 style="@style/home_tab_button"
                 android:drawableTop="@drawable/bg_checkbox_icon_menu_me"
                 android:text="我"/>
-        </RadioGroup>
+        </RadioGroup> -->
+        
+        
+         <LinearLayout 
+      android:layout_width="0dp"
+      android:layout_weight="1"
+      android:layout_height="40dp"
+      android:background="@drawable/img_message_main_select_bg"
+      android:divider="@drawable/img_common_ll_divider"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+      
+        
+          <com.bgood.xn.view.MarkRadioButton
+			android:id="@+id/message_main_tab_messagecenter"
+			android:background="@drawable/bg_home_radiobutton_bg"
+		    android:layout_width="0dp"
+	        android:layout_weight="1"
+	        android:layout_height="match_parent"
+	        android:gravity="center"
+	        android:checked="true"
+	        android:onClick="onTabClicked"
+			markbar:markname = "@string/title_msg"
+			markbar:markcount = "@string/txt_count"
+      		></com.bgood.xn.view.MarkRadioButton>
+          
+            <com.bgood.xn.view.MarkRadioButton
+				android:id="@+id/message_main_tab_friend"
+				android:background="@drawable/bg_home_radiobutton_bg"
+			    android:layout_width="0dp"
+		        android:layout_weight="1"
+		        android:layout_height="match_parent"
+		        android:gravity="center"
+		        android:onClick="onTabClicked"
+				markbar:markname = "@string/title_friend"
+				markbar:markcount = "@string/txt_count"
+     		 ></com.bgood.xn.view.MarkRadioButton>
+            
+              <com.bgood.xn.view.MarkRadioButton
+				android:id="@+id/message_main_tab_group"
+				android:background="@drawable/bg_home_radiobutton_bg"
+			    android:layout_width="0dp"
+		        android:layout_weight="1"
+		        android:layout_height="match_parent"
+		        android:gravity="center"
+		        android:onClick="onTabClicked"
+				markbar:markname = "@string/title_group"
+				markbar:markcount = "@string/txt_count"
+     		></com.bgood.xn.view.MarkRadioButton>
+      
+      
+  
+			  <com.bgood.xn.view.MarkRadioButton
+				android:id="@+id/message_main_tab_communication_hall"
+				android:background="@drawable/bg_home_radiobutton_bg"
+			    android:layout_width="0dp"
+		        android:layout_weight="1"
+		        android:layout_height="match_parent"
+		        android:gravity="center"
+		        android:onClick="onTabClicked"
+				markbar:markname = "@string/title_communicate"
+				markbar:markcount = "@string/txt_count"
+		      ></com.bgood.xn.view.MarkRadioButton>
+			  
+        
+  </LinearLayout>
+        
     </LinearLayout>
 
 </TabHost>

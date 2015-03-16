@@ -80,7 +80,7 @@ public class XuannengRequest extends BaseNetWork {
 		 * @params:@param context
 		 * @params:@param phone
 		 */
-		 public void requestXuanPublish(TaskListenerWithState mHttpTaskListener,Context context,String content, String[] imgs, String[] smallImgs){
+		 public void requestXuanPublish(TaskListenerWithState mHttpTaskListener,Context context,String content, String[] imgs, String[] smallImgs,double longitude,double latitude){
 		 	setMessageType(70003);
 			JSONObject body = new JSONObject();
 			try {
@@ -96,6 +96,8 @@ public class XuannengRequest extends BaseNetWork {
 		                }
 		                body.put("imgs", jsonArray);
 		            }
+					body.put("longitude", longitude);
+					body.put("latitude", latitude);
 					body.put("content", content);
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -333,6 +335,60 @@ public class XuannengRequest extends BaseNetWork {
 				body.put("timestart", "");
 				body.put("timeend", "");
 				body.put("itemid", itemId);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			setBody(body);
+			 new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+		 }
+		 
+		 
+		/**
+		 * 
+		 * @todo:TODO
+		 * @date:2015-3-10 下午6:49:06
+		 * @author:hg_liuzl@163.com
+		 * @params:@param mHttpTaskListener
+		 * @params:@param context
+		 * @params:@param itemId 炫能ID
+		 * @params:@param type 0，不审核；1审核
+		 */
+			 public void requestXuanCheck(TaskListenerWithState mHttpTaskListener,Context context,String itemId,int type,boolean showLoading){
+			 	setMessageType(70021);
+				JSONObject body = new JSONObject();
+				try {
+					body.put("itemid", itemId);
+					body.put("type", type);
+					
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				setBody(body);
+				 new HttpRequestAsyncTask(showLoading,ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			 }
+			 
+			 
+			/** 
+			 * 
+			 * @todo:未审核列表
+			 * @date:2015-3-11 上午9:53:44
+			 * @author:hg_liuzl@163.com
+			 * @params:@param mHttpTaskListener
+			 * @params:@param context
+			 * @params:@param itemId 炫能类型，如幽默秀
+			 * @params:@param type 0，未审核；1：审核，2所有
+			 * @params:@param start 请求从第几条
+			 * @params:@param end 到第几条
+			 */
+		 public void requestXuanUnCheckList(TaskListenerWithState mHttpTaskListener,Context context,int itemId,int type,int start,int end,int maxxnid){
+		 	setMessageType(70022);
+			JSONObject body = new JSONObject();
+			try {
+				body.put("itemid", itemId);
+				body.put("type", type);
+				body.put("start", start);
+				body.put("end", end);
+				body.put("maxxnid", maxxnid);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}

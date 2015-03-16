@@ -26,6 +26,7 @@ import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -54,6 +55,7 @@ public class FeedbackShowActivity extends BaseActivity implements TaskListenerWi
 	@Override
 	public void onResume() {
 		super.onResume();
+		MobclickAgent.onResume(this);
 		mRefreshTime = pUitl.getFeedbackRefreshTime();
 		m_feedback.setRefreshTime(mRefreshTime);
 		UserCenterRequest.getInstance().requestFeedbackList(this, mActivity);
@@ -62,6 +64,7 @@ public class FeedbackShowActivity extends BaseActivity implements TaskListenerWi
 	@Override
 	public void onPause() {
 		super.onPause();
+		MobclickAgent.onPause(this);
 		pUitl.setFeedbackRefreshTime(mRefreshTime);
 	}
 	

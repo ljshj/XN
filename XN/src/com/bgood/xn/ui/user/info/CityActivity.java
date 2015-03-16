@@ -45,6 +45,7 @@ import com.bgood.xn.utils.PingYinUtil;
 import com.bgood.xn.view.LoadingProgress;
 import com.bgood.xn.widget.TitleBar;
 import com.bgood.xn.widget.ZZCityQuickAlphabeticBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 选择城市页面
@@ -62,6 +63,19 @@ public class CityActivity extends BaseActivity implements OnItemClickListener,Ta
 	private AddressBean cityAddressDTO = null;
 	private String address;
 	private int index = 0;
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{

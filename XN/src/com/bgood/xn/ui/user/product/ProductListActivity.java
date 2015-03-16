@@ -26,6 +26,7 @@ import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 
 /**
@@ -41,6 +42,18 @@ public class ProductListActivity extends BaseActivity implements OnItemClickList
     private String mKeyWord = null;
     private String mUserid = null;
     private int m_start_size = 0;
+    
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
     
     @Override
     protected void onCreate(Bundle savedInstanceState)

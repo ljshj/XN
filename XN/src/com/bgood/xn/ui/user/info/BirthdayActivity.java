@@ -38,6 +38,7 @@ import com.bgood.xn.widget.wheel.MyDateTimePickerDialog.OnDateTimeSetListener;
 import com.bgood.xn.widget.wheel.NumericWheelAdapter;
 import com.bgood.xn.widget.wheel.OnWheelChangedListener;
 import com.bgood.xn.widget.wheel.WheelView;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 生日编写页面
@@ -50,6 +51,18 @@ public class BirthdayActivity extends BaseActivity implements TaskListenerWithSt
     private UserInfoBean mUserBean = null;
     private String m_birthday = "";
     private TitleBar titleBar = null;
+    
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
     
     @Override
     protected void onCreate(Bundle savedInstanceState)

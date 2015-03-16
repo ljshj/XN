@@ -24,6 +24,7 @@ import com.bgood.xn.ui.MainActivity;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -38,6 +39,18 @@ public class ForgetPasswordNewPassWordActivity extends BaseActivity implements T
     
     private String newPassword = "";
     private String m_phone = "";
+    
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -73,6 +86,7 @@ public class ForgetPasswordNewPassWordActivity extends BaseActivity implements T
      */
     private void checkInfo()
     {
+    	MobclickAgent.onEvent(ForgetPasswordNewPassWordActivity.this,"sys_forget_pwd_modify_click");
         // 用户手机号码查询
          newPassword = m_newPasswordEt.getText().toString().trim();
          String confirmPassword = m_confirmPasswordEt.getText().toString().trim();

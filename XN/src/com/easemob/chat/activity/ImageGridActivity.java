@@ -1,5 +1,7 @@
 package com.easemob.chat.activity;
 
+import com.umeng.analytics.MobclickAgent;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -34,5 +36,16 @@ public class ImageGridActivity extends FragmentActivity {
 		
 	}
 	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 	
 }

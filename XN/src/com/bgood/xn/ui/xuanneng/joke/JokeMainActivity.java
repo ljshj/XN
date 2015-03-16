@@ -42,6 +42,7 @@ public class JokeMainActivity extends TabActivity implements OnCheckedChangeList
 		joke_main_b_more_operate = (ImageView) findViewById(R.id.joke_main_b_more_operate);
 		joke_main_b_more_operate.setOnClickListener(this);
 	}
+	
 	/**
 	 * 初始化tabhost
 	 */
@@ -53,7 +54,7 @@ public class JokeMainActivity extends TabActivity implements OnCheckedChangeList
 		Intent intent;
 		
 		intent = new Intent().setClass(this, JokeOrderActivity.class);
-		spec = tabHost.newTabSpec("顺序").setIndicator("顺序").setContent(intent);
+		spec = tabHost.newTabSpec("最新").setIndicator("最新").setContent(intent);
 		tabHost.addTab(spec);
 
 		intent = new Intent().setClass(this, JokeRandomActivity.class);
@@ -87,7 +88,7 @@ public class JokeMainActivity extends TabActivity implements OnCheckedChangeList
 		{
 		
 		case R.id.xuanneng_humor_tab_order:
-			tabHost.setCurrentTabByTag("顺序");
+			tabHost.setCurrentTabByTag("最新");
 			break;
 		case R.id.xuanneng_humor_tab_random:
 			tabHost.setCurrentTabByTag("随机");

@@ -27,6 +27,7 @@ import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -60,6 +61,7 @@ public class ProductCommentShowActivity extends BaseActivity implements TaskList
 	@Override
 	public void onResume() {
 		super.onResume();
+		MobclickAgent.onResume(this);
 		mRefreshTime = pUitl.getProductCommentRefreshTime();
 		m_ProductComment.setRefreshTime(mRefreshTime);
 		isRefresh = true;
@@ -69,6 +71,7 @@ public class ProductCommentShowActivity extends BaseActivity implements TaskList
 	@Override
 	public void onPause() {
 		super.onPause();
+		MobclickAgent.onPause(this);
 		pUitl.setProductCommentRefreshTime(mRefreshTime);
 	}
 	

@@ -33,6 +33,7 @@ import com.bgood.xn.ui.base.BaseShowDataActivity;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * @todo:我的幽默秀
@@ -66,6 +67,17 @@ public class JokeMeActivity extends BaseShowDataActivity implements OnItemClickL
 	
 	private String userid = "";	
 	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

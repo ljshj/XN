@@ -24,9 +24,13 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.baidu.location.BDLocation;
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.ImageAdapter;
 import com.bgood.xn.bean.JokeBean;
+import com.bgood.xn.location.ILocationCallback;
+import com.bgood.xn.location.ILocationManager;
+import com.bgood.xn.location.LocationManagerFactory;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
@@ -45,6 +49,7 @@ import com.bgood.xn.view.LoadingProgress;
 import com.bgood.xn.view.dialog.BGDialog;
 import com.bgood.xn.view.dialog.BottomDialog;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * @todo:有奖投稿
@@ -67,7 +72,6 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 	private GridView gridview_images;
 	private ImageAdapter adapter;
 	private EditText comment_content;
-    
     
     private String m_content = null;
     
@@ -106,7 +110,7 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 	private void initViews()
 	{
 		tvShowRule = (TextView) findViewById(R.id.tv_show_rule);
-		tvShowRule.setVisibility(View.VISIBLE);
+		//tvShowRule.setVisibility(View.VISIBLE);
 		tvShowRule.setOnClickListener(this);
 		gridview_images = (GridView) findViewById(R.id.gridview_images);
 		comment_content = (EditText) findViewById(R.id.comment_content);
@@ -129,6 +133,19 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 			}
 			comment_content.setText(mJokeBean.content);
 		}
+	}
+	
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 
 
@@ -154,7 +171,7 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 			if(null != mJokeBean){	//如果是修改幽默秀
 				XuannengRequest.getInstance().requestXuanUpdate(this, this, m_content, mJokeBean.jokeid);
 			}else{	//如果是 添加幽默秀
-				XuannengRequest.getInstance().requestXuanPublish(this, mActivity, m_content, imgs, smallImgs);
+				XuannengRequest.getInstance().requestXuanPublish(this, mActivity, m_content, imgs, smallImgs,BGApp.location.longitude,BGApp.location.latitude);
 			}
 			
 		}

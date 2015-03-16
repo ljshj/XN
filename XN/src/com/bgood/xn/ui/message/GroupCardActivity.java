@@ -13,6 +13,7 @@ import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
 import com.easemob.chat.EMGroupManager;
 import com.easemob.exceptions.EaseMobException;
+import com.umeng.analytics.MobclickAgent;
 
 
 /**
@@ -24,6 +25,18 @@ public class GroupCardActivity extends BaseActivity {
 	private TextView tv_introduction;
 	private GroupBean group = null;
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

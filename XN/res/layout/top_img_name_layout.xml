@@ -65,6 +65,17 @@
               android:visibility="gone"
               />
           
+           <ImageView
+              android:id="@+id/iv_original"
+              android:layout_width="45dp"
+              android:layout_height="30dp"
+              android:layout_alignTop="@id/iv_img"
+              android:layout_alignParentRight="true"
+              android:layout_marginRight="10dp"
+              android:background="@drawable/icon_joke_create"
+              android:visibility="gone"
+              />
+          
             
           
 </RelativeLayout>

@@ -26,6 +26,7 @@ import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.message.fragment.GroupFragment;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * @todo:创建群
@@ -34,6 +35,19 @@ import com.bgood.xn.widget.TitleBar;
  */
 public class CreateGroupActivity extends BaseActivity implements TaskListenerWithState {
 	private EditText etGroupName,etGroupIntro,etGroupNotice;
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

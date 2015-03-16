@@ -29,6 +29,7 @@ import com.bgood.xn.ui.IndexActivity;
 import com.bgood.xn.ui.MainActivity;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.view.BToast;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -46,6 +47,18 @@ public class NavigateActivity extends BaseActivity implements TaskListenerWithSt
 			R.drawable.help_03,
 			R.drawable.help_04,
 	};
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 	
 	/**
 	 * 进入首页
@@ -145,6 +158,8 @@ public class NavigateActivity extends BaseActivity implements TaskListenerWithSt
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				SystemConfig.BS_SERVER = body.optString("bserver");
 				SystemConfig.FILE_SERVER = body.optString("fserver");
+				pUitl.setBSServerUrl(SystemConfig.BS_SERVER);
+				pUitl.setFileServerUrl(SystemConfig.FILE_SERVER);
 				gotoMain();
 			}
 		}

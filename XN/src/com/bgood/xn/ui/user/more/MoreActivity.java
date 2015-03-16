@@ -21,6 +21,7 @@ import com.bgood.xn.utils.ConfigUtil;
 import com.bgood.xn.utils.update.UpdateManager;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -30,6 +31,19 @@ import com.bgood.xn.widget.TitleBar;
  */
 public class MoreActivity extends BaseActivity implements OnClickListener,TaskListenerWithState {
 
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

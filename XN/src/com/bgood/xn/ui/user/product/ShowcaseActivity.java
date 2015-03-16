@@ -48,6 +48,7 @@ import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -151,8 +152,15 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 	}
 	
 	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+	
+	@Override
 	protected void onResume() {
 		super.onResume();
+		MobclickAgent.onResume(this);
 		setBackgroundColor();
 		ProductRequest.getInstance().requestShowCase(this, this, mUserId);
 	}

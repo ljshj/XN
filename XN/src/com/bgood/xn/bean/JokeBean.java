@@ -23,6 +23,11 @@ public class JokeBean implements Serializable {
 	public static final int JOKE_RADOM = 6;
 	public static final int JOKE_ORDER = 5;
 	
+	/**-1 原创,0 不审核，1 审核**/
+	public static final int JOKE_ORIGINAL = -1;
+	public static final int JOKE_DISAGREE = 0;
+	public static final int JOKE_AGREE = 1;
+	
 	public static final String JOKE_BEAN = "joke_bean";
 	
 	/**
@@ -51,6 +56,8 @@ public class JokeBean implements Serializable {
 	public String Comments;
 	public String remark;	/**审核备注*/
 	public int status;		/**1，审核中 2.未通过审核***/
+	public int paihang;	// 榜单排行
+	public int original;	/***0非原创，1原创*****/
 	
 	/**操作
 	 * 转发，还是评论

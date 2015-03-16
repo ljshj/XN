@@ -21,6 +21,7 @@ import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
 import com.bgood.xn.widget.wheel.AgePikcerDialog;
 import com.bgood.xn.widget.wheel.AgePikcerDialog.OnDateAgeSetListener;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 生日编写页面
@@ -31,6 +32,18 @@ public class AgeActivity extends BaseActivity implements TaskListenerWithState
     private UserInfoBean mUserBean = null;
     private String mAge;
     private TitleBar titleBar = null;
+    
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
     
     @Override
     protected void onCreate(Bundle savedInstanceState)

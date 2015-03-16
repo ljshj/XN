@@ -17,6 +17,7 @@ import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 修改密码页面
@@ -26,6 +27,18 @@ public class ModifyPasswordActivity extends BaseActivity implements TaskListener
     private EditText m_oldPasswordEt     = null; // 原密码
     private EditText m_newPasswordEt     = null; // 新密码
     private EditText m_confirmPasswordEt = null; // 确认新密码
+    
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
     
     @Override
     protected void onCreate(Bundle savedInstanceState)

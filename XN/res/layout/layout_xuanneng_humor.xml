@@ -46,7 +46,7 @@
                     style="@style/message_main_tab_button"
                     android:gravity="center"
                     android:checked="true"
-                    android:text="顺序"
+                    android:text="最新"
                     android:textColor="@color/color_home_radiobutton_text" />
 
                 <RadioButton

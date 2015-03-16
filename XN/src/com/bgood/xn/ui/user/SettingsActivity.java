@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.bgood.xn.R;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 设置页面
@@ -27,6 +28,18 @@ public class SettingsActivity extends BaseActivity implements OnCheckedChangeLis
     private CheckBox m_friendsProvingCB = null; // 加我为好友时是否需要验证
     private CheckBox m_soundHintCB      = null; // 消息声音提示
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

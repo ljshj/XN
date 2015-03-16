@@ -62,6 +62,7 @@ public class JokeAdapter extends KBaseAdapter
 			holder.tvComments = (TextView) convertView.findViewById(R.id.tv_comments);
 			holder.gridView = (GridView) convertView.findViewById(R.id.gv_show_img);
 			holder.ivDelete = (ImageView) convertView.findViewById(R.id.iv_delete);
+			holder.ivOriginal = (ImageView) convertView.findViewById(R.id.iv_original);
 			
 			holder.llTransArea = (LinearLayout) convertView.findViewById(R.id.ll_old_area);
 			holder.tvOldAuthorName = (TextView) convertView.findViewById(R.id.tv_old_user);
@@ -72,6 +73,8 @@ public class JokeAdapter extends KBaseAdapter
 			holder.avReply = (ActionView) convertView.findViewById(R.id.av_reply);
 			holder.avTranspnt = (ActionView) convertView.findViewById(R.id.av_transpont);
 			holder.avShare = (ActionView) convertView.findViewById(R.id.av_share);
+			
+			holder.llShare = (LinearLayout) convertView.findViewById(R.id.ll_share);
 			
 			convertView.setTag(holder);
 		} else
@@ -96,6 +99,9 @@ public class JokeAdapter extends KBaseAdapter
 //		}else{
 //			holder.tvRank.setVisibility(View.INVISIBLE);
 //		}
+		
+		//显示是否为原创的icon
+		holder.ivOriginal.setVisibility(jokeBean.original == 0 ? View.GONE:View.VISIBLE);
 		
 		if(!TextUtils.isEmpty(BGApp.mUserId)&& BGApp.mUserId.equals(String.valueOf(jokeBean.userid))){
 			holder.ivDelete.setVisibility(View.VISIBLE);
@@ -139,6 +145,8 @@ public class JokeAdapter extends KBaseAdapter
 		holder.avShare.setOnClickListener(mListener);
 		holder.avShare.setTag(jokeBean);
 		
+		holder.llShare.setOnClickListener(mListener);
+		holder.llShare.setTag(jokeBean);
 		
 		return convertView;
 	}
@@ -156,12 +164,11 @@ public class JokeAdapter extends KBaseAdapter
 	
 	final class Holder
 	{
-		 ImageView ivDelete;
-		 ImageView ivAuthorImg;
+		 ImageView ivDelete,ivAuthorImg,ivOriginal;
 		 TextView tvAuthorName;
 		 TextView tvTime;
 		 TextView tvComments;
-		 LinearLayout llTransArea;
+		 LinearLayout llTransArea,llShare;;
 		 TextView tvOldAuthorName;
 		 TextView tvContent;
 		 GridView gridView,oldgridView;

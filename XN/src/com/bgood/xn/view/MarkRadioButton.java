@@ -1,55 +1,94 @@
 package com.bgood.xn.view;
 
+import com.bgood.xn.R;
+
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bgood.xn.R;
-
 /**
- * @todo:带红色标记的RadioButton
- * @date:2015-1-29 下午6:20:28
+ * @todo:自定义RadioButton,带有提醒功能的radioButton
+ * @date:2015-2-28 上午10:50:08
  * @author:hg_liuzl@163.com
  */
-public class MarkRadioButton extends RadioButton {
+public class MarkRadioButton extends RelativeLayout {
 
-	private TextView tvTitle;
-	private TextView tvCount;
-	
+	private TextView tvName;
+	private TextView tvTip;
 	public MarkRadioButton(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		initView(context, attrs);
+		initView(context,attrs);
 	}
 	
-	private void initView(Context context, AttributeSet attrs) {
-		TypedArray a = context.obtainStyledAttributes(attrs,R.styleable.markRadionButton); 
-	//	int text  = a.getResourceId(R.styleable.markRadionButton_txtTitle, -1);
-		int textCount = a.getResourceId(R.styleable.markRadionButton_txtCount, -1);
+	private void initView(Context context,AttributeSet attrs) {
 		
-		View v = LayoutInflater.from(context).inflate(R.layout.layout_markl_radiobutton, null);
+		TypedArray a = context.obtainStyledAttributes(attrs,R.styleable.markbar); 
+		int text  = a.getResourceId(R.styleable.markbar_markname, -1);
+		int count = a.getResourceId(R.styleable.markbar_markcount, -1);
 		
-//		tvTitle = (TextView) v.findViewById(R.id.tv_title);
-//		tvTitle.setText(text);
 		
-		tvCount = (TextView) v.findViewById(R.id.tv_count);
-		tvCount.setText(textCount);
+		LayoutInflater.from(context).inflate(R.layout.mark_radiobutton, this);
+		tvName = (TextView) findViewById(R.id.tv_name);
+		tvName.setText(text);
+		
+		tvTip = (TextView) findViewById(R.id.tv_tip);
+		tvTip.setText(count);
 		
 		a.recycle();
+		
 	}
 	
-	public void setCount(int count){
-		tvCount.setText(String.valueOf(count));
+	/**
+	 * 
+	 * @todo:设置按钮名字
+	 * @date:2015-2-28 上午11:09:56
+	 * @author:hg_liuzl@163.com
+	 * @params:@param strName
+	 */
+	public void setRBName(String strName){
+		tvName.setText(strName);
 	}
 	
-	public void setCount(String count){
-		tvCount.setText(count);
+	/**
+	 * 
+	 * @todo:设置按钮提示文字
+	 * @date:2015-2-28 上午11:10:12
+	 * @author:hg_liuzl@163.com
+	 * @params:@param strValue
+	 */
+	public void setRBTipValue(String count){
+		if (TextUtils.isEmpty(count) || "0".equals(count)) {
+			tvTip.setVisibility(View.GONE);
+		} else {
+			tvTip.setText(String.valueOf(count));
+			if (Integer.valueOf(String.valueOf(count)) > 99) {
+				tvTip.setText("99+");
+			}
+			tvTip.setVisibility(View.VISIBLE);
+		}
 	}
 	
-	public void setText(String text){
-		tvCount.setText(text);
+	/**
+	 * 
+	 * @todo:设置按钮提示文字
+	 * @date:2015-2-28 上午11:10:12
+	 * @author:hg_liuzl@163.com
+	 * @params:@param strValue
+	 */
+	public void setRBTipValue(int count){
+		if (0 == count) {
+			tvTip.setVisibility(View.GONE);
+		} else {
+			tvTip.setText(String.valueOf(count));
+			if (Integer.valueOf(String.valueOf(count)) > 99) {
+				tvTip.setText("99+");
+			}
+			tvTip.setVisibility(View.VISIBLE);
+		}
 	}
 }

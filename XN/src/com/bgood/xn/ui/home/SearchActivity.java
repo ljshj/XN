@@ -22,6 +22,7 @@ import com.bgood.xn.R;
 import com.bgood.xn.adapter.HistoryAdapter;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.view.BToast;
+import com.umeng.analytics.MobclickAgent;
 
 /***
  * 
@@ -47,6 +48,18 @@ public class SearchActivity extends BaseActivity implements OnClickListener, OnI
 		findView();
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+	
 	/**
 	 * 控件初始化方法
 	 */
@@ -91,6 +104,7 @@ public class SearchActivity extends BaseActivity implements OnClickListener, OnI
 	}
 	
 	private void doSearch(String searchText) {
+		MobclickAgent.onEvent(SearchActivity.this,"home_search_click");
 		Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
 		intent.putExtra(HomeActivity.ACTION_TYPE, search_type);
 		intent.putExtra("msg",searchText);

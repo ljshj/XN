@@ -26,6 +26,7 @@ import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -45,6 +46,18 @@ public class ProductDetailActivity extends BaseActivity implements OnClickListen
     private String productId;
     private ArrayList<String> imgList = new ArrayList<String>(); //存储图片查看器的图片地址
     private ProductBean mProductBean;
+    
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
     
     @Override
     protected void onCreate(Bundle savedInstanceState)

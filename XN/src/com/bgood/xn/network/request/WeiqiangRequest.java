@@ -34,7 +34,7 @@ public class WeiqiangRequest extends BaseNetWork {
 	 * @params:@param context
 	 * @params:@param phone
 	 */
-	 public void requestWeiqiangList(TaskListenerWithState mHttpTaskListener,Context context,String type,String userid,String start,String end){
+	 public void requestWeiqiangList(TaskListenerWithState mHttpTaskListener,Context context,String type,String userid,String start,String end,double longitude,double latitude){
 	 	setMessageType(60001);
 		JSONObject body = new JSONObject();
 		try {
@@ -42,6 +42,8 @@ public class WeiqiangRequest extends BaseNetWork {
 			body.put("userid", userid);
 			body.put("start", start);
 			body.put("end", end);
+			body.put("longitude", longitude);
+			body.put("latitude", latitude);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

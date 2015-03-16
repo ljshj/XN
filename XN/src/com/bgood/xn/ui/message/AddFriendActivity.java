@@ -34,6 +34,7 @@ import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * @todo:搜索并添加好友
@@ -51,6 +52,18 @@ public class AddFriendActivity extends BaseShowDataActivity implements IXListVie
 	private ArrayList<MemberResultBean> m_memberList = new ArrayList<MemberResultBean>();
 	
 	private int m_start = 0;
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

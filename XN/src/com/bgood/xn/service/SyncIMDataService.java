@@ -1,4 +1,4 @@
-package com.bgood.xn.ui.message;
+package com.bgood.xn.service;
 
 import java.util.HashMap;
 import java.util.List;

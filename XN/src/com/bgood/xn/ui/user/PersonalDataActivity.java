@@ -44,6 +44,7 @@ import com.bgood.xn.utils.pic.CropImageActivity;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.dialog.BottomDialog;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 
 /**
@@ -88,7 +89,7 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
     private UserInfoBean mUserBean = null;
     /**是否是自己*/
     private boolean isSelf = false;	
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -107,10 +108,17 @@ public class PersonalDataActivity extends BaseActivity implements OnClickListene
         	m_phoneRl.setVisibility(View.GONE);
         }
     }
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
     
     @Override
 	public void onResume() {
     	super.onResume();
+    	MobclickAgent.onResume(this);
     	if(isSelf){
     		mUserBean = BGApp.mUserBean;
     		setData(BGApp.mUserBean);

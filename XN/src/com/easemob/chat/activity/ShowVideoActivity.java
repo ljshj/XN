@@ -23,6 +23,7 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.cloud.CloudOperationCallback;
 import com.easemob.cloud.HttpFileManager;
 import com.easemob.util.PathUtil;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 展示视频内容
@@ -173,4 +174,16 @@ public class ShowVideoActivity extends BaseActivity implements OnTouchListener {
 		return false;
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+	
 }

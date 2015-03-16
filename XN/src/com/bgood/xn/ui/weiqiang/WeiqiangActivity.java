@@ -13,10 +13,8 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -25,16 +23,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.baidu.location.BDLocation;
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.WeiqiangAdapter;
 import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.bean.WeiQiangBean.WeiqiangActionType;
 import com.bgood.xn.bean.response.WeiqiangResponse;
+import com.bgood.xn.location.ILocationCallback;
+import com.bgood.xn.location.ILocationManager;
+import com.bgood.xn.location.LocationManagerFactory;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
@@ -45,14 +46,14 @@ import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.user.account.LoginActivity;
-import com.bgood.xn.ui.user.info.NameCardActivity;
-import com.bgood.xn.utils.LogUtils;
+import com.bgood.xn.utils.ConfigUtil;
 import com.bgood.xn.utils.ShareUtils;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.dialog.BGDialog;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 我的微墙主页
@@ -100,6 +101,8 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
     
 	private ShareUtils share = null;
 	
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -110,9 +113,11 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 		setAdapter();
 	}
 	
+	
 	 @Override
 	public void onResume() {
 		super.onResume();
+		MobclickAgent.onResume(this);
 		mAllWeiqiangRefreshTime = pUitl.getWeiqiangAllRefreshTime();
 		m_allFriendsXLv.setRefreshTime(mAllWeiqiangRefreshTime);
 		
@@ -123,7 +128,7 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 	@Override
 	public void onPause() {
 		super.onPause();
-		 //相当于Fragment的onPause
+		MobclickAgent.onPause(this);
 		pUitl.setWeiqiangAllRefreshTime(mAllWeiqiangRefreshTime);
 		pUitl.setWeiqiangAttionRefreshTime(mAttionWeiqiangRefreshTime);
 	}
@@ -137,7 +142,7 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 		v_weiqiang_type_select_left_underline = findViewById(R.id.v_weiqiang_type_select_left_underline);
 		v_weiqiang_type_select_right_underline = findViewById(R.id.v_weiqiang_type_select_right_underline);
 		vp_weiqiang_type_select = (ViewPager) findViewById(R.id.vp_weiqiang_type_select);
-		checkType(0);
+	
 		
 		m_followFriendsLayout = inflater.inflate(R.layout.listview_space_bar, null);
 		m_allFriendsLayout = inflater.inflate(R.layout.listview_space_bar, null);
@@ -155,6 +160,8 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 		
 		m_allFriendsAdapter = new WeiqiangAdapter(m_allFriendsList,mActivity,this);
 		m_allFriendsXLv.setAdapter(m_allFriendsAdapter);
+		
+		checkType(0);
 	}
 	
 	/**
@@ -250,26 +257,31 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 			break;
 		case R.id.tv_weiqiang_me:
 			dissmissPopupMore();
+			MobclickAgent.onEvent(WeiqiangActivity.this,"weiqiang_me_click");
 			intent = new Intent(mActivity, WeiqiangPersonActivity.class);
 			intent.putExtra(UserInfoBean.KEY_USER_ID, String.valueOf(BGApp.mUserId));
 			mActivity.startActivity(intent);
 			break;
 		case R.id.tv_weiqiang_publish:
 			dissmissPopupMore();
+			MobclickAgent.onEvent(WeiqiangActivity.this,"weqiang_prepare_publish_click");
 			intent = new Intent(mActivity, WeiqiangPublishActivity.class);
 			mActivity.startActivity(intent);
 			break;
 		case R.id.tv_weiqiang_mention:
 			dissmissPopupMore();
+			MobclickAgent.onEvent(WeiqiangActivity.this,"weiqiang_mention_click");
 			intent = new Intent(mActivity, WeiqiangMentionActivity.class);
 			mActivity.startActivity(intent);
 			break;
 		case R.id.av_zan:	//赞
+			MobclickAgent.onEvent(WeiqiangActivity.this,"weiqiang_zan_click");
 			wqb = (WeiQiangBean) v.getTag();
 			mActionWeiqiang = wqb;
 			WeiqiangRequest.getInstance().requestWeiqiangZan(this, mActivity, wqb.weiboid);
 			break;
 		case R.id.av_reply:	//评论
+			MobclickAgent.onEvent(WeiqiangActivity.this,"weiqiang_reply_click");
 			wqb = (WeiQiangBean) v.getTag();
 			mActionWeiqiang = wqb;
 			type = WeiqiangActionType.RESPONSE;
@@ -277,6 +289,7 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 			createSendDialog();
 			break;
 		case R.id.av_transpont:	//转发
+			MobclickAgent.onEvent(WeiqiangActivity.this,"weiqiang_tranpond_click");
 			wqb = (WeiQiangBean) v.getTag();
 			mActionWeiqiang = wqb;
 			type = WeiqiangActionType.TRANSPOND;
@@ -289,7 +302,14 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 			share.setShareContent(wqb.content, wqb.imgs.size() > 0 ? wqb.imgs.get(0).img:null);
 			WeiqiangRequest.getInstance().requestWeiqiangShare(this, this, wqb.weiboid);
 			break;
-		}}
+		case R.id.ll_share:	//分享
+			MobclickAgent.onEvent(WeiqiangActivity.this,"weiqiang_share_click");
+			wqb = (WeiQiangBean) v.getTag();
+			mActionWeiqiang = wqb;
+			share.setShareContent(wqb.content, wqb.imgs.size() > 0 ? wqb.imgs.get(0).img:null);
+			break;
+		}
+  	  }
 	}
 	
 	
@@ -403,10 +423,13 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View v, int location, long arg3) {
+		MobclickAgent.onEvent(WeiqiangActivity.this,"weiqiang_detial_click");
 	 	final WeiQiangBean weiqiang = (WeiQiangBean) adapter.getAdapter().getItem(location);
-        Intent intent = new Intent(mActivity, WeiqiangDetailActivity.class);
-        intent.putExtra(WeiQiangBean.KEY_WEIQIANG_BEAN, weiqiang);
-        startActivity(intent);
+	 	if(null!=weiqiang){
+	        Intent intent = new Intent(mActivity, WeiqiangDetailActivity.class);
+	        intent.putExtra(WeiQiangBean.KEY_WEIQIANG_BEAN, weiqiang);
+	        startActivity(intent);
+	 	}
 	}
 	
 	@Override
@@ -414,24 +437,38 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 		isRefresh = true;
 		if(m_type == WeiQiangBean.WEIQIANG_ALL){
 			weiqiang_all_start = 0;
-			WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(m_type),BGApp.mUserId, String.valueOf(weiqiang_all_start), String.valueOf(weiqiang_all_start+PAGE_SIZE_ADD));
+			requestData(m_type, weiqiang_all_start, weiqiang_all_start+PAGE_SIZE_ADD);
 		}else{
 			weiqiang_attion_start = 0;
-			WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(m_type),BGApp.mUserId, String.valueOf(weiqiang_attion_start), String.valueOf(weiqiang_attion_start+PAGE_SIZE_ADD));
+			requestData(m_type, weiqiang_attion_start, weiqiang_attion_start+PAGE_SIZE_ADD);
 		}
 	}
 	@Override
 	public void onLoadMore() {
 		isRefresh = false;
 		if(m_type == WeiQiangBean.WEIQIANG_ALL){
-			WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(m_type),BGApp.mUserId, String.valueOf(weiqiang_all_start), String.valueOf(weiqiang_all_start+PAGE_SIZE_ADD));
+			requestData(m_type, weiqiang_all_start, weiqiang_all_start+PAGE_SIZE_ADD);
 		}else{
-			WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(m_type),BGApp.mUserId, String.valueOf(weiqiang_attion_start), String.valueOf(weiqiang_attion_start+PAGE_SIZE_ADD));
+			requestData(m_type, weiqiang_attion_start, weiqiang_attion_start+PAGE_SIZE_ADD);
 		}
 	}
 	
-	private void setWeiqiangData(List<WeiQiangBean> weiqiangs) {
-		
+	/**
+	 * 
+	 * @todo:请求数据
+	 * @date:2015-3-12 下午3:40:27
+	 * @author:hg_liuzl@163.com
+	 * @params:@param type
+	 * @params:@param start
+	 * @params:@param end
+	 */
+	private void requestData(int type,int start,int end) {
+		WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(type),BGApp.mUserId, String.valueOf(start), String.valueOf(end),BGApp.location.longitude,BGApp.location.latitude);
+	}
+	
+	private void setWeiqiangData(String strJson) {
+		WeiqiangResponse response  = JSON.parseObject(strJson, WeiqiangResponse.class);
+		List<WeiQiangBean> weiqiangs = response.items;
 		if(isRefresh){
 			if(m_type == WeiQiangBean.WEIQIANG_ALL){
 				mAllWeiqiangRefreshTime = ToolUtils.getNowTime();
@@ -515,10 +552,7 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 			v_weiqiang_type_select_left_underline.setVisibility(View.VISIBLE);
 			v_weiqiang_type_select_right_underline.setVisibility(View.INVISIBLE);
 			m_type = WeiQiangBean.WEIQIANG_ALL;
-			if(m_allFriendsList.size() == 0){
-				WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(m_type),BGApp.mUserId, String.valueOf(weiqiang_all_start), String.valueOf(weiqiang_all_start+PAGE_SIZE_ADD));
-			}
-
+			showData(0);
 			break;
 		case 1:
 			tv_weiqiang_type_left_select.setTextColor(getResources().getColor(R.color.text_color_normal));
@@ -526,11 +560,60 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 			v_weiqiang_type_select_left_underline.setVisibility(View.INVISIBLE);
 			v_weiqiang_type_select_right_underline.setVisibility(View.VISIBLE);
 			m_type = WeiQiangBean.WEIQIANG_ATTENTION;
-			if(m_followFriendsList.size()==0){
-				WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(m_type),BGApp.mUserId, String.valueOf(weiqiang_attion_start), String.valueOf(weiqiang_attion_start+PAGE_SIZE_ADD));
+			showData(1);
+		}
+	}
+	
+	/**
+	 * 
+	 * @todo:展示数据
+	 * @date:2015-3-12 下午8:23:51
+	 * @author:hg_liuzl@163.com
+	 * @params:@param index
+	 */
+	private void showData(int index) {
+		if (!ConfigUtil.isConnect(mActivity)) {
+			String strJson = "";
+			if (index == 0) {
+				if (m_allFriendsList.size() == 0) {
+					strJson = pUitl.getStoreWeiqiangAll();
+					setWeiqiangData(strJson);
+				}
+			} else {
+				if (m_followFriendsList.size() == 0) {
+					strJson = pUitl.getStoreWeiqiangAttention();
+					setWeiqiangData(strJson);
+				}
+			}
+		} else {
+			if (index == 0) {
+				if (m_allFriendsList.size() == 0) {
+					requestData(m_type, weiqiang_all_start, weiqiang_all_start+ PAGE_SIZE_ADD);
+				}
+			} else {
+				if (m_followFriendsList.size() == 0) {
+					requestData(m_type, weiqiang_attion_start,weiqiang_attion_start + PAGE_SIZE_ADD);
+				}
 			}
 		}
 	}
+	
+	
+	/**
+	 * 
+	 * @todo:保存数据到本地
+	 * @date:2015-3-12 下午7:42:42
+	 * @author:hg_liuzl@163.com
+	 * @params:@param strJson
+	 */
+	private void saveDataToLocal(String strJson) {
+		if(m_type == WeiQiangBean.WEIQIANG_ALL){
+			pUitl.storeWeiqiangAll(strJson);
+		}else{
+			pUitl.storeWeiqiangAttention(strJson);
+		}
+	}
+	
 	
 	@Override
 	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
@@ -540,8 +623,8 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 				switch(bNetWork.getMessageType()){
 				case 860001:	//获取微墙列表
 					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
-						WeiqiangResponse response  = JSON.parseObject(strJson, WeiqiangResponse.class);
-						setWeiqiangData(response.items);
+						saveDataToLocal(strJson);
+						setWeiqiangData(strJson);
 					}else{
 						m_allFriendsXLv.stopRefresh();
 						m_allFriendsXLv.stopLoadMore();

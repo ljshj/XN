@@ -4,6 +4,8 @@ import com.bgood.xn.R;
 import com.bgood.xn.bean.CommentBean;
 import com.bgood.xn.bean.JokeBean;
 import com.bgood.xn.bean.WeiQiangBean;
+import com.bgood.xn.ui.weiqiang.WeiqiangActivity;
+import com.umeng.analytics.MobclickAgent;
 
 import android.app.Activity;
 import android.view.View;
@@ -28,12 +30,15 @@ public class ShowNameCardListener implements OnClickListener {
 		case R.id.iv_img:
 		case R.id.tv_nick:
 			if(object instanceof JokeBean){
+				MobclickAgent.onEvent(mActivity,"joke_see_namecard_click");
 				JokeBean mJokeBean = (JokeBean) object;
 				NameCardActivity.lookNameCard(mActivity, mJokeBean.userid);
 			}else if(object instanceof WeiQiangBean){
+				MobclickAgent.onEvent(mActivity,"weiqiang_see_namecard_click");
 				WeiQiangBean mWeiqiang = (WeiQiangBean) object;
 				NameCardActivity.lookNameCard(mActivity, String.valueOf(mWeiqiang.userid));
 			}else if(object instanceof CommentBean){
+				MobclickAgent.onEvent(mActivity,"comment_see_namecard_click");
 				CommentBean mCommentBean = (CommentBean) object;
 				NameCardActivity.lookNameCard(mActivity, String.valueOf(mCommentBean.userid));
 			}
@@ -43,6 +48,7 @@ public class ShowNameCardListener implements OnClickListener {
 				JokeBean mJokeBean = (JokeBean) object;
 				NameCardActivity.lookNameCard(mActivity, mJokeBean.fromuserid);
 			}else if(object instanceof WeiQiangBean){
+				MobclickAgent.onEvent(mActivity,"weiqiang_see_namecard_click");
 				WeiQiangBean mWeiqiang = (WeiQiangBean) object;
 				NameCardActivity.lookNameCard(mActivity, String.valueOf(mWeiqiang.fromuserid));
 			}else if(object instanceof CommentBean){

@@ -28,6 +28,7 @@ import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.SwipeListView;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * @todo:我的产品编辑列表
@@ -43,6 +44,8 @@ public class ProductEditListActivity extends BaseActivity implements OnItemClick
     private String mKeyWord = "";
     private String mUserid = null;
     private ProductBean mProductBean = null;
+    
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -55,10 +58,17 @@ public class ProductEditListActivity extends BaseActivity implements OnItemClick
         m_listLv.setAdapter(adapter);
         m_listLv.setOnItemClickListener(this);
     }
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
     
     @Override
 	public void onResume() {
     	super.onResume();
+    	MobclickAgent.onResume(this);
     	m_list.clear();
     	ProductRequest.getInstance().requestProductList(this, this, mUserid, mKeyWord, String.valueOf(m_start_size), String.valueOf(m_start_size+PAGE_SIZE_ADD));
     }

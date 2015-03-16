@@ -67,6 +67,7 @@ import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.TitleBar;
 import com.easemob.chat.activity.ChatActivity;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 搜索结果页面
@@ -120,6 +121,18 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 	
 	
 	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+	
+	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
@@ -145,6 +158,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 			@Override
 			public boolean onEditorAction(TextView v, int actionID, KeyEvent arg2) {
 				if(actionID == EditorInfo.IME_ACTION_SEARCH){
+					MobclickAgent.onEvent(SearchResultActivity.this,"home_result_search_click");
 					doSearch();
 				}
 				return false;
@@ -335,6 +349,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 			int radioButtonId = group.getCheckedRadioButtonId();
 			switch (radioButtonId) {
 			case R.id.radio_01:
+				
 				REQUEST_FLAG = CHOOSE_MEMBER;
 				mTabPager.setCurrentItem(0);
 				if(m_memberAdapter == null){
@@ -446,17 +461,20 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
         switch (REQUEST_FLAG)
         {
             case CHOOSE_MEMBER:
+            	MobclickAgent.onEvent(SearchResultActivity.this,"home_result_member_info_click");
             	final MemberResultBean userDTO = (MemberResultBean) adapter.getAdapter().getItem(position);
                 NameCardActivity.lookNameCard(mActivity,userDTO.userid);
                 break;
             
             case CHOOSE_WEI_QIANG:
+            	MobclickAgent.onEvent(SearchResultActivity.this,"home_result_weiqiang_info_click");
             	final WeiQiangBean weiQiangDTO = (WeiQiangBean)  adapter.getAdapter().getItem(position);
                 intent = new Intent(SearchResultActivity.this, WeiqiangDetailActivity.class);
                 intent.putExtra(WeiQiangBean.KEY_WEIQIANG_BEAN, weiQiangDTO);
                 startActivity(intent);
                 break;
             case CHOOSE_CHU_CHUANG:
+            	MobclickAgent.onEvent(SearchResultActivity.this,"home_result_chuchuang_info_click");
             	final CabinetResultBean cabinetDTO = (CabinetResultBean) adapter.getAdapter().getItem(position);
                 intent = new Intent(SearchResultActivity.this, ProductDetailActivity.class);
                 intent.putExtra(ProductBean.KEY_PRODUCT_ID, cabinetDTO.productid);
@@ -591,6 +609,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 	            popupWindowCheckSearchType.dismiss();
 	            break;
 		case R.id.search_result_btn_search:
+			MobclickAgent.onEvent(SearchResultActivity.this,"home_result_search_click");
 			doSearch();
 			break;
 		case R.id.btn_communcation_join:
@@ -617,6 +636,9 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 	 * 进入交流厅
 	 */
 	private void requestJoinCommuncation() {
+		
+		MobclickAgent.onEvent(SearchResultActivity.this,"home_result_chat_click");
+		
 		if(!BGApp.isUserLogin){
 			LoginActivity.doLoginAction(this);
 		}else{		

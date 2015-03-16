@@ -27,6 +27,7 @@ import com.bgood.xn.ui.base.BaseShowDataActivity;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * @todo: 与我相关的微墙
@@ -38,6 +39,19 @@ public class WeiqiangMentionActivity extends BaseShowDataActivity implements Tas
 	private WeiqiangCorrelationAdapter adapter;
 	
 	private XListView m_mentionXLv;
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

@@ -23,11 +23,13 @@ import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.utils.ShareUtils;
 import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * @todo:别人的幽默秀,基本复用微墙的样式
@@ -45,10 +47,12 @@ public class JokePersonActivity extends BaseActivity implements OnItemClickListe
 	private String mRefreshTime;
 	private JokeBean mActionjoke = null;
 	private String userid;
+	private ShareUtils share = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		share = new ShareUtils(mActivity);
 		userid = getIntent().getStringExtra(UserInfoBean.KEY_USER_ID);
 		setContentView(R.layout.layout_weiqiang_person);
 		(new TitleBar(mActivity)).initTitleBar("TA的幽默秀");
@@ -63,6 +67,19 @@ public class JokePersonActivity extends BaseActivity implements OnItemClickListe
 		m_joke_listview.setXListViewListener(this);
 		m_joke_listview.setAdapter(jokeAdapter);
 		m_joke_listview.setOnItemClickListener(this);
+	}
+	
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 
 	@Override
@@ -96,6 +113,7 @@ public class JokePersonActivity extends BaseActivity implements OnItemClickListe
 			break;
 		case R.id.av_share:	//分享
 			joke = (JokeBean) v.getTag();
+			share.setShareContent(joke.content, joke.imgs.size() > 0 ? joke.imgs.get(0).img:null);
 			break;
 		default:
 			break;

@@ -245,6 +245,16 @@ public class PreferenceUtil {
 		return sp.getBoolean("joke_protocol_init", false);
 	}
 	
+	/**未审核的炫能最大ID**/
+	public void setUnCheckJokeMaxID(int maxxnid) {
+		editor.putInt("maxxnid", maxxnid);
+		editor.commit();
+	}
+
+	public int getUnCheckJokeMaxID() {
+		return sp.getInt("maxxnid", 0);
+	}
+	
 
 	/**************************************IM聊天模块*******************************************/
 	
@@ -257,4 +267,103 @@ public class PreferenceUtil {
 	public boolean hasInitFriendAndGroup() {
 		return sp.getBoolean("im_init", false);
 	}
+	
+	/**************************************长内容缓存********************************************************/
+	
+	/***缓存所有的微墙***/
+	public void storeWeiqiangAll(String strJson) {
+		editor.putString("store_weiqiang_all", strJson);
+		editor.commit();
+	}
+	
+	public String getStoreWeiqiangAll() {
+		return sp.getString("store_weiqiang_all", "");
+	}
+	/***缓存我关注的微墙***/
+	public void storeWeiqiangAttention(String strJson) {
+		editor.putString("store_weiqiang_attention", strJson);
+		editor.commit();
+	}
+	
+	public String getStoreWeiqiangAttention() {
+		return sp.getString("store_weiqiang_attention", "");
+	}
+	
+	
+	/***缓存排序的幽默秀***/
+	public void storeJokeOrder(String strJson) {
+		editor.putString("store_joke_order", strJson);
+		editor.commit();
+	}
+	
+	public String getStoreJokeOrder() {
+		return sp.getString("store_joke_order", "");
+	}
+	
+	/***缓存随机的幽默秀***/
+	public void storeJokeRandom(String strJson) {
+		editor.putString("store_joke_random", strJson);
+		editor.commit();
+	}
+	
+	public String getStoreJokeRandom() {
+		return sp.getString("store_joke_random", "");
+	}
+	
+	/***缓存日排行的幽默秀***/
+	public void storeJokeRankDay(String strJson) {
+		editor.putString("storeJokeRankDay", strJson);
+		editor.commit();
+	}
+	
+	public String getStoreJokeRankDay() {
+		return sp.getString("storeJokeRankDay", "");
+	}
+	/***缓存周排行的幽默秀***/
+	public void storeJokeRankWeek(String strJson) {
+		editor.putString("storeJokeRankWeek", strJson);
+		editor.commit();
+	}
+	
+	public String getStoreJokeRankWeek() {
+		return sp.getString("storeJokeRankWeek", "");
+	}
+	/***缓存月排行的幽默秀***/
+	public void storeJokeRankMonth(String strJson) {
+		editor.putString("storeJokeRankMonth", strJson);
+		editor.commit();
+	}
+	
+	public String getStoreJokeRankMonth() {
+		return sp.getString("storeJokeRankMonth", "");
+	}
+	
+	/***缓存日榜单的幽默秀***/
+	public void storeJokeRecordDay(String strJson) {
+		editor.putString("storeJokeRecordDay", strJson);
+		editor.commit();
+	}
+	
+	public String getStoreJokeRecordDay() {
+		return sp.getString("storeJokeRecordDay", "");
+	}
+	/***缓存周榜单的幽默秀***/
+	public void storeJokeRecordWeek(String strJson) {
+		editor.putString("storeJokeRecordWeek", strJson);
+		editor.commit();
+	}
+	
+	public String getStoreJokeRecordWeek() {
+		return sp.getString("storeJokeRecordWeek", "");
+	}
+	/***缓存月榜单的幽默秀***/
+	public void storeJokeRecordMonth(String strJson) {
+		editor.putString("storeJokeRecordMonth", strJson);
+		editor.commit();
+	}
+	
+	public String getStoreJokeRecordMonth() {
+		return sp.getString("storeJokeRecordMonth", "");
+	}
+	
 }

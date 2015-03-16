@@ -16,11 +16,25 @@ import com.easemob.chat.FileMessageBody;
 import com.easemob.cloud.CloudOperationCallback;
 import com.easemob.cloud.HttpFileManager;
 import com.easemob.util.FileUtils;
+import com.umeng.analytics.MobclickAgent;
 
 public class ShowNormalFileActivity extends BaseActivity {
 	private ProgressBar progressBar;
 	private File file;
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

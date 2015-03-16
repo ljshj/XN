@@ -29,6 +29,7 @@ import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -46,6 +47,19 @@ public class WeiqiangPersonActivity extends BaseShowDataActivity implements OnIt
 	private WeiQiangBean mActionWeiqiang = null;
 	private String userid;
 	private boolean isSelf = false;
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -55,8 +69,10 @@ public class WeiqiangPersonActivity extends BaseShowDataActivity implements OnIt
 		isSelf = userid.equals(BGApp.mUserId);
 		(new TitleBar(mActivity)).initTitleBar((isSelf?"我":"TA")+"的微墙");
 		initViews();
-		WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(WeiQiangBean.WEIQIANG_FIND),userid,String.valueOf(start_size), String.valueOf(start_size+PAGE_SIZE_ADD));
+		requestData();
 	}
+	
+	
 	
 	private void initViews()
 	{
@@ -176,11 +192,16 @@ public class WeiqiangPersonActivity extends BaseShowDataActivity implements OnIt
 	public void onRefresh() {
 			isRefreshAction = true;
 			start_size = 0;
-			WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(WeiQiangBean.WEIQIANG_FIND),userid,String.valueOf(start_size), String.valueOf(start_size+PAGE_SIZE_ADD));
+			requestData();
 	}
 	@Override
 	public void onLoadMore() {
 		isRefreshAction = false;
-			WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(WeiQiangBean.WEIQIANG_FIND),userid,String.valueOf(start_size), String.valueOf(start_size+PAGE_SIZE_ADD));
+		requestData();
+	}
+	
+	/**请求数据*/
+	private void requestData() {
+		WeiqiangRequest.getInstance().requestWeiqiangList(this, mActivity, String.valueOf(WeiQiangBean.WEIQIANG_FIND),userid,String.valueOf(start_size), String.valueOf(start_size+PAGE_SIZE_ADD),BGApp.location.longitude,BGApp.location.latitude);
 	}
 }

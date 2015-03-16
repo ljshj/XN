@@ -57,7 +57,7 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 				serverUrl = SystemConfig.HttpServer;
 				
 			}else if(type == ServerType.BusinessServer){
-				serverUrl = null!=SystemConfig.BS_SERVER ? SystemConfig.BS_SERVER:pUtil.getBSServerUrl() ;
+				serverUrl = SystemConfig.BS_SERVER;
 				b.setSessionID(SystemConfig.SessionID);
 				
 			}else if(type == ServerType.IMServer){
@@ -65,7 +65,9 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 				b.setSessionID(SystemConfig.SessionID);
 				
 			}else if(type == ServerType.FileServer){
-				serverUrl = (null!=SystemConfig.FILE_SERVER ? SystemConfig.FILE_SERVER:pUtil.getFileServerUrl())+"Upload.ashx"+b.getConnUrl();	//注意这里是文件类型
+				serverUrl = SystemConfig.FILE_SERVER;
+				//serverUrl = (null!=SystemConfig.FILE_SERVER ? SystemConfig.FILE_SERVER:pUtil.getFileServerUrl())+"Upload.ashx"+b.getConnUrl();	//注意这里是文件类型
+				serverUrl = SystemConfig.FILE_SERVER+"Upload.ashx"+b.getConnUrl();	//注意这里是文件类型
 				b.setSessionID(SystemConfig.SessionID);
 				
 			}else{
@@ -134,48 +136,29 @@ public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo 
 		
 		switch (response.getState()) {
 		case STATE_ERROR_SERVER:
-			Toast.makeText(context, "服务器发生故障", Toast.LENGTH_SHORT).show();
+			LoadingProgress.getInstance().dismiss();
+			BToast.show(context, "服务器发生故障");
 			break;
 		case STATE_NO_NETWORK_CONNECT:
-			Toast.makeText(context, "网络未连接", Toast.LENGTH_SHORT).show();
+			LoadingProgress.getInstance().dismiss();
+			BToast.show(context, "网络未连接");
 			break;
 		case STATE_TIME_OUT:
-			Toast.makeText(context, "连接超时", Toast.LENGTH_SHORT).show();
+			LoadingProgress.getInstance().dismiss();
+			BToast.show(context, "连接超时");
 			break;
 		case STATE_UNKNOWN:
-			Toast.makeText(context, "未知错误", Toast.LENGTH_SHORT).show();
+			LoadingProgress.getInstance().dismiss();
+			BToast.show(context, "未知错误");
 			break;
 		case STATE_OK:
 			if(type == ServerType.FileServer){
 				return;
 			}
-//			BaseNetWork bNetWork = response.getmBaseNetWork();
-//			switch (bNetWork.getReturnCode()) {
-//			case RETURNCODE_OK:
-//				LogUtils.i("-----------------"+bNetWork.getStrJson());
-//				break;
-//			case RETURNCODE_FAIL:
-//				Toast.makeText(context, "操作失败", Toast.LENGTH_SHORT).show();
-//				break;
-//			case RETURNCODE_MESSAGETYPE_ERROR:
-//				Toast.makeText(context, "消息类型错误", Toast.LENGTH_SHORT).show();
-//				break;
-//			case RETURNCODE_DATA_ERROR:
-//				Toast.makeText(context, "数据格式错误", Toast.LENGTH_SHORT).show();
-//				break;
-//			case RETURNCODE_SESSION_OVER:
-//				Toast.makeText(context, "会话过期", Toast.LENGTH_SHORT).show();
-//				break;
-//			case RETURNCODE_CHAT_DISCONNECT:
-//				Toast.makeText(context, "聊天连接已断开", Toast.LENGTH_SHORT).show();
-//				break;
-//			default:
-//				Toast.makeText(context, "未知错误", Toast.LENGTH_SHORT).show();
-//				break;
-//			}
 			break;
 		default:
-			Toast.makeText(context, "未知错误", Toast.LENGTH_SHORT).show();
+			LoadingProgress.getInstance().dismiss();
+			BToast.show(context, "未知错误");
 			break;
 		}
 	}

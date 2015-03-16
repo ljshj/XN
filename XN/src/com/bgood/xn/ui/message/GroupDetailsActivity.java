@@ -63,6 +63,7 @@ import com.easemob.chat.activity.ChatActivity;
 import com.easemob.chat.activity.ExitGroupDialog;
 import com.easemob.chat.widget.ExpandGridView;
 import com.easemob.util.NetUtils;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -104,6 +105,18 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	/**要操作的FriendBean*/
 	private FriendBean actionFriendBean = null;
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

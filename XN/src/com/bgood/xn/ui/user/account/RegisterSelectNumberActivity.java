@@ -30,6 +30,7 @@ import com.bgood.xn.network.request.UserCenterRequest;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.utils.WindowUtil;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -46,6 +47,18 @@ public class RegisterSelectNumberActivity extends BaseActivity implements OnItem
 	private SimpleAdapter adapter;
     private TitleBar titleBar = null;
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{

@@ -21,6 +21,7 @@ import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechRecognizer;
 import com.iflytek.cloud.SpeechUtility;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 语音搜索页面
@@ -45,11 +46,18 @@ public class SpeechSearchActivity extends BaseActivity
         // 初始化识别对象
         mIat = SpeechRecognizer.createRecognizer(this, mInitListener);
     }
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
     
     @Override
 	public void onResume() 
     {
     	super.onResume();
+    	MobclickAgent.onResume(this);
         SpeechUtility.getUtility().checkServiceInstalled();
     }
     
@@ -93,6 +101,9 @@ public class SpeechSearchActivity extends BaseActivity
             @Override
             public void onClick(View v)
             {
+            	
+            	MobclickAgent.onEvent(SpeechSearchActivity.this,"home_speech_click");
+            	
                 m_msg = "";
                 m_msgTv.setText("请点击");
                 m_speechImgV.setImageResource(R.drawable.speech_animation_start);  

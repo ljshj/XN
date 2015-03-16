@@ -2,6 +2,7 @@ package com.bgood.xn.ui.xuanneng.joke;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -27,6 +28,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.JokeRecordAdapter;
+import com.bgood.xn.adapter.KBaseAdapter;
 import com.bgood.xn.adapter.JokeRecordAdapter.JokeRank;
 import com.bgood.xn.bean.JokeBean;
 import com.bgood.xn.bean.JokeBean.JokeActionType;
@@ -42,6 +44,7 @@ import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseShowDataActivity;
 import com.bgood.xn.ui.user.account.LoginActivity;
 import com.bgood.xn.ui.xuanneng.XuanNengMainActivity;
+import com.bgood.xn.utils.ConfigUtil;
 import com.bgood.xn.utils.ShareUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.dialog.BGDialog;
@@ -80,8 +83,6 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 	private int m_start_week = 0;
 	private int m_start_month = 0;
 	
-	private ShareUtils share = null;
-	
     private JokeBean mActionJoke = null;
     private JokeActionType type;
     
@@ -91,7 +92,6 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		share = new ShareUtils(mActivity);
 		setContentView(R.layout.layout_xuanneng_rank);
 		findView();
 		getData(CHOOSE_DAY, true);
@@ -109,6 +109,8 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 		
 		radio_group = (RadioGroup) findViewById(R.id.radio_group);
 		radio_group.setOnCheckedChangeListener(mOnCheckedChangeListener);
+		
+		findViewById(R.id.iv_joke_verify).setOnClickListener(this);
 
 		View view1 = inflater.inflate(R.layout.listview_space_bar, null);
 		mXLDay = (XListView) view1.findViewById(R.id.xlv_sapce);
@@ -169,8 +171,29 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 		};
 		mTabPager.setAdapter(adapter);
 	}
+	
 	/**
 	 * 
+	 * @todo:设置结果数据
+	 * @date:2015-3-13 上午10:41:09
+	 * @author:hg_liuzl@163.com
+	 * @params:@param xListView
+	 * @params:@param adapter
+	 * @params:@param showList
+	 * @params:@param strJson
+	 */
+	private void setResultData(XListView xListView,KBaseAdapter adapter,List<?> showList,String strJson) {
+		if(TextUtils.isEmpty(strJson))
+		{
+			return;
+		}
+		
+		JokeResponse response = JSON.parseObject(strJson, JokeResponse.class);
+		setDataAdapter(xListView, adapter, showList, response.jokes,isRefreshAction);
+	}
+	
+	
+	/**
 	 * @todo:TODO
 	 * @date:2014-11-24 上午10:32:09
 	 * @author:hg_liuzl@163.com
@@ -181,18 +204,35 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 		if(!isNeedLoadData){
 			return;
 		}
-		switch (flag) {
-		case CHOOSE_DAY:
-			XuannengRequest.getInstance().requestXuanRank(this, mActivity, XuanNengMainActivity.XUANNENG_JOKE, CHOOSE_DAY, m_start_day, m_start_day+PAGE_SIZE_ADD);
-			break;
-		case CHOOSE_WEEK:
-			XuannengRequest.getInstance().requestXuanRank(this, mActivity, XuanNengMainActivity.XUANNENG_JOKE, CHOOSE_WEEK, m_start_week, m_start_week+PAGE_SIZE_ADD);
-			break;
-		case CHOOSE_MONTH:
-			XuannengRequest.getInstance().requestXuanRank(this, mActivity, XuanNengMainActivity.XUANNENG_JOKE, CHOOSE_MONTH, m_start_month, m_start_month+PAGE_SIZE_ADD);
-			break;
-		default:
-			break;
+		
+		if (!ConfigUtil.isConnect(mActivity)) {
+			switch (flag) {
+			case CHOOSE_DAY:
+				setResultData(mXLDay, adapterDay, listDay, pUitl.getStoreJokeRankDay());
+				break;
+			case CHOOSE_WEEK:
+				setResultData(mXLWeek, adapterWeek, listWeek, pUitl.getStoreJokeRankWeek());
+				break;
+			case CHOOSE_MONTH:
+				setResultData(mXLMonth, adapterMonth, listMonth, pUitl.getStoreJokeRankMonth());
+				break;
+			default:
+				break;
+			}
+		}else{
+			switch (flag) {
+			case CHOOSE_DAY:
+				XuannengRequest.getInstance().requestXuanRank(this, mActivity, XuanNengMainActivity.XUANNENG_JOKE, CHOOSE_DAY, m_start_day, m_start_day+PAGE_SIZE_ADD);
+				break;
+			case CHOOSE_WEEK:
+				XuannengRequest.getInstance().requestXuanRank(this, mActivity, XuanNengMainActivity.XUANNENG_JOKE, CHOOSE_WEEK, m_start_week, m_start_week+PAGE_SIZE_ADD);
+				break;
+			case CHOOSE_MONTH:
+				XuannengRequest.getInstance().requestXuanRank(this, mActivity, XuanNengMainActivity.XUANNENG_JOKE, CHOOSE_MONTH, m_start_month, m_start_month+PAGE_SIZE_ADD);
+				break;
+			default:
+				break;
+			}
 		}
 	}
     
@@ -258,10 +298,36 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
     public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3)
     {
 	 	final JokeBean joke = (JokeBean) adapter.getAdapter().getItem(position);
-        Intent intent = new Intent(mActivity, JokeDetailActivity.class);
-        intent.putExtra(JokeBean.JOKE_BEAN, joke);
-        startActivity(intent);
+	 	if(null!=joke){
+	        Intent intent = new Intent(mActivity, JokeDetailActivity.class);
+	        intent.putExtra(JokeBean.JOKE_BEAN, joke);
+	        startActivity(intent);
+	 	}
     }
+    
+    
+	/**
+	 * 
+	 * @todo:保存数据到本地
+	 * @date:2015-3-12 下午7:42:42
+	 * @author:hg_liuzl@163.com
+	 * @params:@param strJson
+	 */
+	private void saveDataToLocal(String strJson) {
+		switch (REQUEST_FLAG) {
+		case CHOOSE_DAY:
+			pUitl.storeJokeRankDay(strJson);
+			break;
+		case CHOOSE_WEEK:
+			pUitl.storeJokeRankWeek(strJson);
+			break;
+		case CHOOSE_MONTH:
+			pUitl.storeJokeRankMonth(strJson);
+			break;
+		default:
+			break;
+		}
+	}
 
 	@Override
 	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
@@ -272,6 +338,7 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 			switch (bNetWork.getMessageType()) {
 			case 870002:
 					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+						saveDataToLocal(strJson);
 						JokeResponse response = JSON.parseObject(strJson, JokeResponse.class);
 						switch (REQUEST_FLAG) {
 							case CHOOSE_DAY:
@@ -380,6 +447,16 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 			actionAdapter();
 			XuannengRequest.getInstance().requestXuanShare(this, this, jBean.jokeid);
 			break;
+			
+		case R.id.ll_share:	//分享
+			jBean = (JokeBean) v.getTag();
+			mActionJoke = jBean;
+			share.setShareContent(jBean.content, jBean.imgs.size() > 0 ? jBean.imgs.get(0).img:null);
+			break;
+		case R.id.iv_joke_verify:	//审核
+			JokeVerifyActivity.doVerifyJoke(mActivity);
+			break;
+			
 		}}
 	}
 	

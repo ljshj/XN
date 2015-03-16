@@ -58,6 +58,10 @@ public class WeiqiangAdapter extends KBaseAdapter
 			holder.avReply = (ActionView) convertView.findViewById(R.id.av_reply);
 			holder.avTranspnt = (ActionView) convertView.findViewById(R.id.av_transpont);
 			holder.avShare = (ActionView) convertView.findViewById(R.id.av_share);
+
+			holder.llShare = (LinearLayout) convertView.findViewById(R.id.ll_share);
+			
+			
 			convertView.setTag(holder);
 		} else
 		{
@@ -116,6 +120,8 @@ public class WeiqiangAdapter extends KBaseAdapter
 		holder.avShare.setOnClickListener(mListener);
 		holder.avShare.setTag(weiqiangBean);
 		
+		holder.llShare.setOnClickListener(mListener);
+		holder.llShare.setTag(weiqiangBean);
 		
 		return convertView;
 	}
@@ -133,18 +139,19 @@ public class WeiqiangAdapter extends KBaseAdapter
 
 	final class Holder
 	{
-	      ImageView ivDelete;
+	     ImageView ivDelete;
 		 ImageView ivAuthorImg;
 		 TextView tvAuthorName;
 		 TextView tvTime;
 		 TextView tvComments;
 		
-		 LinearLayout llTransArea;
+		 LinearLayout llTransArea,llShare;
 		 TextView tvOldAuthorName;
 		 TextView tvContent;
 		 NoScrollGridView gridView,oldgridView;
 		
 		 ActionView avZan,avReply,avTranspnt,avShare;
+		 
 	}
 
 }

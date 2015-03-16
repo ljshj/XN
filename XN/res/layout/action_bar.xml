@@ -45,7 +45,21 @@
                  
              </com.bgood.xn.view.ActionView>
              
-	        <com.bgood.xn.view.ActionView
+             <LinearLayout
+                android:id="@+id/ll_share"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center">
+                 <ImageView 
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+	                android:background="@drawable/img_weiqiang_share_indicator"
+			        />
+             </LinearLayout>
+              
+             
+ 	        <com.bgood.xn.view.ActionView
 	          android:id="@+id/av_share"
 	          android:layout_width="0dp"
 	          android:layout_weight="1"
@@ -53,6 +67,7 @@
 	          android:gravity="center"
 			  actionbar:img = "@drawable/img_weiqiang_share_indicator"
 			  actionbar:text = "@string/action_count"
+			  android:visibility="gone"
 			  >
 	            
 	        </com.bgood.xn.view.ActionView>

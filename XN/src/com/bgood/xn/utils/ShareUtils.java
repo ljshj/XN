@@ -80,7 +80,7 @@ public class ShareUtils {
      */
     private void configPlatforms() {
         // 添加新浪SSO授权
-      //  mController.getConfig().setSsoHandler(new SinaSsoHandler());
+        mController.getConfig().setSsoHandler(new SinaSsoHandler());
         // 添加腾讯微博SSO授权
         mController.getConfig().setSsoHandler(new TencentWBSsoHandler());
         // 添加QQ、QZone平台
@@ -103,7 +103,6 @@ public class ShareUtils {
         qZoneSsoHandler.addToSocialSDK();
         mController.setShareContent(content);
 
-       // UMImage localImage = new UMImage(mActivity, R.drawable.icon_app);
         UMImage urlImage = new UMImage(mActivity,TextUtils.isEmpty(imgUrl) ? LOGO_URL:imgUrl);
 
         WeiXinShareContent weixinContent = new WeiXinShareContent();

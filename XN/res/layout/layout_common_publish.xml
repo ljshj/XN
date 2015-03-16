@@ -30,5 +30,13 @@
         android:stretchMode="columnWidth"
          >
     </com.bgood.xn.view.ImageGridView>
+    
+    <!-- <TextView 
+        android:id="@+id/tv_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/img_common_top_title_bg"
+        android:text="地点"
+        /> -->
 
 </LinearLayout>

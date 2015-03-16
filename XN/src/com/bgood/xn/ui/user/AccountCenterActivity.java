@@ -18,6 +18,7 @@ import com.bgood.xn.ui.user.account.LoginActivity;
 import com.bgood.xn.ui.user.account.ModifyPasswordActivity;
 import com.bgood.xn.view.dialog.BottomDialog;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -35,6 +36,18 @@ public class AccountCenterActivity extends BaseActivity implements OnClickListen
     private TextView m_gradeTv = null;  // 用户等级
     private TextView m_vermicelliTv = null;  // 粉丝数量
     private UserInfoBean mUserBean = null;
+    
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
     
     @Override
     protected void onCreate(Bundle savedInstanceState)

@@ -82,6 +82,19 @@
         <attr name="text" format="reference"/> 
     </declare-styleable> 
     
+            <!-- 消息提示的小图标 -->
+      <declare-styleable name="markbar"> 
+        <attr name="markname" format="reference"/> 
+        <attr name="markcount" format="reference"/> 
+    </declare-styleable> 
+    
+            <!-- 消息提示的小图标 -->
+      <declare-styleable name="markimgbar"> 
+        <attr name="mibicon" format="reference"/> 
+        <attr name="mibkname" format="reference"/> 
+        <attr name="mibkcount" format="reference"/> 
+    </declare-styleable> 
+    
                   <!-- 操作的小控件 -->
       <declare-styleable name="markRadionButton"> 
         <attr name="txtTitle" format="reference"/> 

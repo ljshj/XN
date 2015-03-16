@@ -32,6 +32,7 @@ import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * @todo:搜索并添加群
@@ -50,6 +51,18 @@ public class AddGroupActivity extends BaseShowDataActivity implements IXListView
 	private int m_start = 0;
 	private String mKeyWord = "";
 	private TitleBar mTitleBar = null;
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

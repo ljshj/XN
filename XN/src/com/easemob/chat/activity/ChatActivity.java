@@ -98,6 +98,7 @@ import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.EMLog;
 import com.easemob.util.PathUtil;
 import com.easemob.util.VoiceRecorder;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -1267,6 +1268,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener,TaskLi
 	@Override
 	protected void onResume() {
 		super.onResume();
+		MobclickAgent.onResume(this);
 		if(group != null)
 			((TextView) findViewById(R.id.name)).setText(group.name);
 		adapter.refresh();
@@ -1275,6 +1277,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener,TaskLi
 	@Override
 	protected void onPause() {
 		super.onPause();
+		MobclickAgent.onPause(this);
 		if (wakeLock.isHeld())
 			wakeLock.release();
 		if (VoicePlayClickListener.isPlaying && VoicePlayClickListener.currentPlayListener != null) {

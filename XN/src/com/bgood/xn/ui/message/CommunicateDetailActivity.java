@@ -64,6 +64,7 @@ import com.easemob.chat.activity.ExitGroupDialog;
 import com.easemob.chat.widget.ExpandGridView;
 import com.easemob.util.NetUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -102,6 +103,18 @@ public class CommunicateDetailActivity extends BaseActivity implements OnClickLi
 	/**要操作的FriendBean*/
 	private FriendBean actionFriendBean = null;
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

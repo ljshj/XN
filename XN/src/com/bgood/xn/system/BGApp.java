@@ -11,24 +11,26 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.ImageView;
 
+import com.baidu.location.BDLocation;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.FriendBean;
 import com.bgood.xn.bean.GroupBean;
 import com.bgood.xn.bean.GroupMemberBean;
+import com.bgood.xn.bean.Location;
 import com.bgood.xn.bean.MemberLoginBean;
 import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.db.DBHelper;
 import com.easemob.EMCallBack;
 import com.easemob.chat.ChatHXSDKHelper;
 import com.iflytek.cloud.SpeechUtility;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 public class BGApp extends Application {
@@ -49,7 +51,6 @@ public class BGApp extends Application {
 	private static BGApp instance;
 	// login user name
 	public final String PREF_USERNAME = "username";
-	
 	/**
 	 * 当前用户nickname,为了苹果推送不是userid而是昵称
 	 */
@@ -65,7 +66,9 @@ public class BGApp extends Application {
 	/**存放环信群组Id,和群成员**/
 	private Map<String,List<FriendBean>> groupMemberAndHxId = new HashMap<String,List<FriendBean>>();
 	
-
+	/**存放当前位置的经纬度**/
+	public static Location location;
+	
 	@Override
 	public void onCreate()
 	{
@@ -126,12 +129,30 @@ public class BGApp extends Application {
 		.build();//
 		
 		
-		ImageLoaderConfiguration config = new ImageLoaderConfiguration//
-		.Builder(getApplicationContext())//
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())//
+		.threadPriority(Thread.NORM_PRIORITY - 2)
+		.denyCacheImageMultipleSizesInMemory()
+		.tasksProcessingOrder(QueueProcessingType.LIFO)
 		.diskCacheFileCount(1000)
 		.diskCacheSize(100*1024*1024)
 		.build();//
 		ImageLoader.getInstance().init(config);
+		
+//		
+//		// This configuration tuning is custom. You can tune every option, you may tune some of them,
+//		// or you can create default configuration by
+//		//  ImageLoaderConfiguration.createDefault(this);
+//		// method.
+//		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+//				.threadPriority(Thread.NORM_PRIORITY - 2)
+//				.denyCacheImageMultipleSizesInMemory()
+//				.discCacheFileNameGenerator(new Md5FileNameGenerator())
+//				.tasksProcessingOrder(QueueProcessingType.LIFO)
+//				.writeDebugLogs() // Remove for release app
+//				.build();
+//		// Initialize ImageLoader with configuration.
+//		ImageLoader.getInstance().init(config);
+		
 	}
 	
 	
@@ -298,14 +319,14 @@ public class BGApp extends Application {
 
 	/**设置圆角图片*/
     public  void setImage(final String imgUrl,final ImageView iv){
-    	if(TextUtils.isEmpty(imgUrl)){
-    		return;
-    	}
+//    	if(TextUtils.isEmpty(imgUrl)){
+//    		return;
+//    	}
     	
     	String strImgUrl = imgUrl;
     	
-    	if(!strImgUrl.contains("http")){
-    		strImgUrl = SystemConfig.FILE_SERVER+imgUrl;
+    	if(!TextUtils.isEmpty(strImgUrl) && !strImgUrl.contains("http")){
+    		strImgUrl = SystemConfig.FILE_SERVER+strImgUrl;
     	}
     	
 	   ImageLoader.getInstance().displayImage(strImgUrl,iv, optionsRound);
@@ -313,14 +334,14 @@ public class BGApp extends Application {
     
 	/**设置直角图片*/
     public  void setImageSqure(final String imgUrl,final ImageView iv){
-    	if(TextUtils.isEmpty(imgUrl)){
-    		return;
-    	}
+//    	if(TextUtils.isEmpty(imgUrl)){
+//    		return;
+//    	}
     	
     	String strImgUrl = imgUrl;
     	
-    	if(!strImgUrl.contains("http")){
-    		strImgUrl = SystemConfig.FILE_SERVER+imgUrl;
+    	if(!TextUtils.isEmpty(strImgUrl) && !strImgUrl.contains("http")){
+    		strImgUrl = SystemConfig.FILE_SERVER+strImgUrl;
     	}
     	
 	   ImageLoader.getInstance().displayImage(strImgUrl,iv, options);

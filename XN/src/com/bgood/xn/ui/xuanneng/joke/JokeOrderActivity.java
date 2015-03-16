@@ -20,6 +20,7 @@ import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.JokeAdapter;
 import com.bgood.xn.bean.JokeBean;
+import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.bean.JokeBean.JokeActionType;
 import com.bgood.xn.bean.response.JokeResponse;
 import com.bgood.xn.network.BaseNetWork;
@@ -33,11 +34,13 @@ import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseShowDataActivity;
 import com.bgood.xn.ui.user.account.LoginActivity;
 import com.bgood.xn.ui.xuanneng.XuanNengMainActivity;
+import com.bgood.xn.utils.ConfigUtil;
 import com.bgood.xn.utils.ShareUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.dialog.BGDialog;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -61,7 +64,8 @@ public class JokeOrderActivity extends BaseShowDataActivity implements OnItemCli
 	{
 		super.onCreate(savedInstanceState);
 		share = new ShareUtils(mActivity);
-		setContentView(R.layout.listview_space_bar);
+		setContentView(R.layout.layout_joke);
+		findViewById(R.id.iv_joke_verify).setOnClickListener(this);
 		m_listXlv = (XListView) findViewById(R.id.xlv_sapce);
 		m_listXlv.setPullLoadEnable(true);
 		m_listXlv.setPullRefreshEnable(true);
@@ -69,13 +73,24 @@ public class JokeOrderActivity extends BaseShowDataActivity implements OnItemCli
 		m_listXlv.setOnItemClickListener(this);
 		adapter = new JokeAdapter(listJoke, mActivity,this);
 		m_listXlv.setAdapter(adapter);
-		XuannengRequest.getInstance().requestJokeList(this, this, XuanNengMainActivity.XUANNENG_JOKE, JokeBean.JOKE_ORDER, m_start_page, m_start_page+PAGE_SIZE_ADD);
+		showData();
+	}
+	
+	private void showData() {
+		if (!ConfigUtil.isConnect(mActivity)) {
+			String strJson = pUitl.getStoreJokeOrder();
+			JokeResponse response = JSON.parseObject(strJson, JokeResponse.class);
+			setDataAdapter(m_listXlv, adapter, listJoke, response.jokes, isRefreshAction);
+		}else{
+			XuannengRequest.getInstance().requestJokeList(this, this, XuanNengMainActivity.XUANNENG_JOKE, JokeBean.JOKE_ORDER, m_start_page, m_start_page+PAGE_SIZE_ADD);
+		}
 	}
 	
 	
 	@Override
 	public void onResume() {
 		super.onResume();
+		MobclickAgent.onResume(this);
 		
 		mRefreshTime = pUitl.getJokeOrderRefreshTime();
 		m_listXlv.setRefreshTime(mRefreshTime);
@@ -84,6 +99,7 @@ public class JokeOrderActivity extends BaseShowDataActivity implements OnItemCli
 	@Override
 	public void onPause() {
 		super.onPause();
+		MobclickAgent.onPause(this);
 		pUitl.setJokeOrderRefreshTime(mRefreshTime);
 	}
 
@@ -120,6 +136,14 @@ public class JokeOrderActivity extends BaseShowDataActivity implements OnItemCli
 			mActionJoke = jBean;
 			share.setShareContent(jBean.content, jBean.imgs.size() > 0 ? jBean.imgs.get(0).img:null);
 			XuannengRequest.getInstance().requestXuanShare(this, mActivity, jBean.jokeid);
+			break;
+		case R.id.ll_share:	//分享
+			jBean = (JokeBean) v.getTag();
+			mActionJoke = jBean;
+			share.setShareContent(jBean.content, jBean.imgs.size() > 0 ? jBean.imgs.get(0).img:null);
+			break;
+		case R.id.iv_joke_verify:	//审核
+			JokeVerifyActivity.doVerifyJoke(mActivity);
 			break;
 		}}
 	}
@@ -192,6 +216,18 @@ public class JokeOrderActivity extends BaseShowDataActivity implements OnItemCli
         xListView.stopLoadMore();
     }
 	
+	
+	/**
+	 * 
+	 * @todo:保存数据到本地
+	 * @date:2015-3-12 下午7:42:42
+	 * @author:hg_liuzl@163.com
+	 * @params:@param strJson
+	 */
+	private void saveDataToLocal(String strJson) {
+		pUitl.storeJokeOrder(strJson);
+	}
+    
 	@Override
 	public void onTaskOver(HttpRequestInfo request, HttpResponseInfo info) {
 		if(info.getState() == HttpTaskState.STATE_OK){
@@ -199,10 +235,12 @@ public class JokeOrderActivity extends BaseShowDataActivity implements OnItemCli
 			String strJson = bNetWork.getStrJson();
 				switch (bNetWork.getMessageType()) {
 				case 870001:
-						if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
-							JokeResponse response = JSON.parseObject(strJson, JokeResponse.class);
-							setDataAdapter(m_listXlv, adapter, listJoke, response.jokes, isRefreshAction);
-						}
+					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+						saveDataToLocal(strJson);
+						m_start_page += 10;
+						JokeResponse response = JSON.parseObject(strJson, JokeResponse.class);
+						setDataAdapter(m_listXlv, adapter, listJoke, response.jokes, isRefreshAction);
+					}
 					break;
 				case 870005://分享
 					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
@@ -232,9 +270,11 @@ public class JokeOrderActivity extends BaseShowDataActivity implements OnItemCli
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3) {
 		final JokeBean joke = (JokeBean) adapter.getAdapter().getItem(position);
-        Intent intent = new Intent(mActivity, JokeDetailActivity.class);
-        intent.putExtra(JokeBean.JOKE_BEAN, joke);
-        startActivity(intent);
+		if(null!=joke){
+	        Intent intent = new Intent(mActivity, JokeDetailActivity.class);
+	        intent.putExtra(JokeBean.JOKE_BEAN, joke);
+	        startActivity(intent);
+		}
 	}
 
 	@Override

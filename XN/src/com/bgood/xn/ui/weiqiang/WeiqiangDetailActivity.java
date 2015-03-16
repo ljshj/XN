@@ -53,6 +53,7 @@ import com.bgood.xn.view.dialog.BGDialog;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 /**
  * @todo:微墙详情界面
  * @date:2014-10-24 下午2:22:14
@@ -84,7 +85,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	
 	private WeiQiangBean weiqiangBean;
 	private ShareUtils share = null;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -148,6 +149,8 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		avTranspont = (ActionView) head_weiqiang_detail.findViewById(R.id.av_transpont);
 		avShare = (ActionView) head_weiqiang_detail.findViewById(R.id.av_share);
 		
+		head_weiqiang_detail.findViewById(R.id.ll_share).setOnClickListener(this);
+		
 		ivAuthorImg.setOnClickListener(this);
 		tvAuthorName.setOnClickListener(this);
 		tvOldAuthorName.setOnClickListener(this);
@@ -163,14 +166,23 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		listview.setHeaderDividersEnabled(false);
 	}
 	
-	
 	@Override
 	public void onResume() {
 		super.onResume();
+		MobclickAgent.onResume(this);
 		mRefreshDetailWeiqiangTime = pUitl.getWeiqiangDetailRefreshTime();
 		listview.setRefreshTime(mRefreshDetailWeiqiangTime);
 		
 	}
+	
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+		pUitl.setWeiqiangDetailRefreshTime(mRefreshDetailWeiqiangTime);
+	}
+	
 	
 	private IDeleteCallback callback = new IDeleteCallback() {
 		
@@ -181,12 +193,6 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 			}
 		}
 	};
-	
-	@Override
-	public void onPause() {
-		super.onPause();
-		pUitl.setWeiqiangDetailRefreshTime(mRefreshDetailWeiqiangTime);
-	}
 	
 	private void setData()
 	{
@@ -241,15 +247,18 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	        {
 	            // 赞
 	            case R.id.av_zan:
+	            	MobclickAgent.onEvent(mActivity,"weiqiang_info_zan_click");
 	                zanWeiqiang();
 	                break;
 	            // 评论
 	            case R.id.av_reply:
+	            	MobclickAgent.onEvent(mActivity,"weiqiang_info_reply_click");
 	            	type = WeiqiangActionType.RESPONSE;
 	                createSendDialog("");
 	                break;
 	            // 转发
 	            case R.id.av_transpont:
+	            	MobclickAgent.onEvent(mActivity,"weiqiang_info_tranpond_click");
 	            	type = WeiqiangActionType.TRANSPOND;
 	            	createSendDialog("");
 	                break;
@@ -258,6 +267,10 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	    			share.setShareContent(weiqiangBean.content, weiqiangBean.imgs.size() > 0 ? weiqiangBean.imgs.get(0).img:null);
 	    			WeiqiangRequest.getInstance().requestWeiqiangShare(this, mActivity, weiqiangBean.weiboid);
 	                break;
+	            case R.id.ll_share:	//分享
+	            	MobclickAgent.onEvent(mActivity,"weiqiang_info_share_click");
+	            	share.setShareContent(weiqiangBean.content, weiqiangBean.imgs.size() > 0 ? weiqiangBean.imgs.get(0).img:null);
+	            	break;
 	            default:
 	                break;
 	        }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="tips">100</string>
     <string name="app_name">炫能</string>
     <string name="app_version">"邦固科技 版本所有 BANDGOOD "%s</string>
      <string name="viewpager_indicator">%1$d/%2$d</string>
@@ -21,6 +22,9 @@
     
      <string name="joke_fail_verify">未通过审核原因：%s</string>
      
+     <string name="action_original">原创</string>
+     <string name="action_disagree">不通过</string>
+     <string name="action_agree">通过</string>
      <string name="action_count">1</string>
      <string name="errcode_success">发送成功</string>
 	<string name="errcode_cancel">发送取消</string>
