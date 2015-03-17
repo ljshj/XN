@@ -33,7 +33,7 @@ public class XuannengRequest extends BaseNetWork {
 		 * @params:@param context
 		 * @params:@param phone
 		 */
-		 public void requestJokeList(TaskListenerWithState mHttpTaskListener,Context context,int itemid,int type,int start,int end){
+		 public void requestJokeList(TaskListenerWithState mHttpTaskListener,Context context,int itemid,int type,int start,int end,double longitude,double latitude){
 		 	setMessageType(70001);
 			JSONObject body = new JSONObject();
 			try {
@@ -41,6 +41,8 @@ public class XuannengRequest extends BaseNetWork {
 				body.put("type", type);
 				body.put("start", start);
 				body.put("end", end);
+				body.put("longitude", longitude);
+				body.put("latitude", latitude);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -57,7 +59,7 @@ public class XuannengRequest extends BaseNetWork {
 		 * @params:@param context
 		 * @params:@param phone
 		 */
-		 public void requestXuanRank(TaskListenerWithState mHttpTaskListener,Context context,int itemid,int rank_type,int start,int end){
+		 public void requestXuanRank(TaskListenerWithState mHttpTaskListener,Context context,int itemid,int rank_type,int start,int end,double longitude,double latitude){
 		 	setMessageType(70002);
 			JSONObject body = new JSONObject();
 			try {
@@ -65,6 +67,8 @@ public class XuannengRequest extends BaseNetWork {
 				body.put("rank_type", rank_type);
 				body.put("start", start);
 	            body.put("end", end);
+	            body.put("longitude", longitude);
+				body.put("latitude", latitude);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -325,7 +329,7 @@ public class XuannengRequest extends BaseNetWork {
 		 * @params:@param context
 		 * @params:@param phone
 		 */
-		 public void requestXuanRecord(TaskListenerWithState mHttpTaskListener,Context context,int itemId,int type,int start,int end){
+		 public void requestXuanRecord(TaskListenerWithState mHttpTaskListener,Context context,int itemId,int type,int start,int end,double longitude,double latitude){
 		 	setMessageType(70019);
 			JSONObject body = new JSONObject();
 			try {
@@ -335,6 +339,8 @@ public class XuannengRequest extends BaseNetWork {
 				body.put("timestart", "");
 				body.put("timeend", "");
 				body.put("itemid", itemId);
+				body.put("longitude", longitude);
+			    body.put("latitude", latitude);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}

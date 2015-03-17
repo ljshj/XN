@@ -205,7 +205,7 @@ public class UserCenterRequest extends BaseNetWork {
 	  * @params:@param type
 	  * @params:@param value
 	  */
-	 public void requestUpdateLocation(TaskListenerWithState mHttpTaskListener,Context context,String longitude,String latitude){
+	 public void requestUpdateLocation(TaskListenerWithState mHttpTaskListener,Context context,double longitude,double latitude){
 		 	setMessageType(20003);
 			JSONObject body = new JSONObject();
 			try {

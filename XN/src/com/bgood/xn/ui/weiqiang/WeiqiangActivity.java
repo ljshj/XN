@@ -663,7 +663,7 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 							m_followFriendsAdapter.notifyDataSetChanged();
 						}
 					}else if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_HAS_ZAN){
-						BToast.show(mActivity, "不要重复点赞");
+						BToast.show(mActivity, "你已经点赞了！");
 					}
 					break;
 				default:

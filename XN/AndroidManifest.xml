@@ -765,6 +765,14 @@
 		        <action android:name="com.bgood.xn.ui.message.SYNCDATA"></action>
 		    </intent-filter>
 		</service>
+		
+		        <!-- 定时上传位置 -->
+
+		<service android:name="com.bgood.xn.service.TimerSendLocationService">
+		    <intent-filter>
+		        <action android:name="com.bgood.xn.ui.CURRENT_LOCATION"></action>
+		    </intent-filter>
+		</service>
 
 
         <!-- 开机自启动服务 -->

@@ -8,6 +8,14 @@
     
     <include layout="@layout/title_bar"/>
     
+    <ImageView
+        android:id="@+id/iv_no_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/bg_no_content"
+        android:visibility="gone"
+        />
+    
     <!-- <android.support.v4.view.ViewPager
 		android:id="@+id/paper_content" 
 		android:layout_height="0dp"
@@ -28,6 +36,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
+         android:background="@drawable/img_weiqiang_more_bg"
+        android:divider="@drawable/img_common_ll_divider"
+      android:dividerPadding="5dp"
+      android:showDividers="middle" 
         >
         
          <com.bgood.xn.view.ActionView
@@ -36,7 +48,7 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:gravity="center"
-				actionbar:img = "@drawable/icon_joke_disagree"
+				actionbar:img = "@drawable/btn_joke_original"
 				actionbar:text = "@string/action_original"
 				>
             </com.bgood.xn.view.ActionView>
@@ -47,7 +59,7 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:gravity="center"
-				actionbar:img = "@drawable/icon_joke_disagree"
+				actionbar:img = "@drawable/btn_joke_refuse"
 				actionbar:text = "@string/action_disagree"
 				>
             </com.bgood.xn.view.ActionView>
@@ -58,7 +70,7 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:gravity="center"
-				actionbar:img = "@drawable/icon_joke_agree"
+				actionbar:img = "@drawable/btn_joke_pass"
 				actionbar:text = "@string/action_agree"
 				>
             </com.bgood.xn.view.ActionView>

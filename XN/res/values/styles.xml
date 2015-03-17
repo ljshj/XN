@@ -73,6 +73,14 @@
     </style>
     
     
+    <style name = "radio_tab_style">
+        <item name="android:background">@drawable/bg_home_radiobutton_bg</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:onClick">onTabClicked</item>
+    </style>
     
     <style name ="common_commit_btn">
         <item name="android:layout_width">match_parent</item>
@@ -446,6 +454,12 @@
         <item name ="android:textSize">14sp</item>
     </style>
     
+    <style name = "item_distance" parent="item_parent">
+        <item name ="android:layout_marginRight">5dp</item>
+        <item name ="android:textColor">@color/gray</item>
+        <item name ="android:textSize">10sp</item>
+    </style>
+    
     <style name = "item_time" parent="item_parent">
         <item name ="android:layout_marginRight">5dp</item>
         <item name ="android:textColor">@color/gray</item>
@@ -455,7 +469,10 @@
     <style name = "item_content" parent="item_parent">
         <item name ="android:layout_width">match_parent</item>
         <item name ="android:layout_height">wrap_content</item>
-        <item name ="android:layout_margin">10dp</item>
+        <!-- <item name ="android:layout_margin">10dp</item> -->
+        <item name ="android:layout_marginLeft">10dp</item>
+        <item name ="android:layout_marginRight">10dp</item>
+        <item name ="android:layout_marginBottom">10dp</item>
         <item name ="android:textColor">@color/black</item>
         <item name ="android:textSize">16sp</item>
     </style>
@@ -504,9 +521,11 @@
       
           <!-- 审核幽默秀的图标 -->
       <style name="style_verify_joke" >
-          <item name="android:layout_width">40dp</item>
-          <item name="android:layout_height">40dp</item>
-          <item name="android:background">@drawable/icon_joke_verify</item>
+         <!--  <item name="android:layout_width">40dp</item>
+          <item name="android:layout_height">40dp</item> -->
+            <item name="android:layout_width">wrap_content</item>
+          <item name="android:layout_height">wrap_content</item>
+          <item name="android:background">@drawable/btn_joke_audits</item>
           <item name="android:layout_gravity">bottom|right</item>
           <item name="android:layout_margin">25dp</item>
       </style>

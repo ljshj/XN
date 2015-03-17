@@ -59,37 +59,21 @@
         
           <com.bgood.xn.view.MarkRadioButton
 			android:id="@+id/message_main_tab_messagecenter"
-			android:background="@drawable/bg_home_radiobutton_bg"
-		    android:layout_width="0dp"
-	        android:layout_weight="1"
-	        android:layout_height="match_parent"
-	        android:gravity="center"
-	        android:checked="true"
-	        android:onClick="onTabClicked"
+			style="@style/radio_tab_style"
 			markbar:markname = "@string/title_msg"
 			markbar:markcount = "@string/txt_count"
       		></com.bgood.xn.view.MarkRadioButton>
           
             <com.bgood.xn.view.MarkRadioButton
 				android:id="@+id/message_main_tab_friend"
-				android:background="@drawable/bg_home_radiobutton_bg"
-			    android:layout_width="0dp"
-		        android:layout_weight="1"
-		        android:layout_height="match_parent"
-		        android:gravity="center"
-		        android:onClick="onTabClicked"
+				style="@style/radio_tab_style"
 				markbar:markname = "@string/title_friend"
 				markbar:markcount = "@string/txt_count"
      		 ></com.bgood.xn.view.MarkRadioButton>
             
               <com.bgood.xn.view.MarkRadioButton
 				android:id="@+id/message_main_tab_group"
-				android:background="@drawable/bg_home_radiobutton_bg"
-			    android:layout_width="0dp"
-		        android:layout_weight="1"
-		        android:layout_height="match_parent"
-		        android:gravity="center"
-		        android:onClick="onTabClicked"
+				style="@style/radio_tab_style"
 				markbar:markname = "@string/title_group"
 				markbar:markcount = "@string/txt_count"
      		></com.bgood.xn.view.MarkRadioButton>
@@ -98,12 +82,7 @@
   
 			  <com.bgood.xn.view.MarkRadioButton
 				android:id="@+id/message_main_tab_communication_hall"
-				android:background="@drawable/bg_home_radiobutton_bg"
-			    android:layout_width="0dp"
-		        android:layout_weight="1"
-		        android:layout_height="match_parent"
-		        android:gravity="center"
-		        android:onClick="onTabClicked"
+				style="@style/radio_tab_style"
 				markbar:markname = "@string/title_communicate"
 				markbar:markcount = "@string/txt_count"
 		      ></com.bgood.xn.view.MarkRadioButton>

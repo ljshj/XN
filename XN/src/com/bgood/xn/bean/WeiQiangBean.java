@@ -75,8 +75,16 @@ public class WeiQiangBean implements Serializable {
 	public String getPhoto() {
 		return SystemConfig.FILE_SERVER + photo;
 	}
+
+
+	public void setDistance(String distance) {
+		this.distance = distance;
+	}
 	
 	
+	public String getDistance() {
+		return distance;
+	}
 	
 }
 

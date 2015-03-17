@@ -78,6 +78,7 @@ public class JokeRecordAdapter extends KBaseAdapter
 			convertView = mInflater.inflate(R.layout.weiqiang_item_layout, parent, false);
 			holder.ivAuthorImg = (ImageView) convertView.findViewById(R.id.iv_img);
 			holder.tvAuthorName = (TextView) convertView.findViewById(R.id.tv_nick);
+			holder.tvDistance = (TextView) convertView.findViewById(R.id.tv_distance);
 			holder.tvTime = (TextView) convertView.findViewById(R.id.tv_time);
 			holder.tvRecordTime = (TextView) convertView.findViewById(R.id.tv_record_time);
 			holder.tvComments = (TextView) convertView.findViewById(R.id.tv_comments);
@@ -113,6 +114,9 @@ public class JokeRecordAdapter extends KBaseAdapter
 		holder.tvAuthorName.setText(jokeBean.username);
 		holder.tvAuthorName.setOnClickListener(new ShowNameCardListener(jokeBean,mActivity));
 		
+		holder.tvDistance.setVisibility(View.VISIBLE);
+		holder.tvDistance.setText(ToolUtils.formatDistance(jokeBean.distance));
+		
 		holder.tvTime.setText(ToolUtils.getFormatDate(jokeBean.date_time));
 		
 		if(mType == JokeRank.RECORD){		//如果是榜单，则需要全部展示
@@ -147,7 +151,9 @@ public class JokeRecordAdapter extends KBaseAdapter
 //		}
 		
 		//显示是否为原创的icon
-		holder.ivOriginal.setVisibility(jokeBean.original == 0?View.GONE:View.VISIBLE);
+		
+		//holder.ivOriginal.setVisibility(jokeBean.original == 0?View.GONE:View.VISIBLE);
+		holder.ivOriginal.setVisibility(position % 2 ==0?View.GONE:View.VISIBLE);
 		
 		
 		if(!TextUtils.isEmpty(jokeBean.fromname)){	//如果转发人存在
@@ -240,6 +246,7 @@ public class JokeRecordAdapter extends KBaseAdapter
 		 ImageView ivDelete,ivAuthorImg,ivOriginal;
 		 ImageView ivRank;
 		 TextView tvAuthorName;
+		 TextView tvDistance;
 		 TextView tvTime,tvRecordTime;
 		 TextView tvComments;
 		 LinearLayout llTransArea,llShare;

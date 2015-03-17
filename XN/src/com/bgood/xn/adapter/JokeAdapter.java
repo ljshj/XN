@@ -58,6 +58,7 @@ public class JokeAdapter extends KBaseAdapter
 			convertView = mInflater.inflate(R.layout.weiqiang_item_layout, parent, false);
 			holder.ivAuthorImg = (ImageView) convertView.findViewById(R.id.iv_img);
 			holder.tvAuthorName = (TextView) convertView.findViewById(R.id.tv_nick);
+			holder.tvDistance = (TextView) convertView.findViewById(R.id.tv_distance);
 			holder.tvTime = (TextView) convertView.findViewById(R.id.tv_time);
 			holder.tvComments = (TextView) convertView.findViewById(R.id.tv_comments);
 			holder.gridView = (GridView) convertView.findViewById(R.id.gv_show_img);
@@ -88,6 +89,9 @@ public class JokeAdapter extends KBaseAdapter
 		
 		holder.ivAuthorImg.setOnClickListener(new ShowNameCardListener(jokeBean,mActivity));
 		
+		holder.tvDistance.setVisibility(View.VISIBLE);
+		holder.tvDistance.setText(ToolUtils.formatDistance(jokeBean.distance));
+		
 		holder.tvAuthorName.setText(jokeBean.username);
 		holder.tvAuthorName.setOnClickListener(new ShowNameCardListener(jokeBean,mActivity));
 		
@@ -101,7 +105,8 @@ public class JokeAdapter extends KBaseAdapter
 //		}
 		
 		//显示是否为原创的icon
-		holder.ivOriginal.setVisibility(jokeBean.original == 0 ? View.GONE:View.VISIBLE);
+		//holder.ivOriginal.setVisibility(jokeBean.original == 0 ? View.GONE:View.VISIBLE);
+		holder.ivOriginal.setVisibility(position % 2 == 0 ? View.GONE:View.VISIBLE);
 		
 		if(!TextUtils.isEmpty(BGApp.mUserId)&& BGApp.mUserId.equals(String.valueOf(jokeBean.userid))){
 			holder.ivDelete.setVisibility(View.VISIBLE);
@@ -166,6 +171,7 @@ public class JokeAdapter extends KBaseAdapter
 	{
 		 ImageView ivDelete,ivAuthorImg,ivOriginal;
 		 TextView tvAuthorName;
+		 TextView tvDistance;
 		 TextView tvTime;
 		 TextView tvComments;
 		 LinearLayout llTransArea,llShare;;

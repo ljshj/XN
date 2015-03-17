@@ -23,10 +23,16 @@ public class JokeBean implements Serializable {
 	public static final int JOKE_RADOM = 6;
 	public static final int JOKE_ORDER = 5;
 	
-	/**-1 原创,0 不审核，1 审核**/
-	public static final int JOKE_ORIGINAL = -1;
+	
+	/**0，不审核；1审核，2原创，3举报*/
 	public static final int JOKE_DISAGREE = 0;
 	public static final int JOKE_AGREE = 1;
+	public static final int JOKE_ORIGINAL = 2;
+	public static final int JOKE_REPORT = 3;
+	
+	
+	
+	
 	
 	public static final String JOKE_BEAN = "joke_bean";
 	

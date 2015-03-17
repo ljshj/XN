@@ -15,6 +15,8 @@ import com.bgood.xn.network.http.HttpRequestInfo;
 import com.bgood.xn.network.http.HttpResponseInfo;
 import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.UserCenterRequest;
+import com.bgood.xn.service.SyncIMDataService;
+import com.bgood.xn.service.TimerSendLocationService;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.system.SystemConfig;
 import com.bgood.xn.ui.base.BaseActivity;
@@ -35,6 +37,9 @@ public class IndexActivity extends BaseActivity implements TaskListenerWithState
 		setContentView(R.layout.a_index);
 		MobclickAgent.onEvent(IndexActivity.this,"sys_start");
 		initLoacation();
+		//定时上传位置
+		Intent intent = new Intent(TimerSendLocationService.MY_SERVICE);
+		startService(intent);
 	}
 	/**
 	 * 

@@ -44,6 +44,7 @@ public class WeiqiangAdapter extends KBaseAdapter
 			holder.ivAuthorImg = (ImageView) convertView.findViewById(R.id.iv_img);
 			holder.tvAuthorName = (TextView) convertView.findViewById(R.id.tv_nick);
 			holder.ivDelete = (ImageView) convertView.findViewById(R.id.iv_delete);
+			holder.tvDistance = (TextView) convertView.findViewById(R.id.tv_distance);
 			holder.tvTime = (TextView) convertView.findViewById(R.id.tv_time);
 			holder.tvComments = (TextView) convertView.findViewById(R.id.tv_comments);
 			holder.gridView = (NoScrollGridView) convertView.findViewById(R.id.gv_show_img);
@@ -71,6 +72,9 @@ public class WeiqiangAdapter extends KBaseAdapter
 		final WeiQiangBean weiqiangBean = (WeiQiangBean) mList.get(position);
 		
 		BGApp.getInstance().setImage(weiqiangBean.photo, holder.ivAuthorImg);
+		
+		holder.tvDistance.setVisibility(View.VISIBLE);
+		holder.tvDistance.setText(ToolUtils.formatDistance(weiqiangBean.distance));
 		
 		holder.ivAuthorImg.setOnClickListener(new ShowNameCardListener(weiqiangBean, mActivity));
 		
@@ -144,6 +148,7 @@ public class WeiqiangAdapter extends KBaseAdapter
 		 TextView tvAuthorName;
 		 TextView tvTime;
 		 TextView tvComments;
+		 TextView tvDistance;
 		
 		 LinearLayout llTransArea,llShare;
 		 TextView tvOldAuthorName;

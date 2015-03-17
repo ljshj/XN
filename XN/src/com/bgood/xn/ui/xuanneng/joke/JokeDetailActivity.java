@@ -71,7 +71,7 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 	
 	public LinearLayout llTransArea;
 	public ImageView ivAuthorImg,ivDelete;
-	public TextView tvAuthorName;
+	public TextView tvAuthorName,tvDistance;
 	public TextView tvTime;
 	public TextView tvOldAuthorName;
 	public TextView tvComments;
@@ -134,6 +134,9 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 	   	View head_weiqiang_detail = inflater.inflate(R.layout.weiqiang_item_layout, listview, false);
 		ivAuthorImg = (ImageView) head_weiqiang_detail.findViewById(R.id.iv_img);
 		tvAuthorName = (TextView) head_weiqiang_detail.findViewById(R.id.tv_nick);
+		tvDistance = (TextView) head_weiqiang_detail.findViewById(R.id.tv_distance);
+		
+		
 		ivDelete = (ImageView) head_weiqiang_detail.findViewById(R.id.iv_delete);
 		
 		tvTime = (TextView) head_weiqiang_detail.findViewById(R.id.tv_time);
@@ -151,6 +154,8 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 		avReply = (ActionView) head_weiqiang_detail.findViewById(R.id.av_reply);
 		avTranstpont = (ActionView) head_weiqiang_detail.findViewById(R.id.av_transpont);
 		avShare = (ActionView) head_weiqiang_detail.findViewById(R.id.av_share);
+		
+		head_weiqiang_detail.findViewById(R.id.ll_share).setOnClickListener(this);
 		
 		avZan.setOnClickListener(this);
 		avReply.setOnClickListener(this);
@@ -222,6 +227,10 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 		
 		tvAuthorName.setText(jBean.username);
 		
+		tvDistance.setVisibility(View.VISIBLE);
+		tvDistance.setText(ToolUtils.formatDistance(jBean.distance));
+
+		
 		tvTime.setText(ToolUtils.getFormatDate(jBean.date_time));
     	
 		if(!TextUtils.isEmpty(jBean.fromname)){	//如果转发人存在
@@ -275,6 +284,9 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
     			XuannengRequest.getInstance().requestXuanShare(this, mActivity, mJokeBean.jokeid);
     			share.setShareContent(mJokeBean.content, mJokeBean.imgs.size() > 0 ? mJokeBean.imgs.get(0).img:null);
                 break;
+            case R.id.ll_share:
+        			share.setShareContent(mJokeBean.content, mJokeBean.imgs.size() > 0 ? mJokeBean.imgs.get(0).img:null);
+                    break;
             default:
                 break;
         }
@@ -306,7 +318,7 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 						mJokeBean.like_count = String.valueOf(Integer.valueOf(mJokeBean.like_count)+1);
 		            	avZan.setCount(mJokeBean.like_count);
 					}else if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_HAS_ZAN){
-						BToast.show(mActivity, "不要重复点赞");
+						BToast.show(mActivity, "你已经点赞了");
 					}
 					break;
 				default:

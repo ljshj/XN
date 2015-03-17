@@ -79,7 +79,7 @@ public class JokeRandomActivity extends BaseShowDataActivity implements OnItemCl
 			JokeResponse response = JSON.parseObject(strJson, JokeResponse.class);
 			setDataAdapter(m_listXlv, adapter, listJoke, response.jokes, isRefreshAction);
 		}else{
-			XuannengRequest.getInstance().requestJokeList(this, this, XuanNengMainActivity.XUANNENG_JOKE, JokeBean.JOKE_ORDER, m_start_page, m_start_page+PAGE_SIZE_ADD);
+			requestData();
 		}
 	}
 	
@@ -242,8 +242,8 @@ public class JokeRandomActivity extends BaseShowDataActivity implements OnItemCl
 					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 						mActionJoke.like_count = String.valueOf(Integer.valueOf(mActionJoke.like_count)+1);
 						adapter.notifyDataSetChanged();
-					}else if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
-						BToast.show(mActivity, "您已经点过赞！");
+					}else if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_HAS_ZAN){
+						BToast.show(mActivity, "您已经点赞了！");
 					}
 					break;
 				default:
@@ -271,11 +271,22 @@ public class JokeRandomActivity extends BaseShowDataActivity implements OnItemCl
 	public void onRefresh() {
 		isRefreshAction = true;
 		m_start_page = 0;
-		XuannengRequest.getInstance().requestJokeList(this, this, XuanNengMainActivity.XUANNENG_JOKE, JokeBean.JOKE_RADOM, m_start_page, m_start_page+PAGE_SIZE_ADD);
+		requestData();
 	}
 	@Override
 	public void onLoadMore() {
 		isRefreshAction = false;
-		XuannengRequest.getInstance().requestJokeList(this, this, XuanNengMainActivity.XUANNENG_JOKE, JokeBean.JOKE_RADOM, m_start_page, m_start_page+PAGE_SIZE_ADD);
+		requestData();
+	}
+	
+	/**
+	 * 
+	 * @todo:请求数据
+	 * @date:2015-3-17 下午3:24:46
+	 * @author:hg_liuzl@163.com
+	 * @params:
+	 */
+	private void requestData() {
+		XuannengRequest.getInstance().requestJokeList(this, this, XuanNengMainActivity.XUANNENG_JOKE, JokeBean.JOKE_RADOM, m_start_page, m_start_page+PAGE_SIZE_ADD,BGApp.location.longitude, BGApp.location.latitude);
 	}
 }

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.MemberResultBean;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.utils.ToolUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 
@@ -76,7 +77,7 @@ public class ResultMemberAdapter extends KBaseAdapter
         {
             holder.identityImgV.setImageResource(R.drawable.img_common_sex_female);
         }
-        holder.distanceTv.setText(member.distance);
+        holder.distanceTv.setText(ToolUtils.formatDistance(member.distance));
         holder.signatureTv.setText(member.signatrue);
         holder.icanTv.setText(member.ican);
         holder.ineedTv.setText(member.ineed);

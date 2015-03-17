@@ -141,8 +141,8 @@ public class JokePersonActivity extends BaseActivity implements OnItemClickListe
 					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 						mActionjoke.like_count = String.valueOf(Integer.valueOf(mActionjoke.like_count)+1);
 						jokeAdapter.notifyDataSetChanged();
-					}else if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
-						BToast.show(mActivity, "您已经点过赞！");
+					}else if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_HAS_ZAN){
+						BToast.show(mActivity, "您已经点赞了！");
 					}
 					break;
 				case 870008:	//获取微墙列表

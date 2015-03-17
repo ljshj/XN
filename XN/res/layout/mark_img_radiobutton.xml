@@ -10,7 +10,6 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:layout_margin="10dp"
         >
     
         <ImageView
@@ -18,14 +17,13 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:background="@drawable/icon_app"
-	        android:src="@drawable/icon_app"
         />
     
 	    <TextView
 	        android:id="@+id/tv_name"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_margin="5dp"
+	        android:layout_marginTop="2dp"
 	        android:textColor="@color/color_home_radiobutton_text"
 	        android:singleLine="true"
 	        android:text="联系"
@@ -35,7 +33,7 @@
         
      <TextView
          android:id="@+id/tv_tip"
-         android:layout_width="20dp"
+         android:layout_width="wrap_content"
          android:layout_height="20dp"
          android:text="@string/tips"
          android:background="@drawable/unread_count_bg"
@@ -43,6 +41,7 @@
          android:gravity="center"
          android:textColor="@color/white"
          android:clickable="false"
+         android:visibility="gone"
          />
 
 </RelativeLayout>

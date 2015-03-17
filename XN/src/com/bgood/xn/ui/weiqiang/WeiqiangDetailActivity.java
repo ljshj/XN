@@ -65,7 +65,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	private LinearLayout llTransArea;
 	private ImageView ivAuthorImg;
 	private ImageView ivDelete;
-	private TextView tvAuthorName;
+	private TextView tvAuthorName,tvDistance;
 	private TextView tvTime;
 	private TextView tvOldAuthorName;
 	private TextView tvComments;
@@ -130,6 +130,8 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	   	View head_weiqiang_detail = inflater.inflate(R.layout.weiqiang_item_layout, listview, false);
 		ivAuthorImg = (ImageView) head_weiqiang_detail.findViewById(R.id.iv_img);
 		tvAuthorName = (TextView) head_weiqiang_detail.findViewById(R.id.tv_nick);
+		tvDistance = (TextView) head_weiqiang_detail.findViewById(R.id.tv_distance);
+		
 		
 		ivDelete = (ImageView) head_weiqiang_detail.findViewById(R.id.iv_delete);
 		
@@ -208,6 +210,9 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		tvTime.setText(ToolUtils.getFormatDate(weiqiangBean.date_time));
 		
 		tvAuthorName.setText(weiqiangBean.name);
+		
+		tvDistance.setVisibility(View.VISIBLE);
+		tvDistance.setText(ToolUtils.formatDistance(weiqiangBean.distance));
 		
 		ivAuthorImg.setOnClickListener(new ShowNameCardListener(weiqiangBean,mActivity));
 		tvAuthorName.setOnClickListener(new ShowNameCardListener(weiqiangBean,mActivity));
@@ -310,7 +315,7 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 		            	weiqiangBean.like_count = String.valueOf(Integer.valueOf(weiqiangBean.like_count)+1);
 		            	avZan.setCount(weiqiangBean.like_count);
 					}else if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_HAS_ZAN){
-						BToast.show(mActivity, "不要重复点赞");
+						BToast.show(mActivity, "你已经点赞了！");
 					}
 					break;
 				default:

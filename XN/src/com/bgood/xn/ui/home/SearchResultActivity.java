@@ -291,7 +291,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 			HomeRequest.getInstance().reqeuestMemberList(this, this, search_type, m_msg, m_memberStart, m_memberStart + PAGE_SIZE_ADD);
 			break;
 		case CHOOSE_WEI_QIANG:
-			HomeRequest.getInstance().requestWeiqianList(this, this, search_type, m_msg, m_weiqiangStart, m_weiqiangStart + PAGE_SIZE_ADD);
+			HomeRequest.getInstance().requestWeiqianList(this, this, search_type, m_msg, m_weiqiangStart, m_weiqiangStart + PAGE_SIZE_ADD,BGApp.location.longitude, BGApp.location.latitude);
 			break;
 		case CHOOSE_CHU_CHUANG:
 			HomeRequest.getInstance().requestProductList(this, this, search_type, m_msg, m_cabinetStart, m_cabinetStart + PAGE_SIZE_ADD);
@@ -661,7 +661,7 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		        m_memberList.clear();
 		        m_weiQiangList.clear();
 		        m_showcaseList.clear();
-		        HomeRequest.getInstance().requestSearch(this, this, search_type, m_msg, 114.1917953491211f, 22.636533737182617f, m_start, m_start + PAGE_SIZE_ADD);
+		        HomeRequest.getInstance().requestSearch(this, this, search_type, m_msg, BGApp.location.longitude, BGApp.location.latitude, m_start, m_start + PAGE_SIZE_ADD);
 		    }else{
 		    		BToast.show(mActivity, "请输入搜索内容");
 		        return;

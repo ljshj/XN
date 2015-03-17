@@ -222,18 +222,22 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 		}else{
 			switch (flag) {
 			case CHOOSE_DAY:
-				XuannengRequest.getInstance().requestXuanRank(this, mActivity, XuanNengMainActivity.XUANNENG_JOKE, CHOOSE_DAY, m_start_day, m_start_day+PAGE_SIZE_ADD);
+				requestData(CHOOSE_DAY, m_start_day, m_start_day+PAGE_SIZE_ADD);
 				break;
 			case CHOOSE_WEEK:
-				XuannengRequest.getInstance().requestXuanRank(this, mActivity, XuanNengMainActivity.XUANNENG_JOKE, CHOOSE_WEEK, m_start_week, m_start_week+PAGE_SIZE_ADD);
+				requestData(CHOOSE_WEEK, m_start_week, m_start_week+PAGE_SIZE_ADD);
 				break;
 			case CHOOSE_MONTH:
-				XuannengRequest.getInstance().requestXuanRank(this, mActivity, XuanNengMainActivity.XUANNENG_JOKE, CHOOSE_MONTH, m_start_month, m_start_month+PAGE_SIZE_ADD);
+				requestData(CHOOSE_MONTH,m_start_month, m_start_month+PAGE_SIZE_ADD);
 				break;
 			default:
 				break;
 			}
 		}
+	}
+	
+	private void requestData(int dataType,int start,int end) {
+		XuannengRequest.getInstance().requestXuanRank(this, mActivity, XuanNengMainActivity.XUANNENG_JOKE, dataType, start, end,BGApp.location.longitude, BGApp.location.latitude);
 	}
     
 	/**

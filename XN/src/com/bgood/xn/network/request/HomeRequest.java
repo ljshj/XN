@@ -40,8 +40,8 @@ public class HomeRequest  extends BaseNetWork {
 	 	setMessageType(40001);
 		JSONObject body = new JSONObject();
 		try {
-//			body.put("longitude", longitude);
-//			body.put("latitude", latitude);
+			body.put("longitude", longitude);
+			body.put("latitude", latitude);
 			body.put("type", type);
 			body.put("keyword", keyword);
 			body.put("start", start);
@@ -93,7 +93,7 @@ public class HomeRequest  extends BaseNetWork {
 	  * @params:@param start
 	  * @params:@param end
 	  */
-		public void requestWeiqianList(TaskListenerWithState mHttpTaskListener,Context context,int type, String keyword, int start, int end)
+		public void requestWeiqianList(TaskListenerWithState mHttpTaskListener,Context context,int type, String keyword, int start, int end,double longitude,double latitude)
 		{
 			setMessageType(40003);
 			JSONObject body = new JSONObject();
@@ -102,6 +102,8 @@ public class HomeRequest  extends BaseNetWork {
 				body.put("keyword", keyword);
 				body.put("start", start);
 				body.put("end", end);
+				body.put("longitude", longitude);
+				body.put("latitude", latitude);
 			} catch (JSONException e)
 			{
 				e.printStackTrace();

@@ -298,7 +298,8 @@ public class FriendListFragment extends BaseFragment implements TaskListenerWith
 		Collections.sort(contactList, new Comparator<FriendBean>() {
 			@Override
 			public int compare(FriendBean lhs, FriendBean rhs) {
-				return lhs.getName().compareTo(rhs.getName());
+				//return lhs.getName().compareTo(rhs.getName());
+				return lhs.getHeader().compareTo(rhs.getHeader()); //根据头字母来排序
 			}
 		});
 		// 把"申请与通知"添加到首位

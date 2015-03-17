@@ -35,6 +35,31 @@ import com.bgood.xn.R;
 public class ToolUtils {
 	
 	
+	/**
+	 * 
+	 * @todo:距离换算
+	 * @date:2015-3-17 下午5:32:40
+	 * @author:hg_liuzl@163.com
+	 * @params:@param distance
+	 * @params:@return
+	 */
+	public static String formatDistance(String mDistance) {
+		
+		if(TextUtils.isEmpty(mDistance)){
+			return "火星";
+		}
+		
+		double distance = Double.valueOf(mDistance);
+		StringBuilder sb = new StringBuilder();
+		if(distance>=1000){
+			sb.append(Math.round(distance/100d)/10d);
+			sb.append("km");
+		}else{
+			sb.append((int)(distance+0.5));
+			sb.append("m");
+		}
+		return sb.toString();
+	}
 
 	/**
 	 * 

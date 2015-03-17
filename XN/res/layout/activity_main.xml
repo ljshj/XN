@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+<TabHost 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:markimgbar="http://schemas.android.com/apk/res/com.bgood.xn"
     android:id="@android:id/tabhost"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
@@ -66,67 +68,55 @@
         
         
          <LinearLayout 
-      android:layout_width="0dp"
-      android:layout_weight="1"
-      android:layout_height="40dp"
-      android:background="@drawable/img_message_main_select_bg"
-      android:divider="@drawable/img_common_ll_divider"
-      android:orientation="horizontal"
-      android:showDividers="middle"
-      >
+       		android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:gravity="center_vertical"
+            android:background="@drawable/img_menu_bottom_title_bar"
+            android:orientation="horizontal">
       
         
-          <com.bgood.xn.view.MarkRadioButton
-			android:id="@+id/message_main_tab_messagecenter"
-			android:background="@drawable/bg_home_radiobutton_bg"
-		    android:layout_width="0dp"
-	        android:layout_weight="1"
-	        android:layout_height="match_parent"
-	        android:gravity="center"
-	        android:checked="true"
-	        android:onClick="onTabClicked"
-			markbar:markname = "@string/title_msg"
-			markbar:markcount = "@string/txt_count"
-      		></com.bgood.xn.view.MarkRadioButton>
+          <com.bgood.xn.view.MarkImgRadioButton
+				android:id="@+id/main_tab_home"
+				style="@style/radio_tab_style"
+				markimgbar:mibicon="@drawable/bg_checkbox_icon_menu_home"
+				markimgbar:mibkname="@string/main_title_home"
+				markimgbar:mibkcount="@string/main_title_count"
+      		/>
           
-            <com.bgood.xn.view.MarkRadioButton
-				android:id="@+id/message_main_tab_friend"
-				android:background="@drawable/bg_home_radiobutton_bg"
-			    android:layout_width="0dp"
-		        android:layout_weight="1"
-		        android:layout_height="match_parent"
-		        android:gravity="center"
-		        android:onClick="onTabClicked"
-				markbar:markname = "@string/title_friend"
-				markbar:markcount = "@string/txt_count"
-     		 ></com.bgood.xn.view.MarkRadioButton>
+            <com.bgood.xn.view.MarkImgRadioButton
+				android:id="@+id/main_tab_communication"
+				style="@style/radio_tab_style"
+				markimgbar:mibicon="@drawable/bg_checkbox_icon_menu_communication"
+				markimgbar:mibkname="@string/main_title_contact"
+				markimgbar:mibkcount="@string/main_title_count"
+     		 />
             
-              <com.bgood.xn.view.MarkRadioButton
-				android:id="@+id/message_main_tab_group"
-				android:background="@drawable/bg_home_radiobutton_bg"
-			    android:layout_width="0dp"
-		        android:layout_weight="1"
-		        android:layout_height="match_parent"
-		        android:gravity="center"
-		        android:onClick="onTabClicked"
-				markbar:markname = "@string/title_group"
-				markbar:markcount = "@string/txt_count"
-     		></com.bgood.xn.view.MarkRadioButton>
+             <com.bgood.xn.view.MarkImgRadioButton
+				android:id="@+id/main_tab_weiqiang"
+				style="@style/radio_tab_style"
+				markimgbar:mibicon="@drawable/bg_checkbox_icon_menu_weiqiang"
+				markimgbar:mibkname="@string/main_title_weiqiang"
+				markimgbar:mibkcount="@string/main_title_count"
+     		/>
       
       
   
-			  <com.bgood.xn.view.MarkRadioButton
-				android:id="@+id/message_main_tab_communication_hall"
-				android:background="@drawable/bg_home_radiobutton_bg"
-			    android:layout_width="0dp"
-		        android:layout_weight="1"
-		        android:layout_height="match_parent"
-		        android:gravity="center"
-		        android:onClick="onTabClicked"
-				markbar:markname = "@string/title_communicate"
-				markbar:markcount = "@string/txt_count"
-		      ></com.bgood.xn.view.MarkRadioButton>
+			  <com.bgood.xn.view.MarkImgRadioButton
+				android:id="@+id/main_tab_xuanneng"
+				style="@style/radio_tab_style"
+			    markimgbar:mibicon="@drawable/bg_checkbox_icon_menu_xuanneng"
+				markimgbar:mibkname="@string/main_title_show"
+				markimgbar:mibkcount="@string/main_title_count"
+		      />
 			  
+			   <com.bgood.xn.view.MarkImgRadioButton
+				android:id="@+id/main_tab_me"
+				style="@style/radio_tab_style"
+			    markimgbar:mibicon="@drawable/bg_checkbox_icon_menu_me"
+				markimgbar:mibkname="@string/main_title_me"
+				markimgbar:mibkcount="@string/main_title_count"
+		      />
         
   </LinearLayout>
         

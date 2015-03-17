@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -52,6 +53,8 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 	/**最大 的炫能ID*/
 	private int maxxnid = 0;
 	
+	private ImageView ivNodata;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -88,7 +91,11 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 			jokeBeans.addAll(jokes);
 			mCurrentJoke = jokeBeans.get(0);
 			adapter.notifyDataSetChanged();
+			ivNodata.setVisibility(View.GONE);
+			mTitleBar.rightBtn.setVisibility(View.VISIBLE);
 		}else{
+			mTitleBar.rightBtn.setVisibility(View.GONE);
+			ivNodata.setVisibility(View.VISIBLE);
 			BToast.show(mActivity, "暂无可审核内容");
 		}
 	}
@@ -107,9 +114,11 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 		mTitleBar.rightBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				BToast.show(mActivity, "举报");
+				doCheckState(JokeBean.JOKE_REPORT);
 			}
 		});
+		
+		ivNodata = (ImageView) findViewById(R.id.iv_no_data);
 		findViewById(R.id.av_disagree).setOnClickListener(this);
 		findViewById(R.id.av_agree).setOnClickListener(this);
 		findViewById(R.id.av_create).setOnClickListener(this);
@@ -243,9 +252,9 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 					dealData(response.jokes);
 				}
 				break;
-			case 870021:	//审核
-				if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
-					BToast.show(mActivity, "审核成功");
+			case 870021:	//不审核，审核，原创，举报
+				if (bNetWork.getReturnCode() != ReturnCode.RETURNCODE_OK) {
+					BToast.show(mActivity, "操作失败");
 				}
 				break;
 			default:
