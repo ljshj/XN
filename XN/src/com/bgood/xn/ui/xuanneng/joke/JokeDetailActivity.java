@@ -70,7 +70,7 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 	private XListView listview;
 	
 	public LinearLayout llTransArea;
-	public ImageView ivAuthorImg,ivDelete;
+	public ImageView ivAuthorImg,ivDelete,ivOriginal;
 	public TextView tvAuthorName,tvDistance;
 	public TextView tvTime;
 	public TextView tvOldAuthorName;
@@ -134,6 +134,9 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 	   	View head_weiqiang_detail = inflater.inflate(R.layout.weiqiang_item_layout, listview, false);
 		ivAuthorImg = (ImageView) head_weiqiang_detail.findViewById(R.id.iv_img);
 		tvAuthorName = (TextView) head_weiqiang_detail.findViewById(R.id.tv_nick);
+		ivOriginal = (ImageView) head_weiqiang_detail.findViewById(R.id.iv_original);
+		
+		
 		tvDistance = (TextView) head_weiqiang_detail.findViewById(R.id.tv_distance);
 		
 		
@@ -226,6 +229,8 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 		tvOldAuthorName.setOnClickListener(new ShowNameCardListener(mJokeBean,mActivity));
 		
 		tvAuthorName.setText(jBean.username);
+		
+		ivOriginal.setVisibility(jBean.yuanchuang == 0?View.GONE:View.VISIBLE);
 		
 		tvDistance.setVisibility(View.VISIBLE);
 		tvDistance.setText(ToolUtils.formatDistance(jBean.distance));

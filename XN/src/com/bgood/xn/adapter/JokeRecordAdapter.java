@@ -152,8 +152,7 @@ public class JokeRecordAdapter extends KBaseAdapter
 		
 		//显示是否为原创的icon
 		
-		//holder.ivOriginal.setVisibility(jokeBean.original == 0?View.GONE:View.VISIBLE);
-		holder.ivOriginal.setVisibility(position % 2 ==0?View.GONE:View.VISIBLE);
+		holder.ivOriginal.setVisibility(jokeBean.yuanchuang == 0?View.GONE:View.VISIBLE);
 		
 		
 		if(!TextUtils.isEmpty(jokeBean.fromname)){	//如果转发人存在

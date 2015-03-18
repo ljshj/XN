@@ -105,8 +105,7 @@ public class JokeAdapter extends KBaseAdapter
 //		}
 		
 		//显示是否为原创的icon
-		//holder.ivOriginal.setVisibility(jokeBean.original == 0 ? View.GONE:View.VISIBLE);
-		holder.ivOriginal.setVisibility(position % 2 == 0 ? View.GONE:View.VISIBLE);
+		holder.ivOriginal.setVisibility(jokeBean.yuanchuang == 0 ? View.GONE:View.VISIBLE);
 		
 		if(!TextUtils.isEmpty(BGApp.mUserId)&& BGApp.mUserId.equals(String.valueOf(jokeBean.userid))){
 			holder.ivDelete.setVisibility(View.VISIBLE);

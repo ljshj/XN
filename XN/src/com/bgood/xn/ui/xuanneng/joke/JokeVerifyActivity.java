@@ -10,11 +10,19 @@ import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.view.animation.AnimationUtils;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
@@ -31,6 +39,7 @@ import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.user.info.NameCardActivity;
 import com.bgood.xn.ui.xuanneng.XuanNengMainActivity;
+import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.NoScrollViewPager;
 import com.bgood.xn.widget.TitleBar;
@@ -40,12 +49,11 @@ import com.bgood.xn.widget.TitleBar;
  * @date:2015-3-10 上午9:51:17
  * @author:hg_liuzl@163.com
  */
-public class JokeVerifyActivity extends BaseActivity implements OnClickListener,TaskListenerWithState{
+public class JokeVerifyActivity extends BaseActivity implements OnClickListener,OnGestureListener,TaskListenerWithState{
 	
+	private GestureDetector detector;
+	private ViewFlipper flipper;
 	private TitleBar mTitleBar;
-	private NoScrollViewPager paper;
-	private ContentAdapter adapter;
-	private List<View> lists = new ArrayList<View>();
 	private List<JokeBean> jokeBeans = new ArrayList<JokeBean>();
 	private JokeBean mCurrentJoke;
 	/**起始页**/
@@ -54,6 +62,9 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 	private int maxxnid = 0;
 	
 	private ImageView ivNodata;
+	
+	/**对页数进行计数,也从0开始计数,对应集合索引**/
+	private int count = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +75,19 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 		doRequestData();
 	}
 	
-	
 	@Override
 	protected void onStop() {
 		super.onStop();
 		pUitl.setUnCheckJokeMaxID(maxxnid);
+	}
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		return this.detector.onTouchEvent(event); 
+	}
+	
+	private View addView() {
+		return inflater.inflate(R.layout.item_joke_verify, null);
 	}
 	
 	/**
@@ -78,19 +97,18 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 	 * @author:hg_liuzl@163.com
 	 * @params:
 	 */
-	private void dealData(List<JokeBean> jokes) {
-		if(null!=jokes && jokes.size()>0){
-			lists.clear();
-			jokeBeans.clear();
-			for (JokeBean joke : jokes) {
+	private void dealData() {
+		if(null!=jokeBeans && jokeBeans.size()>0){
+			for (JokeBean joke : jokeBeans) {
 				View v = addView();
 				TextView tv = (TextView) v.findViewById(R.id.tv_content);
 				tv.setText(joke.content);
-				lists.add(v);
+				GridView gv = (GridView) v.findViewById(R.id.gv_show_img);
+				ImgUtils.showImgs(joke.imgs,gv,mActivity);
+				flipper.addView(v, new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 			}
-			jokeBeans.addAll(jokes);
 			mCurrentJoke = jokeBeans.get(0);
-			adapter.notifyDataSetChanged();
+			maxxnid = Integer.valueOf(mCurrentJoke.jokeid);
 			ivNodata.setVisibility(View.GONE);
 			mTitleBar.rightBtn.setVisibility(View.VISIBLE);
 		}else{
@@ -99,8 +117,6 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 			BToast.show(mActivity, "暂无可审核内容");
 		}
 	}
-	
-	
 	/**
 	 * 
 	 * @todo:初始化控件
@@ -115,14 +131,18 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 			@Override
 			public void onClick(View arg0) {
 				doCheckState(JokeBean.JOKE_REPORT);
+				showNextPage();
 			}
 		});
+		
+		flipper = (ViewFlipper) findViewById(R.id.paper_content);
+		detector = new GestureDetector(this);
 		
 		ivNodata = (ImageView) findViewById(R.id.iv_no_data);
 		findViewById(R.id.av_disagree).setOnClickListener(this);
 		findViewById(R.id.av_agree).setOnClickListener(this);
 		findViewById(R.id.av_create).setOnClickListener(this);
-		initPaper();
+		
 	}
 
 	@Override
@@ -140,8 +160,29 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 		default:
 			break;
 		}
+		showNextPage();
 	}
 	
+	/**
+	 * 
+	 * @todo:是否需要加载数据
+	 * @date:2015-3-18 下午5:07:05
+	 * @author:hg_liuzl@163.com
+	 * @params:
+	 */
+	private void showNextPage() {
+		if(count >= jokeBeans.size()-1){
+			count = 0;
+			doRequestData();
+		}else{
+			count++;
+			mCurrentJoke = jokeBeans.get(count);
+			maxxnid = Integer.valueOf(mCurrentJoke.jokeid);
+			this.flipper.showNext();
+		}
+	}
+	
+
 	/**
 	 * 
 	 * @todo:审核操作
@@ -162,82 +203,6 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 	 */
 	private void doRequestData() {
 		XuannengRequest.getInstance().requestXuanUnCheckList(this, this, XuanNengMainActivity.XUANNENG_JOKE,JokeBean.JOKE_UN_VERIFY, mStartSize, mStartSize+PAGE_SIZE_ADD,maxxnid);
-
-	}
-	
-	private void initPaper() {
-		paper = (NoScrollViewPager) findViewById(R.id.paper_content);
-		paper.setNoScroll(false);
-		adapter = new ContentAdapter(lists);
-		paper.setAdapter(adapter);
-		paper.setOnPageChangeListener(new OnPageChangeListener() {
-			
-			@Override
-			public void onPageSelected(int position) {
-				if (position > lists.size()-1) {//到了最后一个的时候，再重新加载数据
-					doRequestData();
-				}else{
-					mCurrentJoke = jokeBeans.get(position);
-					if(Integer.valueOf(mCurrentJoke.jokeid) >=maxxnid){
-						maxxnid = Integer.valueOf(mCurrentJoke.jokeid);
-					}
-				}
-			}
-			
-			@Override
-			public void onPageScrolled(int arg0, float arg1, int arg2) {
-				
-			}
-			
-			@Override
-			public void onPageScrollStateChanged(int state) {
-				
-			}
-		});
-		
-	}
-	
-	private View addView() {
-		return inflater.inflate(R.layout.item_joke_verify, null);
-	}
-	
-	class ContentAdapter extends PagerAdapter{
-		public List<View> mListViews;
-
-		public ContentAdapter(List<View> mListViews) {
-			this.mListViews = mListViews;
-		}
-
-		@Override
-		public void destroyItem(View arg0, int arg1, Object arg2) {
-			((ViewPager) arg0).removeView(mListViews.get(arg1));
-		}
-
-
-		@Override
-		public Object instantiateItem(View arg0, int arg1) {
-			((ViewPager) arg0).addView(mListViews.get(arg1), 0);
-			return mListViews.get(arg1);
-		}
-
-		@Override
-		public boolean isViewFromObject(View arg0, Object arg1) {
-			return arg0 == (arg1);
-		}
-
-		@Override
-		public void restoreState(Parcelable arg0, ClassLoader arg1) {
-		}
-
-		@Override
-		public int getCount() {
-			return mListViews.size();
-		}
-		
-		@Override
-		public void setPrimaryItem(ViewGroup container, int position,Object object) {
-			super.setPrimaryItem(container, position, object);
-		}
 	}
 
 	@Override
@@ -249,7 +214,9 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 			case 870022:
 				if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
 					JokeResponse response = JSON.parseObject(strJson, JokeResponse.class);
-					dealData(response.jokes);
+					jokeBeans.clear();
+					jokeBeans.addAll(response.jokes);
+					dealData();
 				}
 				break;
 			case 870021:	//不审核，审核，原创，举报
@@ -273,5 +240,47 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 	public static void doVerifyJoke(Activity activity){
 		 Intent intent = new Intent(activity, JokeVerifyActivity.class);
          activity.startActivity(intent);
+	}
+
+
+	@Override
+	public boolean onDown(MotionEvent arg0) {
+		return false;
+	}
+
+
+	@Override
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,float arg3) {
+		
+		if ((e1.getX() - e2.getX() > 50)) {	//向左滑动距离大于50就进入下一页
+				this.flipper.setInAnimation(AnimationUtils.loadAnimation(this,R.anim.animation_right_in));
+				this.flipper.setOutAnimation(AnimationUtils.loadAnimation(this,R.anim.animation_left_out));
+				showNextPage();
+				
+			return true;
+		} 
+		return false;
+	}
+
+
+	@Override
+	public void onLongPress(MotionEvent arg0) {
+	}
+
+
+	@Override
+	public boolean onScroll(MotionEvent arg0, MotionEvent arg1, float arg2,float arg3) {
+		return false;
+	}
+
+
+	@Override
+	public void onShowPress(MotionEvent arg0) {
+	}
+
+
+	@Override
+	public boolean onSingleTapUp(MotionEvent arg0) {
+		return false;
 	}
 }

@@ -3,6 +3,5 @@
    xmlns:android="http://schemas.android.com/apk/res/android"
    android:id="@+id/xlv_sapce"
    style="@style/common_listview"
-   android:dividerHeight="8dp"
-   >
+   android:dividerHeight="8dp">
 </com.bgood.xn.view.xlistview.XListView>

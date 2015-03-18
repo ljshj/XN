@@ -30,6 +30,7 @@ public class JokeCorattionBean {
 		public String fromname;
 		public String opertime;
 		public String comments;
+		public int yuanchuang;
 		
 		public String getPhoto() {
 			return SystemConfig.FILE_SERVER + photo;

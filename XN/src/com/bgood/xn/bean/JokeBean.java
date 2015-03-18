@@ -63,7 +63,7 @@ public class JokeBean implements Serializable {
 	public String remark;	/**审核备注*/
 	public int status;		/**1，审核中 2.未通过审核***/
 	public int paihang;	// 榜单排行
-	public int original;	/***0非原创，1原创*****/
+	public int yuanchuang;	/***0非原创，1原创*****/
 	
 	/**操作
 	 * 转发，还是评论
@@ -90,6 +90,7 @@ public class JokeBean implements Serializable {
 		wbean.share_count =bean.share_count;
 		wbean.type = bean.type;
 		wbean.imgs = bean.imgs;
+		wbean.yuanchuang = bean.yuanchuang;
 		//wbean.Comments;
 		return wbean;
 	}

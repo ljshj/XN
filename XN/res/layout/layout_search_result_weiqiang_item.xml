@@ -83,9 +83,9 @@
         </LinearLayout>
     </LinearLayout>
 
-    <View
+    <!-- <View
         android:layout_width="fill_parent"
         android:layout_height="1px"
-        android:background="@drawable/img_search_x_line" />
+        android:background="@drawable/img_search_x_line" /> -->
 
 </LinearLayout>

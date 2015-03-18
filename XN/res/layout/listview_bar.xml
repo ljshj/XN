@@ -4,5 +4,6 @@
     android:id="@+id/xlv_spaceless"
     style="@style/common_listview"
     android:divider="@color/gray"
-    android:dividerHeight="@dimen/divierHeight" >
+    android:dividerHeight="@dimen/divierHeight" 
+    >
 </com.bgood.xn.view.xlistview.XListView>
