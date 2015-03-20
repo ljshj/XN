@@ -161,6 +161,8 @@ public class ProductAddActivity extends BaseActivity implements OnClickListener,
             BToast.show(mActivity, "请输入产品名称");
             return;
         }else{
+        	
+        	MobclickAgent.onEvent(this,"me_add_product_click");
         	m_recommend = m_recommendCb.isChecked()?1:0;
         	m_ProductBean.img = img;
         	m_ProductBean.img_thum = img_thumb;

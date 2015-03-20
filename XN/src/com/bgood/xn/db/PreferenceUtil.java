@@ -65,6 +65,16 @@ public class PreferenceUtil {
 	public static String BS_SERVER = null;
 	
 	
+	/**获取历史版本号**/
+	public void setHistoryVersion(String version) {
+		editor.putString("app_version", version);
+		editor.commit();
+	}
+
+	public String getHistoryVersion() {
+		return sp.getString("app_version", "");
+	}
+	
 	/**设置是否展示微墙页**/
 	public void setShowWelcomePage(boolean isShow) {
 		editor.putBoolean("welcome_show", isShow);

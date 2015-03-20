@@ -114,8 +114,8 @@ public class JokeRecordAdapter extends KBaseAdapter
 		holder.tvAuthorName.setText(jokeBean.username);
 		holder.tvAuthorName.setOnClickListener(new ShowNameCardListener(jokeBean,mActivity));
 		
-		holder.tvDistance.setVisibility(View.VISIBLE);
-		holder.tvDistance.setText(ToolUtils.formatDistance(jokeBean.distance));
+//		holder.tvDistance.setVisibility(View.VISIBLE);
+//		holder.tvDistance.setText(ToolUtils.formatDistance(jokeBean.distance));
 		
 		holder.tvTime.setText(ToolUtils.getFormatDate(jokeBean.date_time));
 		

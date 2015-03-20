@@ -359,7 +359,7 @@ public class XuannengRequest extends BaseNetWork {
 		 * @params:@param itemId 炫能ID
 		 * @params:@param type 0，不审核；1审核
 		 */
-			 public void requestXuanCheck(TaskListenerWithState mHttpTaskListener,Context context,String itemId,int type,boolean showLoading){
+			 public void requestXuanCheck(TaskListenerWithState mHttpTaskListener,Context context,String itemId,String type,boolean showLoading){
 			 	setMessageType(70021);
 				JSONObject body = new JSONObject();
 				try {

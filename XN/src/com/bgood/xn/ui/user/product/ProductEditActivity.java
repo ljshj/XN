@@ -191,6 +191,7 @@ public class ProductEditActivity extends BaseActivity implements OnClickListener
             BToast.show(mActivity, "请输入产品名称");
             return;
         }else{
+        	MobclickAgent.onEvent(this,"me_edit_product_click");
         	m_ProductBean.img = img;
         	m_ProductBean.img_thum = img_thumb;
         	m_ProductBean.product_name = productName;

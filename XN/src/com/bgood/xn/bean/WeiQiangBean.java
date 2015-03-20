@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.system.Const;
 import com.bgood.xn.system.SystemConfig;
+import com.bgood.xn.ui.xuanneng.XuanNengMainActivity;
+import com.bgood.xn.utils.ShareUtils;
 
 /**
  * @todo:微墙类
@@ -13,6 +16,12 @@ import com.bgood.xn.system.SystemConfig;
  */
 public class WeiQiangBean implements Serializable {
 
+	
+	/**
+	 * 分享的地址
+	 */
+	public static final String SHARE_URL = "http://www.showneng.com/wqshare.aspx?wbid=";
+	
 	public static final int WEIQIANG_FIND = 0;
 	public static final int WEIQIANG_ATTENTION = 1;
 	public static final int WEIQIANG_ALL = 2;
@@ -86,6 +95,20 @@ public class WeiQiangBean implements Serializable {
 		return distance;
 	}
 	
+	public String getShareUrl(){
+		return String.format(Const.SHARE_URL, weiboid,"wq");
+	}
+	
+	/**
+	 * 
+	 * @todo:内容分享
+	 * @date:2015-3-20 上午10:34:23
+	 * @author:hg_liuzl@163.com
+	 * @params:@param share
+	 */
+	public void doShare(ShareUtils share){
+		share.setShareContent(content, imgs.size() > 0 ? imgs.get(0).getImg_thum():null,getShareUrl());
+	}
 }
 
 

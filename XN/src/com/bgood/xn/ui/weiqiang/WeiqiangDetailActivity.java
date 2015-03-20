@@ -245,6 +245,10 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
     public void onClick(View v)
     {
     	
+    	if (v.getId() == R.id.ll_share) {
+        	MobclickAgent.onEvent(mActivity,"weiqiang_info_share_click");
+        	weiqiangBean.doShare(share);
+		}else{
     	if(!BGApp.isUserLogin){
 			LoginActivity.doLoginAction(this);
 		}else{
@@ -267,18 +271,19 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	            	type = WeiqiangActionType.TRANSPOND;
 	            	createSendDialog("");
 	                break;
-	            // 分享
-	            case R.id.av_share:
-	    			share.setShareContent(weiqiangBean.content, weiqiangBean.imgs.size() > 0 ? weiqiangBean.imgs.get(0).img:null);
-	    			WeiqiangRequest.getInstance().requestWeiqiangShare(this, mActivity, weiqiangBean.weiboid);
-	                break;
-	            case R.id.ll_share:	//分享
-	            	MobclickAgent.onEvent(mActivity,"weiqiang_info_share_click");
-	            	share.setShareContent(weiqiangBean.content, weiqiangBean.imgs.size() > 0 ? weiqiangBean.imgs.get(0).img:null);
-	            	break;
+//	            // 分享
+//	            case R.id.av_share:
+//	    			//share.setShareContent(weiqiangBean.content, weiqiangBean.imgs.size() > 0 ? weiqiangBean.imgs.get(0).img:null);
+//	    			WeiqiangRequest.getInstance().requestWeiqiangShare(this, mActivity, weiqiangBean.weiboid);
+//	                break;
+//	            case R.id.ll_share:	//分享
+//	            	MobclickAgent.onEvent(mActivity,"weiqiang_info_share_click");
+//	            	//share.setShareContent(weiqiangBean.content, weiqiangBean.imgs.size() > 0 ? weiqiangBean.imgs.get(0).img:null);
+//	            	weiqiangBean.doShare(share);
+//	            	break;
 	            default:
 	                break;
-	        }
+	        }}
        }
     }
     

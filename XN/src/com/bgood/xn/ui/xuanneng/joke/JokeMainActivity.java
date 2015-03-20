@@ -20,6 +20,7 @@ import com.bgood.xn.R;
 import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.user.account.LoginActivity;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * @todo:炫能主页
@@ -61,9 +62,9 @@ public class JokeMainActivity extends TabActivity implements OnCheckedChangeList
 		spec = tabHost.newTabSpec("随机").setIndicator("随机").setContent(intent);
 		tabHost.addTab(spec);
 		
-		intent = new Intent().setClass(this, JokeRankActivity.class);
-		spec = tabHost.newTabSpec("排行").setIndicator("排行").setContent(intent);
-		tabHost.addTab(spec);
+//		intent = new Intent().setClass(this, JokeRankActivity.class);
+//		spec = tabHost.newTabSpec("排行").setIndicator("排行").setContent(intent);
+//		tabHost.addTab(spec);
 		
 		intent = new Intent().setClass(this, JokeRecordActivity.class);
 		spec = tabHost.newTabSpec("榜单").setIndicator("榜单").setContent(intent);
@@ -89,15 +90,20 @@ public class JokeMainActivity extends TabActivity implements OnCheckedChangeList
 		
 		case R.id.xuanneng_humor_tab_order:
 			tabHost.setCurrentTabByTag("最新");
+			MobclickAgent.onEvent(this,"xuanneng_joke_order_click");
 			break;
 		case R.id.xuanneng_humor_tab_random:
 			tabHost.setCurrentTabByTag("随机");
+			MobclickAgent.onEvent(this,"xuanneng_joke_radom_click");
+			
 			break;
 		case R.id.xuanneng_humor_tab_ranking:
 			tabHost.setCurrentTabByTag("排行");
+			MobclickAgent.onEvent(this,"xuanneng_joke_rank_click");
 			break;
 		case R.id.xuanneng_humor_tab_record:
 			tabHost.setCurrentTabByTag("榜单");
+			MobclickAgent.onEvent(this,"xuanneng_joke_record_click");
 			break;
 		}
 
@@ -124,17 +130,20 @@ public class JokeMainActivity extends TabActivity implements OnCheckedChangeList
 		case R.id.tv_joke_publish:	/**投稿**/
 			dissmissPopupMore();
 			intent = new Intent(this, JokePublishActivity.class);
+			MobclickAgent.onEvent(this,"xuanneng_joke_publish_click");
 			startActivity(intent);
 			break;
 		case R.id.tv_joke_mention:/**提到我的*/
 			dissmissPopupMore();
 			intent = new Intent(this, JokeMentionActivity.class);
+			MobclickAgent.onEvent(this,"xuanneng_joke_mention_click");
 			startActivity(intent);
 			break;
 		case R.id.tv_joke_me:/**我的幽默秀*/
 			dissmissPopupMore();
 			intent = new Intent(this, JokeMeActivity.class);
 			intent.putExtra(UserInfoBean.KEY_USER_ID, BGApp.mUserId);
+			MobclickAgent.onEvent(this,"xuanneng_joke_me_click");
 			startActivity(intent);
 			break;
 		}

@@ -102,6 +102,8 @@ public class ProductCommentActivity extends BaseActivity implements TaskListener
     		 BToast.show(mActivity, "请输入您的评论!");
              return;
     	}
+    	
+    	MobclickAgent.onEvent(this,"me_comment_product_click");
     	ProductRequest.getInstance().requestProductComment(this, this, product_id, mContent);
 	}
    

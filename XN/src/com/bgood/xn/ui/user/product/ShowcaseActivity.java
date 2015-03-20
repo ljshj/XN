@@ -195,6 +195,9 @@ public class ShowcaseActivity extends CBaseSlidingMenu implements OnClickListene
 			@Override
 			public boolean onEditorAction(TextView tv, int actionId, KeyEvent arg2) {
 				if(actionId == EditorInfo.IME_ACTION_SEARCH){
+					
+					MobclickAgent.onEvent(ShowcaseActivity.this,"me_search_product_click");
+					
 					String searchContent = m_searchEt.getText().toString().trim();
                     Intent intent = new Intent(ShowcaseActivity.this, ProductListActivity.class);
                     intent.putExtra("content", searchContent);

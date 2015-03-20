@@ -106,46 +106,55 @@ public class JokeOrderActivity extends BaseShowDataActivity implements OnItemCli
 	@Override
 	public void onClick(View v)
 	{
-		
-		if(!BGApp.isUserLogin){
-			LoginActivity.doLoginAction(this);
-		}else{
-		
 		JokeBean jBean = null;
-		switch (v.getId())
-		{
-		case R.id.av_zan:	//赞
-			jBean = (JokeBean) v.getTag();
-			mActionJoke = jBean;
-			XuannengRequest.getInstance().requestXuanZan(this, mActivity, jBean.jokeid);
-			break;
-		case R.id.av_reply:	//评论
-			jBean = (JokeBean) v.getTag();
-			mActionJoke = jBean;
-			type = JokeActionType.RESPONSE;
-			createSendDialog();
-			break;
-		case R.id.av_transpont:	//转发
-			jBean = (JokeBean) v.getTag();
-			mActionJoke = jBean;
-			type = JokeActionType.TRANSPOND;
-			createSendDialog();
-			break;
-		case R.id.av_share:	//分享
-			jBean = (JokeBean) v.getTag();
-			mActionJoke = jBean;
-			share.setShareContent(jBean.content, jBean.imgs.size() > 0 ? jBean.imgs.get(0).img:null);
-			XuannengRequest.getInstance().requestXuanShare(this, mActivity, jBean.jokeid);
-			break;
-		case R.id.ll_share:	//分享
-			jBean = (JokeBean) v.getTag();
-			mActionJoke = jBean;
-			share.setShareContent(jBean.content, jBean.imgs.size() > 0 ? jBean.imgs.get(0).img:null);
-			break;
-		case R.id.iv_joke_verify:	//审核
+		if (v.getId() == R.id.iv_joke_verify) { // 审核不需要登录
+			MobclickAgent.onEvent(this, "xuanneng_joke_verify_click");
 			JokeVerifyActivity.doVerifyJoke(mActivity);
-			break;
-		}}
+		} else if (v.getId() == R.id.ll_share) {
+			MobclickAgent.onEvent(this, "xuanneng_joke_share_click");
+			jBean = (JokeBean) v.getTag();
+			mActionJoke = jBean;
+			jBean.doShare(share);
+		} else {
+			if (!BGApp.isUserLogin) {
+				LoginActivity.doLoginAction(this);
+			} else {
+				switch (v.getId()) {
+				case R.id.av_zan: // 赞
+					MobclickAgent.onEvent(this, "xuanneng_joke_zan_click");
+					jBean = (JokeBean) v.getTag();
+					mActionJoke = jBean;
+					XuannengRequest.getInstance().requestXuanZan(this,mActivity, jBean.jokeid);
+					break;
+				case R.id.av_reply: // 评论
+					MobclickAgent.onEvent(this, "xuanneng_joke_reply_click");
+					jBean = (JokeBean) v.getTag();
+					mActionJoke = jBean;
+					type = JokeActionType.RESPONSE;
+					createSendDialog();
+					break;
+				case R.id.av_transpont: // 转发
+					MobclickAgent
+							.onEvent(this, "xuanneng_joke_transpond_click");
+					jBean = (JokeBean) v.getTag();
+					mActionJoke = jBean;
+					type = JokeActionType.TRANSPOND;
+					createSendDialog();
+					break;
+				/*
+				 * case R.id.av_share: //分享
+				 * MobclickAgent.onEvent(this,"xuanneng_joke_share_click");
+				 * jBean = (JokeBean) v.getTag(); mActionJoke = jBean;
+				 * jBean.doShare(share);
+				 * XuannengRequest.getInstance().requestXuanShare(this,
+				 * mActivity, jBean.jokeid); break; case R.id.ll_share: //分享
+				 * MobclickAgent.onEvent(this,"xuanneng_joke_share_click");
+				 * jBean = (JokeBean) v.getTag(); mActionJoke = jBean;
+				 * jBean.doShare(share); break;
+				 */
+				}
+			}
+		}
 	}
 	
 	
@@ -271,6 +280,7 @@ public class JokeOrderActivity extends BaseShowDataActivity implements OnItemCli
 	public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3) {
 		final JokeBean joke = (JokeBean) adapter.getAdapter().getItem(position);
 		if(null!=joke){
+			MobclickAgent.onEvent(this,"xuanneng_joke_detail_click");
 	        Intent intent = new Intent(mActivity, JokeDetailActivity.class);
 	        intent.putExtra(JokeBean.JOKE_BEAN, joke);
 	        startActivity(intent);

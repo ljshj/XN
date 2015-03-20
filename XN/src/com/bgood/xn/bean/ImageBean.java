@@ -2,6 +2,8 @@ package com.bgood.xn.bean;
 
 import java.io.Serializable;
 
+import android.text.TextUtils;
+
 import com.bgood.xn.system.SystemConfig;
 
 /**
@@ -32,4 +34,20 @@ public class ImageBean implements Serializable
 		this.img = img;
 		this.img_thum = img_thum;
 	}
+
+	
+	public String getImg() {
+    	if(!TextUtils.isEmpty(img) && !img.contains("http")){
+    		img = SystemConfig.FILE_SERVER+img;
+    	}
+		return img;
+	}
+
+	public String getImg_thum() {
+    	if(!TextUtils.isEmpty(img_thum) && !img_thum.contains("http")){
+    		img_thum = SystemConfig.FILE_SERVER+img_thum;
+    	}
+		return img_thum;
+	}
+	
 }

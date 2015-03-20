@@ -40,6 +40,7 @@
                 android:gravity="center"
 				actionbar:img = "@drawable/img_weiqiang_send_indicator"
 				actionbar:text = "@string/action_count"
+				android:visibility="gone"
 				>
 				
                  

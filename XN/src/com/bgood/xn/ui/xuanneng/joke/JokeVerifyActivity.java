@@ -43,6 +43,7 @@ import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.NoScrollViewPager;
 import com.bgood.xn.widget.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * @todo:幽默秀审核
@@ -73,6 +74,18 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 		maxxnid = pUitl.getUnCheckJokeMaxID();
 		initView();
 		doRequestData();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 	
 	@Override
@@ -160,7 +173,6 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 		default:
 			break;
 		}
-		showNextPage();
 	}
 	
 	/**
@@ -178,6 +190,8 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 			count++;
 			mCurrentJoke = jokeBeans.get(count);
 			maxxnid = Integer.valueOf(mCurrentJoke.jokeid);
+			this.flipper.setInAnimation(AnimationUtils.loadAnimation(this,R.anim.animation_right_in));
+			this.flipper.setOutAnimation(AnimationUtils.loadAnimation(this,R.anim.animation_left_out));
 			this.flipper.showNext();
 		}
 	}
@@ -191,7 +205,7 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 	 * @params:@param state
 	 */
 	private void doCheckState(int state) {
-		XuannengRequest.getInstance().requestXuanCheck(this, this, mCurrentJoke.jokeid, state,false);
+		XuannengRequest.getInstance().requestXuanCheck(this, this, mCurrentJoke.jokeid, String.valueOf(state),false);
 	}
 	
 	/**
@@ -220,7 +234,10 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 				}
 				break;
 			case 870021:	//不审核，审核，原创，举报
-				if (bNetWork.getReturnCode() != ReturnCode.RETURNCODE_OK) {
+				if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
+					BToast.show(mActivity, "操作成功");
+					showNextPage();
+				}else{
 					BToast.show(mActivity, "操作失败");
 				}
 				break;
@@ -253,10 +270,7 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,float arg3) {
 		
 		if ((e1.getX() - e2.getX() > 50)) {	//向左滑动距离大于50就进入下一页
-				this.flipper.setInAnimation(AnimationUtils.loadAnimation(this,R.anim.animation_right_in));
-				this.flipper.setOutAnimation(AnimationUtils.loadAnimation(this,R.anim.animation_left_out));
 				showNextPage();
-				
 			return true;
 		} 
 		return false;

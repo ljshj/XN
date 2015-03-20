@@ -7,6 +7,7 @@ import android.content.Context;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.http.HttpRequestAsyncTask;
 import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
+import com.bgood.xn.system.SystemConfig;
 import com.bgood.xn.system.SystemConfig.ServerType;
 import com.bgood.xn.utils.MD5;
 
@@ -206,6 +207,12 @@ public class UserCenterRequest extends BaseNetWork {
 	  * @params:@param value
 	  */
 	 public void requestUpdateLocation(TaskListenerWithState mHttpTaskListener,Context context,double longitude,double latitude){
+		 
+		 	//初始化的时候，业务服务器的地址可能为空，这里就不上传地址了
+		 	if(null == SystemConfig.BS_SERVER){
+		 		return;
+		 	}
+		 
 		 	setMessageType(20003);
 			JSONObject body = new JSONObject();
 			try {
@@ -215,7 +222,7 @@ public class UserCenterRequest extends BaseNetWork {
 				e.printStackTrace();
 			}
 			setBody(body);
-			new HttpRequestAsyncTask(ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
+			new HttpRequestAsyncTask(false,ServerType.BusinessServer,this, mHttpTaskListener, context).execute();
 		}
 	 
 	 /**

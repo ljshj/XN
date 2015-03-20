@@ -231,13 +231,19 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 	@Override
 	public void onClick(View v)
 	{
+		Intent intent = null;
+		WeiQiangBean wqb = null;
 		
+		if(v.getId() == R.id.ll_share){
+			MobclickAgent.onEvent(WeiqiangActivity.this,"weiqiang_share_click");
+			wqb = (WeiQiangBean) v.getTag();
+			mActionWeiqiang = wqb;
+			wqb.doShare(share);
+		}else{
 		if(!BGApp.isUserLogin){
 			LoginActivity.doLoginAction(this);
 		}else{
 		
-		Intent intent = null;
-		WeiQiangBean wqb = null;
 		switch (v.getId())
 		{
 		case R.id.layout_weiqiang_type_left_select:
@@ -296,20 +302,21 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 //			selectPosition(wqb);
 			createSendDialog();
 			break;
-		case R.id.av_share:	//分享
-			wqb = (WeiQiangBean) v.getTag();
-			mActionWeiqiang = wqb;
-			share.setShareContent(wqb.content, wqb.imgs.size() > 0 ? wqb.imgs.get(0).img:null);
-			WeiqiangRequest.getInstance().requestWeiqiangShare(this, this, wqb.weiboid);
-			break;
-		case R.id.ll_share:	//分享
-			MobclickAgent.onEvent(WeiqiangActivity.this,"weiqiang_share_click");
-			wqb = (WeiQiangBean) v.getTag();
-			mActionWeiqiang = wqb;
-			share.setShareContent(wqb.content, wqb.imgs.size() > 0 ? wqb.imgs.get(0).img:null);
-			break;
+//		case R.id.av_share:	//分享
+//			wqb = (WeiQiangBean) v.getTag();
+//			mActionWeiqiang = wqb;
+//			share.setShareContent(wqb.content, wqb.imgs.size() > 0 ? wqb.imgs.get(0).img:null);
+//			WeiqiangRequest.getInstance().requestWeiqiangShare(this, this, wqb.weiboid);
+//			break;
+//		case R.id.ll_share:	//分享
+//			MobclickAgent.onEvent(WeiqiangActivity.this,"weiqiang_share_click");
+//			wqb = (WeiQiangBean) v.getTag();
+//			mActionWeiqiang = wqb;
+//			//share.setShareContent(wqb.content, wqb.imgs.size() > 0 ? wqb.imgs.get(0).img:null);
+//			wqb.doShare(share);
+//			break;
 		}
-  	  }
+  	  }}
 	}
 	
 	

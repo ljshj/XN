@@ -21,7 +21,7 @@ import com.bgood.xn.view.BToast;
 import com.bgood.xn.view.LoadingProgress;
 
 public class HttpRequestAsyncTask extends AsyncTask<Void, Void,HttpResponseInfo > {
-	private String serverUrl = null;	//服务器地址
+	private String serverUrl = "";	//服务器地址
 	private HttpRequestInfo mRequest;
 	private TaskListenerWithState mListenerWithState;
 	private Context context;

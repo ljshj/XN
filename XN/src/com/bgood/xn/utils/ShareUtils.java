@@ -31,17 +31,15 @@ public class ShareUtils {
 	
 	
 	
-//	public static final String TENCENTWB_APP_KEY = "801551617";
-//	public static final String TENCENTWB_APP_SECRET = "5be3f0bb7f149080826b040ec1f23e9c";
+	public static final String TENCENTWB_APP_KEY = "801551617";
+	public static final String TENCENTWB_APP_SECRET = "5be3f0bb7f149080826b040ec1f23e9c";
 
-	public static final String SINAWB_APP_KEY = "2584417705";
-	public static final String SIANWB_APP_SECRET = "0ee4dc674882d8d3a53596dddba7a15b";
+	public static final String SINAWB_APP_KEY = "1431874026";
+	public static final String SIANWB_APP_SECRET = "8adeedd5cc28245824b2e03b126912d0";
 	
 	public static final String WX_APP_ID = "wx8fd7339391e0d06a";
 	public static final String WX_APP_SECRET = "a6cfc6406d9c31305c882f77b8aead65";
 	
-//	public static final String QQ_APP_ID = "1103507475";
-//	public static final String QQ_APP_KEY = "uQrjhyh93ifnPE0W";
 	
 	public static final String QQ_APP_ID = "1104200467";
 	public static final String QQ_APP_KEY = "FecuY1h9fM7kTxZN";
@@ -81,6 +79,7 @@ public class ShareUtils {
     private void configPlatforms() {
         // 添加新浪SSO授权
         mController.getConfig().setSsoHandler(new SinaSsoHandler());
+        mController.getConfig().setSinaCallbackUrl("http://www.showneng.com");
         // 添加腾讯微博SSO授权
         mController.getConfig().setSsoHandler(new TencentWBSsoHandler());
         // 添加QQ、QZone平台
@@ -94,8 +93,14 @@ public class ShareUtils {
      * 根据不同的平台设置不同的分享内容</br>
      */
     public void setShareContent(String content,String imgUrl) {
-
-        // 配置SSO
+    	setShareContent(content, imgUrl, TARGET_URL);
+    }
+    
+    /**
+     * 根据不同的平台设置不同的分享内容</br>
+     */
+    public void setShareContent(String content,String imgUrl,String linkUrl) {
+    	 // 配置SSO
         mController.getConfig().setSsoHandler(new SinaSsoHandler());
         mController.getConfig().setSsoHandler(new TencentWBSsoHandler());
 
@@ -108,16 +113,17 @@ public class ShareUtils {
         WeiXinShareContent weixinContent = new WeiXinShareContent();
         weixinContent.setShareContent(content);
         weixinContent.setTitle("炫能，炫了更有可能!");
-        weixinContent.setTargetUrl(TARGET_URL);
+        weixinContent.setTargetUrl(linkUrl);
         weixinContent.setShareMedia(urlImage);
         mController.setShareMedia(weixinContent);
 
         // 设置朋友圈分享的内容
         CircleShareContent circleMedia = new CircleShareContent();
         circleMedia.setShareContent(content);
-        circleMedia.setTitle("炫能，炫了更有可能!");
+        // circleMedia.setTitle("炫能，炫了更有可能!");
+        circleMedia.setTitle(content);
         circleMedia.setShareImage(urlImage);
-        circleMedia.setTargetUrl(TARGET_URL);
+        circleMedia.setTargetUrl(linkUrl);
         mController.setShareMedia(circleMedia);
 
         UMImage qzoneImage = new UMImage(mActivity,TextUtils.isEmpty(imgUrl) ? LOGO_URL:imgUrl);
@@ -126,7 +132,7 @@ public class ShareUtils {
         // 设置QQ空间分享内容
         QZoneShareContent qzone = new QZoneShareContent();
         qzone.setShareContent(content);
-        qzone.setTargetUrl(TARGET_URL);
+        qzone.setTargetUrl(linkUrl);
         qzone.setTitle("炫能，炫了更有可能!");
         qzone.setShareImage(urlImage);
         mController.setShareMedia(qzone);
@@ -136,7 +142,7 @@ public class ShareUtils {
         qqShareContent.setShareContent(content);
         qqShareContent.setTitle("炫能，炫了更有可能!");
         qqShareContent.setShareImage(urlImage);
-        qqShareContent.setTargetUrl(TARGET_URL);
+        qqShareContent.setTargetUrl(linkUrl);
         mController.setShareMedia(qqShareContent);
 
 
@@ -150,7 +156,10 @@ public class ShareUtils {
         mController.setShareMedia(sinaContent);
 
         doShare();
+       
     }
+    
+    
     
     /**QQ平台支持*/
     private void addQQQZonePlatform() {

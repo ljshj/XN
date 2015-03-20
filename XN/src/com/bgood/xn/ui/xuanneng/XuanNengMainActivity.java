@@ -12,6 +12,7 @@ import com.bgood.xn.R;
 import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.location.MyLocationActivity;
 import com.bgood.xn.system.BGApp;
+import com.bgood.xn.ui.MainActivity;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.xuanneng.joke.JokeMainActivity;
 import com.bgood.xn.ui.xuanneng.joke.JokePersonActivity;
@@ -82,6 +83,7 @@ public class XuanNengMainActivity extends BaseActivity implements OnClickListene
 	private void goToJoke() {
 		Intent intent = null;
 		if(isSelf && TextUtils.isEmpty(mUserId)){
+			MobclickAgent.onEvent(this,"xuanneng_joke_click");
 			intent = new Intent(mActivity, JokeMainActivity.class);
 			startActivity(intent);
 		}else if(!isSelf){

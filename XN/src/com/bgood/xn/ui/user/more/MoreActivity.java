@@ -60,18 +60,22 @@ public class MoreActivity extends BaseActivity implements OnClickListener,TaskLi
 		Intent intent = null;
 		switch (v.getId()) {
 		case R.id.tv_feedback:
+			MobclickAgent.onEvent(this,"me_feedback_click");
 			intent = new Intent(mActivity, FeedbackShowActivity.class);
 			startActivity(intent);
 			break;
 		
 		case R.id.tv_comment_score:
+			MobclickAgent.onEvent(this,"me_app_rating_click");
 			score();
 			break;
 
 		case R.id.tv_update_version:
+			MobclickAgent.onEvent(this,"me_version_upgrade_click");
 			UserCenterRequest.getInstance().requestCheckVesion(this, mActivity);
 			break;
 		case R.id.tv_about_xuanneng:
+			MobclickAgent.onEvent(this,"me_about_our_click");
 			intent = new Intent(mActivity, AboutUsActivity.class);
 			startActivity(intent);
 			break;

@@ -102,17 +102,20 @@ public class AccountCenterActivity extends BaseActivity implements OnClickListen
         {
             // 修改密码
             case R.id.tv_modify_pwd:
+            	MobclickAgent.onEvent(this,"me_change_password_complete_click");
             	intent = new Intent(AccountCenterActivity.this, ModifyPasswordActivity.class);
                 startActivity(intent);
                 break;
             // 个人资料
             case R.id.tv_edit_userinfo:
+            	MobclickAgent.onEvent(this,"me_edit_profile_info_click");
             	intent = new Intent(AccountCenterActivity.this, PersonalDataActivity.class);
                 intent.putExtra(UserInfoBean.KEY_USER_BEAN, mUserBean);
                 startActivity(intent);
                 break;
             // 注销
             case R.id.tv_quit_login:
+            	MobclickAgent.onEvent(this,"me_logout_click");
             	doLoginOutDialog();
                 break;
             case R.id.btn_ok:

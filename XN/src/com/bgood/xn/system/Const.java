@@ -9,6 +9,11 @@ import android.os.Environment;
  */
 public class Const {
 
+	/**
+	 * 分享的地址，objid,分享内容的id,tag分享内容的类型,有xn,wq两种类型
+	 */
+	public static final String SHARE_URL = "http://www.showneng.com/xnshare.aspx?objid=%s&tag=%s";
+	
 	/**登录到环信聊天服务器的密码**/
 	public static final String IM_PWD = "banggood123";
 	

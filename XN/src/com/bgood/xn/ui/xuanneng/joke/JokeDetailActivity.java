@@ -47,6 +47,7 @@ import com.bgood.xn.ui.user.account.LoginActivity;
 import com.bgood.xn.ui.user.info.ShowNameCardListener;
 import com.bgood.xn.ui.weiqiang.WeiqiangDetailActivity;
 import com.bgood.xn.ui.weiqiang.WeiqiangPublishActivity;
+import com.bgood.xn.ui.xuanneng.XuanNengMainActivity;
 import com.bgood.xn.utils.ImgUtils;
 import com.bgood.xn.utils.ShareUtils;
 import com.bgood.xn.utils.ToolUtils;
@@ -264,38 +265,54 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
     @Override
     public void onClick(View v)
     {
-    	if(!BGApp.isUserLogin){
-			LoginActivity.doLoginAction(this);
-		}else{
-    	
-        switch (v.getId())
-        {
-            // 赞
-            case R.id.av_zan:
-            	XuannengRequest.getInstance().requestXuanZan(this, mActivity, mJokeBean.jokeid);
-                break;
-            // 评论
-            case R.id.av_reply:
-            	type = JokeActionType.RESPONSE;
-                createSendDialog("");
-                break;
-            // 转发
-            case R.id.av_transpont:
-            	type = JokeActionType.TRANSPOND;
-            	createSendDialog("");
-                break;
-            // 分享
-            case R.id.av_share:
-    			XuannengRequest.getInstance().requestXuanShare(this, mActivity, mJokeBean.jokeid);
-    			share.setShareContent(mJokeBean.content, mJokeBean.imgs.size() > 0 ? mJokeBean.imgs.get(0).img:null);
-                break;
-            case R.id.ll_share:
-        			share.setShareContent(mJokeBean.content, mJokeBean.imgs.size() > 0 ? mJokeBean.imgs.get(0).img:null);
-                    break;
-            default:
-                break;
-        }
-        }
+		if (v.getId() == R.id.ll_share) {
+			MobclickAgent.onEvent(this, "xuanneng_joke_share_click");
+			mJokeBean.doShare(share);
+		} else {
+
+			if (!BGApp.isUserLogin) {
+				LoginActivity.doLoginAction(this);
+			} else {
+				switch (v.getId()) {
+				// 赞
+				case R.id.av_zan:
+					MobclickAgent.onEvent(this, "xuanneng_joke_zan_click");
+					XuannengRequest.getInstance().requestXuanZan(this,mActivity, mJokeBean.jokeid);
+					break;
+				// 评论
+				case R.id.av_reply:
+					MobclickAgent.onEvent(this, "xuanneng_joke_reply_click");
+					type = JokeActionType.RESPONSE;
+					createSendDialog("");
+					break;
+				// 转发
+				case R.id.av_transpont:
+					MobclickAgent.onEvent(this, "xuanneng_joke_transpond_click");
+					type = JokeActionType.TRANSPOND;
+					createSendDialog("");
+					break;
+				// // 分享
+				// case R.id.av_share:
+				// MobclickAgent.onEvent(this,"xuanneng_joke_share_click");
+				// XuannengRequest.getInstance().requestXuanShare(this,
+				// mActivity, mJokeBean.jokeid);
+				// mJokeBean.doShare(share);
+				// //share.setShareContent(mJokeBean.content,
+				// mJokeBean.imgs.size() > 0 ?
+				// mJokeBean.imgs.get(0).img:null,mJokeBean.getShareUrl());
+				// break;
+				// case R.id.ll_share:
+				// MobclickAgent.onEvent(this,"xuanneng_joke_share_click");
+				// mJokeBean.doShare(share);
+				// //share.setShareContent(mJokeBean.content,
+				// mJokeBean.imgs.size() > 0 ?
+				// mJokeBean.imgs.get(0).img:null,mJokeBean.getShareUrl());
+				// break;
+				default:
+					break;
+				}
+			}
+		}
     }
 
 	@Override

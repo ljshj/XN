@@ -108,13 +108,11 @@ public class MyLocationManager implements ILocationManager {
 				if(locationCallback != null){
 					locationCallback.locationFail(errorCode,"失败");
 				}
-				stopLocation();
 			}
 
 			if(lastBDLocation != null && (locationCount >= maxCount || System.currentTimeMillis() - startLocationTime > maxLocationTime)){
 				locationCount = 0;
 				locationCallback.locationSuccess(location);
-				stopLocation();
 			}
 		}
 

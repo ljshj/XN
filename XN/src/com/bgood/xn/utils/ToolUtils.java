@@ -723,4 +723,33 @@ public class ToolUtils {
 		return false;
 	}
 	
+
+	/**
+	 * 
+	 * @todo:是否已经更新到新版本
+	 * @date:2015-3-20 下午6:27:19
+	 * @author:hg_liuzl@163.com
+	 * @params:@param version  历史版本的app
+	 * @params:@param mContext
+	 * @params:@return
+	 */
+	public static boolean hasUpdate(String version,Context mContext) {
+		if(TextUtils.isEmpty(version))
+			return true;
+		
+		/**旧版app,版本*/
+		String[] netVersion = version.split("\\.");
+		/**当前应用的app,版本*/
+		String[] curVersion = ConfigUtil.getVersionName(mContext).split("\\.");
+
+		for(int i = 0;i<netVersion.length;i++){
+			int netV = Integer.valueOf(netVersion[i]);
+			int curV = Integer.valueOf(curVersion[i]);
+			if(netV < curV){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 }

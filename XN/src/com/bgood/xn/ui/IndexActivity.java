@@ -2,6 +2,9 @@ package com.bgood.xn.ui;
 import org.json.JSONObject;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+
 import com.baidu.location.BDLocation;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.Location;
@@ -22,6 +25,7 @@ import com.bgood.xn.system.SystemConfig;
 import com.bgood.xn.ui.base.BaseActivity;
 import com.bgood.xn.ui.welcome.NavigateActivity;
 import com.bgood.xn.utils.ConfigUtil;
+import com.bgood.xn.utils.ToolUtils;
 import com.bgood.xn.view.BToast;
 import com.umeng.analytics.MobclickAgent;
 
@@ -30,12 +34,19 @@ import com.umeng.analytics.MobclickAgent;
  * @date:2014-10-28 下午6:49:41
  * @author:hg_liuzl@163.com
  */
-public class IndexActivity extends BaseActivity implements TaskListenerWithState {
+public class IndexActivity extends BaseActivity implements TaskListenerWithState,OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.a_index);
+		findViewById(R.id.ll_view).setOnClickListener(this);
 		MobclickAgent.onEvent(IndexActivity.this,"sys_start");
+		
+		if(ToolUtils.hasUpdate(pUitl.getHistoryVersion(), mActivity)){	//如果当前版本大于历史版本
+			pUitl.setHistoryVersion(ConfigUtil.getVersionName(mActivity));
+			pUitl.setShowWelcomePage(false);	//重新展开引导页
+		}
+		
 		initLoacation();
 		//定时上传位置
 		Intent intent = new Intent(TimerSendLocationService.MY_SERVICE);
@@ -144,11 +155,13 @@ public class IndexActivity extends BaseActivity implements TaskListenerWithState
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			JSONObject body = bNetWork.getBody();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
-				SystemConfig.BS_SERVER = body.optString("bserver");
-				SystemConfig.FILE_SERVER = body.optString("fserver");
-				
-				pUitl.setBSServerUrl(SystemConfig.BS_SERVER);
-				pUitl.setFileServerUrl(SystemConfig.FILE_SERVER);
+				if(null!=body){
+					SystemConfig.BS_SERVER = body.optString("bserver");
+					SystemConfig.FILE_SERVER = body.optString("fserver");
+					
+					pUitl.setBSServerUrl(SystemConfig.BS_SERVER);
+					pUitl.setFileServerUrl(SystemConfig.FILE_SERVER);
+				}
 				
 				gotoMain();
 			}
@@ -165,5 +178,17 @@ public class IndexActivity extends BaseActivity implements TaskListenerWithState
 	protected void onPause() {
 		super.onPause();
 		MobclickAgent.onPause(this);
+	}
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.ll_view:
+			UserCenterRequest.getInstance().requestUnLoginBSServer(this, this);
+			break;
+
+		default:
+			break;
+		}
+		
 	}
 }

@@ -105,6 +105,7 @@ public class ProductDetailActivity extends BaseActivity implements OnClickListen
                 break;
             // 联系卖家
             case R.id.product_detail_ll_contact_seller:
+            	MobclickAgent.onEvent(this,"me_contact_seller_click");
             	NameCardActivity.lookNameCard(mActivity, mProductBean.userid);
                 break;
             //查看图片

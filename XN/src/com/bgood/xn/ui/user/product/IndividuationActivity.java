@@ -88,6 +88,7 @@ public class IndividuationActivity extends BaseActivity implements OnClickListen
      */
     private void setColor(int index)
     {
+    	MobclickAgent.onEvent(this,"me_personalized_template_click");
         pUitl.setSelfTemplat(index);
         Toast.makeText(this, "修改成功！", Toast.LENGTH_LONG).show();
         finish();

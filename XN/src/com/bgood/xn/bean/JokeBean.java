@@ -3,7 +3,10 @@ package com.bgood.xn.bean;
 import java.io.Serializable;
 import java.util.List;
 
+import com.bgood.xn.system.Const;
 import com.bgood.xn.system.SystemConfig;
+import com.bgood.xn.ui.xuanneng.XuanNengMainActivity;
+import com.bgood.xn.utils.ShareUtils;
 
 /**
  * @todo:笑话类
@@ -97,5 +100,20 @@ public class JokeBean implements Serializable {
 	
 	public String getPhoto() {
 		return SystemConfig.FILE_SERVER + photo;
+	}
+	
+	public String getShareUrl(){
+		return String.format(Const.SHARE_URL, jokeid,"xn");
+	}
+	
+	/**
+	 * 
+	 * @todo:内容分享
+	 * @date:2015-3-20 上午10:34:23
+	 * @author:hg_liuzl@163.com
+	 * @params:@param share
+	 */
+	public void doShare(ShareUtils share){
+		share.setShareContent(content, imgs.size() > 0 ? imgs.get(0).getImg_thum():null,getShareUrl());
 	}
 }
