@@ -65,16 +65,12 @@ public class NavigatePagerAdapter extends PagerAdapter {
 		start_view = (FrameLayout) imageLayout.findViewById(R.id.start_view);
 		left_view = (FrameLayout) imageLayout.findViewById(R.id.left_view);
 		right_view = (FrameLayout) imageLayout.findViewById(R.id.right_view);
-		if(position == 4){
+		if(position == 3){
 			start_btn.setVisibility(View.VISIBLE);
 			start_btn.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					//doOpenDoor();
-					
-					//gotoMain();
-					
-					mLoad.loadCommplet();
+					doOpenDoor();
 				}
 			});
 		}

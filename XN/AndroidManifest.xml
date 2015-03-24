@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bgood.xn"
     android:versionCode="3"
-    android:versionName="1.0.0.3" >
+    android:versionName="1.0.0.2" >
 
     <supports-screens 
            android:largeScreens="true"  
@@ -585,11 +585,13 @@
         <meta-data android:name="UMENG_APPKEY" android:value="544e311cfd98c5dc4e00a0de" />
         
     <!-- ###################添加UmengApp Channel###################### -->
-        <meta-data android:name="UMENG_CHANNEL" android:value="360" />
-<!--         <meta-data android:name="UMENG_CHANNEL" android:value="baidu" />
-        <meta-data android:name="UMENG_CHANNEL" android:value="wandoujia" />
-        <meta-data android:name="UMENG_CHANNEL" android:value="xiaomi" />
-        <meta-data android:name="UMENG_CHANNEL" android:value="tencent" /> -->
+       <!--  <meta-data android:name="UMENG_CHANNEL" android:value="offical" /> -->
+       <!--   <meta-data android:name="UMENG_CHANNEL" android:value="baidu" /> -->
+       <!--  <meta-data android:name="UMENG_CHANNEL" android:value="wandoujia" /> -->
+       <!--  <meta-data android:name="UMENG_CHANNEL" android:value="xiaomi" /> -->
+        <!--  <meta-data android:name="UMENG_CHANNEL" android:value="360" /> -->
+         <meta-data android:name="UMENG_CHANNEL" android:value="tencent" />
+        
         
         
         
