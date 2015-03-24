@@ -39,6 +39,7 @@ import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.ui.base.BaseShareActivity;
 import com.bgood.xn.ui.help.DeleteListener;
 import com.bgood.xn.ui.help.IDeleteCallback;
 import com.bgood.xn.ui.user.account.LoginActivity;
@@ -54,11 +55,12 @@ import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.bgood.xn.widget.TitleBar;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.sso.UMSsoHandler;
 /**
  * @todo:微墙详情界面
  * @date:2014-10-24 下午2:22:14
  */
-public class WeiqiangDetailActivity extends BaseActivity implements OnClickListener,TaskListenerWithState,IXListViewListener,OnItemClickListener
+public class WeiqiangDetailActivity extends BaseShareActivity implements OnClickListener,TaskListenerWithState,IXListViewListener,OnItemClickListener
 {
 	/**微墙详情类的key*/
 	private XListView listview;
@@ -84,13 +86,11 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 	private String weiqiangId;
 	
 	private WeiQiangBean weiqiangBean;
-	private ShareUtils share = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		share = new ShareUtils(mActivity);
 		setContentView(R.layout.layout_weiqiang_detail);
 		weiqiangBean = (WeiQiangBean) getIntent().getSerializableExtra(WeiQiangBean.KEY_WEIQIANG_BEAN);
 		weiqiangId = weiqiangBean.weiboid;
@@ -438,5 +438,15 @@ public class WeiqiangDetailActivity extends BaseActivity implements OnClickListe
 				createSendDialog("@" + bean.name + "  ");
 			}
 		}
+	}
+	
+	@Override 
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    super.onActivityResult(requestCode, resultCode, data);
+	    /**使用SSO授权必须添加如下代码 */
+	    UMSsoHandler ssoHandler = share.mController.getConfig().getSsoHandler(requestCode) ;
+	    if(ssoHandler != null){
+	       ssoHandler.authorizeCallBack(requestCode, resultCode, data);
+	    }
 	}
 }

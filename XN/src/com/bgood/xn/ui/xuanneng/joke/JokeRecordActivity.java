@@ -117,6 +117,7 @@ public class JokeRecordActivity extends BaseShowDataActivity implements OnClickL
 		radio_group.setOnCheckedChangeListener(mOnCheckedChangeListener);
 		
 		findViewById(R.id.iv_joke_verify).setOnClickListener(this);
+		findViewById(R.id.iv_joke_publish).setOnClickListener(this);
 
 		View view1 = inflater.inflate(R.layout.listview_space_bar, null);
 		mXLDay = (XListView) view1.findViewById(R.id.xlv_sapce);
@@ -457,7 +458,6 @@ public class JokeRecordActivity extends BaseShowDataActivity implements OnClickL
 	{
 		JokeBean jBean = null;
 		if (v.getId() == R.id.iv_joke_verify) { // 审核不需要登录
-
 			MobclickAgent.onEvent(this, "xuanneng_joke_verify_click");
 			JokeVerifyActivity.doVerifyJoke(mActivity);
 		} else if (v.getId() == R.id.ll_share) {
@@ -472,6 +472,9 @@ public class JokeRecordActivity extends BaseShowDataActivity implements OnClickL
 			} else {
 
 				switch (v.getId()) {
+				case R.id.iv_joke_publish://评论
+					JokePublishActivity.doPublishJoke(mActivity);
+					break;
 				case R.id.av_zan: // 赞
 					MobclickAgent.onEvent(this, "xuanneng_joke_zan_click");
 					jBean = (JokeBean) v.getTag();

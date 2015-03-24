@@ -41,6 +41,7 @@ import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.XuannengRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.ui.base.BaseShareActivity;
 import com.bgood.xn.ui.help.DeleteListener;
 import com.bgood.xn.ui.help.IDeleteCallback;
 import com.bgood.xn.ui.user.account.LoginActivity;
@@ -65,7 +66,7 @@ import com.umeng.analytics.MobclickAgent;
  * @date:2014-11-21 下午5:30:37
  * @author:hg_liuzl@163.com
  */
-public class JokeDetailActivity extends BaseActivity implements OnClickListener,TaskListenerWithState,IXListViewListener,OnItemClickListener
+public class JokeDetailActivity extends BaseShareActivity implements OnClickListener,TaskListenerWithState,IXListViewListener,OnItemClickListener
 {
 	/**炫能详情类的key*/
 	private XListView listview;
@@ -88,13 +89,11 @@ public class JokeDetailActivity extends BaseActivity implements OnClickListener,
 	private int comment_start = 0;
 	private JokeActionType type;
 	private TitleBar titleBar;
-	private ShareUtils share;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		share = new ShareUtils(mActivity);
 		setContentView(R.layout.layout_weiqiang_detail);
 		mJokeBean = (JokeBean) getIntent().getSerializableExtra(JokeBean.JOKE_BEAN);
 		titleBar = new TitleBar(mActivity);

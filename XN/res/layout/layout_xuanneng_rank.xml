@@ -35,8 +35,13 @@
 			android:layout_height="match_parent"
 			android:layout_width="match_parent" />
 	</LinearLayout>
-	 <ImageView 
+<!-- 	 <ImageView 
 	        android:id="@+id/iv_joke_verify"
 	        style="@style/style_verify_joke"
-	        />
+	        /> -->
+	        
+	         <include
+			layout="@layout/joke_action_bar"
+	     />      
+	        
 </FrameLayout>

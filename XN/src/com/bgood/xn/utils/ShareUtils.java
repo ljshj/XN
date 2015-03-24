@@ -29,10 +29,8 @@ import com.umeng.socialize.weixin.media.WeiXinShareContent;
  */
 public class ShareUtils {
 	
-	
-	
-	public static final String TENCENTWB_APP_KEY = "801551617";
-	public static final String TENCENTWB_APP_SECRET = "5be3f0bb7f149080826b040ec1f23e9c";
+	public static final String TENCENTWB_APP_KEY = "1104200467";
+	public static final String TENCENTWB_APP_SECRET = "FecuY1h9fM7kTxZN";
 
 	public static final String SINAWB_APP_KEY = "1431874026";
 	public static final String SIANWB_APP_SECRET = "8adeedd5cc28245824b2e03b126912d0";
@@ -65,8 +63,7 @@ public class ShareUtils {
     			SHARE_MEDIA.WEIXIN_CIRCLE,
     			SHARE_MEDIA.QQ,
     			SHARE_MEDIA.QZONE,
-    			SHARE_MEDIA.SINA,
-    			SHARE_MEDIA.TENCENT
+    			SHARE_MEDIA.SINA//SHARE_MEDIA.TENCENT
     			);
     	mController.openShare(mActivity, false);
     }
@@ -79,14 +76,20 @@ public class ShareUtils {
     private void configPlatforms() {
         // 添加新浪SSO授权
         mController.getConfig().setSsoHandler(new SinaSsoHandler());
+        
         mController.getConfig().setSinaCallbackUrl("http://www.showneng.com");
         // 添加腾讯微博SSO授权
         mController.getConfig().setSsoHandler(new TencentWBSsoHandler());
+        
         // 添加QQ、QZone平台
         addQQQZonePlatform();
         // 添加微信、微信朋友圈平台
         addWXPlatform();
     }
+    
+    
+    
+    
 
 
     /**
@@ -153,6 +156,7 @@ public class ShareUtils {
 
         SinaShareContent sinaContent = new SinaShareContent(urlImage);
         sinaContent.setShareContent(content);
+        sinaContent.setTargetUrl(linkUrl);
         mController.setShareMedia(sinaContent);
 
         doShare();

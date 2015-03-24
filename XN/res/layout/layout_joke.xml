@@ -6,8 +6,16 @@
     
     <include layout="@layout/listview_space_bar"/>
     
-   	 <ImageView 
+<!--     	 <ImageView 
 	        android:id="@+id/iv_joke_verify"
 	        style="@style/style_verify_joke"
-	        />
+	        />  -->
+	 
+	 <include
+			layout="@layout/joke_action_bar"
+	     />       
+	        
 </FrameLayout>
+
+<!-- 			 <item name="android:layout_gravity">bottom|right</item>
+          <item name="android:layout_margin">25dp</item> -->

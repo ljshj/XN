@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -379,5 +380,18 @@ public class JokePublishActivity extends BaseActivity implements OnItemClickList
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+	
+	/**
+	 * 
+	 * @todo:发布幽默秀
+	 * @date:2015-3-16 上午10:19:10
+	 * @author:hg_liuzl@163.com
+	 * @params:
+	 */
+	public static void doPublishJoke(Activity activity){
+		MobclickAgent.onEvent(activity,"xuanneng_joke_publish_click");
+		 Intent intent = new Intent(activity, JokePublishActivity.class);
+         activity.startActivity(intent);
 	}
 }

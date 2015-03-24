@@ -16,14 +16,12 @@ import com.bgood.xn.view.xlistview.XListView;
  * @date:2014-12-5 上午10:56:12
  * @author:hg_liuzl@163.com
  */
-public class BaseShowDataActivity extends BaseActivity {
+public class BaseShowDataActivity extends BaseShareActivity {
 	
-	public ShareUtils share = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		share = new ShareUtils(mActivity);
 	}
 	
 	/*******通用的数据刷新与设置数据方法***************************************************/

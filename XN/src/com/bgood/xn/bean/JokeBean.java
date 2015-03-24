@@ -114,6 +114,6 @@ public class JokeBean implements Serializable {
 	 * @params:@param share
 	 */
 	public void doShare(ShareUtils share){
-		share.setShareContent(content, imgs.size() > 0 ? imgs.get(0).getImg_thum():null,getShareUrl());
+		share.setShareContent(content, imgs.size() > 0 ? imgs.get(0).getImg():null,getShareUrl());
 	}
 }

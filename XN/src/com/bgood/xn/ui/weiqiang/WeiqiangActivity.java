@@ -26,16 +26,12 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.baidu.location.BDLocation;
 import com.bgood.xn.R;
 import com.bgood.xn.adapter.WeiqiangAdapter;
 import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.bean.WeiQiangBean;
 import com.bgood.xn.bean.WeiQiangBean.WeiqiangActionType;
 import com.bgood.xn.bean.response.WeiqiangResponse;
-import com.bgood.xn.location.ILocationCallback;
-import com.bgood.xn.location.ILocationManager;
-import com.bgood.xn.location.LocationManagerFactory;
 import com.bgood.xn.network.BaseNetWork;
 import com.bgood.xn.network.BaseNetWork.ReturnCode;
 import com.bgood.xn.network.http.HttpRequestAsyncTask.TaskListenerWithState;
@@ -45,6 +41,7 @@ import com.bgood.xn.network.http.HttpResponseInfo.HttpTaskState;
 import com.bgood.xn.network.request.WeiqiangRequest;
 import com.bgood.xn.system.BGApp;
 import com.bgood.xn.ui.base.BaseActivity;
+import com.bgood.xn.ui.base.BaseShareActivity;
 import com.bgood.xn.ui.user.account.LoginActivity;
 import com.bgood.xn.utils.ConfigUtil;
 import com.bgood.xn.utils.ShareUtils;
@@ -54,13 +51,14 @@ import com.bgood.xn.view.dialog.BGDialog;
 import com.bgood.xn.view.xlistview.XListView;
 import com.bgood.xn.view.xlistview.XListView.IXListViewListener;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.sso.UMSsoHandler;
 
 /**
  * 我的微墙主页
  * @author ChenGuoqing 2014-8-20下午3:46:57
  * @date:2014-10-24 下午2:21:22
  */
-public class WeiqiangActivity extends BaseActivity implements OnItemClickListener,TaskListenerWithState,OnClickListener,OnPageChangeListener,IXListViewListener
+public class WeiqiangActivity extends BaseShareActivity implements OnItemClickListener,TaskListenerWithState,OnClickListener,OnPageChangeListener,IXListViewListener
 {
 	/**请示去查看微墙详情**/
 	public static final int REQUEST_WEIQIANG_DETAIL = 100;
@@ -99,14 +97,13 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
     private WeiQiangBean mActionWeiqiang = null;
     private WeiqiangActionType type;
     
-	private ShareUtils share = null;
+	
 	
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		share = new ShareUtils(mActivity);
 		setContentView(R.layout.weiqiang_layout_main);
 		initViews();
 		setListeners();
@@ -678,4 +675,14 @@ public class WeiqiangActivity extends BaseActivity implements OnItemClickListene
 				}
 			}
 		}
+	
+//	@Override 
+//	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//	    super.onActivityResult(requestCode, resultCode, data);
+//	    /**使用SSO授权必须添加如下代码 */
+//	    UMSsoHandler ssoHandler = share.mController.getConfig().getSsoHandler(requestCode) ;
+//	    if(ssoHandler != null){
+//	       ssoHandler.authorizeCallBack(requestCode, resultCode, data);
+//	    }
+//	}
 }

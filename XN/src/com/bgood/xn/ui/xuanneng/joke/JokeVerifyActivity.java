@@ -1,6 +1,8 @@
 package com.bgood.xn.ui.xuanneng.joke;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import android.app.Activity;
@@ -26,6 +28,7 @@ import android.widget.ViewFlipper;
 
 import com.alibaba.fastjson.JSON;
 import com.bgood.xn.R;
+import com.bgood.xn.bean.FriendBean;
 import com.bgood.xn.bean.JokeBean;
 import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.bean.response.JokeResponse;
@@ -103,6 +106,29 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 		return inflater.inflate(R.layout.item_joke_verify, null);
 	}
 	
+	
+	/**
+	 * 
+	 * @todo:根据jokeId排序一下
+	 * @date:2015-3-24 上午10:33:16
+	 * @author:hg_liuzl@163.com
+	 * @params:
+	 */
+	private void sortByID() {
+		Collections.sort(jokeBeans, new Comparator<JokeBean>() {
+			@Override
+			public int compare(final JokeBean j1, final JokeBean j2) {
+				if (Integer.valueOf(j1.jokeid) == Integer.valueOf(j2.jokeid)) {
+					return 0;
+				} else if (Integer.valueOf(j1.jokeid) < Integer.valueOf(j2.jokeid)) {
+					return -1;
+				} else {
+					return 1;
+				}
+			}
+		});
+	}
+	
 	/**
 	 * 
 	 * @todo:处理获取到的数据
@@ -112,6 +138,7 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 	 */
 	private void dealData() {
 		if(null!=jokeBeans && jokeBeans.size()>0){
+			sortByID();
 			for (JokeBean joke : jokeBeans) {
 				View v = addView();
 				TextView tv = (TextView) v.findViewById(R.id.tv_content);
@@ -235,7 +262,7 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 				break;
 			case 870021:	//不审核，审核，原创，举报
 				if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
-					BToast.show(mActivity, "操作成功");
+					//BToast.show(mActivity, "操作成功");
 					showNextPage();
 				}else{
 					BToast.show(mActivity, "操作失败");
@@ -269,7 +296,7 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 	@Override
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,float arg3) {
 		
-		if ((e1.getX() - e2.getX() > 50)) {	//向左滑动距离大于50就进入下一页
+		if ((e1.getX() - e2.getX() > 30)) {	//向左滑动距离大于50就进入下一页
 				showNextPage();
 			return true;
 		} 

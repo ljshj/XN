@@ -46,6 +46,7 @@ public class NavigateActivity extends BaseActivity implements TaskListenerWithSt
 			R.drawable.help_02,
 			R.drawable.help_03,
 			R.drawable.help_04,
+			R.drawable.help_05,
 	};
 	
 	@Override

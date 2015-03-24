@@ -66,6 +66,7 @@ public class JokeOrderActivity extends BaseShowDataActivity implements OnItemCli
 		share = new ShareUtils(mActivity);
 		setContentView(R.layout.layout_joke);
 		findViewById(R.id.iv_joke_verify).setOnClickListener(this);
+		findViewById(R.id.iv_joke_publish).setOnClickListener(this);
 		m_listXlv = (XListView) findViewById(R.id.xlv_sapce);
 		m_listXlv.setPullLoadEnable(true);
 		m_listXlv.setPullRefreshEnable(true);
@@ -120,6 +121,9 @@ public class JokeOrderActivity extends BaseShowDataActivity implements OnItemCli
 				LoginActivity.doLoginAction(this);
 			} else {
 				switch (v.getId()) {
+				case R.id.iv_joke_publish:	//发布
+					JokePublishActivity.doPublishJoke(mActivity);
+					break;
 				case R.id.av_zan: // 赞
 					MobclickAgent.onEvent(this, "xuanneng_joke_zan_click");
 					jBean = (JokeBean) v.getTag();

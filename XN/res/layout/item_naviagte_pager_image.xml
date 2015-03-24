@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 	<LinearLayout 
-	    android:visibility="visible"
+	    android:visibility="gone"
 	    android:id="@+id/animation_view"
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
