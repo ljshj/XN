@@ -12,6 +12,7 @@ import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.TextUtils;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
@@ -254,6 +255,9 @@ public class JokeVerifyActivity extends BaseActivity implements OnClickListener,
 			switch (bNetWork.getMessageType()) {
 			case 870022:
 				if (bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK) {
+					if(TextUtils.isEmpty(strJson)){
+						return;
+					}
 					JokeResponse response = JSON.parseObject(strJson, JokeResponse.class);
 					jokeBeans.clear();
 					jokeBeans.addAll(response.jokes);

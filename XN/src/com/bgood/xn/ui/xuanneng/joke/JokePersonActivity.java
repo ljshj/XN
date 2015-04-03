@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -146,6 +147,9 @@ public class JokePersonActivity extends BaseActivity implements OnItemClickListe
 					}
 					break;
 				case 870008:	//获取微墙列表
+					if(TextUtils.isEmpty(strJson)){
+						return;
+					}
 					JokeResponse response  = JSON.parseObject(strJson, JokeResponse.class);
 					setJokeData(response.jokes);
 					break;

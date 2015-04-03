@@ -6,7 +6,7 @@ import android.os.Handler;
 import android.os.IBinder;
 
 import com.baidu.location.BDLocation;
-import com.bgood.xn.bean.Location;
+import com.bgood.xn.bean.MyLocation;
 import com.bgood.xn.location.ILocationCallback;
 import com.bgood.xn.location.ILocationManager;
 import com.bgood.xn.location.LocationManagerFactory;
@@ -62,7 +62,7 @@ public class TimerSendLocationService extends Service implements TaskListenerWit
 			public void locationSuccess(BDLocation location) {
 				longitude = location.getLongitude();
 				latitude = location.getLatitude();
-				Location l = new Location();
+				MyLocation l = new MyLocation();
 				l.longitude = longitude;
 				l.latitude = latitude;
 				BGApp.location = l;

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -284,6 +285,9 @@ public class JokeMeActivity extends BaseShowDataActivity implements OnItemClickL
 				switch(bNetWork.getMessageType()){
 				case 870008:	//获取投稿列表
 					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+						if(TextUtils.isEmpty(strJson)){
+							return;
+						}
 					JokeResponse response  = JSON.parseObject(strJson, JokeResponse.class);
 					if(REQUEST_FLAG == JokeBean.JOKE_VERIFY){	//已审核
 						m_VerifyStart += PAGE_SIZE_ADD;

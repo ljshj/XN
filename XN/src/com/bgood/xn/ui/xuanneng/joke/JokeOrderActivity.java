@@ -80,6 +80,9 @@ public class JokeOrderActivity extends BaseShowDataActivity implements OnItemCli
 	private void showData() {
 		if (!ConfigUtil.isConnect(mActivity)) {
 			String strJson = pUitl.getStoreJokeOrder();
+			if(TextUtils.isEmpty(strJson)){
+				return;
+			}
 			JokeResponse response = JSON.parseObject(strJson, JokeResponse.class);
 			setDataAdapter(m_listXlv, adapter, listJoke, response.jokes, isRefreshAction);
 		}else{
@@ -251,6 +254,9 @@ public class JokeOrderActivity extends BaseShowDataActivity implements OnItemCli
 					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 						saveDataToLocal(strJson);
 						m_start_page += 10;
+						if(TextUtils.isEmpty(strJson)){
+							return;
+						}
 						JokeResponse response = JSON.parseObject(strJson, JokeResponse.class);
 						setDataAdapter(m_listXlv, adapter, listJoke, response.jokes, isRefreshAction);
 					}

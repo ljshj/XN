@@ -500,6 +500,9 @@ public class SearchResultActivity extends BaseActivity implements OnClickListene
 		if(info.getState() == HttpTaskState.STATE_OK){
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			String strJson = bNetWork.getStrJson();
+			if(TextUtils.isEmpty(strJson)){
+				return;
+			}
 			try {
 			switch (bNetWork.getMessageType()) {
 			case 840001://搜索结果

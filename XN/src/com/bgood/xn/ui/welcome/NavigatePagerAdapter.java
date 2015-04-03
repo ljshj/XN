@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import com.bgood.xn.R;
 
 /**
- * 
  * @todo:欢迎页适配器
  * @date:2015-1-22 下午7:09:09
  * @author:hg_liuzl@163.com
@@ -47,7 +46,6 @@ public class NavigatePagerAdapter extends PagerAdapter {
 
 	@Override
 	public int getCount() {
-//		return images.length;
 		return ids.length;
 	}
 

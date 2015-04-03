@@ -14,19 +14,17 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
-import com.baidu.location.BDLocation;
 import com.bgood.xn.R;
 import com.bgood.xn.bean.FriendBean;
 import com.bgood.xn.bean.GroupBean;
 import com.bgood.xn.bean.GroupMemberBean;
-import com.bgood.xn.bean.Location;
 import com.bgood.xn.bean.MemberLoginBean;
+import com.bgood.xn.bean.MyLocation;
 import com.bgood.xn.bean.UserInfoBean;
 import com.bgood.xn.db.DBHelper;
 import com.easemob.EMCallBack;
 import com.easemob.chat.ChatHXSDKHelper;
 import com.iflytek.cloud.SpeechUtility;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -67,7 +65,7 @@ public class BGApp extends Application {
 	private Map<String,List<FriendBean>> groupMemberAndHxId = new HashMap<String,List<FriendBean>>();
 	
 	/**存放当前位置的经纬度**/
-	public static Location location;
+	public static MyLocation location;
 	
 	@Override
 	public void onCreate()

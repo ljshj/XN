@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -69,6 +70,9 @@ public class JokeMentionActivity extends BaseShowDataActivity implements TaskLis
 			BaseNetWork bNetWork = info.getmBaseNetWork();
 			String strJson = bNetWork.getStrJson();
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+				if(TextUtils.isEmpty(strJson)){
+					return;
+				}
 				JokeCorattionResponse response = JSON.parseObject(strJson, JokeCorattionResponse.class);
 				setDataAdapter(m_mentionXLv, adapter, corationBeans, response.merelated,isRefreshAction);
 			}

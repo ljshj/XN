@@ -345,6 +345,9 @@ public class JokeRankActivity extends BaseShowDataActivity implements OnClickLis
 			case 870002:
 					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 						saveDataToLocal(strJson);
+						if(TextUtils.isEmpty(strJson)){
+							return;
+						}
 						JokeResponse response = JSON.parseObject(strJson, JokeResponse.class);
 						switch (REQUEST_FLAG) {
 							case CHOOSE_DAY:

@@ -369,6 +369,9 @@ public class JokeRecordActivity extends BaseShowDataActivity implements OnClickL
 			switch (bNetWork.getMessageType()) {
 			case 870019:
 					if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
+						if(TextUtils.isEmpty(strJson)){
+							return;
+						}
 						saveDataToLocal(strJson);
 						JokeResponse response = JSON.parseObject(strJson, JokeResponse.class);
 						List<JokeBean> newJokes = response.jokes;

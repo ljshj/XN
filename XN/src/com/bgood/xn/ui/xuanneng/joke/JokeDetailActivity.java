@@ -324,6 +324,9 @@ public class JokeDetailActivity extends BaseShareActivity implements OnClickList
 			if(bNetWork.getReturnCode() == ReturnCode.RETURNCODE_OK){
 				switch (bNetWork.getMessageType()) {
 				case 870009:
+					if(TextUtils.isEmpty(strJson)){
+						return;
+					}
 					CommentResponse response = JSON.parseObject(strJson, CommentResponse.class);
 					List<CommentBean> comments = response.comments;
 					setCommentData(comments);

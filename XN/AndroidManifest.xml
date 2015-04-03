@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bgood.xn"
-    android:versionCode="3"
-    android:versionName="1.0.0.2" >
+    android:versionCode="5"
+    android:versionName="1.0.0.4" >
 
     <supports-screens 
            android:largeScreens="true"  
@@ -792,16 +792,16 @@
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" >
-            <intent-filter>
+          <!--   <intent-filter>
                 <action android:name="com.baidu.location.service_v2.2" >
                 </action>
-            </intent-filter>
+            </intent-filter> -->
         </service>
 
         <!-- meta-data需要写在application中 -->
-        <meta-data
+ <!--        <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="7yZkxBhGPnd2fMpo8deYDHUt" />
+            android:value="7yZkxBhGPnd2fMpo8deYDHUt" /> -->
     </application>
     
 

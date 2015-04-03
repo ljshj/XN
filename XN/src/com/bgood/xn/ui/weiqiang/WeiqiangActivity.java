@@ -471,6 +471,14 @@ public class WeiqiangActivity extends BaseShareActivity implements OnItemClickLi
 	}
 	
 	private void setWeiqiangData(String strJson) {
+		m_allFriendsXLv.stopRefresh();
+		m_allFriendsXLv.stopLoadMore();
+		m_followFriendsXLv.stopRefresh();
+		m_followFriendsXLv.stopLoadMore();
+		if(TextUtils.isEmpty(strJson)){
+			return;
+		}
+		
 		WeiqiangResponse response  = JSON.parseObject(strJson, WeiqiangResponse.class);
 		List<WeiQiangBean> weiqiangs = response.items;
 		if(isRefresh){
@@ -483,10 +491,6 @@ public class WeiqiangActivity extends BaseShareActivity implements OnItemClickLi
 			}
 		}
 		
-		m_allFriendsXLv.stopRefresh();
-		m_allFriendsXLv.stopLoadMore();
-		m_followFriendsXLv.stopRefresh();
-		m_followFriendsXLv.stopLoadMore();
 		if(null == weiqiangs){
 			return;
 		}

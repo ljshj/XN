@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.bgood.xn.bean.MyLocation;
+
 public class PreferenceUtil {
 	
 	public static final  String PREFERENCE_FILE = "tb_preference";
@@ -15,6 +17,16 @@ public class PreferenceUtil {
 	public PreferenceUtil(Context context, String file) {
 		sp = context.getSharedPreferences(file, Context.MODE_PRIVATE);
 		editor = sp.edit();
+	}
+	
+	public void setLocation(final MyLocation location){
+		editor.putString("latitude", String.valueOf(location.latitude));
+		editor.putString("longitude", String.valueOf(location.longitude));
+		editor.commit();
+	}
+	
+	public MyLocation getLocation() {
+		return new MyLocation(Double.valueOf(sp.getString("latitude", "0.0")), Double.valueOf(sp.getString("longitude", "0.0")));
 	}
 	
 	/**设置是否已经登录*/
